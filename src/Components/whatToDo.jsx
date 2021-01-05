@@ -5,7 +5,7 @@ import categories from '../services/categories';
 import { getProducts } from '../services/productService';
 import Loader from './loader';
 
-const WhatToDo = ({ handleBack, history }) => {
+const WhatToDo = () => {
   const [currentCategory, setCurrentCategory] = useState('');
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,9 +18,8 @@ const WhatToDo = ({ handleBack, history }) => {
   };
 
   useEffect(() => {
-    handleBack(history.goBack);
     getAllProducts();
-  }, [handleBack, history]);
+  }, []);
 
   const handleCategory = (cate) => {
     setCurrentCategory(cate);
@@ -44,6 +43,7 @@ const WhatToDo = ({ handleBack, history }) => {
         <div className='theme-categories'>
           {categories.map((c) => (
             <ThemeCategory
+              key={c}
               category={c}
               current={currentCategory}
               setCategory={handleCategory}
@@ -65,7 +65,7 @@ const WhatToDo = ({ handleBack, history }) => {
             <Loader />
           ) : filteredBrands().length > 0 ? (
             filteredBrands().map((b) => (
-              <BrandCard brand={b} delay={(delay += 0.1)} />
+              <BrandCard key={b._id} brand={b} delay={(delay += 0.1)} />
             ))
           ) : (
             <div className='no-result'>

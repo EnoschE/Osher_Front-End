@@ -1,11 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 // import { Lazy } from 'rrr-lazy';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 const settings = {
-
   dots: true,
   infinite: true,
   speed: 500,
@@ -59,29 +57,27 @@ const BrandCard = ({ delay, brand }) => {
         }}
       /> */}
 
-      <Slider {...settings}>
-        <div className='brand-carousel'>
-          <img src={brand.img} alt='Brand' />
-        </div>
-        <div className='brand-carousel'>
-          <img src='/img/img3.jpg' alt='Brand' />
-        </div>
-        <div className='brand-carousel'>
-          <img src='/img/img5.jpg' alt='Brand' />
-        </div>
-      </Slider>
+      <Link to={`/whattodo/brand/${brand._id}`}>
+        <Slider {...settings}>
+          {brand.img.map((b) => (
+            <div className='brand-carousel'>
+              <img src={b} alt='Brand' />
+            </div>
+          ))}
+        </Slider>
 
-      {/* <div
+        {/* <div
         className='brand-img'
         style={{
           backgroundImage: 'url(' + brand.img + ')',
         }}
       ></div> */}
-      <h2 className='brand-title'>{brand.name}</h2>
-      <h3 className='brand-price'>{brand.price}$</h3>
-      <div className='brand-category'>
-        <div>{brand.category}</div>
-      </div>
+        <h2 className='brand-title'>{brand.name}</h2>
+        <h3 className='brand-price'>{brand.price}$</h3>
+        <div className='brand-category'>
+          <div>{brand.category}</div>
+        </div>
+      </Link>
     </div>
   );
 };

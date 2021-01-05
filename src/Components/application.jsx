@@ -8,14 +8,17 @@ import NotFound from './notFound';
 import Nap from './nap';
 import VolumeScreen from './common/volumeScreen';
 import DriverProfile from './driverProfile';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
-import './stylesheet.css';
 import LoginPage from './loginPage';
 import auth from '../services/authService';
 import ProtectedRoute from './common/protectedRoute';
 import Logout from './logout';
 import WhatToDo from './whatToDo';
+import CouponPage from './couponPage';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import './stylesheet.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 class Application extends Component {
   state = {
@@ -59,11 +62,6 @@ class Application extends Component {
     setTimeout(() => {
       this.setState({ mute: false });
     }, 1500);
-
-    // Array.prototype.slice.call(document.querySelectorAll('audio')).forEach(function(audio) {
-    //   audio.muted = true;
-    // });
-
     document
       .querySelectorAll('video, audio')
       .forEach((element) => this.muteMe(element));
@@ -81,11 +79,6 @@ class Application extends Component {
   };
 
   handleVolumeUp = () => {
-    // const { volumePop } = this.state;
-    // if (volumePop) {
-    //   this.setState({ volumePop: false });
-    //   this.handleVolumeUp();
-    // } else
     this.setState({ volumePop: true });
 
     setTimeout(() => {
@@ -98,12 +91,6 @@ class Application extends Component {
   };
 
   handleVolumeDown = () => {
-    // const { volumePop } = this.state;
-    // if (volumePop) {
-    // this.setState({ volumePop: false });
-    // this.handleVolumeDown();
-    // } else
-
     this.setState({ volumePop: true });
 
     setTimeout(() => {
@@ -146,16 +133,20 @@ class Application extends Component {
             />
 
             <Route
+              path='/whattodo/brand/:id'
+              render={(props) => (
+                <CouponPage {...props} handleBack={this.handleBack} />
+              )}
+            ></Route>
+
+            <Route
+              path='/whattodo'
+              render={(props) => <WhatToDo {...props} />}
+            />
+            <Route
               path='/main'
               render={(props) => (
                 <MainPage {...props} handleBack={this.handleBack} />
-              )}
-            />
-           
-            <Route
-              path='/whattodo'
-              render={(props) => (
-                <WhatToDo {...props} handleBack={this.handleBack} />
               )}
             />
 
@@ -163,7 +154,11 @@ class Application extends Component {
               <Route
                 path='/logout'
                 render={(props) => (
-                  <Logout {...props} updateUser={this.updateUser} handleBack={this.handleBack}/>
+                  <Logout
+                    {...props}
+                    updateUser={this.updateUser}
+                    handleBack={this.handleBack}
+                  />
                 )}
               />
             )}
