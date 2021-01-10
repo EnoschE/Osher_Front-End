@@ -1,7 +1,12 @@
 import React from 'react';
 import RadioInput from './common/radioInput';
 
-const CouponRightBlock = ({ data, currentOffer, radioFunction }) => {
+const CouponRightBlock = ({
+  data,
+  currentOffer,
+  radioFunction,
+  handleCoupon,
+}) => {
   return (
     <div className='coupon-right-block'>
       {data.map((o) => (
@@ -13,7 +18,9 @@ const CouponRightBlock = ({ data, currentOffer, radioFunction }) => {
         />
       ))}
 
-      <button className='get-coupon orange-btn'>Get this coupon</button>
+      <button className='get-coupon orange-btn' onClick={handleCoupon}>
+        Get this coupon
+      </button>
     </div>
   );
 };

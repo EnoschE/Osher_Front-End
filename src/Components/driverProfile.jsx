@@ -10,7 +10,7 @@ class DriverProfile extends Component {
   async componentDidMount() {
     window.scrollTo(0, 0);
 
-    this.props.handleBack(this.props.history.goBack);
+    this.props.handleBack(true);
     this.setState({ loading: false });
 
     const user = await auth.getCurrentUser();

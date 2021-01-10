@@ -2,7 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = (props) => {
-  const { handleNap, backAddress, mutePage, handleVolumeUp , handleVolumeDown} = props;
+  const {
+    handleNap,
+    backAddress,
+    mutePage,
+    handleVolumeUp,
+    handleVolumeDown,
+    visibleBack,
+  } = props;
 
   return (
     <div className='footer'>
@@ -11,11 +18,11 @@ const Footer = (props) => {
       </Link>
       <audio className='audio-element'>
         <source src='/img/audio.mp3'></source>
-        {/* <source src='https://assets.coderrocketfuel.com/pomodoro-times-up.mp3'></source> */}
+
       </audio>
 
       <div className='footer-icons'>
-        {backAddress && (
+        {visibleBack && (
           <div className='icon-block' onClick={() => backAddress()}>
             <i className='fas fa-angle-double-left'></i>
             <p>Back</p>
@@ -32,7 +39,7 @@ const Footer = (props) => {
           <p>Mute</p>
         </div>
 
-        <div className='icon-block' onClick={ handleVolumeDown}>
+        <div className='icon-block' onClick={handleVolumeDown}>
           <i className='fas fa-volume-down'></i>
           <p>Down</p>
         </div>
@@ -56,6 +63,13 @@ const Footer = (props) => {
           <div className='icon-block'>
             <i className='far fa-user-tie'></i>
             <p>Profile</p>
+          </div>
+        </Link>
+      
+        <Link to='/dashboard'>
+          <div className='icon-block'>
+            <i className='far fa-th'></i>
+            <p>Dashboard</p>
           </div>
         </Link>
       </div>

@@ -14,7 +14,7 @@ class LoginPage extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     document.title = 'Login - Osher';
-    this.props.handleBack(this.props.history.goBack);
+    this.props.handleBack(true);
   }
 
   schema = {
@@ -66,12 +66,12 @@ class LoginPage extends Component {
       const { data } = this.state;
       await auth.login(data.username, data.password);
       // const user = auth.getCurrentUser();
-       auth.getCurrentUser();
+      auth.getCurrentUser();
 
-    //   this.props.handleNotification({
-    //     message: 'Welcome, ' + user.name + '!',
-    //     img: user.profilePic,
-    //   });
+      //   this.props.handleNotification({
+      //     message: 'Welcome, ' + user.name + '!',
+      //     img: user.profilePic,
+      //   });
 
       const { state } = this.props.location;
 

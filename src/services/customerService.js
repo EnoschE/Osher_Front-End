@@ -1,19 +1,16 @@
 import http from './httpService';
 
-const apiEndpoint = '/users';
+const apiEndpoint = '/customers';
 
-function userUrl(id) {
+function customerUrl(id) {
   return `${apiEndpoint}/${id}`;
 }
 
-
-
 export function register(user) {
   return http.post(apiEndpoint, {
-    email: user.username.toLowerCase(),
-    password: user.password,
+    email: user.email.toLowerCase(),
     name: user.name,
-    profilePic: user.profilePic,
+    phone: user.phone,
   });
 }
 
@@ -25,7 +22,7 @@ export function getMyDetails(_id) {
   return http.get(apiEndpoint + '/mydetails/' + _id);
 }
 
-export function updateUser(user) {
+export function updateCustomer(user) {
   if (user._id) {
     const body = { ...user };
     delete body._id;
@@ -36,7 +33,7 @@ export function updateUser(user) {
     if (body.resetPasswordToken) delete body.resetPasswordToken;
 
     body.email = body.email.toLowerCase();
-    return http.put(userUrl(user._id), body);
+    return http.put(customerUrl(user._id), body);
   }
 }
 

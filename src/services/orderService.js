@@ -14,6 +14,12 @@ export function getOrder(id) {
   return http.get(orderUrl(id));
 }
 
+export function sendCoupon(order) {
+  return http.post(apiEndpoint+'/sendcoupon', order);
+}
+
+
+
 export function saveOrder(order) {
   if (order._id) {
     const body = { ...order };

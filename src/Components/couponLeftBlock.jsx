@@ -9,12 +9,12 @@ const settings = {
   slidesToScroll: 1,
 };
 
-const CouponLeftBlock = ({brand}) => {
+const CouponLeftBlock = ({ brand }) => {
   return (
     <>
       <Slider {...settings}>
         {brand.img.map((b) => (
-          <div className='coupon-page-carousel'>
+          <div className='coupon-page-carousel' key={b}>
             <img src={b} alt='Brand' />
           </div>
         ))}

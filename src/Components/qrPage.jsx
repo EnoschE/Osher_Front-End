@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const QrPage = ({ handleBack }) => {
   useEffect(() => {
-    handleBack('');
+    handleBack(false);
   }, [handleBack]);
 
   return (

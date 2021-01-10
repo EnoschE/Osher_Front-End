@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const MainPage = ({ handleBack, history }) => {
+const MainPage = ({ handleBack }) => {
   useEffect(() => {
-    handleBack(history.goBack);
-  }, [handleBack, history]);
+    handleBack(true);
+  }, [handleBack]);
 
   return (
     <div className='main-background'>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import MainPage from './mainPage';
 import QrPage from './qrPage';
@@ -19,6 +19,9 @@ import 'bootstrap/dist/js/bootstrap.js';
 import './stylesheet.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import history from '../services/history';
+import NotificationBar from './common/notificationBar';
+import Dashboard from './dashboard';
 
 class Application extends Component {
   state = {
@@ -27,12 +30,23 @@ class Application extends Component {
     volumePop: false,
     volume: 1,
     backAddress: '',
+    visibleBack: false,
+    notify: '',
   };
 
   componentDidMount() {
     const user = auth.getCurrentUser();
-    this.setState({ user });
+    this.setState({
+      user,
+      backAddress: history.goBack,
+      visibleBack: true,
+    });
   }
+
+  handleNotification = (notify) => {
+    this.setState({ notify });
+    setTimeout(() => this.setState({ notify: '' }), 4000);
+  };
 
   updateUser = () => {
     const user = auth.getCurrentUser();
@@ -102,101 +116,116 @@ class Application extends Component {
       .forEach((element) => this.volChange(element, 'down'));
   };
 
-  handleBack = (backAddress) => {
-    this.setState({ backAddress });
+  handleBack = (value) => {
+    this.setState({ visibleBack: value });
   };
 
   render() {
-    const { nap, mute, volumePop, volume, backAddress, user } = this.state;
+    const {
+      nap,
+      mute,
+      volumePop,
+      volume,
+      backAddress,
+      user,
+      visibleBack,
+      notify,
+    } = this.state;
 
     return (
       <div>
-        <Router>
-          <Footer
-            handleNap={this.handleNap}
-            backAddress={backAddress}
-            mutePage={this.mutePage}
-            handleVolumeUp={this.handleVolumeUp}
-            handleVolumeDown={this.handleVolumeDown}
+        <Footer
+          handleNap={this.handleNap}
+          backAddress={backAddress}
+          mutePage={this.mutePage}
+          handleVolumeUp={this.handleVolumeUp}
+          handleVolumeDown={this.handleVolumeDown}
+          visibleBack={visibleBack}
+        />
+
+        {notify && (
+          <NotificationBar message={notify.message} img={notify.img} />
+        )}
+
+        {nap && <Nap handleNap={this.handleNap} />}
+        {mute && <VolumeScreen role='mute' />}
+        {volumePop && <VolumeScreen role='volume' value={volume} />}
+
+        <Switch>
+          <ProtectedRoute path='/dashboard' component={Dashboard} />
+
+          <ProtectedRoute
+            path='/profile'
+            render={(props) => (
+              <DriverProfile {...props} handleBack={this.handleBack} />
+            )}
           />
 
-          {nap && <Nap handleNap={this.handleNap} />}
-          {mute && <VolumeScreen role='mute' />}
-          {volumePop && <VolumeScreen role='volume' value={volume} />}
-
-          <Switch>
-            <ProtectedRoute
-              path='/profile'
-              render={(props) => (
-                <DriverProfile {...props} handleBack={this.handleBack} />
-              )}
-            />
-
-            <Route
-              path='/whattodo/brand/:id'
-              render={(props) => (
-                <CouponPage {...props} handleBack={this.handleBack} />
-              )}
-            ></Route>
-
-            <Route
-              path='/whattodo'
-              render={(props) => <WhatToDo {...props} />}
-            />
-            <Route
-              path='/main'
-              render={(props) => (
-                <MainPage {...props} handleBack={this.handleBack} />
-              )}
-            />
-
-            {user && (
-              <Route
-                path='/logout'
-                render={(props) => (
-                  <Logout
-                    {...props}
-                    updateUser={this.updateUser}
-                    handleBack={this.handleBack}
-                  />
-                )}
+          <Route
+            path='/whattodo/brand/:id'
+            render={(props) => (
+              <CouponPage
+                {...props}
+                handleBack={this.handleBack}
+                handleNotification={this.handleNotification}
               />
             )}
+          ></Route>
 
-            <Route
-              path='/login/'
-              render={(props) => {
-                if (auth.getCurrentUser()) {
-                  return <Redirect to='/profile' />;
-                }
-                return (
-                  <LoginPage
-                    {...props}
-                    handleBack={this.handleBack}
-                    updateUser={this.updateUser}
-                    handleNotification={this.handleNotification}
-                  />
-                );
-              }}
-            />
+          <Route path='/whattodo' render={(props) => <WhatToDo {...props} />} />
+          <Route
+            path='/main'
+            render={(props) => (
+              <MainPage {...props} handleBack={this.handleBack} />
+            )}
+          />
 
+          {user && (
             <Route
-              path='/not-found'
+              path='/logout'
               render={(props) => (
-                <NotFound {...props} handleBack={this.handleBack} />
+                <Logout
+                  {...props}
+                  updateUser={this.updateUser}
+                  handleBack={this.handleBack}
+                />
               )}
             />
+          )}
 
-            <Route
-              exact
-              path='/'
-              render={(props) => (
-                <QrPage {...props} handleBack={this.handleBack} />
-              )}
-            />
-            <Redirect to='/not-found' />
-          </Switch>
-        </Router>
+          <Route
+            path='/login/'
+            render={(props) => {
+              if (auth.getCurrentUser()) {
+                return <Redirect to='/profile' />;
+              }
+              return (
+                <LoginPage
+                  {...props}
+                  handleBack={this.handleBack}
+                  updateUser={this.updateUser}
+                  handleNotification={this.handleNotification}
+                />
+              );
+            }}
+          />
+
+          <Route
+            path='/not-found'
+            render={(props) => (
+              <NotFound {...props} handleBack={this.handleBack} />
+            )}
+          />
+
+          <Route
+            exact
+            path='/'
+            render={(props) => (
+              <QrPage {...props} handleBack={this.handleBack} />
+            )}
+          />
+          <Redirect to='/not-found' />
+        </Switch>
       </div>
     );
   }

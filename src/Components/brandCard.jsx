@@ -60,7 +60,7 @@ const BrandCard = ({ delay, brand }) => {
       <Link to={`/whattodo/brand/${brand._id}`}>
         <Slider {...settings}>
           {brand.img.map((b) => (
-            <div className='brand-carousel'>
+            <div className='brand-carousel' key={b}>
               <img src={b} alt='Brand' />
             </div>
           ))}
