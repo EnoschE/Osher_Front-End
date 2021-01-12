@@ -73,7 +73,7 @@ const BrandCard = ({ delay, brand }) => {
         }}
       ></div> */}
         <h2 className='brand-title'>{brand.name}</h2>
-        <h3 className='brand-price'>{brand.price}$</h3>
+        <h3 className='brand-price'>${brand.offers[0].price}</h3>
         <div className='brand-category'>
           <div>{brand.category}</div>
         </div>

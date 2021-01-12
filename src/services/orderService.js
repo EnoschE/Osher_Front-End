@@ -24,7 +24,7 @@ export function saveOrder(order) {
   if (order._id) {
     const body = { ...order };
     delete body._id;
-    delete body.email;
+    // delete body.email;
     delete body.publishDate;
     return http.put(orderUrl(order._id), body);
   }

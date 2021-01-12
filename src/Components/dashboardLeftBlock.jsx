@@ -25,18 +25,19 @@ class DashboardLeftBlock extends Component {
     return (
       <div className='col-md-2 p-2'>
         <div className='dashboard-left-block'>
-          
-            <div
-              className='dashboard-pic-circle'
-              style={{
-                backgroundImage: 'url(' + user.profilePic + ')',
-              }}
-            ></div>
-          
-          <div className='profile-left-text'>
-            <h2>{user.name}</h2>
-            {user.isAdmin && <h6>Admin</h6>}
-          </div>
+          <div
+            className='dashboard-pic-circle'
+            style={{
+              backgroundImage: 'url(' + user.profilePic + ')',
+            }}
+          ></div>
+
+          <Link to='/update-profile'>
+            <div className='profile-left-text'>
+              <h2>{user.name}</h2>
+              {user.isAdmin && <h6>Admin</h6>}
+            </div>
+          </Link>
 
           <br />
 
@@ -54,7 +55,7 @@ class DashboardLeftBlock extends Component {
               </div>
             </Link>
 
-            {user.isAdmin && (
+            {(user.isAdmin || user.isBrand) && (
               <Link to='/dashboard/customers/'>
                 <div
                   className={
@@ -81,7 +82,7 @@ class DashboardLeftBlock extends Component {
                 <div></div>
               </div>
             </Link>
-          
+
             <Link to='/dashboard/report'>
               <div
                 className={
@@ -95,7 +96,7 @@ class DashboardLeftBlock extends Component {
               </div>
             </Link>
 
-            {user.isAdmin && (
+            {(user.isAdmin || user.isBrand) && (
               <Link to='/dashboard/products'>
                 <div
                   className={

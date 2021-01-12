@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Pie, Bar } from 'react-chartjs-2';
 import { getOrders } from '../services/orderService';
 import { getUsers } from '../services/userService';
+import { getCustomers } from '../services/customerService';
 import { Link } from 'react-router-dom';
 import auth from '../services/authService';
 import moment from 'moment';
@@ -18,39 +19,39 @@ class DashboardOverview extends Component {
       labels: ['11', '12', '13', '14', '29'],
       datasets: [
         {
-          label: 'Cold drinks',
+          label: 'Coupons',
           data: [12, 19, 3, 5, 2, 3],
           backgroundColor: 'rgb(255, 99, 132)',
         },
-        {
-          label: 'Water',
-          data: [2, 3, 20, 5, 1, 4],
-          backgroundColor: 'rgb(54, 162, 235)',
-        },
-        {
-          label: 'Juices',
-          data: [3, 10, 13, 15, 22, 30],
-          backgroundColor: 'rgba(255, 206, 86, 1)',
-        },
+        // {
+        //   label: 'Water',
+        //   data: [2, 3, 20, 5, 1, 4],
+        //   backgroundColor: 'rgb(54, 162, 235)',
+        // },
+        // {
+        //   label: 'Juices',
+        //   data: [3, 10, 13, 15, 22, 30],
+        //   backgroundColor: 'rgba(255, 206, 86, 1)',
+        // },
       ],
     },
 
     pieChartData: {
-      labels: ['Cold drinks', 'Water', 'Juices'],
+      labels: ['Used', 'Active'],
       datasets: [
         {
           label: 'Sales by category',
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
+            // 'rgba(54, 162, 235, 0.2)',
             'rgba(255, 206, 86, 0.2)',
           ],
           hoverBackgroundColor: [
             'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
+            // 'rgba(54, 162, 235, 1)',
             'rgba(255, 206, 86, 1)',
           ],
-          data: [65, 30, 56],
+          data: [65, 30],
           borderWidth: 1,
         },
       ],
@@ -67,26 +68,49 @@ class DashboardOverview extends Component {
     const { data: users } = await getUsers();
     this.setState({ users });
 
+    let { data: customers } = await getCustomers();
+
     let { data: orders } = await getOrders();
 
     if (!user.isAdmin) {
-      orders = orders.filter((o) => o.userId === user._id);
+      orders = orders.filter((o) => o.brandId === user._id);
     }
-    this.setState({ orders });
+
+    if (!user.isAdmin) {
+      let myCustomers = [];
+
+      for (var i = 0; i < orders.length; i++) {
+        if (i === 0) myCustomers.push(orders[i].userId);
+        else if (myCustomers.indexOf(orders[i].userId) === -1)
+          myCustomers.push(orders[i].userId);
+      }
+
+      let newCustomers = [];
+
+      for (var x = 0; x < customers.length; x++) {
+        for (var j = 0; j < myCustomers.length; j++)
+          if (customers[x]._id === myCustomers[j])
+            newCustomers.push(customers[x]);
+      }
+
+      customers = newCustomers;
+    }
+
+    this.setState({ orders, customers });
 
     // const coldDrinks = this.calculateTotalItems('Cold drink', orders);
     // const juices = this.calculateTotalItems('Juice', orders);
     // const water = this.calculateTotalItems('Water', orders);
+    const used = orders.filter((o) => o.orderStatus !== 'Active').length;
+    const unused = orders.filter((o) => o.orderStatus === 'Active').length;
 
-    // const pieChartData = { ...this.state.pieChartData };
-    // pieChartData.datasets[0].data = [coldDrinks, water, juices];
+    const pieChartData = { ...this.state.pieChartData };
+    pieChartData.datasets[0].data = [used, unused];
 
     const { dates, coupons: c } = this.populateDates(orders);
     const barChartData = { ...this.state.barChartData };
     barChartData.labels = dates;
     barChartData.datasets[0].data = c;
-    // barChartData.datasets[1].data = w;
-    // barChartData.datasets[2].data = j;
 
     // this.setState({ pieChartData, barChartData, loading: false });
     this.setState({ barChartData, loading: false });
@@ -118,26 +142,13 @@ class DashboardOverview extends Component {
       const index = dates.indexOf(d);
       dates[index] = moment(d).format('D MMM');
 
-      coupons.push();
+      coupons.push(ordersTemp.length);
       // coldDrinks.push(this.calculateTotalItems('Cold drink', ordersTemp));
       // juices.push(this.calculateTotalItems('Juice', ordersTemp));
       // water.push(this.calculateTotalItems('Water', ordersTemp));
     }
 
     return { dates, coupons };
-  };
-
-  calculateTotalCoupons = (type, orders) => {
-    // const { orders } = this.state;
-
-    let total = 0;
-
-    for (const order of orders)
-      for (const c of order.cartItems) {
-        if (c.product.category === type) total = total + c.quantity;
-      }
-
-    return total;
   };
 
   componentWillUnmount() {
@@ -147,7 +158,7 @@ class DashboardOverview extends Component {
   }
 
   render() {
-    let { users, orders, user, loading } = this.state;
+    let { users, orders, user, loading, customers } = this.state;
 
     if (loading) return <Loader />;
 
@@ -193,7 +204,7 @@ class DashboardOverview extends Component {
               className='profile-right-block'
               style={{ animationDelay: '0.3s' }}
             >
-              <h6>{user.isAdmin ? 'Sales' : 'Purchased'} by category</h6>
+              <h6>Coupons by status</h6>
               <br />
               <Pie
                 data={this.state.pieChartData}
@@ -252,7 +263,11 @@ class DashboardOverview extends Component {
         </div>
 
         <div className='row'>
-          <div className={user.isAdmin ? 'col-md-9 p-2' : 'col-md-12 p-2'}>
+          <div
+            className={
+              user.isAdmin || user.isBrand ? 'col-md-9 p-2' : 'col-md-12 p-2'
+            }
+          >
             <div
               className='profile-right-block'
               style={{ animationDelay: '0.7s' }}
@@ -262,7 +277,7 @@ class DashboardOverview extends Component {
               <table className=' orders-table'>
                 <thead>
                   <tr>
-                    <th>Items</th>
+                    <th>Coupon</th>
                     <th>Buyer</th>
                     <th className='hide-col'>Purchased</th>
                     <th>Amount</th>
@@ -272,13 +287,13 @@ class DashboardOverview extends Component {
                 </thead>
 
                 <tbody>
-                  {/* {orders
+                  {orders
                     .reverse()
                     .slice(0, 4)
                     .map((o) => (
                       <tr key={o._id}>
                         <td>
-                          {o.cartItems.length === 1 ? (
+                          {/* {o.cartItems.length === 1 ? (
                             <div className='item-pic'>
                               <img
                                 src={o.cartItems[0].product.imageUrl}
@@ -293,11 +308,12 @@ class DashboardOverview extends Component {
                               />
                               <h3>+</h3>
                             </div>
-                          )}
+                          )} */}
+                          <b>{o.coupon}</b>
                         </td>
                         <td>
                           <div className='cutomer'>
-                            <div
+                            {/* <div
                               className='customer-pic'
                               style={{
                                 marginRight: '10px',
@@ -306,18 +322,16 @@ class DashboardOverview extends Component {
                                   this.buyerOfOrder(o.userId).profilePic +
                                   ')',
                               }}
-                            ></div>
-                            <span className='hide-col'>
-                              {this.buyerOfOrder(o.userId).name}
-                            </span>
+                            ></div> */}
+                            <span className='hide-col'>{o.name}</span>
                           </div>
                         </td>
                         <td className='hide-col purchased-col'>
                           {moment(o.publishDate).fromNow()}
                         </td>
                         <td>
-                          <span className='hide-col'>PKR </span>
-                          <b>{this.calculateTotal(o.cartItems)}</b>
+                          <span className='hide-col'>$</span>
+                          <b>{o.offerPrice}</b>
                         </td>
                         <td
                           className={
@@ -333,7 +347,7 @@ class DashboardOverview extends Component {
                           </Link>
                         </td>
                       </tr>
-                    ))} */}
+                    ))}
                 </tbody>
               </table>
 
@@ -345,7 +359,7 @@ class DashboardOverview extends Component {
             </div>
           </div>
 
-          {user.isAdmin && (
+          {(user.isAdmin || user.isBrand) && (
             <div className='col-md-3 p-2'>
               <div
                 className='profile-right-block'
@@ -353,19 +367,19 @@ class DashboardOverview extends Component {
               >
                 <h6>Customers</h6>
                 <br />
-                {users
+                {customers
                   .filter((u) => !u.isAdmin)
                   .slice(0, 5)
                   .map((u) => (
                     <React.Fragment key={u._id}>
                       <div key={u._id} className='cutomer'>
-                        <div
+                        {/* <div
                           className='customer-pic'
                           style={{
                             backgroundImage: 'url(' + u.profilePic + ')',
                           }}
-                        ></div>
-                        <p>{u.name}</p>
+                        ></div> */}
+                        <p>{u.name !== '-' ? u.name : u.email}</p>
                       </div>
                       <br />
                     </React.Fragment>

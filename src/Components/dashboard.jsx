@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import DashboardOverview from './dashboardOverview';
 import DashboardLeftBlock from './dashboardLeftBlock';
-// import Customers from './customers';
-// import Orders from './orders';
-// import OrderPage from './orderPage';
-// import CustomerPage from './customerPage';
-// import ProductsDashboard from './productsDashboard';
-// import Report from './report';
+import Customers from './customers';
+import Orders from './orders';
+import OrderPage from './orderPage';
+import CustomerPage from './customerPage';
+import ProductsDashboard from './productsDashboard';
+import Report from './report';
 import auth from '../services/authService';
 
 class Dashboard extends Component {
@@ -42,37 +42,41 @@ class Dashboard extends Component {
 
           <div className='col-md-10 dashboard-right-block'>
             <Switch>
-              
-              {/* {user.isAdmin && <Route
-                path='/dashboard/customers/customer/:id'
-                render={(props) => (
-                  <CustomerPage
-                      
-                    {...props}
-                    updateDashboardMenu={this.updateDashboardMenu}
-                  />
-                )}
-              />}
+              {(user.isAdmin || user.isBrand) && (
+                <Route
+                  path='/dashboard/customers/customer/:id'
+                  render={(props) => (
+                    <CustomerPage
+                      {...props}
+                      updateDashboardMenu={this.updateDashboardMenu}
+                    />
+                  )}
+                />
+              )}
 
-              {user.isAdmin && <Route
-                path='/dashboard/customers'
-                render={(props) => (
-                  <Customers
-                    {...props}
-                    updateDashboardMenu={this.updateDashboardMenu}
-                  />
-                )}
-              />}
+              {(user.isAdmin || user.isBrand) && (
+                <Route
+                  path='/dashboard/customers'
+                  render={(props) => (
+                    <Customers
+                      {...props}
+                      updateDashboardMenu={this.updateDashboardMenu}
+                    />
+                  )}
+                />
+              )}
 
-              {user.isAdmin && <Route
-                path='/dashboard/products'
-                render={(props) => (
-                  <ProductsDashboard
-                    {...props}
-                    updateDashboardMenu={this.updateDashboardMenu}
-                  />
-                )}
-              />}
+              {(user.isAdmin || user.isBrand) && (
+                <Route
+                  path='/dashboard/products'
+                  render={(props) => (
+                    <ProductsDashboard
+                      {...props}
+                      updateDashboardMenu={this.updateDashboardMenu}
+                    />
+                  )}
+                />
+              )}
 
               <Route
                 path='/dashboard/orders/order/:id'
@@ -83,7 +87,7 @@ class Dashboard extends Component {
                   />
                 )}
               />
-
+              
               <Route
                 path='/dashboard/orders'
                 render={(props) => (
@@ -102,7 +106,7 @@ class Dashboard extends Component {
                     updateDashboardMenu={this.updateDashboardMenu}
                   />
                 )}
-              /> */}
+              />
 
               <Route
                 exact

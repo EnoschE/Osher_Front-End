@@ -15,6 +15,7 @@ body {
   --dark: #202020;
   --light: rgb(241, 241, 241);
   --medium: rgb(206, 206, 206);
+  --medium-dark: rgb(124, 124, 124);
   --white: white;
 
   --radius: 25px;
@@ -30,6 +31,15 @@ body {
 }
 
 /*===\ Animations \===*/
+
+@keyframes slide-up-flat {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
 
 @keyframes notify {
   0% {
@@ -186,6 +196,24 @@ select {
 select:focus {
   border-color: #202020;
   outline: none;
+}
+
+textarea {
+  background-color: transparent;
+  color: #444444;
+  padding: 10px 15px;
+  font-size: 15px;
+  border:1px solid #ced4da; 
+  border-radius: 0px;
+  resize: none;
+  width: 100%;
+}
+
+textarea:focus {
+  background-color: transparent;
+  outline: none;
+  border-color: #202020;
+  box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important;
 }
 
 input[type='text'] {
@@ -750,7 +778,7 @@ a:hover {
   border-color: var(--dark);
   color: white;
   width: 100%;
-  margin-top: -20px;
+  /* margin-top: -20px; */
 }
 
 .login-btn a {
@@ -1103,7 +1131,13 @@ button.slick-prev {
 
 .modal-continue-btn:disabled {
   background-color: rgb(255, 233, 220);
-  border-color:rgb(255, 233, 220);
+  border-color: rgb(255, 233, 220);
+}
+
+.modal-continue-btn:disabled:hover {
+  background-color: rgb(255, 233, 220);
+  border-color: rgb(255, 233, 220);
+  color: var(--dark);
 }
 
 .hide-modal {
@@ -1162,7 +1196,6 @@ button.slick-prev {
   color: rgb(92, 92, 92);
   margin: 25px 0px 30px 0px;
 }
-
 
 /*========\ Notifcation Bar\=====*/
 
@@ -1354,12 +1387,14 @@ button.slick-prev {
 .view-all-customers a,
 .view-all-customers button {
   width: 100%;
+  font-size: 13px;
 }
 
 .orders-filter {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  padding: 20px 0px;
+  justify-content: space-between;
 }
 
 .orders-filter p {
@@ -1370,6 +1405,7 @@ button.slick-prev {
   .orders-filter {
     margin-top: 15px;
     justify-content: flex-start;
+    flex-direction: column;
   }
 
   .orders-filter .filter-block {
@@ -1391,6 +1427,46 @@ button.slick-prev {
   }
 }
 
+.filter-block {
+  display: flex;
+  align-items: center;
+}
+
+.filter-heading {
+  font-weight: 400;
+  padding-right: 10px;
+  color: #585858;
+}
+
+.filter-item {
+  padding: 8px 10px;
+
+  color: #969696;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+@media (max-width: 468px) {
+  .filter-heading {
+    padding-right: 7px;
+    font-size: 13px;
+  }
+
+  .filter-item {
+    font-size: 14px;
+    padding: 8px 5px;
+  }
+}
+
+.filter-item:hover {
+  color: #202020;
+}
+.filter-item-active {
+  color: #202020;
+  text-decoration: underline;
+}
+
 .orders-table th,
 .orders-table td {
   padding: 6px 2px;
@@ -1403,6 +1479,7 @@ button.slick-prev {
 .orders-table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 30px;
 }
 
 .orders .orders-table tr {
@@ -1441,14 +1518,15 @@ button.slick-prev {
   padding: 1px 10px;
 }
 
-.placed div {
+/* .active div {
   background-color: rgb(252, 246, 218);
   color: rgb(128, 94, 0);
-}
-.approved div {
+} */
+.active div {
   background-color: rgb(234, 252, 218);
   color: rgb(2, 102, 2);
 }
+
 .delivered div {
   background-color: rgb(218, 238, 252);
   color: rgb(2, 70, 102);
@@ -1457,7 +1535,7 @@ button.slick-prev {
   background-color: rgb(236, 218, 252);
   color: rgb(65, 2, 102);
 }
-.cancelled div {
+.expired div {
   background-color: rgb(252, 218, 218);
   color: rgb(128, 0, 0);
 }
@@ -1553,4 +1631,281 @@ td.purchased-col {
   border: 0px;
   box-shadow: 0 10px 12px 0 rgba(0, 137, 161, 0.404),
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.back-btn {
+  margin-top: -5px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0px;
+  transition: all ease-out 0.5s;
+  width: 60px;
+}
+
+.back-btn:hover {
+  border: 0px;
+  color: #220022;
+  background-color: transparent;
+  width: 70px;
+}
+
+.orderpage-coupon {
+  font-size: 60px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.brand-name {
+  font-size: 50px;
+}
+
+.customer-pic-circle {
+  height: 130px;
+  width: 130px;
+  background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+  /* background-color: #990a0a; */
+  border-radius: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customer-pic-circle h4 {
+  color: white;
+  font-weight: 600;
+  font-size: 66px;
+  margin-top: 12px;
+}
+
+/*==========\  Report  \==========*/
+
+.datepicker button:hover {
+  background-color: transparent;
+  border: 0px;
+}
+.datepicker {
+  margin-top: 5px;
+}
+
+.datespan {
+  color: rgb(129, 129, 129);
+  font-size: 14px;
+}
+
+@media (max-width: 468px) {
+  .datepicker {
+    margin: 10px;
+    margin-left: -30px;
+  }
+}
+
+.choose-date-btn {
+  font-size: 14px;
+  margin: 20px 0px;
+}
+
+/*========\ Search Input \========*/
+
+.search-input {
+  width: 50%;
+  background-color: transparent;
+  color: #444444;
+  padding: 20px 15px;
+  font-size: 15px;
+}
+
+.search-input:focus {
+  background-color: transparent;
+  color: #444444;
+}
+
+@media (max-width: 768px) {
+  .search-input {
+    width: 70%;
+    order: 3;
+    /* margin: 15px; */
+  }
+}
+@media (max-width: 468px) {
+  .search-input {
+    width: 100%;
+  }
+}
+
+/*=======\ Delete Pop up \========*/
+
+.delete-popup-background {
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.delete-pop-up {
+  width: 100vw;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  background-color: white;
+  padding: 50px;
+  padding-bottom: 110px;
+  border-radius: 25px 25px 0px 0px;
+  animation: 0.5s slide-up-flat ease-out both;
+}
+
+.delete-pop-up button {
+  width: 50%;
+}
+
+.inner-pop {
+  display: flex;
+  align-items: center;
+}
+
+.inner-pop img {
+  width: 12%;
+  height: 12%;
+  margin-bottom: 2%;
+}
+
+.inner-pop-text h2 {
+  font-size: 28px;
+}
+
+@media (max-width: 600px) {
+  .inner-pop img {
+    width: 30%;
+    height: 30%;
+    margin-top: -2%;
+  }
+
+  .inner-pop-text h2 {
+    font-size: 18px;
+  }
+}
+
+.gray-span {
+  color: var(--medium-dark);
+  font-size: 21px;
+  margin-right: 10px;
+}
+
+/*======\ Update Profile \========*/
+
+.profile-pic-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.profile-pic-block .custom-file {
+  margin-bottom: 28px;
+  width: 50%;
+}
+
+.profile-pic-block .progress {
+  width: 50%;
+  margin-top: -20px;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 768px) {
+  .profile-pic-block .custom-file {
+    width: 100%;
+  }
+}
+
+.profile-pic-block .custom-file .custom-file-label {
+  background-color: transparent;
+  color: #444444;
+  padding-left: 15px;
+  font-size: 13px;
+  border-radius: 0px;
+}
+
+/*=====\ New Password \=====*/
+.new-password-block {
+  animation: 0.6s slide-up-small ease-out both;
+}
+
+
+/*=====\ Add New Product \=====*/
+
+.add-product-page {
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
+
+.add-product-page h1 {
+  display: block;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.add-product-form {
+  animation: 0.7s slide-up-small ease-out both;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cancel-btn {
+  width: 100%;
+  margin: 0px;
+  margin-top: 10px;
+}
+
+.product-image {
+  animation: 0.7s slide-up-small 0.2s ease-out both;
+  margin-bottom: 100px;
+  padding-top: 30px;
+  /* -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(80%, transparent), to(rgba(255,255,255,0.2))); */
+}
+
+.product-image img {
+  width: 100%;
+}
+
+.input-group-append button {
+  margin-top: 0px;
+}
+
+.add-product-page .input-group {
+  width: 60%;
+}
+
+.add-product-page .input-group button {
+  border-radius: 0;
+  background-color: transparent;
+  color: black;
+  border: 1px rgb(211, 211, 211) solid;
+  transition: all ease-out 0.3s;
+}
+
+.add-product-page .input-group button:hover {
+  background-color: black;
+  color: white;
+  border: 1px black solid;
+}
+
+.add-product-page .product-image {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.product-image .input-group .custom-file .custom-file-label {
+  background-color: transparent;
+  color: #444444;
+  padding-left: 15px;
+  border-radius: 0px;
 }

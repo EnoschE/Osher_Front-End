@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NotFound = ({ handleBack, history }) => {
-  useEffect(() => {
-    handleBack(history.goBack);
-  }, [handleBack, history]);
-
-  return (
+const NotFound = () => {
+   return (
     <div className='main-background'>
       <div className='qr-page'>
         <h1>Page you're looking for, not found!</h1>

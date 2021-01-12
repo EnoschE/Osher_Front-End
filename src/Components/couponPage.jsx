@@ -176,21 +176,22 @@ class CouponPage extends Component {
         name: userInfo.name,
         email: userInfo.email,
         phone: userInfo.phone,
-        brandId: brand._id,
-        brandName: brand.name,
+        brandId: brand.brandId,
+        bundleName: brand.name,
+        bundleId: brand._id,
         brandCategory: brand.category,
         offerPrice: offer,
         offerDetail: brandOffer[0].offer,
         coupon: '',
-        orderStatus: 'Active'
+        orderStatus: 'Active',
       };
 
       const res = await orderService.saveOrder(order);
-      this.setState({ coupon: res.data.coupon});
+      this.setState({ coupon: res.data.coupon });
 
       const newOrder = { ...order };
       newOrder.coupon = res.data.coupon;
-      
+
       await orderService.sendCoupon(newOrder);
       // this.hideModal();
 
@@ -199,10 +200,12 @@ class CouponPage extends Component {
         img: '/img/success.png',
       });
 
-      this.setState({ currentModal: 'coupon' })
-
+      this.setState({ currentModal: 'coupon' });
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
+      if (
+        (ex.response && ex.response.status === 400) ||
+        (ex.response && ex.response.status === 403)
+      ) {
         this.setState({ isProcessing: false });
         const errors = { ...this.state.errors };
         errors.phone = ex.response.data;
@@ -334,7 +337,9 @@ class CouponPage extends Component {
                   <button
                     className='modal-continue-btn continue-to-shipping'
                     onClick={this.handlePhone}
-                    disabled={!userInfo.phone || !agreesToReceive}
+                    disabled={
+                      !userInfo.phone || !agreesToReceive || isProcessing
+                    }
                   >
                     {!isProcessing ? (
                       'Receive Coupon'
@@ -343,7 +348,6 @@ class CouponPage extends Component {
                         Processing... <i className='fas fa-circle-notch'></i>
                       </span>
                     )}
-                    
                   </button>
                   <div className='modal-back-btn'>
                     <p onClick={() => this.setState({ currentModal: 'name' })}>

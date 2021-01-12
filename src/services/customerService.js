@@ -14,8 +14,12 @@ export function register(user) {
   });
 }
 
-export function getUsers() {
+export function getCustomers() {
   return http.get(apiEndpoint);
+}
+
+export function getCustomer(id) {
+  return http.get(customerUrl(id));
 }
 
 export function getMyDetails(_id) {

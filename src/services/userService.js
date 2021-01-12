@@ -30,6 +30,7 @@ export function updateUser(user) {
     const body = { ...user };
     delete body._id;
     if (body.isAdmin) delete body.isAdmin;
+    if (body.isBrand) delete body.isBrand;
     if (body.__v === 0) delete body.__v;
     if (body.publishDate) delete body.publishDate;
     if (body.resetPasswordExpires) delete body.resetPasswordExpires;
