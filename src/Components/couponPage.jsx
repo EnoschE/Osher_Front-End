@@ -181,7 +181,7 @@ class CouponPage extends Component {
         bundleId: brand._id,
         brandCategory: brand.category,
         offerPrice: offer,
-        offerDetail: brandOffer[0].offer,
+        offerDetail: brandOffer[0].offerDetails,
         coupon: '',
         orderStatus: 'Active',
       };

@@ -92,7 +92,7 @@ class ProductsDashboard extends Component {
                   <thead>
                     <tr>
                       <th>Item</th>
-                      <th>Offers</th>
+                      <th className='hide-col'>Offers</th>
                       <th className='hide-col'>Price</th>
 
                       <th></th>
@@ -105,23 +105,23 @@ class ProductsDashboard extends Component {
                       <tr key={o._id}>
                         <td>
                           <div className='item-pic'>
-                            <Link to={'/products/product/' + o._id}>
+                            {/* <Link to={'/products/product/' + o._id}> */}
                               {/* <img
                               src={o.imageUrl}
                               alt='pic'
                               style={{ marginRight: '7px' }}
                               /> */}
-                            </Link>
-                            <Link
+                            {/* </Link> */}
+                            {/* <Link
                               className='hide-col'
                               to={'/products/product/' + o._id}
-                            >
+                            > */}
                               {o.name}
-                            </Link>
+                            {/* </Link> */}
                           </div>
                         </td>
 
-                        <td>
+                        <td className='hide-col'>
                           {o.offers.length}
                           {/* {o.offers.length <= 5 && (
                             <span

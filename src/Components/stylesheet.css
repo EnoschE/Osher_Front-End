@@ -17,6 +17,7 @@ body {
   --medium: rgb(206, 206, 206);
   --medium-dark: rgb(124, 124, 124);
   --white: white;
+  --danger: rgb(192, 44, 44);
 
   --radius: 25px;
   --small-radius: 12px;
@@ -203,7 +204,7 @@ textarea {
   color: #444444;
   padding: 10px 15px;
   font-size: 15px;
-  border:1px solid #ced4da; 
+  border: 1px solid #ced4da;
   border-radius: 0px;
   resize: none;
   width: 100%;
@@ -1382,6 +1383,7 @@ button.slick-prev {
 
 .view-all-customers {
   width: 100%;
+  margin-bottom: 6px;
 }
 
 .view-all-customers a,
@@ -1610,7 +1612,7 @@ td.purchased-col {
 }
 
 .new-pro {
-  margin-top: -14px;
+  /* margin-top: -14px; */
   text-align: right;
   width: 100%;
 }
@@ -1677,6 +1679,25 @@ td.purchased-col {
   font-weight: 600;
   font-size: 66px;
   margin-top: 12px;
+}
+
+.dashboard-customer-pic-circle {
+  height: 33px;
+  width: 33px;
+
+  background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+  /* background-color: #990a0a; */
+  border-radius: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-customer-pic-circle h5 {
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 7px;
 }
 
 /*==========\  Report  \==========*/
@@ -1835,11 +1856,10 @@ td.purchased-col {
   animation: 0.6s slide-up-small ease-out both;
 }
 
-
 /*=====\ Add New Product \=====*/
 
 .add-product-page {
-  padding-top: 20px;
+  padding-top: 25px;
   padding-bottom: 60px;
 }
 
@@ -1854,7 +1874,7 @@ td.purchased-col {
   padding-bottom: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .cancel-btn {
@@ -1865,8 +1885,8 @@ td.purchased-col {
 
 .product-image {
   animation: 0.7s slide-up-small 0.2s ease-out both;
-  margin-bottom: 100px;
-  padding-top: 30px;
+  margin-bottom: 50px;
+  padding-top: 0px;
   /* -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(80%, transparent), to(rgba(255,255,255,0.2))); */
 }
 
@@ -1908,4 +1928,109 @@ td.purchased-col {
   color: #444444;
   padding-left: 15px;
   border-radius: 0px;
+}
+
+.offer-input-block {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.offer-input-block button {
+  margin-left: 10px;
+  padding: 38px 10px;
+  border-radius: 0px;
+  color: var(--dark);
+  border-color: var(--dark);
+}
+
+.offer-input-block button:hover {
+  color: white;
+  background-color: var(--danger);
+  border-color: var(--danger);
+}
+
+.add-images-block {
+  background-color: var(--light);
+  border: 1px solid var(--medium);
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+
+
+.img-box {
+  height: 150px;
+  background-color: var(--medium);
+  overflow: hidden;
+  display: flex;
+  margin: 5px 0px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+
+.remove-img-btn {
+  position: absolute;
+  /* top:0;
+  right: 0; */
+  padding: 9px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 25px;
+  color: white;
+  webkit-backdrop-filter: saturate(180%) blur(15px);
+  backdrop-filter: saturate(180%) blur(15px);
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: all ease-in-out 0.5s;
+  /* border: 0.1px solid var(--medium-dark); */
+
+}
+
+.remove-img-btn:hover {
+  transform: rotate(180deg);
+}
+
+.img-box, .image-input-label {
+  width: 49%;
+}
+
+.img-box img {
+  width: 100%;
+}
+
+
+.image-input-label {
+  height: 150px;
+  margin: 5px 0px;
+  padding: 10px;
+  background: var(--medium);
+  /* border: 1px solid var(--medium); */
+  /* background: coral; */
+  display: inline-block;
+  color: var(--medium-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-size: 45px;
+  cursor: pointer;
+}
+
+@media (max-width: 468px) { 
+  .img-box, .image-input-label {
+    width: 100%;
+  }
+}
+
+.image-input-label input[type='file'] {
+  display: none;
 }

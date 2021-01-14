@@ -20,6 +20,7 @@ class Dashboard extends Component {
     window.scrollTo(0, 0);
     const user = auth.getCurrentUser();
     this.setState({ user });
+    this.props.handleBack(true);
   }
 
   componentWillUnmount() {

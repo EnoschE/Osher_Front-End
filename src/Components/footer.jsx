@@ -9,6 +9,7 @@ const Footer = (props) => {
     handleVolumeUp,
     handleVolumeDown,
     visibleBack,
+    user,
   } = props;
 
   return (
@@ -18,7 +19,6 @@ const Footer = (props) => {
       </Link>
       <audio className='audio-element'>
         <source src='/img/audio.mp3'></source>
-
       </audio>
 
       <div className='footer-icons'>
@@ -62,16 +62,18 @@ const Footer = (props) => {
         <Link to='/profile'>
           <div className='icon-block'>
             <i className='far fa-user-tie'></i>
-            <p>Profile</p>
+            <p>{!user ? 'Login' : 'Profile'}</p>
           </div>
         </Link>
-      
-        <Link to='/dashboard'>
-          <div className='icon-block'>
-            <i className='far fa-th'></i>
-            <p>Dashboard</p>
-          </div>
-        </Link>
+
+        {((user && user.isAdmin) || (user && user.isBrand)) && (
+          <Link to='/dashboard'>
+            <div className='icon-block'>
+              <i className='far fa-th'></i>
+              <p>Dashboard</p>
+            </div>
+          </Link>
+        )}
       </div>
     </div>
   );

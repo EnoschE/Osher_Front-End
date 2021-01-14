@@ -4,6 +4,7 @@ import { getOrders } from '../services/orderService';
 import { getUsers } from '../services/userService';
 import { getCustomers } from '../services/customerService';
 import { Link } from 'react-router-dom';
+import OrdersTable from './ordersTable';
 import auth from '../services/authService';
 import moment from 'moment';
 import Loader from './loader';
@@ -71,6 +72,12 @@ class DashboardOverview extends Component {
     let { data: customers } = await getCustomers();
 
     let { data: orders } = await getOrders();
+
+    let revOrders = [];
+    for (var xy = orders.length - 1; xy >= 0; xy--) {
+      revOrders.push(orders[xy]);
+    }
+    orders = revOrders;
 
     if (!user.isAdmin) {
       orders = orders.filter((o) => o.brandId === user._id);
@@ -158,7 +165,7 @@ class DashboardOverview extends Component {
   }
 
   render() {
-    let { users, orders, user, loading, customers } = this.state;
+    let { orders, user, loading, customers } = this.state;
 
     if (loading) return <Loader />;
 
@@ -234,7 +241,7 @@ class DashboardOverview extends Component {
               className='profile-right-block'
               style={{ animationDelay: '0.6s' }}
             >
-              <h6>Daily {user.isAdmin ? 'sales' : 'purchases'}</h6>
+              <h6>Daily sales</h6>
               <br />
 
               <Bar
@@ -274,82 +281,8 @@ class DashboardOverview extends Component {
             >
               <h6>Recent orders</h6>
               <br />
-              <table className=' orders-table'>
-                <thead>
-                  <tr>
-                    <th>Coupon</th>
-                    <th>Buyer</th>
-                    <th className='hide-col'>Purchased</th>
-                    <th>Amount</th>
-                    <th className='hide-col'>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
 
-                <tbody>
-                  {orders
-                    .reverse()
-                    .slice(0, 4)
-                    .map((o) => (
-                      <tr key={o._id}>
-                        <td>
-                          {/* {o.cartItems.length === 1 ? (
-                            <div className='item-pic'>
-                              <img
-                                src={o.cartItems[0].product.imageUrl}
-                                alt='pic'
-                              />
-                            </div>
-                          ) : (
-                            <div className='item-pic'>
-                              <img
-                                src={o.cartItems[0].product.imageUrl}
-                                alt='pic'
-                              />
-                              <h3>+</h3>
-                            </div>
-                          )} */}
-                          <b>{o.coupon}</b>
-                        </td>
-                        <td>
-                          <div className='cutomer'>
-                            {/* <div
-                              className='customer-pic'
-                              style={{
-                                marginRight: '10px',
-                                backgroundImage:
-                                  'url(' +
-                                  this.buyerOfOrder(o.userId).profilePic +
-                                  ')',
-                              }}
-                            ></div> */}
-                            <span className='hide-col'>{o.name}</span>
-                          </div>
-                        </td>
-                        <td className='hide-col purchased-col'>
-                          {moment(o.publishDate).fromNow()}
-                        </td>
-                        <td>
-                          <span className='hide-col'>$</span>
-                          <b>{o.offerPrice}</b>
-                        </td>
-                        <td
-                          className={
-                            'order-status  hide-col ' +
-                            o.orderStatus.toLowerCase()
-                          }
-                        >
-                          <div className='hide-col'>{o.orderStatus}</div>
-                        </td>
-                        <td>
-                          <Link to={`/dashboard/orders/order/${o._id}`}>
-                            <button className='view-order'>View</button>
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+              <OrdersTable data={orders} length={4} dateFromNow={true} />
 
               <div className='view-all-customers'>
                 <Link to='/dashboard/orders'>
@@ -369,21 +302,26 @@ class DashboardOverview extends Component {
                 <br />
                 {customers
                   .filter((u) => !u.isAdmin)
-                  .slice(0, 5)
+                  .slice(0, 4)
                   .map((u) => (
                     <React.Fragment key={u._id}>
-                      <div key={u._id} className='cutomer'>
+                      <div key={u._id} className='cutomer' style={{marginBottom: '10px'}}>
                         {/* <div
                           className='customer-pic'
                           style={{
                             backgroundImage: 'url(' + u.profilePic + ')',
                           }}
                         ></div> */}
+
+                        <div className='dashboard-customer-pic-circle'>
+                          <h5>{u.name.charAt(0)}</h5>
+                        </div>
                         <p>{u.name !== '-' ? u.name : u.email}</p>
                       </div>
-                      <br />
+                      {/* <br /> */}
                     </React.Fragment>
                   ))}
+                <br/>
                 <div className='view-all-customers'>
                   <Link to='/dashboard/customers'>
                     <button>View all</button>

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { getOrders } from '../services/orderService';
 import { getUsers } from '../services/userService';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
 import auth from '../services/authService';
 import Loader from './loader';
 import SearchInput from './common/searchInput';
+import OrdersTable from './ordersTable';
 
 class Orders extends Component {
   state = {
@@ -92,7 +91,7 @@ class Orders extends Component {
   render() {
     let { filtered: orders } = this.getFilteredOrders();
     const { status, allStatus, loading, searchQuery } = this.state;
-    let delay = 0.1;
+
 
     if (loading) return <Loader />;
 
@@ -129,82 +128,9 @@ class Orders extends Component {
                   ))}
                 </div>
               </div>
-
-              <table className=' orders-table'>
-                <thead>
-                  <tr>
-                    <th>Coupon</th>
-                    <th className='hide-col'>Buyer</th>
-                    <th className='hide-col'>Purchased</th>
-                    <th>Amount</th>
-                    <th className='hide-col'>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {orders.map((o) => (
-                    <tr
-                      key={o._id}
-                      style={{ animationDelay: `${(delay += 0.1)}s` }}
-                    >
-                      <td>
-                        {/* {o.cartItems.length === 1 ? (
-                          <div className='item-pic'>
-                            <img
-                              src={o.cartItems[0].product.imageUrl}
-                              alt='pic'
-                            />
-                          </div>
-                        ) : (
-                          <div className='item-pic'>
-                            <img
-                              src={o.cartItems[0].product.imageUrl}
-                              alt='pic'
-                            />
-                            <h3>+</h3>
-                          </div>
-                        )} */}
-                        <b>{o.coupon}</b>
-                      </td>
-                      <td className='hide-col'>
-                        <div className='cutomer'>
-                          {/* <div
-                            className='customer-pic'
-                            style={{
-                              marginRight: '10px',
-                              backgroundImage:
-                                'url(' +
-                                this.buyerOfOrder(o.userId).profilePic +
-                                ')',
-                            }}
-                          ></div> */}
-                          <span className='hide-col'>{o.name}</span>
-                        </div>
-                      </td>
-                      <td className='hide-col purchased-col'>
-                        {moment(o.publishDate).format('lll')}
-                      </td>
-                      <td>
-                        <span className='hide-col'>$</span>
-                        <b>{o.offerPrice}</b>
-                      </td>
-                      <td
-                        className={
-                          'hide-col order-status ' + o.orderStatus.toLowerCase()
-                        }
-                      >
-                        <div className='hide-col'>{o.orderStatus}</div>
-                      </td>
-                      <td>
-                        <Link to={`/dashboard/orders/order/${o._id}`}>
-                          <button className='view-order'>View</button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            
+              <OrdersTable data={orders} />
+              
               <br />
             </div>
           </div>

@@ -13,7 +13,7 @@ const RadioInput = ({ order, currentOffer, handleChange }) => {
         onChange={handleChange}
       />
       <label className='form-check-label' htmlFor={order.price}>
-        <p>{order.offer}</p>
+        <p>{order.offerDetails}</p>
         <div className='pricebox'>
           <h5>${order.price}</h5>
         </div>

@@ -145,6 +145,7 @@ class Application extends Component {
           handleVolumeUp={this.handleVolumeUp}
           handleVolumeDown={this.handleVolumeDown}
           visibleBack={visibleBack}
+          user={user}
         />
 
         {notify && (
@@ -156,10 +157,6 @@ class Application extends Component {
         {volumePop && <VolumeScreen role='volume' value={volume} />}
 
         <Switch>
-
-
-          
-
           <ProtectedRoute
             path='/profile'
             render={(props) => (
@@ -231,40 +228,45 @@ class Application extends Component {
               );
             }}
           />
-        
+
           <ProtectedRoute
-              path='/update-password/'
-              render={(props) => (
-                <UpdatePassword
-                  {...props}
-                  handleNotification={this.handleNotification}
-                />
-              )}
-            />
-         
-         {((user && user.isAdmin) || (user && user.isBrand)) && (
-              <Route
-                path='/add-new-product/:id?'
-                render={(props) => (
-                  <AddNewProduct
-                    {...props}
-                    handleNotification={this.handleNotification}
-                  />
-                )}
+            path='/update-password/'
+            render={(props) => (
+              <UpdatePassword
+                {...props}
+                handleNotification={this.handleNotification}
               />
             )}
-          
-          <ProtectedRoute
-              path='/update-profile'
+          />
+
+          {((user && user.isAdmin) || (user && user.isBrand)) && (
+            <Route
+              path='/add-new-product/:id?'
               render={(props) => (
-                <UpdateProfile
+                <AddNewProduct
                   {...props}
-                  updateUser={this.updateUser}
                   handleNotification={this.handleNotification}
                 />
               )}
             />
-          <ProtectedRoute path='/dashboard' component={Dashboard} />
+          )}
+
+          <ProtectedRoute
+            path='/update-profile'
+            render={(props) => (
+              <UpdateProfile
+                {...props}
+                updateUser={this.updateUser}
+                handleNotification={this.handleNotification}
+              />
+            )}
+          />
+          <ProtectedRoute
+            path='/dashboard'
+            render={(props) => (
+              <Dashboard {...props} handleBack={this.handleBack} />
+            )}
+          />
 
           <Route
             path='/not-found'
@@ -279,7 +281,6 @@ class Application extends Component {
             render={(props) => (
               <QrPage {...props} handleBack={this.handleBack} />
             )}
-
           />
           <Redirect to='/not-found' />
         </Switch>

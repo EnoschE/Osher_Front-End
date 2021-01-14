@@ -23,7 +23,7 @@ class Customers extends Component {
 
     let { data: users } = await getCustomers();
     let { data: orders } = await getOrders();
-    
+
     if (!user.isAdmin) {
       orders = orders.filter((o) => o.brandId === user._id);
     }
@@ -59,6 +59,7 @@ class Customers extends Component {
 
   render() {
     const { users, loading } = this.state;
+    let delay = 0.1;
 
     if (loading) return <Loader />;
 
@@ -88,9 +89,16 @@ class Customers extends Component {
                     // .filter((u) => !u.isAdmin)
                     .reverse()
                     .map((o) => (
-                      <tr key={o._id}>
+                      <tr
+                        key={o._id}
+                        style={{ animationDelay: `${(delay += 0.1)}s` }}
+                      >
                         <td>
                           <div className='cutomer'>
+                            <div className='dashboard-customer-pic-circle'>
+                              <h5>{o.name.charAt(0)}</h5>
+                            </div>
+
                             {/* <div
                               className='customer-pic'
                               style={{
@@ -100,7 +108,7 @@ class Customers extends Component {
                                 backgroundImage: 'url(' + o.profilePic + ')',
                               }}
                             ></div> */}
-                            {o.name}
+                            <p>{o.name !== '-' ? o.name : o.email}</p>
                           </div>
                         </td>
                         <td className='hide-col purchased-col'>

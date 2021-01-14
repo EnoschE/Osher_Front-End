@@ -5,6 +5,7 @@ import moment from 'moment';
 import Loader from './loader';
 import { getCustomer } from '../services/customerService';
 import auth from '../services/authService';
+import OrdersTable from './ordersTable';
 
 class CustomerPage extends Component {
   state = {
@@ -30,6 +31,12 @@ class CustomerPage extends Component {
 
       let { data: orders } = await getOrders();
       const { data: user } = await getCustomer(userId);
+
+      let revOrders = [];
+      for (var xy = orders.length - 1; xy >= 0; xy--) {
+        revOrders.push(orders[xy]);
+      }
+      orders = revOrders;
 
       orders = orders.filter((o) => o.userId === user._id);
       if (!currentUser.isAdmin) {
@@ -126,75 +133,8 @@ class CustomerPage extends Component {
               </div>
               <h5>Recent orders ({orders.length})</h5>
               <br />
-              <table className=' orders-table'>
-                <thead>
-                  <tr>
-                    <th>Coupon</th>
-                    <th>Buyer</th>
-                    <th className='hide-col'>Purchased</th>
-                    <th>Amount</th>
-                    <th className='hide-col'>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
+              <OrdersTable data={orders} />
 
-                <tbody>
-                  {orders.reverse().map((o) => (
-                    <tr key={o._id}>
-                      <td>
-                        {/* {o.cartItems.length === 1 ? (
-                          <div className='item-pic'>
-                            <img
-                              src={o.cartItems[0].product.imageUrl}
-                              alt='pic'
-                            />
-                          </div>
-                        ) : (
-                          <div className='item-pic'>
-                            <img
-                              src={o.cartItems[0].product.imageUrl}
-                              alt='pic'
-                            />
-                            <h3>+</h3>
-                          </div>
-                        )} */}
-                        <b>{o.coupon}</b>
-                      </td>
-                      <td>
-                        <div className='cutomer'>
-                          {/* <div
-                            className='customer-pic'
-                            style={{
-                              marginRight: '10px',
-                              backgroundImage: 'url(' + user.profilePic + ')',
-                            }}
-                          ></div> */}
-                          <span className='hide-col'>{user.name}</span>
-                        </div>
-                      </td>
-                      <td className='hide-col purchased-col'>
-                        {moment(o.publishDate).format('lll')}
-                      </td>
-                      <td>
-                        <span className='hide-col'>$</span>
-                        <b>{o.offerPrice}</b>
-                      </td>
-                      <td
-                        className={
-                          'hide-col order-status ' + o.orderStatus.toLowerCase()
-                        }
-                      >
-                        <div className='hide-col'>{o.orderStatus}</div>
-                      </td>
-                      <td>
-                        <Link to={`/dashboard/orders/order/${o._id}`}>
-                          <button className='view-order'>View</button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
               <br />
               <br />
             </div>
