@@ -15,6 +15,7 @@ const OrdersTable = ({ data: orders, length, dateFromNow }) => {
           <th>Coupon</th>
           <th>Buyer</th>
           <th className='hide-col'>Purchased</th>
+          <th className='hide-col'>Expiry</th>
           <th>Amount</th>
           <th className='hide-col'>Status</th>
           <th></th>
@@ -65,6 +66,11 @@ const OrdersTable = ({ data: orders, length, dateFromNow }) => {
               {dateFromNow
                 ? moment(o.publishDate).fromNow()
                 : moment(o.publishDate).format('lll')}
+            </td>
+            <td className='hide-col purchased-col'>
+              {dateFromNow
+                ? moment(o.expiryDate).fromNow()
+                : moment(o.expiryDate).format('lll')}
             </td>
             <td>
               <span className='hide-col'>$</span>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Pie, Bar } from 'react-chartjs-2';
-import { getOrders } from '../services/orderService';
+import { getOrders, saveOrder } from '../services/orderService';
 import { getUsers } from '../services/userService';
 import { getCustomers } from '../services/customerService';
 import { Link } from 'react-router-dom';
@@ -38,19 +38,20 @@ class DashboardOverview extends Component {
     },
 
     pieChartData: {
-      labels: ['Used', 'Active'],
+      labels: ['Used', 'Active', 'Expired'],
       datasets: [
         {
           label: 'Sales by category',
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            // 'rgba(54, 162, 235, 0.2)',
             'rgba(255, 206, 86, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+
           ],
           hoverBackgroundColor: [
-            'rgba(255, 99, 132, 1)',
-            // 'rgba(54, 162, 235, 1)',
             'rgba(255, 206, 86, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 99, 132, 1)',
           ],
           data: [65, 30],
           borderWidth: 1,
@@ -83,6 +84,16 @@ class DashboardOverview extends Component {
       orders = orders.filter((o) => o.brandId === user._id);
     }
 
+    for (var v = 0; v < orders.length; v++) {
+      if (
+        new Date() - new Date(orders[v].expiryDate) > 0 &&
+        orders[v].orderStatus !== 'Used'
+      ) {
+        orders[v].orderStatus = 'Expired';
+        await saveOrder(orders[v]);
+      }
+    }
+
     if (!user.isAdmin) {
       let myCustomers = [];
 
@@ -108,11 +119,12 @@ class DashboardOverview extends Component {
     // const coldDrinks = this.calculateTotalItems('Cold drink', orders);
     // const juices = this.calculateTotalItems('Juice', orders);
     // const water = this.calculateTotalItems('Water', orders);
-    const used = orders.filter((o) => o.orderStatus !== 'Active').length;
+    const used = orders.filter((o) => o.orderStatus === 'Used').length;
+    const expired = orders.filter((o) => o.orderStatus === 'Expired').length;
     const unused = orders.filter((o) => o.orderStatus === 'Active').length;
 
     const pieChartData = { ...this.state.pieChartData };
-    pieChartData.datasets[0].data = [used, unused];
+    pieChartData.datasets[0].data = [used, unused, expired];
 
     const { dates, coupons: c } = this.populateDates(orders);
     const barChartData = { ...this.state.barChartData };
@@ -178,7 +190,7 @@ class DashboardOverview extends Component {
               style={{ animationDelay: '0.3s' }}
             >
               <h1>
-                {orders.filter((o) => o.orderStatus === 'Expired').length}
+                {orders.filter((o) => o.orderStatus === 'Used').length}
               </h1>
               <h6>Coupons used</h6>
             </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getOrders } from '../services/orderService';
+import { getOrders, saveOrder } from '../services/orderService';
 import { getUsers } from '../services/userService';
 import auth from '../services/authService';
 import Loader from './loader';
@@ -10,6 +10,7 @@ class Orders extends Component {
   state = {
     allStatus: [
       'Active',
+      'Used',
       'Expired',
       // , 'Delivered', 'Recieved', 'Cancelled'
     ],
@@ -40,6 +41,16 @@ class Orders extends Component {
       orders = orders.filter((o) => o.brandId === user._id);
     }
 
+    for (var i = 0; i < orders.length; i++) {
+      if (
+        new Date() - new Date(orders[i].expiryDate) > 0 &&
+        orders[i].orderStatus !== 'Used'
+      ) {
+        orders[i].orderStatus = 'Expired';
+        await saveOrder(orders[i]);
+      }
+    }
+
     this.setState({ orders, loading: false });
   }
 
@@ -63,8 +74,10 @@ class Orders extends Component {
     let filtered = orders;
 
     if (searchQuery)
-      filtered = orders.filter((o) =>
-        o.coupon.toLowerCase().includes(searchQuery.toLowerCase()) || o.name.toLowerCase().includes(searchQuery.toLowerCase()) 
+      filtered = orders.filter(
+        (o) =>
+          o.coupon.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          o.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     else if (status !== 'All')
       filtered = orders.filter((o) => o.orderStatus === status);
@@ -91,7 +104,6 @@ class Orders extends Component {
   render() {
     let { filtered: orders } = this.getFilteredOrders();
     const { status, allStatus, loading, searchQuery } = this.state;
-
 
     if (loading) return <Loader />;
 
@@ -128,9 +140,9 @@ class Orders extends Component {
                   ))}
                 </div>
               </div>
-            
+
               <OrdersTable data={orders} />
-              
+
               <br />
             </div>
           </div>

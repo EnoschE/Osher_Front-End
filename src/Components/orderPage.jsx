@@ -65,6 +65,10 @@ class OrderPage extends Component {
       coupon: order.coupon,
       orderStatus: order.orderStatus,
       publishDate: order.publishDate,
+      expiryDate: order.expiryDate,
+      branches: order.branches,
+
+
     };
   }
 
@@ -95,6 +99,7 @@ class OrderPage extends Component {
       city: user.city || '',
       country: user.country || '',
       postalCode: user.postalCode || '',
+
       // theme: user.theme,
     };
   }
@@ -193,6 +198,11 @@ class OrderPage extends Component {
                     {moment(order.publishDate).format('lll')}
                   </p>
                   <p>
+                    <b>Expired on:</b>{' '}
+                    {moment(order.expiryDate).format('lll')}
+                    {console.log(order.expiryDate)}
+                  </p>
+                  <p>
                     <b>Buyer name:</b> {order.name}
                   </p>
                   <p>
@@ -235,7 +245,7 @@ class OrderPage extends Component {
                       <div className='linee'></div>
                       <br />
                       <Select
-                        options={['Active', 'Expired']}
+                        options={['Active', 'Used', 'Expired']}
                         name='orderStatus'
                         value={order.orderStatus}
                         label='Update coupon Status'

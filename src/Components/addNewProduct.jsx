@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { saveProduct, getProduct } from '../services/productService';
 // import { uploadImage } from '../services/fileService';
 import { Link } from 'react-router-dom';
+import { Calendar } from 'react-date-range';
+import { getLocation } from '../services/locationService';
+import { storage } from '../firebase/firebase';
 import Joi from 'joi-browser';
 import Input from './common/input';
 import Select from './common/select';
 import categories from '../services/categories';
-import { storage } from '../firebase/firebase';
 import TextArea from './common/textArea';
 import auth from '../services/authService';
+import moment from 'moment';
+import Loader from './loader';
 
 class AddNewProduct extends Component {
   state = {
@@ -26,7 +30,7 @@ class AddNewProduct extends Component {
     },
     categories: [],
     errors: {},
-    heading: 'Add New Product',
+    heading: 'Add New Bundle',
     offers: [
       {
         id: 1,
@@ -34,13 +38,13 @@ class AddNewProduct extends Component {
         price: '',
       },
     ],
-    img: [
-      '/img/img1.jpg',
-      '/img/img2.jpg',
-      '/img/img3.jpg',
-      '/img/img4.jpg',
-      '/img/img5.jpg',
-    ],
+    img: [],
+    deletePopup: false,
+    loaded: 0,
+    locations: [],
+    activeLocations: [],
+    expiryDate: new Date(),
+    loading: true,
   };
 
   schema = {
@@ -61,16 +65,37 @@ class AddNewProduct extends Component {
 
         const { data: product } = await getProduct(productId);
         this.setState({
+          activeLocations: product.branches,
+          expiryDate: new Date(product.expiryDate),
           product: this.mapToViewModel(product),
+
           // imagePreviewUrl: product.img,
           img: product.img,
           offers: product.offers,
-          heading: 'Update Product',
+          heading: 'Update Bundle',
+          loading: false,
         });
-      }
+      } else this.setState({ loading: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         this.props.history.replace('/not-found');
+    }
+  }
+
+  async populateLocations(id) {
+    try {
+      const { data } = await getLocation(id);
+
+      this.setState({
+        locations: data.locations,
+        activeLocations: data.locations,
+      });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+      this.setState({
+        locations: [],
+        activeLocations:[],
+      });
     }
   }
 
@@ -83,11 +108,11 @@ class AddNewProduct extends Component {
   async componentDidMount() {
     window.scrollTo(0, 0);
     const user = auth.getCurrentUser();
-
     this.setState({ user });
 
     this.populateCategories();
     await this.populateProducts();
+    await this.populateLocations(user._id);
   }
 
   mapToViewModel(product) {
@@ -101,8 +126,18 @@ class AddNewProduct extends Component {
       img: product.img,
       offers: product.offers,
       inStock: product.inStock,
+      branches: product.branches,
+      expiryDate: product.expiryDate,
     };
   }
+
+  handleDeletePopUp = (offer) => {
+    this.setState({ deleteRequestedOffer: offer });
+
+    let { deletePopup } = this.state;
+    deletePopup = !deletePopup;
+    this.setState({ deletePopup });
+  };
 
   validate = () => {
     const options = { abortEarly: false };
@@ -134,7 +169,7 @@ class AddNewProduct extends Component {
 
       maxId++;
     }
-    
+
     offers.push({ id: maxId, offerDetails: '', price: '' });
 
     this.setState({ offers });
@@ -144,6 +179,7 @@ class AddNewProduct extends Component {
     let offers = [...this.state.offers];
     offers = offers.filter((o) => o !== offer);
     this.setState({ offers });
+    this.handleDeletePopUp('');
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -183,13 +219,21 @@ class AddNewProduct extends Component {
   };
 
   doSubmit = async () => {
-    const { product, img, offers, user } = this.state;
+    const {
+      product,
+      img,
+      offers,
+      user,
+      activeLocations,
+      expiryDate,
+    } = this.state;
     product.img = img;
     product.offers = offers;
     product.brandId = user._id;
-    console.log(product);
-    const res = await saveProduct(product);
-    console.log(res);
+    product.branches = activeLocations;
+    product.expiryDate = expiryDate;
+
+    await saveProduct(product);
 
     let message = 'Product added successfully!';
 
@@ -206,12 +250,12 @@ class AddNewProduct extends Component {
   _handleImageChange = (e) => {
     e.preventDefault();
 
-    let file = e.target.files[0];
-
     this.setState({
-      file,
-      loaded: 0,
+      // file,
+      loaded: 1,
     });
+
+    let file = e.target.files[0];
 
     const uploadTask = storage.ref(`images/${file.name}`).put(file);
     uploadTask.on(
@@ -233,7 +277,7 @@ class AddNewProduct extends Component {
           .then((url) => {
             const img = [...this.state.img];
             img.push(url);
-            this.setState({ img });
+            this.setState({ img, loaded: 0 });
             // this.setState({ imagePreviewUrl: url });
           });
       }
@@ -247,56 +291,78 @@ class AddNewProduct extends Component {
     this.setState({ img });
   };
 
-  // handleImageUpload = async (e) => {
-  //   e.preventDefault();
+  isActive = (location) => {
+    const { activeLocations } = this.state;
+    let classes = 'branch branch-active';
 
-  //   const { file: image } = this.state;
+    const result = activeLocations.filter((l) => l === location);
 
-  //   const uploadTask = storage.ref(`images/${image.name}`).put(image);
-  //   uploadTask.on(
-  //     'state_changed',
-  //     (snapshot) => {
-  //       const progress = Math.round(
-  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-  //       );
-  //       this.setState({ loaded: progress });
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     },
-  //     () => {
-  //       storage
-  //         .ref('images')
-  //         .child(image.name)
-  //         .getDownloadURL()
-  //         .then((url) => {
-  //           this.setState({ imagePreviewUrl: url });
-  //         });
-  //     }
-  //   );
+    if (result.length === 0) classes = 'branch';
 
-  //   // const data = new FormData();
-  //   // data.append('photo', this.state.file);
+    return classes;
+  };
 
-  //   // const { data: imagePreviewUrl } = await uploadImage(data, {
-  //   //   onUploadProgress: (pe) => {
-  //   //     this.setState({
-  //   //       loaded: (pe.loaded / pe.total) * 100,
-  //   //     });
-  //   //   },
-  //   // });
-  //   // this.setState({ imagePreviewUrl });
-  //   // console.log(imagePreviewUrl);
+  setDate = (date) => {
+    console.log(date);
+    this.setState({ expiryDate: date });
+  };
 
-  //   // return false;
-  // };
+  selectBranch = (location) => {
+    let activeLocations = [...this.state.activeLocations];
+    // let classes = 'branch branch-active'
+    console.log(location);
+    const result = activeLocations.filter((l) => l === location);
+
+    console.log(result);
+
+    if (result.length === 0) activeLocations.push(location);
+    else activeLocations = activeLocations.filter((l) => l !== location);
+
+    this.setState({ activeLocations });
+  };
 
   render() {
-    let { imagePreviewUrl, file } = this.state;
-    const { product, errors, offers, categories, heading, img } = this.state;
+    // let { imagePreviewUrl, file } = this.state;
+    const {
+      product,
+      errors,
+      offers,
+      categories,
+      heading,
+      img,
+      deletePopup,
+      deleteRequestedOffer,
+      loaded,
+      locations,
+      expiryDate,
+      loading,
+    } = this.state;
+
+    if (loading) return <Loader />;
 
     return (
       <div className='container add-product-page'>
+        {deletePopup && (
+          <React.Fragment>
+            <div
+              className='delete-popup-background'
+              onClick={this.handleDeletePopUp}
+            ></div>
+            <div className='delete-pop-up'>
+              <h5>Are you sure to remove this offer?</h5>
+              <div className='inner-pop'>
+                <div className='inner-pop-text'>
+                  <h2>Offer id: {deleteRequestedOffer.id}</h2>
+                  <h2>Offer: {deleteRequestedOffer.offerDetails}</h2>
+                </div>
+              </div>
+              <button onClick={() => this.removeOffer(deleteRequestedOffer)}>
+                Yes
+              </button>
+              <button onClick={() => this.handleDeletePopUp('')}>No</button>
+            </div>
+          </React.Fragment>
+        )}
         <h1>{heading}</h1>
         <div className='row'>
           <div className='col-md-7 add-product-form'>
@@ -324,7 +390,7 @@ class AddNewProduct extends Component {
               <label htmlFor=''>Choose Images (Max 5)</label>
               <div className='add-images-block'>
                 {img.map((i) => (
-                  <div className='img-box'>
+                  <div className='img-box' key={i}>
                     <div
                       className='remove-img-btn'
                       onClick={() => this.removeImage(i)}
@@ -334,9 +400,28 @@ class AddNewProduct extends Component {
                     <img src={i} alt={i} />
                   </div>
                 ))}
+                {loaded > 0 && (
+                  <div className='img-uploading-box'>
+                    <div className='progress' style={{ width: '100%' }}>
+                      <div
+                        className='progress-bar bg-warning progress-bar-striped progress-bar-animated'
+                        role='progressbar'
+                        style={{ width: this.state.loaded + '%' }}
+                        aria-valuenow={this.state.loaded}
+                        aria-valuemin='0'
+                        aria-valuemax='100'
+                      >
+                        {/* {this.state.loaded > 0 && this.state.loaded + '%'} */}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {img.length < 5 && (
                   <label className='image-input-label'>
-                    +
+                    {/* + */}
+                    <i className='far fa-image'></i>
+                    {img.length < 1 ? <p>Add Cover Image</p> : <p>Add Image</p>}
                     <input
                       type='file'
                       size='60'
@@ -345,54 +430,6 @@ class AddNewProduct extends Component {
                   </label>
                 )}
               </div>
-
-              {/* <div>
-                <div className='input-group'>
-                  <div className='custom-file'>
-                    <input
-                      onChange={this._handleImageChange}
-                      type='file'
-                      className='custom-file-input'
-                      id='inputGroupFile04'
-                    />
-                    <label
-                      className='custom-file-label'
-                      htmlFor='inputGroupFile04'
-                    >
-                      +
-                      {file ? file.name : 'Choose image'}
-                    </label>
-                  </div>
-
-                  <div className='input-group-append'>
-                    <button
-                      onClick={(e) => this.handleImageUpload(e)}
-                      className='btn btn-outline-secondary'
-                      type='submit'
-                      style={{ fontSize: '14px' }}
-                    >
-                      Upload
-                    </button>
-                  </div>
-                </div>
-                <div
-                  className='progress'
-                  style={{ width: '60%', marginBottom: '15px' }}
-                >
-                  <div
-                    className='progress-bar bg-success progress-bar-striped progress-bar-animated'
-                    role='progressbar'
-                    style={{ width: this.state.loaded + '%' }}
-                    aria-valuenow={this.state.loaded}
-                    aria-valuemin='0'
-                    aria-valuemax='100'
-                  >
-                    {this.state.loaded > 0 && this.state.loaded + '%'}
-                  </div>
-                </div>
-
-                <img width='60%' alt='' src={imagePreviewUrl} />
-              </div> */}
 
               <label htmlFor=''>Details</label>
               <TextArea
@@ -414,6 +451,18 @@ class AddNewProduct extends Component {
                 error={errors.description}
               />
 
+              <label htmlFor=''>Branches</label>
+              <div className='branches-block'>
+                {locations.map((l) => (
+                  <div
+                    onClick={() => this.selectBranch(l)}
+                    className={this.isActive(l)}
+                  >
+                    {l}
+                  </div>
+                ))}
+              </div>
+
               <label htmlFor=''>Quantity in Stock</label>
               <Input
                 type='number'
@@ -424,16 +473,6 @@ class AddNewProduct extends Component {
                 error={errors.inStock}
               />
 
-              {/* <label htmlFor=''>Price</label>
-              <Input
-                type='number'
-                placeholder='Price'
-                name='price'
-                value={product.price}
-                onChange={this.handleChange}
-                error={errors.price}
-              /> */}
-
               <button className='login-btn'>Save</button>
             </form>
             <Link to='/dashboard/products/'>
@@ -442,14 +481,6 @@ class AddNewProduct extends Component {
           </div>
 
           <div className='col-md-5 product-image'>
-            {/* <input type='file' onChange={this._handleImageChange} />
-                <button
-                  type='submit'
-                  onClick={(e) => this.handleImageUpload(e)}
-                >
-                  Upload Image
-                </button> */}
-
             <div className='extendable-offers' style={{ width: '100%' }}>
               {offers.map((o) => (
                 <div key={o.id} className='offer-input-block'>
@@ -473,7 +504,8 @@ class AddNewProduct extends Component {
                     />
                     <div className='linee'></div>
                   </div>
-                  <button onClick={() => this.removeOffer(o)}>
+                  <button onClick={() => this.handleDeletePopUp(o)}>
+                    {/* <button onClick={() => this.removeOffer(o)}> */}
                     <i className='far fa-trash-alt'></i>
                   </button>
                 </div>
@@ -483,6 +515,18 @@ class AddNewProduct extends Component {
                   Add Offer
                 </button>
               )}
+
+              <div className='choose-expiry-date'>
+                <div className='linee'></div>
+                <h3>
+                  <span>Expires on: </span>
+                  {moment(expiryDate).format('ll')}
+                </h3>
+                <Calendar
+                  onChange={(item) => this.setDate(item)}
+                  date={expiryDate}
+                />
+              </div>
             </div>
           </div>
         </div>

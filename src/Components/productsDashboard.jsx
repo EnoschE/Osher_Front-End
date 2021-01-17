@@ -84,14 +84,14 @@ class ProductsDashboard extends Component {
 
               <div className='new-pro'>
                 <Link to='/add-new-product/'>
-                  <button>Add new Product +</button>
+                  <button>Add new Bundle</button>
                 </Link>
               </div>
               {loading && (
                 <table className=' orders-table'>
                   <thead>
                     <tr>
-                      <th>Item</th>
+                      <th>Bundle</th>
                       <th className='hide-col'>Offers</th>
                       <th className='hide-col'>Price</th>
 

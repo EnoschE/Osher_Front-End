@@ -109,7 +109,7 @@ class Report extends Component {
 
               <table className=' orders-table'>
                 <thead>
-                  <tr>
+                <tr>
                     <th className='hide-col'>Index</th>
                     <th>Coupon</th>
                     <th>Buyer</th>

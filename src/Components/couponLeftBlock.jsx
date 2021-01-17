@@ -26,6 +26,9 @@ const CouponLeftBlock = ({ brand }) => {
 
         <h3>Need to know</h3>
         <p>{brand.description}</p>
+       
+        <h3>Branches</h3>
+      {brand.branches.map(b=> <li key={b}>{b}</li>)}
       </div>
     </>
   );

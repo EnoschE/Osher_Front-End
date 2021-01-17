@@ -2,7 +2,7 @@ import React from 'react';
 
 const Input = ({ name, label, error, placeholder, ...rest }) => {
   return (
-    <div className='form-group'>
+    <div className='form-group' style={{ width: '100%'}}>
       <input
         {...rest}
         name={name}

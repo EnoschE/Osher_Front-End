@@ -9,6 +9,7 @@ import CustomerPage from './customerPage';
 import ProductsDashboard from './productsDashboard';
 import Report from './report';
 import auth from '../services/authService';
+import Locations from './locations';
 
 class Dashboard extends Component {
   state = {
@@ -48,6 +49,18 @@ class Dashboard extends Component {
                   path='/dashboard/customers/customer/:id'
                   render={(props) => (
                     <CustomerPage
+                      {...props}
+                      updateDashboardMenu={this.updateDashboardMenu}
+                    />
+                  )}
+                />
+              )}
+              
+              {(user.isAdmin || user.isBrand) && (
+                <Route
+                  path='/dashboard/locations'
+                  render={(props) => (
+                    <Locations
                       {...props}
                       updateDashboardMenu={this.updateDashboardMenu}
                     />

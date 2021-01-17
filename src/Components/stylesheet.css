@@ -1520,10 +1520,11 @@ button.slick-prev {
   padding: 1px 10px;
 }
 
-/* .active div {
+.used div {
   background-color: rgb(252, 246, 218);
   color: rgb(128, 94, 0);
-} */
+}
+
 .active div {
   background-color: rgb(234, 252, 218);
   color: rgb(2, 102, 2);
@@ -1612,7 +1613,8 @@ td.purchased-col {
 }
 
 .new-pro {
-  /* margin-top: -14px; */
+  margin: 20px 0px;
+  margin-top: 5px;
   text-align: right;
   width: 100%;
 }
@@ -1795,6 +1797,9 @@ td.purchased-col {
   margin-bottom: 2%;
 }
 
+.inner-pop-text {
+  padding: 20px 0px;
+}
 .inner-pop-text h2 {
   font-size: 28px;
 }
@@ -1964,7 +1969,36 @@ td.purchased-col {
   flex-wrap: wrap;
 }
 
+.branches-block {
+  /* background-color: var(--light); */
+  border: 1px solid var(--medium);
+  padding: 15px;
+  /* border-radius: 4px; */
+  margin-bottom: 25px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+}
 
+.branch {
+  padding: 5px 15px;
+  border: 1px solid var(--medium);
+  border-radius: 100px;
+  margin: 5px 5px;
+  cursor: pointer;
+}
+
+.branch-active {
+  padding: 5px 15px;
+  border: 1px solid var(--primary);
+  background-color: var(--primary);
+  color: white;
+  border-radius: 100px;
+  margin: 5px 5px;
+  cursor: pointer;
+}
 
 .img-box {
   height: 150px;
@@ -1976,7 +2010,6 @@ td.purchased-col {
   justify-content: center;
   border-radius: 5px;
 }
-
 
 .remove-img-btn {
   position: absolute;
@@ -1992,21 +2025,33 @@ td.purchased-col {
   background-color: rgba(0, 0, 0, 0.2);
   transition: all ease-in-out 0.5s;
   /* border: 0.1px solid var(--medium-dark); */
-
 }
 
 .remove-img-btn:hover {
   transform: rotate(180deg);
 }
 
-.img-box, .image-input-label {
+.img-box,
+.img-uploading-box,
+.image-input-label {
   width: 49%;
+}
+
+.img-uploading-box {
+  height: 150px;
+  background-color: var(--medium);
+  overflow: hidden;
+  display: flex;
+  margin: 5px 0px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 20px;
 }
 
 .img-box img {
   width: 100%;
 }
-
 
 .image-input-label {
   height: 150px;
@@ -2020,17 +2065,127 @@ td.purchased-col {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   border-radius: 5px;
-  font-size: 45px;
+  font-size: 65px;
   cursor: pointer;
 }
 
-@media (max-width: 468px) { 
-  .img-box, .image-input-label {
+.image-input-label p {
+  font-size: 15px;
+  margin-bottom: -1px;
+}
+
+@media (max-width: 468px) {
+  .img-box,
+  .img-uploading-box,
+  .image-input-label {
     width: 100%;
   }
 }
 
 .image-input-label input[type='file'] {
   display: none;
+}
+
+/*=====\ Locations \=======*/
+
+.locations-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 5px 200px;
+}
+
+@media (max-width: 468px) {
+  .locations-page {
+    padding: 5px 10px;
+  }
+}
+
+.location-input-block {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  /* flex-direction: column; */
+  width: 100%;
+}
+
+.location-input-block button {
+  padding: 7px 20px;
+  margin: 0px;
+  margin-left: 15px;
+  background-color: var(--dark);
+  color: white;
+  border: 1px solid var(--dark);
+}
+
+.location-input-block button:hover {
+  background-color: var(--medium-dark);
+  border: 1px solid var(--medium-dark);
+}
+
+.location-input-block button:disabled {
+  background-color: var(--medium-dark);
+  border: 1px solid var(--medium-dark);
+}
+
+.location-input {
+  margin: 0px;
+}
+
+.locations {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.location-box {
+  padding: 5px 15px;
+  border: 1px solid var(--medium);
+  border-radius: 100px;
+  margin: 5px 5px;
+}
+
+.location-box button {
+  padding: 2px 8px;
+  margin-left: 10px;
+  margin-right: -10px;
+  font-size: 14px;
+}
+
+.choose-expiry-date {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.choose-expiry-date h3 {
+  width: 100%;
+  display: block;
+}
+
+.choose-expiry-date h3 span {
+  font-size: 20px ;
+  color: var(--medium-dark);
+  }
+
+
+
+.choose-expiry-date button:hover {
+  background-color: transparent;
+  border: 0px;
+}
+
+.datepicker button:hover {
+  background-color: transparent;
+  border: 0px;
 }

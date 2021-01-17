@@ -56,6 +56,21 @@ class DashboardLeftBlock extends Component {
             </Link>
 
             {(user.isAdmin || user.isBrand) && (
+              <Link to='/dashboard/locations/'>
+                <div
+                  className={
+                    currentBlock === 'locations'
+                      ? 'left-menu-link active-link'
+                      : 'left-menu-link'
+                  }
+                >
+                  <h5>Locations</h5>
+                  <div></div>
+                </div>
+              </Link>
+            )}
+            
+            {(user.isAdmin || user.isBrand) && (
               <Link to='/dashboard/customers/'>
                 <div
                   className={

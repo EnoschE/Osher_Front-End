@@ -182,6 +182,8 @@ class CouponPage extends Component {
         brandCategory: brand.category,
         offerPrice: offer,
         offerDetail: brandOffer[0].offerDetails,
+        expiryDate: brand.expiryDate,
+        branches: brand.branches,
         coupon: '',
         orderStatus: 'Active',
       };
@@ -397,6 +399,7 @@ class CouponPage extends Component {
 
                   <div className='col-sm-4'>
                     <CouponRightBlock
+                      expiry={brand.expiryDate}
                       data={brand.offers}
                       currentOffer={offer}
                       radioFunction={this.handleChange}
