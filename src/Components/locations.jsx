@@ -15,6 +15,7 @@ class Locations extends Component {
       locations: [],
       brandId: '',
     },
+    deletePopup: false,
   };
 
   async componentDidMount() {
@@ -53,6 +54,14 @@ class Locations extends Component {
       locations: location.locations,
     };
   }
+
+  handleDeletePopUp = (offer) => {
+    this.setState({ deleteRequestedOffer: offer });
+
+    let { deletePopup } = this.state;
+    deletePopup = !deletePopup;
+    this.setState({ deletePopup });
+  };
 
   handleStatusSelect = (status) => {
     this.setState({
@@ -96,6 +105,7 @@ class Locations extends Component {
     await saveLocation(locationObj);
 
     this.setState({ locations });
+    this.handleDeletePopUp('');
   };
 
   componentWillUnmount() {
@@ -106,7 +116,13 @@ class Locations extends Component {
 
   render() {
     // let { filtered: orders } = this.getFilteredOrders();
-    const { loading, locationInput, locations } = this.state;
+    const {
+      loading,
+      locationInput,
+      locations,
+      deletePopup,
+      deleteRequestedOffer,
+    } = this.state;
 
     if (loading) return <Loader />;
 
@@ -114,6 +130,29 @@ class Locations extends Component {
       <div className='customers-page orders'>
         {/* <div className='row'>
           <div className='col-md-12 p-2'> */}
+
+        {deletePopup && (
+          <React.Fragment>
+            <div
+              className='delete-popup-background'
+              onClick={this.handleDeletePopUp}
+            ></div>
+            <div className='delete-pop-up'>
+              <h5>Are you sure to remove this location?</h5>
+              <div className='inner-pop'>
+                <div className='inner-pop-text'>
+                  <h2><span className='gray-span'>Branch:</span> {deleteRequestedOffer}</h2>
+                  {/* <h2>Offer: {deleteRequestedOffer.offerDetails}</h2> */}
+                </div>
+              </div>
+              <button onClick={() => this.removeLocation(deleteRequestedOffer)}>
+                Yes
+              </button>
+              <button onClick={() => this.handleDeletePopUp('')}>No</button>
+            </div>
+          </React.Fragment>
+        )}
+
         <div className='profile-right-block' style={{ animationDelay: '0.1s' }}>
           <h1>Locations</h1>
           <br />
@@ -137,7 +176,7 @@ class Locations extends Component {
             <div className='locations'>
               {locations.map((l) => (
                 <div className='location-box' key={l}>
-                  {l} <button onClick={() => this.removeLocation(l)}>X</button>
+                  {l} <button onClick={() => this.handleDeletePopUp(l)}>X</button>
                 </div>
               ))}
             </div>

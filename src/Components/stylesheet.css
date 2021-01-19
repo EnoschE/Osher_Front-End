@@ -1784,7 +1784,26 @@ td.purchased-col {
 
 .delete-pop-up button {
   width: 50%;
+  border-color: var(--dark);
 }
+
+.delete-pop-up button:hover {
+  background-color: var(--dark);
+}
+
+.delete-pop-up button:nth-last-child(1) {
+  border-radius: 0px 50px 50px 0px;
+}
+
+.delete-pop-up button:nth-last-child(2) {
+  border-radius: 50px 0px 0px 50px;
+  border-right: 0px;
+}
+
+/* .delete-pop-up button:nth-child(2) {
+  width: 50%;
+  border-radius: 50px 0px 0px 50px;
+} */
 
 .inner-pop {
   display: flex;
@@ -1854,6 +1873,11 @@ td.purchased-col {
   padding-left: 15px;
   font-size: 13px;
   border-radius: 0px;
+}
+
+/*=====\ Order Page \=====*/
+.order-page-details p {
+  font-size: 13px;
 }
 
 /*=====\ New Password \=====*/
@@ -2174,11 +2198,9 @@ td.purchased-col {
 }
 
 .choose-expiry-date h3 span {
-  font-size: 20px ;
+  font-size: 20px;
   color: var(--medium-dark);
-  }
-
-
+}
 
 .choose-expiry-date button:hover {
   background-color: transparent;

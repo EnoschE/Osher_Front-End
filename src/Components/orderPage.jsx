@@ -15,6 +15,7 @@ class OrderPage extends Component {
     order: [],
     user: '',
     cancelPopup: false,
+    deletePopup: false,
   };
 
   async componentDidMount() {
@@ -44,8 +45,8 @@ class OrderPage extends Component {
         user: this.mapToViewCustomer(customer),
       });
     } catch (ex) {
-      if (ex.response && ex.response.status === 404) 
-      this.props.history.replace('/not-found');
+      if (ex.response && ex.response.status === 404)
+        this.props.history.replace('/not-found');
     }
   };
 
@@ -67,8 +68,6 @@ class OrderPage extends Component {
       publishDate: order.publishDate,
       expiryDate: order.expiryDate,
       branches: order.branches,
-
-
     };
   }
 
@@ -117,6 +116,14 @@ class OrderPage extends Component {
     this.setState({ cancelPopup });
   };
 
+  handleDeletePopUp = (offer) => {
+    this.setState({ deleteRequestedOffer: offer });
+
+    let { deletePopup } = this.state;
+    deletePopup = !deletePopup;
+    this.setState({ deletePopup });
+  };
+
   updateOrder = async (status) => {
     const { order } = this.state;
 
@@ -145,12 +152,39 @@ class OrderPage extends Component {
   }
 
   render() {
-    const { order, loading, currentUser, cancelPopup, brand } = this.state;
+    const {
+      order,
+      loading,
+      currentUser,
+      cancelPopup,
+      brand,
+      deletePopup,
+    } = this.state;
 
     if (loading) return <Loader />;
 
     return (
       <div className='order-page'>
+        {deletePopup && (
+          <React.Fragment>
+            <div
+              className='delete-popup-background'
+              onClick={this.handleDeletePopUp}
+            ></div>
+            <div className='delete-pop-up'>
+              <h5>Are you sure to update order status?</h5>
+              <div className='inner-pop'>
+                <div className='inner-pop-text'>
+                  <h2><span className='gray-span'>New Status: </span>{order.orderStatus}</h2>
+                  {/* <h2>Offer: {deleteRequestedOffer.offerDetails}</h2> */}
+                </div>
+              </div>
+              <button onClick={() => this.updateOrder('')}>Yes</button>
+              <button onClick={() => this.handleDeletePopUp('')}>No</button>
+            </div>
+          </React.Fragment>
+        )}
+
         <div className='row'>
           {cancelPopup && (
             <React.Fragment>
@@ -198,8 +232,7 @@ class OrderPage extends Component {
                     {moment(order.publishDate).format('lll')}
                   </p>
                   <p>
-                    <b>Expired on:</b>{' '}
-                    {moment(order.expiryDate).format('lll')}
+                    <b>Expired on:</b> {moment(order.expiryDate).format('lll')}
                     {console.log(order.expiryDate)}
                   </p>
                   <p>
@@ -240,25 +273,29 @@ class OrderPage extends Component {
 
                   <h4 className='orderpage-coupon'>{order.coupon}</h4>
 
-                  {(currentUser.isAdmin || currentUser.isBrand) && (
-                    <>
-                      <div className='linee'></div>
-                      <br />
-                      <Select
-                        options={['Active', 'Used', 'Expired']}
-                        name='orderStatus'
-                        value={order.orderStatus}
-                        label='Update coupon Status'
-                        onChange={this.handleChange}
-                      />
-                      <button
-                        className='continue-to-shipping'
-                        onClick={() => this.updateOrder('')}
-                      >
-                        Update order status
-                      </button>
-                    </>
-                  )}
+                  {(currentUser.isAdmin || currentUser.isBrand) &&
+                    (order.orderStatus === 'Active' ||
+                      order.orderStatus === 'Used') && (
+                      <>
+                        <div className='linee'></div>
+                        <br />
+                        <Select
+                          options={['Active', 'Used']}
+                          // options={['Active', 'Used', 'Expired']}
+                          name='orderStatus'
+                          value={order.orderStatus}
+                          label='Update coupon Status'
+                          onChange={this.handleChange}
+                        />
+                        <button
+                          className='continue-to-shipping'
+                          onClick={() => this.handleDeletePopUp('')}
+                          // onClick={() => this.updateOrder('')}
+                        >
+                          Update order status
+                        </button>
+                      </>
+                    )}
 
                   {order.orderStatus === 'Placed' && !currentUser.isAdmin && (
                     <>

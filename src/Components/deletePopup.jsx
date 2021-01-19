@@ -12,7 +12,7 @@ const DeletePopUp = ({
         onClick={handleDeletePopUP}
       ></div>
       <div className='delete-pop-up'>
-        <h5>Are you sure to delete this product?</h5>
+        <h5>Are you sure to delete this bundle?</h5>
         <br />
         <div className='inner-pop'>
           {/* <img src={deleteRequestedProduct.imageUrl} alt='pop' /> */}

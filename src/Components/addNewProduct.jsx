@@ -92,10 +92,10 @@ class AddNewProduct extends Component {
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
-      this.setState({
-        locations: [],
-        activeLocations:[],
-      });
+        this.setState({
+          locations: [],
+          activeLocations: [],
+        });
     }
   }
 
@@ -352,8 +352,14 @@ class AddNewProduct extends Component {
               <h5>Are you sure to remove this offer?</h5>
               <div className='inner-pop'>
                 <div className='inner-pop-text'>
-                  <h2>Offer id: {deleteRequestedOffer.id}</h2>
-                  <h2>Offer: {deleteRequestedOffer.offerDetails}</h2>
+                  <h2>
+                    <span className='gray-span'>Offer id: </span>
+                    {deleteRequestedOffer.id}
+                  </h2>
+                  <h2>
+                    <span className='gray-span'>Offer: </span>
+                    {deleteRequestedOffer.offerDetails}
+                  </h2>
                 </div>
               </div>
               <button onClick={() => this.removeOffer(deleteRequestedOffer)}>
