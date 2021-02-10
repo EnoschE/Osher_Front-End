@@ -3,11 +3,13 @@ import { getOrders, saveOrder } from '../services/orderService';
 import { getUsers } from '../services/userService';
 import auth from '../services/authService';
 import Loader from './loader';
-import SearchInput from './common/searchInput';
-import OrdersTable from './ordersTable';
+// import SearchInput from './common/searchInput';
+// import OrdersTable from './ordersTable';
 import ChooseBrand from './common/chooseBrand';
+import { getFinancials } from '../services/financialService';
+import FinanceTable from './financeTable';
 
-class Orders extends Component {
+class Financials extends Component {
   state = {
     allStatus: [
       'Active',
@@ -18,6 +20,7 @@ class Orders extends Component {
     user: '',
     orders: [],
     users: [],
+    financials: [],
     status: 'All',
     loading: true,
     searchQuery: '',
@@ -26,7 +29,7 @@ class Orders extends Component {
 
   async componentDidMount() {
     window.scrollTo(0, 0);
-    this.props.updateDashboardMenu('orders');
+    this.props.updateDashboardMenu('financials');
 
     const allStatus = ['All', ...this.state.allStatus];
     this.setState({ allStatus });
@@ -38,6 +41,8 @@ class Orders extends Component {
     this.setState({ users });
 
     let { data: orders } = await getOrders();
+
+    let { data: financials } = await getFinancials();
 
     if (!user.isAdmin) {
       orders = orders.filter((o) => o.brandId === user._id);
@@ -53,7 +58,7 @@ class Orders extends Component {
       }
     }
 
-    this.setState({ orders, loading: false });
+    this.setState({ orders, financials, loading: false });
   }
 
   handleStatusSelect = (status) => {
@@ -75,22 +80,22 @@ class Orders extends Component {
   };
 
   getFilteredOrders = () => {
-    const { user, status, orders, searchQuery, currentBrand } = this.state;
+    const { user, currentBrand, financials } = this.state;
 
-    let filtered = orders;
+    let filtered = financials;
 
     if (user.isAdmin && currentBrand) {
       filtered = filtered.filter((o) => o.brandId === currentBrand);
     }
 
-    if (searchQuery)
-      filtered = orders.filter(
-        (o) =>
-          o.coupon.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          o.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    else if (status !== 'All')
-      filtered = orders.filter((o) => o.orderStatus === status);
+    // if (searchQuery)
+    //   filtered = orders.filter(
+    //     (o) =>
+    //       o.coupon.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    //       o.name.toLowerCase().includes(searchQuery.toLowerCase())
+    //   );
+    // else if (status !== 'All')
+    //   filtered = orders.filter((o) => o.orderStatus === status);
 
     // filtered = filtered.reverse();
 
@@ -112,8 +117,14 @@ class Orders extends Component {
   }
 
   render() {
-    let { filtered: orders } = this.getFilteredOrders();
-    const { status, allStatus,user, loading, searchQuery, users } = this.state;
+    let { filtered: financials } = this.getFilteredOrders();
+    const {
+      // status, allStatus,
+      user,
+      loading,
+      // searchQuery,
+      users,
+    } = this.state;
 
     if (loading) return <Loader />;
 
@@ -125,42 +136,25 @@ class Orders extends Component {
               className='profile-right-block'
               style={{ animationDelay: '0.1s' }}
             >
-              <h1>Orders</h1>
+              <h1>Financials</h1>
 
-              <div className='orders-filter'>
-                <SearchInput
-                  value={searchQuery}
-                  updateSearch={this.handleSearch}
-                />
-                <div className='filter-block'>
-                  <p className='filter-heading'>Filter by: </p>
-
-                  {allStatus.map((s) => (
-                    <div
-                      key={s}
-                      className={
-                        s === status
-                          ? 'filter-item  filter-item-active'
-                          : ' filter-item'
-                      }
-                      onClick={() => this.handleStatusSelect(s)}
-                    >
-                      <p>{s}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
+              <br />
               {user.isAdmin && (
                 <ChooseBrand
                   data={users}
                   def={true}
-                  label={'Showing orders of '}
+                  label={'Showing finances of '}
                   handleChange={this.handleChange}
                 />
               )}
 
-              <OrdersTable data={orders} />
+              <FinanceTable data={financials} />
+
+              <br/>
+              <div className='total-financial-payments'>
+                <h4>Total Payment</h4>
+                <h3>$<b>{this.calculateTotal(financials)}</b></h3>
+              </div>
 
               <br />
             </div>
@@ -179,9 +173,9 @@ class Orders extends Component {
 
   calculateTotal = (cartItems) => {
     let total = 0;
-    for (const c of cartItems) total = total + c.product.price * c.quantity;
+    for (const c of cartItems) total = total + parseInt(c.payment);
     return total;
   };
 }
 
-export default Orders;
+export default Financials;

@@ -29,10 +29,10 @@ const Footer = (props) => {
           </div>
         )}
 
-        <div className='icon-block'>
+        {/* <div className='icon-block'>
           <i className='fas fa-language'></i>
           <p>Language</p>
-        </div>
+        </div> */}
 
         <div className='icon-block' onClick={mutePage}>
           <i className='fas fa-volume-mute'></i>
@@ -49,10 +49,10 @@ const Footer = (props) => {
           <p>Up</p>
         </div>
 
-        <div className='icon-block'>
+        {/* <div className='icon-block'>
           <i className='fas fa-sun'></i>
           <p>Brightness</p>
-        </div>
+        </div> */}
 
         <div className='icon-block' onClick={handleNap}>
           <i className='far fa-moon'></i>

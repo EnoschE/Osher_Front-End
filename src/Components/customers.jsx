@@ -6,12 +6,16 @@ import moment from 'moment';
 import Loader from './loader';
 import { getCustomers } from '../services/customerService';
 import auth from '../services/authService';
+//import ChooseBrand from './common/chooseBrand';
+import { getUsers } from '../services/userService';
 
 class Customers extends Component {
   state = {
     orders: [],
     users: [],
+    user: {},
     loading: true,
+    currentBrand: '',
   };
 
   async componentDidMount() {
@@ -20,6 +24,9 @@ class Customers extends Component {
 
     const user = await auth.getCurrentUser();
     this.setState({ user });
+
+    let { data: brands } = await getUsers();
+    this.setState({ brands });
 
     let { data: users } = await getCustomers();
     let { data: orders } = await getOrders();
@@ -51,6 +58,46 @@ class Customers extends Component {
     this.setState({ users });
   }
 
+  handleChange = ({ currentTarget: input }) => {
+    this.setState({ currentBrand: input.value });
+  };
+
+  getCustomers = (orders, users) => {
+    let myCustomers = [];
+    let newCustomers = users;
+
+    for (let i = 0; i < orders.length; i++) {
+      if (i === 0) myCustomers.push(orders[i].userId);
+      else if (myCustomers.indexOf(orders[i].userId) === -1)
+        myCustomers.push(orders[i].userId);
+    }
+
+    for (let x = 0; x < users.length; x++) {
+      for (let j = 0; j < myCustomers.length; j++)
+        if (users[x]._id === myCustomers[j]) newCustomers.push(users[x]);
+    }
+
+    return newCustomers;
+  };
+
+  // getFilteredCustomers = () => {
+  //   let { orders, user, users, currentBrand } = this.state;
+
+  //   // let myCustomers = [];
+  //   let newCustomers = users;
+
+  //   if (!user.isAdmin) {
+  //     newCustomers = this.getCustomers(orders, users);
+  //   }
+
+  //   // if (currentBrand) {
+  //   //   let myOrders = orders.filter((o) => o.brandId === currentBrand);
+  //   //   newCustomers = this.getCustomers(myOrders, users);
+  //   // }
+
+  //   return { newCustomers };
+  // };
+
   componentWillUnmount() {
     this.setState = (state, callback) => {
       return;
@@ -58,7 +105,8 @@ class Customers extends Component {
   }
 
   render() {
-    const { users, loading } = this.state;
+    const { loading,  users } = this.state;
+    // const { newCustomers: users } = this.getFilteredCustomers();
     let delay = 0.1;
 
     if (loading) return <Loader />;
@@ -73,6 +121,13 @@ class Customers extends Component {
             >
               <h1>Customers</h1>
               <br />
+              {/* {user.isAdmin && (
+                <ChooseBrand
+                  data={brands}
+                  label={'Showing customers of '}
+                  handleChange={this.handleChange}
+                />
+              )} */}
               <table className=' orders-table'>
                 <thead>
                   <tr>

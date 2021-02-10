@@ -4,18 +4,44 @@ import ThemeCategory from './themeCategory';
 import categories from '../services/categories';
 import { getProducts } from '../services/productService';
 import Loader from './loader';
+import { getUsers } from '../services/userService';
 
 const WhatToDo = () => {
   const [currentCategory, setCurrentCategory] = useState('');
-  const [brands, setBrands] = useState([]);
+  const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   let delay = 0;
 
   const getAllProducts = async () => {
     const { data } = await getProducts();
-    setBrands(data);
+    const { data: userz } = await getUsers();
+
+    var activeBundles = [];
+
+    for (var i = 0; i < data.length; i++) {
+      var currentBrand = {};
+
+      for (var j = 0; j < userz.length; j++) {
+        if (userz[j]._id === data[i].brandId) currentBrand = userz[j];
+      }
+
+      if (currentBrand.isActive) {
+        activeBundles.push(data[i]);
+        currentBrand = {};
+      }
+
+
+    }
+
+    setBundles(activeBundles);
+    // setBundles(data);
+
     setLoading(false);
   };
+
+  // const checkBrandActive = (userz, data) => {
+
+  // };
 
   useEffect(() => {
     getAllProducts();
@@ -25,11 +51,11 @@ const WhatToDo = () => {
     setCurrentCategory(cate);
   };
 
-  const filteredBrands = () => {
-    let filtered = brands;
+  const filteredBundles = () => {
+    let filtered = bundles;
 
     if (currentCategory !== 'All' && currentCategory !== '') {
-      filtered = brands.filter((b) => b.category === currentCategory);
+      filtered = bundles.filter((b) => b.category === currentCategory);
     }
 
     return filtered;
@@ -63,8 +89,8 @@ const WhatToDo = () => {
           /> */}
           {loading ? (
             <Loader />
-          ) : filteredBrands().length > 0 ? (
-            filteredBrands().map((b) => (
+          ) : filteredBundles().length > 0 ? (
+            filteredBundles().map((b) => (
               <BrandCard key={b._id} brand={b} delay={(delay += 0.1)} />
             ))
           ) : (

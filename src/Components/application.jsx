@@ -26,6 +26,7 @@ import SignupPage from './signupPage';
 import UpdateProfile from './updateProfile';
 import UpdatePassword from './updatePassword';
 import AddNewProduct from './addNewProduct';
+import BrandSignup from './brandSignup';
 
 class Application extends Component {
   state = {
@@ -64,7 +65,7 @@ class Application extends Component {
     if (!nap) {
       setTimeout(() => {
         this.setState({ nap: false });
-      }, 2000);
+      }, 300000);
     }
   };
 
@@ -204,6 +205,22 @@ class Application extends Component {
               }
               return (
                 <SignupPage
+                  {...props}
+                  updateUser={this.updateUser}
+                  handleNotification={this.handleNotification}
+                />
+              );
+            }}
+          />
+         
+          <Route
+            path='/brand-signup/'
+            render={(props) => {
+              if (auth.getCurrentUser()) {
+                return <Redirect to='/dashboard' />;
+              }
+              return (
+                <BrandSignup
                   {...props}
                   updateUser={this.updateUser}
                   handleNotification={this.handleNotification}

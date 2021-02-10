@@ -33,9 +33,24 @@ class DashboardLeftBlock extends Component {
           ></div>
 
           <Link to='/update-profile'>
-            <div className='profile-left-text'>
+            <div className='dashboard-left-text'>
               <h2>{user.name}</h2>
               {user.isAdmin && <h6>Admin</h6>}
+              {user.isBrand && (
+                <div className='brand-status-bg'>
+                  <div
+                    className={
+                      user.isActive
+                        ? 'brand-main-status active-brand'
+                        : 'brand-main-status disabled-brand'
+                    }
+                  >
+                    <div className=''>
+                      {user.isActive ? 'Active' : 'Disabled'}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </Link>
 
@@ -55,6 +70,21 @@ class DashboardLeftBlock extends Component {
               </div>
             </Link>
 
+            {user.isAdmin && (
+              <Link to='/dashboard/brands/'>
+                <div
+                  className={
+                    currentBlock === 'brands'
+                      ? 'left-menu-link active-link'
+                      : 'left-menu-link'
+                  }
+                >
+                  <h5>Brands</h5>
+                  <div></div>
+                </div>
+              </Link>
+            )}
+
             {(user.isAdmin || user.isBrand) && (
               <Link to='/dashboard/locations/'>
                 <div
@@ -69,7 +99,7 @@ class DashboardLeftBlock extends Component {
                 </div>
               </Link>
             )}
-            
+
             {(user.isAdmin || user.isBrand) && (
               <Link to='/dashboard/customers/'>
                 <div
@@ -97,7 +127,22 @@ class DashboardLeftBlock extends Component {
                 <div></div>
               </div>
             </Link>
-
+           
+            {(user.isAdmin || user.isBrand) && (
+              <Link to='/dashboard/products'>
+                <div
+                  className={
+                    currentBlock === 'products'
+                      ? 'left-menu-link active-link'
+                      : 'left-menu-link'
+                  }
+                >
+                  <h5>Products</h5>
+                  <div></div>
+                </div>
+              </Link>
+            )}
+           
             <Link to='/dashboard/report'>
               <div
                 className={
@@ -111,16 +156,17 @@ class DashboardLeftBlock extends Component {
               </div>
             </Link>
 
+         
             {(user.isAdmin || user.isBrand) && (
-              <Link to='/dashboard/products'>
+              <Link to='/dashboard/financials'>
                 <div
                   className={
-                    currentBlock === 'products'
+                    currentBlock === 'financials'
                       ? 'left-menu-link active-link'
                       : 'left-menu-link'
                   }
                 >
-                  <h5>Products</h5>
+                  <h5>Financials</h5>
                   <div></div>
                 </div>
               </Link>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Pie, Bar } from 'react-chartjs-2';
 import { getOrders, saveOrder } from '../services/orderService';
-import { getUsers } from '../services/userService';
+import { getUsers,  updatePayment } from '../services/userService';
 import { getCustomers } from '../services/customerService';
 import { Link } from 'react-router-dom';
 import OrdersTable from './ordersTable';
@@ -9,6 +9,7 @@ import auth from '../services/authService';
 import moment from 'moment';
 import Loader from './loader';
 import 'chartjs-plugin-deferred';
+import BrandsTable from './brandsTable';
 
 class DashboardOverview extends Component {
   state = {
@@ -46,7 +47,6 @@ class DashboardOverview extends Component {
             'rgba(255, 206, 86, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             'rgba(255, 99, 132, 0.2)',
-
           ],
           hoverBackgroundColor: [
             'rgba(255, 206, 86, 1)',
@@ -68,8 +68,20 @@ class DashboardOverview extends Component {
     this.setState({ user });
 
     const { data: users } = await getUsers();
+
+    for (let v = 0; v < users.length; v++) {
+      if (
+        new Date() - new Date(users[v].paymentExpiry) > 0 &&
+        users[v].isActive !== false
+      ) {
+        users[v].isActive = false;
+        await updatePayment(users[v]);
+      }
+    }
+
     this.setState({ users });
 
+    console.log(users)
     let { data: customers } = await getCustomers();
 
     let { data: orders } = await getOrders();
@@ -177,7 +189,7 @@ class DashboardOverview extends Component {
   }
 
   render() {
-    let { orders, user, loading, customers } = this.state;
+    let { orders, user, loading, customers, users } = this.state;
 
     if (loading) return <Loader />;
 
@@ -189,9 +201,7 @@ class DashboardOverview extends Component {
               className='profile-right-block'
               style={{ animationDelay: '0.3s' }}
             >
-              <h1>
-                {orders.filter((o) => o.orderStatus === 'Used').length}
-              </h1>
+              <h1>{orders.filter((o) => o.orderStatus === 'Used').length}</h1>
               <h6>Coupons used</h6>
             </div>
           </div>
@@ -236,13 +246,6 @@ class DashboardOverview extends Component {
                     display: true,
                     position: 'right',
                   },
-                  // plugins: {
-                  //   deferred: {
-                  //     // xOffset: 150,
-                  //     // yOffset: '50%',
-                  //     delay: 400,
-                  //   },
-                  // },
                 }}
               />
             </div>
@@ -314,10 +317,14 @@ class DashboardOverview extends Component {
                 <br />
                 {customers
                   .filter((u) => !u.isAdmin)
-                  .slice(0, 4)
+                  .slice(0, 5)
                   .map((u) => (
                     <React.Fragment key={u._id}>
-                      <div key={u._id} className='cutomer' style={{marginBottom: '10px'}}>
+                      <div
+                        key={u._id}
+                        className='cutomer'
+                        style={{ marginBottom: '10px' }}
+                      >
                         {/* <div
                           className='customer-pic'
                           style={{
@@ -333,7 +340,7 @@ class DashboardOverview extends Component {
                       {/* <br /> */}
                     </React.Fragment>
                   ))}
-                <br/>
+                <br />
                 <div className='view-all-customers'>
                   <Link to='/dashboard/customers'>
                     <button>View all</button>
@@ -343,6 +350,36 @@ class DashboardOverview extends Component {
             </div>
           )}
         </div>
+
+        {user.isAdmin && (
+          <div className='row'>
+            <div className='col-md-12 p-2'>
+              <div
+                className='profile-right-block'
+                style={{ animationDelay: '0.8s' }}
+              >
+                <h6>Brands</h6>
+                <br />
+
+                <BrandsTable
+                  data={users}
+                  orders={orders}
+                  customers={customers}
+                  length={5}
+                  dateFromNow={true}
+                />
+
+                <br />
+
+                <div className='view-all-customers'>
+                  <Link to='/dashboard/brands'>
+                    <button>View all brands</button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </React.Fragment>
     );
   }
@@ -352,6 +389,36 @@ class DashboardOverview extends Component {
     const user = users.filter((u) => u._id === id);
 
     return user[0];
+  };
+
+  calculateTotalOrders = (id) => {
+    const { orders } = this.state;
+
+    return orders.filter((o) => o.brandId === id).length;
+  };
+
+  calculateTotalCustomers = (id) => {
+    const { customers, orders } = this.state;
+
+    const myOrders = orders.filter((o) => o.brandId === id);
+
+    let myCustomers = [];
+
+    for (var i = 0; i < myOrders.length; i++) {
+      if (i === 0) myCustomers.push(myOrders[i].userId);
+      else if (myCustomers.indexOf(myOrders[i].userId) === -1)
+        myCustomers.push(myOrders[i].userId);
+    }
+
+    let newCustomers = [];
+
+    for (var x = 0; x < customers.length; x++) {
+      for (var j = 0; j < myCustomers.length; j++)
+        if (customers[x]._id === myCustomers[j])
+          newCustomers.push(customers[x]);
+    }
+
+    return myCustomers.length;
   };
 
   calculateTotal = (cartItems) => {

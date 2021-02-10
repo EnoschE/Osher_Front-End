@@ -11,13 +11,16 @@ import Select from './common/select';
 import categories from '../services/categories';
 import TextArea from './common/textArea';
 import auth from '../services/authService';
+import { getUsers } from '../services/userService';
 import moment from 'moment';
 import Loader from './loader';
+import ChooseBrand from './common/chooseBrand';
 
 class AddNewProduct extends Component {
   state = {
     file: '',
     imagePreviewUrl: '/img/img1.jpg',
+    currentBrand: '',
     product: {
       name: '',
       brandId: '',
@@ -75,6 +78,18 @@ class AddNewProduct extends Component {
           heading: 'Update Bundle',
           loading: false,
         });
+
+        const { user } = this.state;
+        if (user.isAdmin) {
+          // const { data: users } = await getUsers();
+
+          this.setState({
+            currentBrand: product.brandId,
+            // users,
+            // currentBrand: users.filter((u) => u.isBrand)[0]._id,
+          });
+          await this.populateLocations(product.brandId);
+        }
       } else this.setState({ loading: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
@@ -82,14 +97,24 @@ class AddNewProduct extends Component {
     }
   }
 
-  async populateLocations(id) {
+  async populateLocations(currentBrand) {
     try {
-      const { data } = await getLocation(id);
+      const { user } = this.state;
+      const id = user._id;
+
+      let response;
+
+      if (user.isAdmin) response = await getLocation(currentBrand);
+      else response = await getLocation(id);
 
       this.setState({
-        locations: data.locations,
-        activeLocations: data.locations,
+        locations: response.data.locations,
       });
+
+      if (!this.props.match.params.id)
+        this.setState({
+          activeLocations: response.data.locations,
+        });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         this.setState({
@@ -110,9 +135,23 @@ class AddNewProduct extends Component {
     const user = auth.getCurrentUser();
     this.setState({ user });
 
+    if (user.isAdmin) {
+      const { data: users } = await getUsers();
+      this.setState({ users });
+      
+      if (!this.props.match.params.id) {
+        this.setState({
+          currentBrand: users.filter((u) => u.isBrand)[0]._id,
+        });
+
+        await this.populateLocations(users.filter((u) => u.isBrand)[0]._id);
+      }
+    }
+
+    if (!user.isAdmin) await this.populateLocations('');
+
     this.populateCategories();
     await this.populateProducts();
-    await this.populateLocations(user._id);
   }
 
   mapToViewModel(product) {
@@ -182,6 +221,11 @@ class AddNewProduct extends Component {
     this.handleDeletePopUp('');
   };
 
+  handleChooseBrand = async ({ currentTarget: input }) => {
+    this.setState({ currentBrand: input.value });
+    await this.populateLocations(input.value);
+  };
+
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
@@ -226,10 +270,12 @@ class AddNewProduct extends Component {
       user,
       activeLocations,
       expiryDate,
+      currentBrand,
     } = this.state;
     product.img = img;
     product.offers = offers;
-    product.brandId = user._id;
+    if (user.isAdmin) product.brandId = currentBrand;
+    else product.brandId = user._id;
     product.branches = activeLocations;
     product.expiryDate = expiryDate;
 
@@ -295,7 +341,7 @@ class AddNewProduct extends Component {
     const { activeLocations } = this.state;
     let classes = 'branch branch-active';
 
-    const result = activeLocations.filter((l) => l === location);
+    const result = activeLocations.filter((l) => l.id === location.id);
 
     if (result.length === 0) classes = 'branch';
 
@@ -311,12 +357,10 @@ class AddNewProduct extends Component {
     let activeLocations = [...this.state.activeLocations];
     // let classes = 'branch branch-active'
     console.log(location);
-    const result = activeLocations.filter((l) => l === location);
-
-    console.log(result);
+    const result = activeLocations.filter((l) => l.id === location.id);
 
     if (result.length === 0) activeLocations.push(location);
-    else activeLocations = activeLocations.filter((l) => l !== location);
+    else activeLocations = activeLocations.filter((l) => l.id !== location.id);
 
     this.setState({ activeLocations });
   };
@@ -336,6 +380,9 @@ class AddNewProduct extends Component {
       locations,
       expiryDate,
       loading,
+      user,
+      currentBrand,
+      users,
     } = this.state;
 
     if (loading) return <Loader />;
@@ -372,6 +419,14 @@ class AddNewProduct extends Component {
         <h1>{heading}</h1>
         <div className='row'>
           <div className='col-md-7 add-product-form'>
+            {user.isAdmin && (
+              <ChooseBrand
+                data={users}
+                value={currentBrand}
+                label={'Choosed brand'}
+                handleChange={this.handleChooseBrand}
+              />
+            )}
             <form onSubmit={this.handleSubmit}>
               <label htmlFor=''>Bundle Name</label>
               <Input
@@ -463,8 +518,9 @@ class AddNewProduct extends Component {
                   <div
                     onClick={() => this.selectBranch(l)}
                     className={this.isActive(l)}
+                    key={l.id}
                   >
-                    {l}
+                    {l.address}
                   </div>
                 ))}
               </div>

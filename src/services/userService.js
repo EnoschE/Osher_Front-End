@@ -17,6 +17,18 @@ export function register(user) {
   });
 }
 
+export function registerBrand(user) {
+  return http.post(apiEndpoint+'/brand-singup', {
+    email: user.username.toLowerCase(),
+    password: user.password,
+    name: user.name,
+    profilePic: user.profilePic,
+    isActive: user.isActive,
+    paymentExpiry: user.paymentExpiry,
+    isBrand: user.isBrand,
+  });
+}
+
 export function getUsers() {
   return http.get(apiEndpoint);
 }
@@ -38,6 +50,13 @@ export function updateUser(user) {
 
     body.email = body.email.toLowerCase();
     return http.put(userUrl(user._id), body);
+  }
+}
+
+export function updatePayment(user) {
+  if (user._id) {
+    const body = { ...user };
+    return http.post(apiEndpoint + '/updatepayment', body);
   }
 }
 

@@ -13,11 +13,11 @@ const OrdersTable = ({ data: orders, length, dateFromNow }) => {
       <thead>
         <tr>
           <th>Coupon</th>
-          <th>Buyer</th>
+          <th className='hide-col'>Buyer</th>
           <th className='hide-col'>Purchased</th>
           <th className='hide-col'>Expiry</th>
           <th>Amount</th>
-          <th className='hide-col'>Status</th>
+          <th>Status</th>
           <th></th>
         </tr>
       </thead>
@@ -44,7 +44,7 @@ const OrdersTable = ({ data: orders, length, dateFromNow }) => {
                   )} */}
               <b>{o.coupon}</b>
             </td>
-            <td>
+            <td className='hide-col'>
               <div className='cutomer'>
                 {/* <div
                       className='customer-pic'
@@ -78,10 +78,10 @@ const OrdersTable = ({ data: orders, length, dateFromNow }) => {
             </td>
             <td
               className={
-                'order-status  hide-col ' + o.orderStatus.toLowerCase()
+                'order-status ' + o.orderStatus.toLowerCase()
               }
             >
-              <div className='hide-col'>{o.orderStatus}</div>
+              <div className=''>{o.orderStatus}</div>
             </td>
             <td>
               <Link to={`/dashboard/orders/order/${o._id}`}>
