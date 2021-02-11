@@ -8,7 +8,7 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-p{
+p {
   font-size: var(--small-text);
 }
 
@@ -430,7 +430,7 @@ a:hover {
 }
 
 .icon-block p {
-  font-size:11px;
+  font-size: 11px;
   margin-top: 6px;
   margin-bottom: 0px;
 }
@@ -1006,7 +1006,7 @@ button.slick-prev {
   border: 0.1px solid var(--medium);
   border-radius: var(--small-radius);
   background-color: white;
-  font-size:12px;
+  font-size: 12px;
   /* font-size: var(--small-text); */
 }
 
@@ -1016,6 +1016,25 @@ button.slick-prev {
   width: 100vw;
   height: 100%;
   padding: 10px 0px 80px 0px;
+}
+
+.expiry-countdown {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 100%;
+  font-weight: 600;
+}
+
+.expiry-countdown span {
+margin-right: 5px;
+color: gray;
+}
+
+.expiry-countdown p {
+  font-size: 20px;
+  margin-left: 10px;
+  margin-bottom: 0px;
 }
 
 h1.brand-name {
@@ -1107,6 +1126,16 @@ h1.brand-name {
   color: var(--white);
 }
 
+.orange-btn:disabled {
+  background-color: rgb(255, 208, 176);
+  border-color: rgb(255, 208, 176);
+}
+
+.orange-btn:disabled:hove {
+  background-color: rgb(255, 208, 176);
+  border-color: rgb(255, 208, 176);
+}
+
 .orange-btn:hover {
   background-color: rgb(231, 94, 2);
 }
@@ -1164,7 +1193,6 @@ h1.brand-name {
   width: 100%;
   margin-top: 30px;
   margin-bottom: 20px;
-
 }
 
 .modal-animation {
@@ -1722,14 +1750,14 @@ td.purchased-col {
   justify-content: space-between;
   border: 0px;
   transition: all ease-out 0.5s;
-  width: 60px;
+  width: 45px;
 }
 
 .back-btn:hover {
   border: 0px;
   color: #220022;
   background-color: transparent;
-  width: 70px;
+  width: 55px;
 }
 
 .orderpage-coupon {
@@ -2453,7 +2481,6 @@ td.purchased-col {
   top: 10px;
   animation: 0.5s slide-up-small 0.3s ease-in-out both;
 }
-
 
 .total-financial-payments {
   display: flex;

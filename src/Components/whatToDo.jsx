@@ -26,11 +26,11 @@ const WhatToDo = () => {
       }
 
       if (currentBrand.isActive) {
-        activeBundles.push(data[i]);
+        if (new Date() - new Date(data[i].expiryDate) < 0)
+          activeBundles.push(data[i]);
+        
         currentBrand = {};
       }
-
-
     }
 
     setBundles(activeBundles);
