@@ -11,52 +11,12 @@ const settings = {
   slidesToScroll: 1,
 };
 
-const BrandCard = ({ delay, brand }) => {
+const BrandCard = ({ delay, brand, mainBrand }) => {
   return (
     <div
       style={{ animationDelay: `${(delay += 0.1)}s` }}
       className='brandcard col-sm-4'
     >
-      {/* <Lazy
-        rootMargin='300px 0 300px 0'
-        render={(status) => {
-          if (status === 'unload') {
-            return (
-              <div
-                className='brand-img'
-                style={{
-                  backgroundImage: 'url(/img/tiny.jpg)',
-                }}
-              ></div>
-            );
-          }
-          if (status === 'loading') {
-            return (
-              <div
-                className='brand-img'
-                style={{
-                  backgroundImage: 'url(/img/tiny.jpg)',
-                }}
-              ></div>
-            );
-          }
-          if (status === 'loaded') {
-            return (
-              <div
-                className='brand-img'
-                style={{
-                  backgroundImage:
-                    'url(' +
-                    (status === 'loaded' ? brand.img : '/img/tiny.jpg') +
-                    ')',
-                }}
-              ></div>
-            );
-          }
-          throw new Error('Unknown status');
-        }}
-      /> */}
-
       <Link to={`/whattodo/brand/${brand._id}`}>
         <Slider {...settings}>
           {brand.img.map((b) => (
@@ -66,18 +26,24 @@ const BrandCard = ({ delay, brand }) => {
           ))}
         </Slider>
 
-        {/* <div
-        className='brand-img'
-        style={{
-          backgroundImage: 'url(' + brand.img + ')',
-        }}
-      ></div> */}
         <h2 className='brand-title'>{brand.name}</h2>
         {/* <h3 className='brand-price'>${brand.offers[0].price}</h3> */}
         <div className='brand-category'>
           <div>{brand.category}</div>
         </div>
       </Link>
+
+      {mainBrand && (
+        <div className='brandcard-brand-identity'>
+          <div
+            className='profile-pic-circle'
+            style={{
+              backgroundImage: 'url(' + mainBrand.profilePic + ')',
+            }}
+          ></div>
+          <p>{mainBrand.name}</p>
+        </div>
+      )}
     </div>
   );
 };

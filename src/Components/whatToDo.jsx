@@ -9,12 +9,14 @@ import { getUsers } from '../services/userService';
 const WhatToDo = () => {
   const [currentCategory, setCurrentCategory] = useState('');
   const [bundles, setBundles] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   let delay = 0;
 
   const getAllProducts = async () => {
     const { data } = await getProducts();
     const { data: userz } = await getUsers();
+    setBrands(userz);
 
     var activeBundles = [];
 
@@ -28,7 +30,7 @@ const WhatToDo = () => {
       if (currentBrand.isActive) {
         if (new Date() - new Date(data[i].expiryDate) < 0)
           activeBundles.push(data[i]);
-        
+
         currentBrand = {};
       }
     }
@@ -91,7 +93,12 @@ const WhatToDo = () => {
             <Loader />
           ) : filteredBundles().length > 0 ? (
             filteredBundles().map((b) => (
-              <BrandCard key={b._id} brand={b} delay={(delay += 0.1)} />
+              <BrandCard
+                key={b._id}
+                brand={b}
+                mainBrand={brands.filter((br) => br._id === b.brandId)[0]}
+                delay={(delay += 0.1)}
+              />
             ))
           ) : (
             <div className='no-result'>

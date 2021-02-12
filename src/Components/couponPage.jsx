@@ -6,6 +6,7 @@ import RelatedBrands from './relatedBrands';
 import CouponLeftBlock from './couponLeftBlock';
 import Loader from './loader';
 import Input from './common/input';
+import { getUsers } from '../services/userService';
 import * as customerService from '../services/customerService';
 import * as orderService from '../services/orderService';
 
@@ -40,6 +41,8 @@ class CouponPage extends Component {
       const { id } = this.props.match.params;
       const { data: brand } = await getProduct(id);
       const { data } = await getProducts();
+      const { data: userz } = await getUsers();
+      this.setState({ userz: userz });
 
       const brands = data.filter(
         (d) => d.category === brand.category && d._id !== id
@@ -410,7 +413,8 @@ class CouponPage extends Component {
 
                 <RelatedBrands
                   loading={loading}
-                  brands={brands}
+                  bundles={brands}
+                  brands={this.state.userz}
                   delay={delay}
                 />
               </div>

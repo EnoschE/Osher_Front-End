@@ -2,19 +2,24 @@ import React from 'react';
 import Loader from './loader';
 import BrandCard from './brandCard';
 
-const RelatedBrands = ({ loading, brands, delay }) => {
+const RelatedBrands = ({ loading, bundles,brands, delay }) => {
   return (
     <>
       {loading ? (
         <Loader />
-      ) : brands.length > 0 ? (
+      ) : bundles.length > 0 ? (
         <div className='related-brands'>
           <div className='linee'></div>
           <h2 className='related-h2'>Related Brands</h2>
 
           <div className='row'>
-            {brands.map((b) => (
-              <BrandCard key={b._id} brand={b} delay={(delay += 0.1)} />
+            {bundles.map((b) => (
+              <BrandCard
+                key={b._id}
+                mainBrand={brands.filter((br) => br._id === b.brandId)[0]}
+                brand={b}
+                delay={(delay += 0.1)}
+              />
             ))}
             {/* : (
           <div className='no-result'>

@@ -998,7 +998,7 @@ button.slick-prev {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .brand-category div {
@@ -1009,6 +1009,37 @@ button.slick-prev {
   font-size: 12px;
   /* font-size: var(--small-text); */
 }
+
+.brandcard-brand-identity {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* background-color: yellow; */
+  margin-bottom: 20px;
+}
+
+.brandcard-brand-identity .profile-pic-circle {
+  height: 25px;
+  width: 25px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  box-shadow:none;
+  margin-bottom: 0px;
+
+  /* background-image: url('/img/tom.jpg'); */
+  background-size: cover;
+  background-position: center;
+  margin-right: 12px;
+}
+
+.brandcard-brand-identity p  {
+  margin: 0px;
+  color: var(--medium-dark);
+}
+
 
 /*====\ Coupon Page \=======*/
 
@@ -1084,7 +1115,7 @@ h1.brand-name {
   }
 
   .coupon-page-carousel {
-    height: 260px;
+    height: 160px;
   }
   .coupon-page-carousel img {
     width: 120%;
