@@ -76,7 +76,14 @@ const Footer = (props) => {
           <i className='far fa-moon'></i>
           <p>Nap</p>
         </div>
-
+        
+        <Link to='/weather'>
+            <div className='icon-block'>
+              <i className='far fa-cloud-sun'></i>
+              <p>Weather</p>
+            </div>
+        </Link>
+        
         {((user && !user.isAdmin) && (user && !user.isBrand)) && (
           <Link to='/profile'>
             <div className='icon-block'>

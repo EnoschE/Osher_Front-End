@@ -40,9 +40,30 @@ class CouponPage extends Component {
     try {
       const { id } = this.props.match.params;
       const { data: brand } = await getProduct(id);
-      const { data } = await getProducts();
+      let { data } = await getProducts();
       const { data: userz } = await getUsers();
       this.setState({ userz: userz });
+
+
+
+      var activeBundles = [];
+
+      for (var i = 0; i < data.length; i++) {
+        var currentBrand = {};
+  
+        for (var j = 0; j < userz.length; j++) {
+          if (userz[j]._id === data[i].brandId) currentBrand = userz[j];
+        }
+  
+        if (currentBrand.isActive) {
+          if (new Date() - new Date(data[i].expiryDate) < 0)
+            activeBundles.push(data[i]);
+  
+          currentBrand = {};
+        }
+      } 
+  
+      data = activeBundles;
 
       const brands = data.filter(
         (d) => d.category === brand.category && d._id !== id

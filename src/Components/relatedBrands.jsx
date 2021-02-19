@@ -2,13 +2,18 @@ import React from 'react';
 import Loader from './loader';
 import BrandCard from './brandCard';
 
-const RelatedBrands = ({ loading, bundles,brands, delay }) => {
+const RelatedBrands = ({ loading, bundles, brands, delay }) => {
+ 
+
+
+
   return (
     <>
       {loading ? (
         <Loader />
       ) : bundles.length > 0 ? (
-        <div className='related-brands'>
+          <div className='related-brands'>
+            
           <div className='linee'></div>
           <h2 className='related-h2'>Related Brands</h2>
 

@@ -32,6 +32,7 @@ import { getUsers, updatePayment } from '../services/userService';
 import { getOrders, saveOrder } from '../services/orderService';
 import AdminLoginPage from './adminLoginPage';
 import UpdateDriverProfile from './updateDriverProfile';
+import Weather from './weather';
 
 class Application extends Component {
   state = {
@@ -44,7 +45,13 @@ class Application extends Component {
     notify: '',
   };
 
- async componentDidMount() {
+  componentWillMount() {
+    this.setState({
+      visibleBack: true,
+    });
+  }
+
+  async componentDidMount() {
     const user = auth.getCurrentUser();
 
     await this.refreshAllData();
@@ -52,12 +59,11 @@ class Application extends Component {
     this.setState({
       user,
       backAddress: history.goBack,
-      visibleBack: true,
+      // visibleBack: true,
     });
   }
 
   refreshAllData = async () => {
-      
     const { data: users } = await getUsers();
 
     for (let v = 0; v < users.length; v++) {
@@ -71,7 +77,7 @@ class Application extends Component {
     }
 
     let { data: orders } = await getOrders();
-    
+
     for (var v = 0; v < orders.length; v++) {
       if (
         new Date() - new Date(orders[v].expiryDate) > 0 &&
@@ -81,8 +87,7 @@ class Application extends Component {
         await saveOrder(orders[v]);
       }
     }
-
-  }
+  };
 
   handleNotification = (notify) => {
     this.setState({ notify });
@@ -213,10 +218,18 @@ class Application extends Component {
           ></Route>
 
           <Route path='/whattodo' render={(props) => <WhatToDo {...props} />} />
+
           <Route
             path='/main'
             render={(props) => (
               <MainPage {...props} handleBack={this.handleBack} />
+            )}
+          />
+
+          <Route
+            path='/weather'
+            render={(props) => (
+              <Weather {...props} handleBack={this.handleBack} />
             )}
           />
 
@@ -248,7 +261,6 @@ class Application extends Component {
           />
           <Route path='/logout-driver' component={LogoutDriver} />
 
-          
           <Route
             path='/brand-signup/'
             render={(props) => {
@@ -298,7 +310,6 @@ class Application extends Component {
               );
             }}
           />
-
 
           <ProtectedRoute
             path='/update-password/'
