@@ -81,7 +81,6 @@ class DashboardOverview extends Component {
 
     this.setState({ users });
 
-    console.log(users)
     let { data: customers } = await getCustomers();
 
     let { data: orders } = await getOrders();

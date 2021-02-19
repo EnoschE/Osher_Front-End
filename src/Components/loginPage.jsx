@@ -102,7 +102,7 @@ class LoginPage extends Component {
 
             <div className='col-md-6 login-page-form'>
               <h1>Login</h1>
-              <p>
+              {/* <p>
                 Don't have an account yet?{' '}
                 <Link
                   to={{
@@ -112,7 +112,7 @@ class LoginPage extends Component {
                 >
                   <i>Create account</i>
                 </Link>
-              </p>
+              </p> */}
               <form onSubmit={this.handleSubmit}>
                 <Input
                   type='text'
@@ -150,14 +150,14 @@ class LoginPage extends Component {
                       </span>
                     )}
                   </button>
-                  <Link to='/brand-signup/'>
+                  {/* <Link to='/brand-signup/'>
                     <button
                       className='continue-to-shipping'
                       style={{ width: '100%' }}
                     >
                       Create Brand Account
                     </button>
-                  </Link>
+                  </Link> */}
                 </div>
               </form>
             </div>

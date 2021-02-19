@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Clock from 'react-live-clock';
 
 const Footer = (props) => {
   const {
@@ -15,8 +16,25 @@ const Footer = (props) => {
   return (
     <div className='footer'>
       <Link to='/'>
-        <h1 className='pc-only'>Osher</h1>
+        <img className='pc-only logo' src='/img/logo2.png' alt='OSHER' />
       </Link>
+
+      <div className='pc-only'>
+        <div className='clock-date-block'>
+          <div className='clock-block'>
+            <Clock
+              format={'h:mm'}
+              ticking={true}
+              timezone={'America/Toronto'}
+            />
+          </div>
+          <div className='date-block'>
+            <Clock format={'ddd'} timezone={'America/Toronto'} />
+            <Clock format={'DD MMM'} timezone={'America/Toronto'} />
+          </div>
+        </div>
+      </div>
+
       <audio className='audio-element'>
         <source src='/img/audio.mp3'></source>
       </audio>
@@ -59,12 +77,14 @@ const Footer = (props) => {
           <p>Nap</p>
         </div>
 
-        <Link to='/profile'>
-          <div className='icon-block'>
-            <i className='far fa-user-tie'></i>
-            <p>{!user ? 'Login' : 'Profile'}</p>
-          </div>
-        </Link>
+        {((user && !user.isAdmin) && (user && !user.isBrand)) && (
+          <Link to='/profile'>
+            <div className='icon-block'>
+              <i className='far fa-user-tie'></i>
+              <p>Driver</p>
+            </div>
+          </Link>
+        )}
 
         {((user && user.isAdmin) || (user && user.isBrand)) && (
           <Link to='/dashboard'>

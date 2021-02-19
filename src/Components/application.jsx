@@ -14,11 +14,6 @@ import ProtectedRoute from './common/protectedRoute';
 import Logout from './logout';
 import WhatToDo from './whatToDo';
 import CouponPage from './couponPage';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
-import './stylesheet.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import history from '../services/history';
 import NotificationBar from './common/notificationBar';
 import Dashboard from './dashboard';
@@ -27,6 +22,16 @@ import UpdateProfile from './updateProfile';
 import UpdatePassword from './updatePassword';
 import AddNewProduct from './addNewProduct';
 import BrandSignup from './brandSignup';
+import LogoutDriver from './logoutDriver';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import './stylesheet.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { getUsers, updatePayment } from '../services/userService';
+import { getOrders, saveOrder } from '../services/orderService';
+import AdminLoginPage from './adminLoginPage';
+import UpdateDriverProfile from './updateDriverProfile';
 
 class Application extends Component {
   state = {
@@ -39,13 +44,44 @@ class Application extends Component {
     notify: '',
   };
 
-  componentDidMount() {
+ async componentDidMount() {
     const user = auth.getCurrentUser();
+
+    await this.refreshAllData();
+
     this.setState({
       user,
       backAddress: history.goBack,
       visibleBack: true,
     });
+  }
+
+  refreshAllData = async () => {
+      
+    const { data: users } = await getUsers();
+
+    for (let v = 0; v < users.length; v++) {
+      if (
+        new Date() - new Date(users[v].paymentExpiry) > 0 &&
+        users[v].isActive !== false
+      ) {
+        users[v].isActive = false;
+        await updatePayment(users[v]);
+      }
+    }
+
+    let { data: orders } = await getOrders();
+    
+    for (var v = 0; v < orders.length; v++) {
+      if (
+        new Date() - new Date(orders[v].expiryDate) > 0 &&
+        orders[v].orderStatus !== 'Used'
+      ) {
+        orders[v].orderStatus = 'Expired';
+        await saveOrder(orders[v]);
+      }
+    }
+
   }
 
   handleNotification = (notify) => {
@@ -184,19 +220,6 @@ class Application extends Component {
             )}
           />
 
-          {user && (
-            <Route
-              path='/logout'
-              render={(props) => (
-                <Logout
-                  {...props}
-                  updateUser={this.updateUser}
-                  handleBack={this.handleBack}
-                />
-              )}
-            />
-          )}
-
           <Route
             path='/signup/'
             render={(props) => {
@@ -212,7 +235,20 @@ class Application extends Component {
               );
             }}
           />
-         
+
+          <Route
+            path='/logout'
+            render={(props) => (
+              <Logout
+                {...props}
+                updateUser={this.updateUser}
+                handleBack={this.handleBack}
+              />
+            )}
+          />
+          <Route path='/logout-driver' component={LogoutDriver} />
+
+          
           <Route
             path='/brand-signup/'
             render={(props) => {
@@ -246,6 +282,24 @@ class Application extends Component {
             }}
           />
 
+          <Route
+            path='/admin-login/'
+            render={(props) => {
+              if (auth.getCurrentUser()) {
+                return <Redirect to='/dashboard' />;
+              }
+              return (
+                <AdminLoginPage
+                  {...props}
+                  handleBack={this.handleBack}
+                  updateUser={this.updateUser}
+                  handleNotification={this.handleNotification}
+                />
+              );
+            }}
+          />
+
+
           <ProtectedRoute
             path='/update-password/'
             render={(props) => (
@@ -278,6 +332,18 @@ class Application extends Component {
               />
             )}
           />
+
+          <ProtectedRoute
+            path='/update-driver'
+            render={(props) => (
+              <UpdateDriverProfile
+                {...props}
+                updateUser={this.updateUser}
+                handleNotification={this.handleNotification}
+              />
+            )}
+          />
+
           <ProtectedRoute
             path='/dashboard'
             render={(props) => (

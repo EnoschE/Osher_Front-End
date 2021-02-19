@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import DashboardOverview from './dashboardOverview';
 import DashboardLeftBlock from './dashboardLeftBlock';
 import Customers from './customers';
@@ -78,44 +78,49 @@ class Dashboard extends Component {
       alreadyExpired,
     } = this.state;
 
+
+    if (!auth.getCurrentUser().isAdmin && !auth.getCurrentUser().isBrand) return <Redirect to='/profile' />;
+
     return (
-      <div className='dashboard'>
-        {warningAlert && (
-          <div
-            className={
-              alertBox
-                ? 'warning-alert-background'
-                : 'warning-alert-background hide-warning-alert-bg'
-            }
-          >
+        <div className='dashboard'>
+          {warningAlert && (
             <div
               className={
-                alertBox ? 'warning-alert' : 'warning-alert hide-warning-alert'
+                alertBox
+                  ? 'warning-alert-background'
+                  : 'warning-alert-background hide-warning-alert-bg'
               }
             >
               <div
-                className='notification-pic'
-                style={{ backgroundImage: 'url(/img/alert.png)' }}
-              ></div>
+                className={
+                  alertBox
+                    ? 'warning-alert'
+                    : 'warning-alert hide-warning-alert'
+                }
+              >
+                <div
+                  className='notification-pic'
+                  style={{ backgroundImage: 'url(/img/alert.png)' }}
+                ></div>
 
-              <div className='alert-text-block'>
-                <h6>
-                  {alreadyExpired
-                    ? 'Your payment have expired '
-                    : 'Your payment will expire '}
-                  {moment(myInfo.paymentExpiry).fromNow()}
-                </h6>
+                <div className='alert-text-block'>
+                  <h6>
+                    {alreadyExpired
+                      ? 'Your payment have expired '
+                      : 'Your payment will expire '}
+                    {moment(myInfo.paymentExpiry).fromNow()}
+                  </h6>
 
-                <div>
-                  <button>Contact Admin</button>
-                  <button onClick={this.hideModal}>Dismiss</button>
+                  <div>
+                    <button>Contact Admin</button>
+                    <button onClick={this.hideModal}>Dismiss</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* {warningAlert && (
+          {/* {warningAlert && (
         
           <div className='warning-alert-background'>
             <div className='warning-alert'>
@@ -139,140 +144,141 @@ class Dashboard extends Component {
           </div>
         )} */}
 
-        <div className='row'>
-          <DashboardLeftBlock currentBlock={currentBlock} />
+          <div className='row'>
+            <DashboardLeftBlock currentBlock={currentBlock} />
 
-          <div className='col-md-10 dashboard-right-block'>
-            <Switch>
-              {(user.isAdmin || user.isBrand) && (
-                <Route
-                  path='/dashboard/customers/customer/:id'
-                  render={(props) => (
-                    <CustomerPage
-                      {...props}
-                      updateDashboardMenu={this.updateDashboardMenu}
-                    />
-                  )}
-                />
-              )}
-
-              {(user.isAdmin || user.isBrand) && (
-                <Route
-                  path='/dashboard/locations'
-                  render={(props) => (
-                    <Locations
-                      {...props}
-                      updateDashboardMenu={this.updateDashboardMenu}
-                    />
-                  )}
-                />
-              )}
-              
-              {(user.isAdmin || user.isBrand) && (
-                <Route
-                  path='/dashboard/financials'
-                  render={(props) => (
-                    <Financials
-                      {...props}
-                      updateDashboardMenu={this.updateDashboardMenu}
-                    />
-                  )}
-                />
-              )}
-
-              {user.isAdmin && (
-                <Route
-                  path='/dashboard/brands/brand/:id'
-                  render={(props) => (
-                    <BrandDetailsPage
-                      {...props}
-                      updateDashboardMenu={this.updateDashboardMenu}
-                    />
-                  )}
-                />
-              )}
-
-              {user.isAdmin && (
-                <Route
-                  path='/dashboard/brands'
-                  render={(props) => (
-                    <Brands
-                      {...props}
-                      updateDashboardMenu={this.updateDashboardMenu}
-                    />
-                  )}
-                />
-              )}
-
-              {(user.isAdmin || user.isBrand) && (
-                <Route
-                  path='/dashboard/customers'
-                  render={(props) => (
-                    <Customers
-                      {...props}
-                      updateDashboardMenu={this.updateDashboardMenu}
-                    />
-                  )}
-                />
-              )}
-
-              {(user.isAdmin || user.isBrand) && (
-                <Route
-                  path='/dashboard/products'
-                  render={(props) => (
-                    <ProductsDashboard
-                      {...props}
-                      updateDashboardMenu={this.updateDashboardMenu}
-                    />
-                  )}
-                />
-              )}
-
-              <Route
-                path='/dashboard/orders/order/:id'
-                render={(props) => (
-                  <OrderPage
-                    {...props}
-                    updateDashboardMenu={this.updateDashboardMenu}
+            <div className='col-md-10 dashboard-right-block'>
+              <Switch>
+                {(user.isAdmin || user.isBrand) && (
+                  <Route
+                    path='/dashboard/customers/customer/:id'
+                    render={(props) => (
+                      <CustomerPage
+                        {...props}
+                        updateDashboardMenu={this.updateDashboardMenu}
+                      />
+                    )}
                   />
                 )}
-              />
 
-              <Route
-                path='/dashboard/orders'
-                render={(props) => (
-                  <Orders
-                    {...props}
-                    updateDashboardMenu={this.updateDashboardMenu}
+                {(user.isAdmin || user.isBrand) && (
+                  <Route
+                    path='/dashboard/locations'
+                    render={(props) => (
+                      <Locations
+                        {...props}
+                        updateDashboardMenu={this.updateDashboardMenu}
+                      />
+                    )}
                   />
                 )}
-              />
 
-              <Route
-                path='/dashboard/report'
-                render={(props) => (
-                  <Report
-                    {...props}
-                    updateDashboardMenu={this.updateDashboardMenu}
+                {(user.isAdmin || user.isBrand) && (
+                  <Route
+                    path='/dashboard/financials'
+                    render={(props) => (
+                      <Financials
+                        {...props}
+                        updateDashboardMenu={this.updateDashboardMenu}
+                      />
+                    )}
                   />
                 )}
-              />
 
-              <Route
-                exact
-                path='/dashboard/'
-                render={(props) => (
-                  <DashboardOverview
-                    {...props}
-                    updateDashboardMenu={this.updateDashboardMenu}
+                {user.isAdmin && (
+                  <Route
+                    path='/dashboard/brands/brand/:id'
+                    render={(props) => (
+                      <BrandDetailsPage
+                        {...props}
+                        updateDashboardMenu={this.updateDashboardMenu}
+                      />
+                    )}
                   />
                 )}
-              />
-            </Switch>
+
+                {user.isAdmin && (
+                  <Route
+                    path='/dashboard/brands'
+                    render={(props) => (
+                      <Brands
+                        {...props}
+                        updateDashboardMenu={this.updateDashboardMenu}
+                      />
+                    )}
+                  />
+                )}
+
+                {(user.isAdmin || user.isBrand) && (
+                  <Route
+                    path='/dashboard/customers'
+                    render={(props) => (
+                      <Customers
+                        {...props}
+                        updateDashboardMenu={this.updateDashboardMenu}
+                      />
+                    )}
+                  />
+                )}
+
+                {(user.isAdmin || user.isBrand) && (
+                  <Route
+                    path='/dashboard/products'
+                    render={(props) => (
+                      <ProductsDashboard
+                        {...props}
+                        updateDashboardMenu={this.updateDashboardMenu}
+                      />
+                    )}
+                  />
+                )}
+
+                <Route
+                  path='/dashboard/orders/order/:id'
+                  render={(props) => (
+                    <OrderPage
+                      {...props}
+                      updateDashboardMenu={this.updateDashboardMenu}
+                    />
+                  )}
+                />
+
+                <Route
+                  path='/dashboard/orders'
+                  render={(props) => (
+                    <Orders
+                      {...props}
+                      updateDashboardMenu={this.updateDashboardMenu}
+                    />
+                  )}
+                />
+
+                <Route
+                  path='/dashboard/report'
+                  render={(props) => (
+                    <Report
+                      {...props}
+                      updateDashboardMenu={this.updateDashboardMenu}
+                    />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path='/dashboard/'
+                  render={(props) => (
+                    <DashboardOverview
+                      {...props}
+                      updateDashboardMenu={this.updateDashboardMenu}
+                    />
+                  )}
+                />
+              </Switch>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+
   }
 }
 

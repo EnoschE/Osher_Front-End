@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
 import Joi from 'joi-browser';
 import Input from './common/input';
+import { Link, Redirect } from 'react-router-dom';
 import auth from '../services/authService';
-import * as userService from '../services/userService';
 
-class SignupPage extends Component {
+class AdminLoginPage extends Component {
   state = {
-    data: { username: '', password: '', name: '', profilePic: '/img/ava3.jpg' },
+    data: { username: '', password: '' },
     errors: {},
     isProcessing: false,
   };
 
-  schema = {
-    username: Joi.string().required().email().label('Username'),
-    password: Joi.string().required().min(5).label('Password'),
-    name: Joi.string().required().label('Name'),
-    profilePic: Joi.string().label('Profile Pic'),
-  };
-
   componentDidMount() {
     window.scrollTo(0, 0);
+    document.title = 'Login - Osher';
+    this.props.handleBack(true);
   }
+
+  schema = {
+    username: Joi.string().required().label('Username'),
+    password: Joi.string().required().label('Password'),
+  };
 
   validate = () => {
     const options = { abortEarly: false };
@@ -65,22 +64,19 @@ class SignupPage extends Component {
     try {
       this.setState({ isProcessing: true });
       const { data } = this.state;
-      data.profilePic = '/img/ava3.jpg';
-
-      const response = await userService.register(data);
-      auth.loginWithJwt(response.headers['x-auth-token']);
+      await auth.login(data.username, data.password);
+      const user = auth.getCurrentUser();
 
       this.props.handleNotification({
-        message: 'Welcome, ' + data.name + '!',
-        img: data.profilePic,
+        message: 'Welcome, ' + user.name + '!',
+        img: user.profilePic,
       });
 
       const { state } = this.props.location;
 
       this.props.updateUser();
-      this.props.history.push(state ? state.from.pathname : '/');
+      this.props.history.push(state ? state.from.pathname : '/dashboard');
 
-      // window.location = '/';
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         this.setState({ isProcessing: false });
@@ -103,24 +99,9 @@ class SignupPage extends Component {
             <div className='col-md-3'></div>
 
             <div className='col-md-6 login-page-form'>
-              <h1>Create Driver Account</h1>
+              <h1>Admin Login</h1>
 
-              <p>
-                Already have an account?{' '}
-                <Link to='/login/'>
-                  <i>Login</i>
-                </Link>
-              </p>
               <form onSubmit={this.handleSubmit}>
-                <Input
-                  type='text'
-                  placeholder='Name'
-                  name='name'
-                  value={data.name}
-                  onChange={this.handleChange}
-                  error={errors.name}
-                />
-
                 <Input
                   type='text'
                   placeholder='Username'
@@ -129,7 +110,6 @@ class SignupPage extends Component {
                   onChange={this.handleChange}
                   error={errors.username}
                 />
-
                 <Input
                   type='password'
                   placeholder='Password'
@@ -139,18 +119,26 @@ class SignupPage extends Component {
                   error={errors.password}
                 />
 
-                <button
-                  disabled={this.validate() || isProcessing}
-                  className='login-btn continue-to-shipping'
-                >
-                  {!isProcessing ? (
-                    'Create'
-                  ) : (
-                    <span>
-                      Creating... <i className='fas fa-circle-notch'></i>
-                    </span>
-                  )}
-                </button>
+                <p>
+                  <Link to='/forgot-password/'>
+                    <i>Forgot your password?</i>
+                  </Link>
+                </p>
+
+                <div className='login-page-btns'>
+                  <button
+                    disabled={this.validate() || isProcessing}
+                    className='login-btn continue-to-shipping'
+                  >
+                    {!isProcessing ? (
+                      'Login'
+                    ) : (
+                      <span>
+                        Logining in... <i className='fas fa-circle-notch'></i>
+                      </span>
+                    )}
+                  </button>
+                </div>
               </form>
             </div>
 
@@ -162,4 +150,4 @@ class SignupPage extends Component {
   }
 }
 
-export default SignupPage;
+export default AdminLoginPage;

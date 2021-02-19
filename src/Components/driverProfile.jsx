@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import auth from '../services/authService';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { getOrders } from '../services/orderService';
 import Loader from './loader';
 
@@ -27,6 +27,9 @@ class DriverProfile extends Component {
     // const { user, orders, loading } = this.state;
     const { user, loading } = this.state;
 
+    if (auth.getCurrentUser().isAdmin || auth.getCurrentUser().isBrand)
+      return <Redirect to='/dashboard' />;
+
     return (
       <div className='main-background'>
         <div className=' profile-page'>
@@ -35,8 +38,13 @@ class DriverProfile extends Component {
               <Loader />
             ) : (
               <div className='row'>
-                <div className='col-sm-4 p-2'>
+                <div className='col-sm-6'>
                   <div className='profile-left-block'>
+                    <h5>You're riding with</h5>
+                    <h1>
+                      <b>{user.name}</b>
+                    </h1>
+                    <br />
                     <div
                       className='profile-pic-circle'
                       style={{
@@ -44,36 +52,42 @@ class DriverProfile extends Component {
                         backgroundImage: 'url(' + user.profilePic + ')',
                       }}
                     ></div>
-                    <div className='profile-left-text'>
-                      {/* <h2>Muhammad Aqib</h2> */}
-                      <h2>{user.name}</h2>
-                      {/* {user && user.isAdmin && <h6>Admin</h6>} */}
-                      <br />
-                      <p>Email: {user.email}</p>
-                      <p>Phone: {user.phone || 'Not set yet'}</p>
-                      <p>Address: {user.address || 'Not set yet'}</p>
-                      <p>City: {user.city || 'Not set yet'}</p>
-
-                      <Link to='/update-profile'>
-                        <button>Update Profile</button>
-                      </Link>
-                    </div>
                   </div>
                 </div>
                 {!loading && (
-                  <div className='col-sm-8'>
-                    <div className='row'>
+                  <div className='col-sm-6'>
+                    <div className='profile-right-box'>
+                      <h1>
+                        <b>About Me</b>
+                      </h1>
+
+                      <h6 className='grey-text'>Hometown</h6>
+                      <h5>{user.address || 'Not set yet'}</h5>
+
+                      <h6 className='grey-text'>Favorite Food</h6>
+                      <h5>{user.city || 'Not set yet'}</h5>
+
+                        <h6 className='grey-text'>Favorite Hobby</h6>
+                      <h5>{user.country || 'Not set yet'}</h5>
+
+                      <h6 className='grey-text'>Favorite Sport or Team</h6>
+                      <h5>{user.postalCode || 'Not set yet'}</h5>
+
+                      <h6 className='grey-text'>Ask me about</h6>
+                      <h5>{user.phone || 'Not set yet'}</h5>
+
+                      <h6 className='grey-text'>My tips go towards</h6>
+                      <h5>{user.trips || 'Not set yet'}</h5>
+
+                    </div>
+                    {/* <div className='row'>
                       <div className='col-sm-4 p-2'>
                         <div
                           className='profile-right-block'
                           style={{ animationDelay: '0.2s' }}
                         >
                           <h1>
-                            24{' '}
-                            {/* {
-                              orders.filter((o) => o.orderStatus === 'Placed')
-                                .length
-                            } */}
+                            24
                           </h1>
                           <h6>Unapproved orders</h6>
                         </div>
@@ -86,10 +100,6 @@ class DriverProfile extends Component {
                         >
                           <h1>
                             34
-                            {/* {
-                              orders.filter((o) => o.orderStatus === 'Approved')
-                                .length
-                            } */}
                           </h1>
                           <h6>Approved orders</h6>
                         </div>
@@ -101,12 +111,7 @@ class DriverProfile extends Component {
                           style={{ animationDelay: '0.4s' }}
                         >
                           <h1>
-                            23{' '}
-                            {/* {
-                              orders.filter(
-                                (o) => o.orderStatus === 'Cancelled'
-                              ).length
-                            } */}
+                            23
                           </h1>
                           <h6>Cancelled orders</h6>
                         </div>
@@ -120,12 +125,7 @@ class DriverProfile extends Component {
                           style={{ animationDelay: '0.4s' }}
                         >
                           <h1>
-                            23{' '}
-                            {/* {
-                              orders.filter(
-                                (o) => o.orderStatus === 'Delivered'
-                              ).length
-                            } */}
+                            23
                           </h1>
                           <h6>Delivered orders</h6>
                         </div>
@@ -137,11 +137,7 @@ class DriverProfile extends Component {
                           style={{ animationDelay: '0.5s' }}
                         >
                           <h1>
-                            14{' '}
-                            {/* {
-                              orders.filter((o) => o.orderStatus === 'Recieved')
-                                .length
-                            } */}
+                            14
                           </h1>
                           <h6>Received orders</h6>
                         </div>
@@ -153,8 +149,6 @@ class DriverProfile extends Component {
                           style={{ animationDelay: '0.6s' }}
                         >
                           <h1>438</h1>
-                          {/* <h1>{this.calculateTotalItems(orders)}</h1> */}
-                          {/* <h6>Items {user.isAdmin ? 'sold' : 'purchased'}</h6> */}
                           <h6>Items sold</h6>
                         </div>
                       </div>
@@ -183,7 +177,7 @@ class DriverProfile extends Component {
                           </div>
                         </Link>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 )}
               </div>

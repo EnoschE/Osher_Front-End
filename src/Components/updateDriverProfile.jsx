@@ -7,7 +7,7 @@ import Input from './common/input';
 import * as userService from '../services/userService';
 import auth from '../services/authService';
 
-class UpdateProfile extends Component {
+class UpdateDriverProfile extends Component {
   state = {
     isProcessing: false,
     file: '',
@@ -21,6 +21,7 @@ class UpdateProfile extends Component {
       address: '',
       city: '',
       country: '',
+      trips: '',
       postalCode: '',
 
       //   theme: '',
@@ -34,11 +35,12 @@ class UpdateProfile extends Component {
     email: Joi.string().required().email().label('Username'),
     password: Joi.string().required().min(5).label('Password'),
     name: Joi.string().required().label('Name'),
-    phone: Joi.string().label('Phone Number'),
-    address: Joi.string().label('Address'),
-    city: Joi.string().label('City'),
-    country: Joi.string().label('Country'),
-    postalCode: Joi.string().label('Postal code'),
+    phone: Joi.string().label('Ask me about'),
+    address: Joi.string().label('Hometown'),
+    city: Joi.string().label('Favorite Food'),
+    country: Joi.string().label('Favorite Hobby'),
+    trips: Joi.string().label('Trips'),
+    postalCode: Joi.string().label('Favorite Sports or Team'),
   };
 
   async componentDidMount() {
@@ -66,6 +68,7 @@ class UpdateProfile extends Component {
       city: user.city || '',
       country: user.country || '',
       postalCode: user.postalCode || '',
+      trips: user.trips || '',
       //   theme: user.theme,
     };
   }
@@ -126,41 +129,7 @@ class UpdateProfile extends Component {
           });
       }
     );
-
-    // const pic = new FormData();
-    // pic.append('photo', file);
-
-    // const { data: imagePreviewUrl } = await uploadImage(pic, {
-    //   onUploadProgress: (pe) => {
-    //     this.setState({
-    //       loaded: (pe.loaded / pe.total) * 100,
-    //     });
-    //   },
-    // });
-    // this.setState({ imagePreviewUrl, file });
-
-    // return false;
   };
-
-  // handleImageUpload = async (e) => {
-  //   e.preventDefault();
-
-  //   const pic = new FormData();
-  //   pic.append('photo', this.state.file);
-
-  //   const { data: imagePreviewUrl } = await uploadImage(pic, {
-  //     onUploadProgress: (pe) => {
-  //       this.setState({
-  //         loaded: (pe.loaded / pe.total) * 100,
-  //       });
-  //     },
-  //   });
-  //   // const { data } = this.state;
-  //   // data.profilePic = imagePreviewUrl;
-  //   this.setState({ imagePreviewUrl });
-
-  //   return false;
-  // };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -187,7 +156,7 @@ class UpdateProfile extends Component {
       });
 
       this.props.updateUser();
-      this.props.history.push('/dashboard/');
+      this.props.history.push('/profile');
       // window.location = '/';
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -213,23 +182,22 @@ class UpdateProfile extends Component {
 
     return (
       <div className='main-background'>
-        <div className='login-page' style={{ marginTop: '-70px' }}>
+        <div
+          className='login-page update-driver'
+          style={{ marginTop: '-70px' }}
+        >
           <div className='row'>
             <div className='col-md-3'></div>
 
             <div className='col-md-6 login-page-form'>
-              <Link to='/dashboard'>
+              <Link to='/profile'>
                 <button className='back-btn'>
                   <i className='fas fa-angle-double-left'></i> Back
                 </button>
               </Link>
-              <h1>Update Profile</h1>
+              <h1>Update Driver Profile</h1>
 
               <div className='profile-pic-block'>
-                {/* <input type='file' onChange={(e) => this._handleImageChange(e)} /> */}
-                {/* <button type='submit' onClick={(e) => this.handleImageUpload(e)}>
-                Upload Image
-              </button> */}
                 <div
                   className='profile-pic-circle'
                   style={{ backgroundImage: 'url(' + imagePreviewUrl + ')' }}
@@ -276,72 +244,74 @@ class UpdateProfile extends Component {
                   error={errors.name}
                 />
 
-                <label htmlFor=''>Username</label>
+                <label htmlFor=''>Email</label>
                 <Input
                   type='text'
-                  placeholder='Username'
+                  placeholder='Email'
                   name='email'
                   value={data.email}
                   onChange={this.handleChange}
                   error={errors.email}
                 />
 
-                <label htmlFor=''>Complete address</label>
+                <label htmlFor=''>Hometown</label>
                 <Input
                   type='text'
-                  placeholder='Complete address'
+                  placeholder='Hometown'
                   name='address'
                   value={data.address || ''}
                   onChange={this.handleChange}
                   error={errors.address}
                 />
 
-                <label htmlFor=''>City</label>
+                <label htmlFor=''>Favorite Food</label>
                 <Input
                   type='text'
-                  placeholder='City'
+                  placeholder='Favorite Food'
                   name='city'
                   value={data.city || ''}
                   onChange={this.handleChange}
                   error={errors.city}
                 />
-                <div style={{ width: '58%', display: 'inline-block' }}>
-                  <label htmlFor=''>Country</label>
-                  <Input
-                    type='text'
-                    placeholder='Country'
-                    name='country'
-                    value={data.country || ''}
-                    onChange={this.handleChange}
-                    error={errors.country}
-                  />
-                </div>
 
-                <div
-                  style={{
-                    width: '40%',
-                    display: 'inline-block',
-                    marginLeft: '2%',
-                  }}
-                >
-                  <label htmlFor=''>Postal code</label>
-                  <Input
-                    type='text'
-                    placeholder='Postal code'
-                    name='postalCode'
-                    value={data.postalCode || ''}
-                    onChange={this.handleChange}
-                    error={errors.postalCode}
-                  />
-                </div>
-                <label htmlFor=''>Phone Number</label>
+                <label htmlFor=''>Favorite Hobby</label>
                 <Input
                   type='text'
-                  placeholder='Phone Number'
+                  placeholder='Favorite Hobby'
+                  name='country'
+                  value={data.country || ''}
+                  onChange={this.handleChange}
+                  error={errors.country}
+                />
+
+                <label htmlFor=''>Favorite Sports or Team</label>
+                <Input
+                  type='text'
+                  placeholder='Favorite Sports or Team'
+                  name='postalCode'
+                  value={data.postalCode || ''}
+                  onChange={this.handleChange}
+                  error={errors.postalCode}
+                />
+
+                <label htmlFor=''>Ask me About</label>
+                <Input
+                  type='text'
+                  placeholder='Ask me About'
                   name='phone'
                   value={data.phone || ''}
                   onChange={this.handleChange}
                   error={errors.phone}
+                />
+
+                <label htmlFor=''>My tips go towards</label>
+                <Input
+                  type='text'
+                  placeholder='My tips go towards'
+                  name='trips'
+                  value={data.trips || ''}
+                  onChange={this.handleChange}
+                  error={errors.trips}
                 />
 
                 <Link to='/update-password'>
@@ -379,4 +349,4 @@ class UpdateProfile extends Component {
   }
 }
 
-export default UpdateProfile;
+export default UpdateDriverProfile;

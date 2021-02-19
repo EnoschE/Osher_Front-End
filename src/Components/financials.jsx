@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { getOrders, saveOrder } from '../services/orderService';
-import { getUsers } from '../services/userService';
 import auth from '../services/authService';
 import Loader from './loader';
-// import SearchInput from './common/searchInput';
-// import OrdersTable from './ordersTable';
 import ChooseBrand from './common/chooseBrand';
 import { getFinancials } from '../services/financialService';
 import FinanceTable from './financeTable';
@@ -15,7 +11,6 @@ class Financials extends Component {
       'Active',
       'Used',
       'Expired',
-      // , 'Delivered', 'Recieved', 'Cancelled'
     ],
     user: '',
     orders: [],
@@ -31,34 +26,18 @@ class Financials extends Component {
     window.scrollTo(0, 0);
     this.props.updateDashboardMenu('financials');
 
-    const allStatus = ['All', ...this.state.allStatus];
-    this.setState({ allStatus });
+    // const allStatus = ['All', ...this.state.allStatus];
+    // this.setState({ allStatus });
 
     const user = auth.getCurrentUser();
     this.setState({ user });
 
-    const { data: users } = await getUsers();
-    this.setState({ users });
-
-    let { data: orders } = await getOrders();
-
     let { data: financials } = await getFinancials();
 
-    if (!user.isAdmin) {
-      orders = orders.filter((o) => o.brandId === user._id);
-    }
+    if (!user.isAdmin) 
+      financials = financials.filter(f=> f.brandId === user._id)
 
-    for (var i = 0; i < orders.length; i++) {
-      if (
-        new Date() - new Date(orders[i].expiryDate) > 0 &&
-        orders[i].orderStatus !== 'Used'
-      ) {
-        orders[i].orderStatus = 'Expired';
-        await saveOrder(orders[i]);
-      }
-    }
-
-    this.setState({ orders, financials, loading: false });
+    this.setState({  financials, loading: false });
   }
 
   handleStatusSelect = (status) => {
@@ -87,17 +66,6 @@ class Financials extends Component {
     if (user.isAdmin && currentBrand) {
       filtered = filtered.filter((o) => o.brandId === currentBrand);
     }
-
-    // if (searchQuery)
-    //   filtered = orders.filter(
-    //     (o) =>
-    //       o.coupon.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //       o.name.toLowerCase().includes(searchQuery.toLowerCase())
-    //   );
-    // else if (status !== 'All')
-    //   filtered = orders.filter((o) => o.orderStatus === status);
-
-    // filtered = filtered.reverse();
 
     let filtered2 = [];
 
