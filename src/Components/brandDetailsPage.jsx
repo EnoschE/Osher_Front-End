@@ -21,6 +21,7 @@ class BrandDetailsPage extends Component {
     deletePopUp: false,
     expiryDate: new Date(),
     payment: '',
+    isProcessing: false,
   };
 
   async componentDidMount() {
@@ -106,13 +107,13 @@ class BrandDetailsPage extends Component {
   updateBrand = async () => {
     try {
       // this.setState({ isProcessing: true });
+      this.setState({ isProcessing: true });
       const { user, expiryDate, payment } = this.state;
       user.paymentExpiry = expiryDate;
       user.payment = payment;
 
-      
-       await userService.updatePayment(user);
-      
+      await userService.updatePayment(user);
+
       const finance = {
         brandId: user._id,
         brandName: user.name,
@@ -120,11 +121,10 @@ class BrandDetailsPage extends Component {
         payment: payment,
         expiryDate: expiryDate,
         publishDate: new Date(),
-      }
+      };
 
-      const resy = await saveFinancial(finance)
-      console.log(resy)
-      
+      await saveFinancial(finance);
+
       // auth.logout();
       // auth.loginWithJwt(response.headers['x-auth-token']);
 
@@ -133,6 +133,7 @@ class BrandDetailsPage extends Component {
       //   img: '/img/success.png',
       // });
 
+      this.setState({ isProcessing: false });
       this.props.history.push('/dashboard/brands');
       // window.location = '/';
     } catch (ex) {
@@ -158,6 +159,7 @@ class BrandDetailsPage extends Component {
       orders,
       expiryDate,
       deletePopup,
+      isProcessing,
       payment,
     } = this.state;
 
@@ -190,7 +192,7 @@ class BrandDetailsPage extends Component {
                   {/* <h2>Offer: {deleteRequestedOffer.offerDetails}</h2> */}
                 </div>
               </div>
-              <button onClick={this.updateBrand}>Yes</button>
+              <button disabled={isProcessing} onClick={this.updateBrand}>Yes</button>
               <button onClick={() => this.handleDeletePopUp('')}>No</button>
             </div>
           </React.Fragment>
@@ -214,7 +216,7 @@ class BrandDetailsPage extends Component {
                 <div className='col-md-5 p-2'>
                   <div
                     className='profile-right-block dashboard-left-block brand-details-left'
-                    style={{ animationDelay: '0.3s', marginBottom: '20px'}}
+                    style={{ animationDelay: '0.3s', marginBottom: '20px' }}
                   >
                     <br />
                     <div
