@@ -739,7 +739,7 @@ a:hover {
 .grey-text {
   color: rgb(156, 156, 156);
   font-weight: 600;
-  margin-top: 23px;
+  margin-top: 21px;
   margin-bottom: 3px;
   font-size: var(--small-text);
 }
@@ -1134,7 +1134,7 @@ button.slick-prev {
 .coupon-page {
   width: 100vw;
   height: 100%;
-  padding: 10px 0px 80px 0px;
+  padding: 15px 0px 80px 0px;
 }
 
 .expiry-countdown {
