@@ -32,7 +32,7 @@ p {
   --xlarge-text: 60px;
   --large-text: 40px;
   --medium-text: 30px;
-  --small-text: 14px;
+  --small-text: 12px;
 }
 
 /*===\ Animations \===*/
@@ -197,7 +197,7 @@ button {
   color: var(--dark);
   transition: all ease-out 0.3s;
   border-radius: var(--radius);
-  font-size: 13px;
+  font-size: var(--small-text);
 }
 
 button:hover {
@@ -214,7 +214,7 @@ select {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=);
   padding: 0.5em;
   padding-right: 35px;
-  font-size: 13px;
+  font-size: var(--small-text);
   border-radius: 0px;
   border: 0.1px solid #494949;
   color: #444444;
@@ -229,7 +229,7 @@ textarea {
   background-color: transparent;
   color: #444444;
   padding: 10px 15px;
-  font-size: 15px;
+  font-size: var(--small-text);
   border: 1px solid #ced4da;
   border-radius: 0px;
   resize: none;
@@ -247,7 +247,7 @@ input[type='text'] {
   background-color: transparent;
   color: #444444;
   padding: 20px 15px;
-  font-size: 15px;
+  font-size: var(--small-text);
   border-radius: 0px;
 }
 
@@ -261,7 +261,7 @@ input[type='password'] {
   background-color: transparent;
   color: #444444;
   padding: 20px 15px;
-  font-size: 15px;
+  font-size: var(--small-text);
   border-radius: 0px;
 }
 
@@ -279,7 +279,7 @@ input[type='number'] {
   background-color: transparent;
   color: #444444;
   padding: 20px 15px;
-  font-size: 15px;
+  font-size: var(--small-text);
   border-radius: 0px;
 }
 input[type='number']::-webkit-inner-spin-button,
@@ -1291,21 +1291,38 @@ h1.brand-name {
   animation: 0.5s fade-in 0s ease-in-out both;
 }
 
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 35px solid transparent;
+  border-right: 35px solid transparent;
+  border-bottom: 70px solid orange;
+}
+
 .getuserinfo {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   flex-direction: column;
   padding: 40px 70px;
   height: 400px;
   width: 700px;
+  overflow: hidden;
   box-shadow: var(--small-shadow);
   background-color: white;
   border-radius: var(--radius);
   margin-bottom: 20px;
 
+  position: relative;
   transition: all ease-in-out 0.5s;
   animation: 0.5s fade-in-up 0.1s ease-in-out both;
+}
+
+.getuserinfo-img {
+  width: 280px;
+  position: absolute;
+  top: 10px;
+  right: -45px;
 }
 
 .getuserinfo input[type='text'] {
@@ -1315,21 +1332,41 @@ h1.brand-name {
 }
 
 .modal-animation {
-  text-align: center;
-  width: 100%;
-
+  /* text-align: center; */
+  width: 65%;
   animation: 0.5s slide-up-small 0.1s ease-in-out both;
+}
+
+.visit  {
+font-size: 42px;
+}
+
+.modal-animation p {
+  color: rgb(161, 161, 161);
+}
+
+.modal-continue-btn {
+  background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+  color: white;  
+  width: 150px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .modal-continue-btn:disabled {
   background-color: rgb(255, 233, 220);
   border-color: rgb(255, 233, 220);
+  
+}
+
+.warning-red {
+  font-size: var(--small-text);
 }
 
 .modal-continue-btn:disabled:hover {
   background-color: rgb(255, 233, 220);
   border-color: rgb(255, 233, 220);
-  color: var(--dark);
+  color: white;
 }
 
 .hide-modal {
@@ -1351,13 +1388,16 @@ h1.brand-name {
   width: 30px;
   height: 30px;
   padding: 0;
-  top: 20px;
-  left: 20px;
+  top: 15px;
+  left: 15px;
   border-color: white;
+  font-size: 18px;
+  color: gray;
 }
 
 .modal-back-btn {
-  margin-top: 16px;
+  margin-top: 6px;
+  width: 150px;
   text-align: center;
 }
 
@@ -1368,12 +1408,13 @@ h1.brand-name {
 .modal-back-btn p {
   cursor: pointer;
   display: inline;
+  color: var(--dark);
 }
 
 .coupon-box {
   /* background-color: var(--light); */
-  padding: 15px;
-  margin: 20px;
+  padding: 15px 0px;
+  margin: 20px 0px;
 }
 
 .coupon-box h1 {

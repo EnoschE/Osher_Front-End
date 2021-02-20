@@ -17,7 +17,7 @@ const BrandsTable = ({
   const isActive = (date) => {
     if (new Date() - new Date(date) > -432000000)
       return (
-        <span style={{ color: '#e20606', fontSize: '30px', lineHeight: '2px' }}>
+        <span style={{ color: '#e20606', fontSize: '20px', lineHeight: '2px' }}>
           {' '}
           *
         </span>
@@ -97,7 +97,7 @@ const BrandsTable = ({
               <td className='hide-col purchased-col'>
                 {calculateTotalOrders(o._id)}
               </td>
-              <td className='hide-col'>{calculateTotalCustomers(o._id)}</td>
+              <td className='hide-col purchased-col'>{calculateTotalCustomers(o._id)}</td>
               {/* <td className='hide-col'>
                 {o.isActive? "Active": 'Disabled'}
               </td> */}

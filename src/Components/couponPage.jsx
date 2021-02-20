@@ -44,25 +44,23 @@ class CouponPage extends Component {
       const { data: userz } = await getUsers();
       this.setState({ userz: userz });
 
-
-
       var activeBundles = [];
 
       for (var i = 0; i < data.length; i++) {
         var currentBrand = {};
-  
+
         for (var j = 0; j < userz.length; j++) {
           if (userz[j]._id === data[i].brandId) currentBrand = userz[j];
         }
-  
+
         if (currentBrand.isActive) {
           if (new Date() - new Date(data[i].expiryDate) < 0)
             activeBundles.push(data[i]);
-  
+
           currentBrand = {};
         }
-      } 
-  
+      }
+
       data = activeBundles;
 
       const brands = data.filter(
@@ -280,17 +278,35 @@ class CouponPage extends Component {
               className={emailModal ? 'getuserinfo' : 'getuserinfo hide-modal'}
             >
               {currentModal !== 'coupon' && (
-                <button className='modal-hide-btn' onClick={this.hideModal}>
-                  X
-                </button>
+                <>
+                  <button className='modal-hide-btn' onClick={this.hideModal}>
+                    X
+                  </button>
+                  <img
+                    className='getuserinfo-img'
+                    src='/img/signup.png'
+                    alt='SIGNUP'
+                  />
+                </>
+              )}
+              {currentModal === 'coupon' && (
+                  <img
+                    className='getuserinfo-img'
+                    src='/img/signup.png'
+                    alt='SIGNUP'
+                  />
+
               )}
 
               {currentModal === 'email' && (
                 <div className='modal-animation'>
-                  <h3>Enter your email to recieve this coupon</h3>
+                  <h1 className='visit'>Visiting Montreal?</h1>
+                  <p>
+                    Join our list now to receive coupons! We promise - no spam!
+                  </p>
                   <Input
                     type='text'
-                    placeholder='Email'
+                    placeholder='Enter your e-mail'
                     name='email'
                     value={userInfo.email}
                     onChange={this.handleInput}
