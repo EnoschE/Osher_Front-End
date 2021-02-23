@@ -45,6 +45,7 @@ class Brands extends Component {
 
   render() {
     const { users, loading, customers, orders } = this.state;
+    const { t } = this.props;
 
     if (loading) return <Loader />;
 
@@ -56,7 +57,7 @@ class Brands extends Component {
               className='profile-right-block'
               style={{ animationDelay: '0.1s' }}
             >
-              <h1>Brands</h1>
+              <h1>{t('Brands')}</h1>
               <br />
               <BrandsTable
                 data={users}

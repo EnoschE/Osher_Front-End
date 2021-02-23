@@ -12,6 +12,7 @@ import 'chartjs-plugin-deferred';
 import BrandsTable from './brandsTable';
 
 class DashboardOverview extends Component {
+  
   state = {
     loading: true,
     orders: [],
@@ -21,7 +22,7 @@ class DashboardOverview extends Component {
       labels: ['11', '12', '13', '14', '29'],
       datasets: [
         {
-          label: 'Coupons',
+          label: this.props.t('Coupons'),
           data: [12, 19, 3, 5, 2, 3],
           backgroundColor: 'rgb(255, 99, 132)',
         },
@@ -189,6 +190,7 @@ class DashboardOverview extends Component {
 
   render() {
     let { orders, user, loading, customers, users } = this.state;
+    const { t } = this.props;
 
     if (loading) return <Loader />;
 
@@ -201,7 +203,7 @@ class DashboardOverview extends Component {
               style={{ animationDelay: '0.3s' }}
             >
               <h1>{orders.filter((o) => o.orderStatus === 'Used').length}</h1>
-              <h6>Coupons used</h6>
+              <h6>{t('Used Coupons')}</h6>
             </div>
           </div>
 
@@ -211,7 +213,7 @@ class DashboardOverview extends Component {
               style={{ animationDelay: '0.4s' }}
             >
               <h1>{orders.filter((o) => o.orderStatus === 'Active').length}</h1>
-              <h6>Unused coupons</h6>
+              <h6>{t('Unused Coupons')}</h6>
             </div>
           </div>
 
@@ -221,7 +223,7 @@ class DashboardOverview extends Component {
               style={{ animationDelay: '0.5s' }}
             >
               <h1>{orders.length}</h1>
-              <h6>Total coupons</h6>
+              <h6>{t('Total Coupons')}</h6>
             </div>
           </div>
         </div>
@@ -232,7 +234,7 @@ class DashboardOverview extends Component {
               className='profile-right-block'
               style={{ animationDelay: '0.3s' }}
             >
-              <h6>Coupons by status</h6>
+              <h6>{t('Coupons by status')}</h6>
               <br />
               <Pie
                 data={this.state.pieChartData}
@@ -255,7 +257,7 @@ class DashboardOverview extends Component {
               className='profile-right-block'
               style={{ animationDelay: '0.6s' }}
             >
-              <h6>Daily sales</h6>
+              <h6>{t('Daily sales')}</h6>
               <br />
 
               <Bar
@@ -293,14 +295,14 @@ class DashboardOverview extends Component {
               className='profile-right-block'
               style={{ animationDelay: '0.7s' }}
             >
-              <h6>Recent orders</h6>
+              <h6>{t('Recent orders')}</h6>
               <br />
 
               <OrdersTable data={orders} length={4} dateFromNow={true} />
 
               <div className='view-all-customers'>
                 <Link to='/dashboard/orders'>
-                  <button>View all orders</button>
+                  <button>{t('View all orders')}</button>
                 </Link>
               </div>
             </div>
@@ -312,7 +314,7 @@ class DashboardOverview extends Component {
                 className='profile-right-block'
                 style={{ animationDelay: '0.8s' }}
               >
-                <h6>Customers</h6>
+                <h6>{t('Customers')}</h6>
                 <br />
                 {customers
                   .filter((u) => !u.isAdmin)
@@ -342,7 +344,7 @@ class DashboardOverview extends Component {
                 <br />
                 <div className='view-all-customers'>
                   <Link to='/dashboard/customers'>
-                    <button>View all</button>
+                    <button>{t('View all')}</button>
                   </Link>
                 </div>
               </div>
@@ -357,7 +359,7 @@ class DashboardOverview extends Component {
                 className='profile-right-block'
                 style={{ animationDelay: '0.8s' }}
               >
-                <h6>Brands</h6>
+                <h6>{t('Brands')}</h6>
                 <br />
 
                 <BrandsTable
@@ -372,7 +374,7 @@ class DashboardOverview extends Component {
 
                 <div className='view-all-customers'>
                   <Link to='/dashboard/brands'>
-                    <button>View all brands</button>
+                    <button>{t('View all brands')}</button>
                   </Link>
                 </div>
               </div>

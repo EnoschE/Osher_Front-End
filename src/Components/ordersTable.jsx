@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
 const OrdersTable = ({ data: orders, length, dateFromNow }) => {
+  const { t } = useTranslation();
+
   if (length) {
     orders = orders.slice(0, length);
   }
@@ -12,12 +15,12 @@ const OrdersTable = ({ data: orders, length, dateFromNow }) => {
     <table className=' orders-table'>
       <thead>
         <tr>
-          <th>Coupon</th>
-          <th className='hide-col'>Buyer</th>
-          <th className='hide-col'>Purchased</th>
-          <th className='hide-col'>Expiry</th>
-          <th>Amount</th>
-          <th>Status</th>
+          <th>{t('Coupon')}</th>
+          <th className='hide-col'>{t('Buyer')}</th>
+          <th className='hide-col'>{t('Purchased')}</th>
+          <th className='hide-col'>{t('Expiry')}</th>
+          <th>{t('Amount')}</th>
+          <th>{t('Status')}</th>
           <th></th>
         </tr>
       </thead>
@@ -85,7 +88,7 @@ const OrdersTable = ({ data: orders, length, dateFromNow }) => {
             </td>
             <td>
               <Link to={`/dashboard/orders/order/${o._id}`}>
-                <button className='view-order'>View</button>
+                <button className='view-order'>{t('View')}</button>
               </Link>
             </td>
           </tr>

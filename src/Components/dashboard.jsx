@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import DashboardOverview from './dashboardOverview';
 import DashboardLeftBlock from './dashboardLeftBlock';
 import Customers from './customers';
@@ -77,7 +78,7 @@ class Dashboard extends Component {
       alertBox,
       alreadyExpired,
     } = this.state;
-
+    const { t } = this.props;
 
     if (!auth.getCurrentUser().isAdmin && !auth.getCurrentUser().isBrand) return <Redirect to='/profile' />;
 
@@ -145,7 +146,7 @@ class Dashboard extends Component {
         )} */}
 
           <div className='row'>
-            <DashboardLeftBlock currentBlock={currentBlock} />
+            <DashboardLeftBlock t={t} currentBlock={currentBlock} />
 
             <div className='col-md-10 dashboard-right-block'>
               <Switch>
@@ -167,6 +168,7 @@ class Dashboard extends Component {
                     render={(props) => (
                       <Locations
                         {...props}
+                        t={t}
                         updateDashboardMenu={this.updateDashboardMenu}
                       />
                     )}
@@ -203,6 +205,7 @@ class Dashboard extends Component {
                     render={(props) => (
                       <Brands
                         {...props}
+                        t={t}
                         updateDashboardMenu={this.updateDashboardMenu}
                       />
                     )}
@@ -215,6 +218,7 @@ class Dashboard extends Component {
                     render={(props) => (
                       <Customers
                         {...props}
+                        t={t}
                         updateDashboardMenu={this.updateDashboardMenu}
                       />
                     )}
@@ -269,6 +273,7 @@ class Dashboard extends Component {
                   render={(props) => (
                     <DashboardOverview
                       {...props}
+                      t={t}
                       updateDashboardMenu={this.updateDashboardMenu}
                     />
                   )}
@@ -282,4 +287,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default withTranslation()(Dashboard);

@@ -105,7 +105,8 @@ class Customers extends Component {
   }
 
   render() {
-    const { loading,  users } = this.state;
+    const { loading, users } = this.state;
+    const { t } = this.props;
     // const { newCustomers: users } = this.getFilteredCustomers();
     let delay = 0.1;
 
@@ -119,7 +120,7 @@ class Customers extends Component {
               className='profile-right-block'
               style={{ animationDelay: '0.1s' }}
             >
-              <h1>Customers</h1>
+              <h1>{ t('Customers')}</h1>
               <br />
               {/* {user.isAdmin && (
                 <ChooseBrand
@@ -131,11 +132,11 @@ class Customers extends Component {
               <table className=' orders-table'>
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th className='hide-col'>Joined</th>
-                    <th className='hide-col'>Email</th>
-                    <th className='hide-col'>Orders</th>
-                    <th>Information</th>
+                    <th>{ t('Name')}</th>
+                    <th className='hide-col'>{ t('Joined')}</th>
+                    <th className='hide-col'>{ t('Email')}</th>
+                    <th className='hide-col'>{ t('Orders')}</th>
+                    <th>{ t('Information')}</th>
                   </tr>
                 </thead>
 
@@ -175,7 +176,7 @@ class Customers extends Component {
                         <td className='hide-col'>{this.totalOrders(o._id)}</td>
                         <td>
                           <Link to={`/dashboard/customers/customer/${o._id}`}>
-                            <button className='view-order'>View</button>
+                            <button className='view-order'>{ t('View')}</button>
                           </Link>
                         </td>
                       </tr>

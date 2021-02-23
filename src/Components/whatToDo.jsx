@@ -5,6 +5,9 @@ import categories from '../services/categories';
 import { getProducts } from '../services/productService';
 import Loader from './loader';
 import { getUsers } from '../services/userService';
+import { useTranslation } from 'react-i18next';
+
+
 
 const WhatToDo = () => {
   const [currentCategory, setCurrentCategory] = useState('');
@@ -12,6 +15,8 @@ const WhatToDo = () => {
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   let delay = 0;
+  
+  const { t } = useTranslation();
 
   const getAllProducts = async () => {
     const { data } = await getProducts();
@@ -66,7 +71,7 @@ const WhatToDo = () => {
   return (
     <div className='main-background'>
       <div className='whattodo-page'>
-        <h1 className='whattodo-heading'>What to Do</h1>
+        <h1 className='whattodo-heading'>{t('WHAT TO DO')}</h1>
 
         <div className='theme-categories'>
           {categories.map((c) => (

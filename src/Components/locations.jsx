@@ -209,6 +209,7 @@ class Locations extends Component {
       user,
       allLocations,
     } = this.state;
+    const {t} =this.props;
 
     if (loading) return <Loader />;
 
@@ -224,7 +225,7 @@ class Locations extends Component {
               onClick={this.handleDeletePopUp}
             ></div>
             <div className='delete-pop-up'>
-              <h5>Are you sure to remove this location?</h5>
+              <h5>{ t('Are you sure to remove this location')}?</h5>
               <div className='inner-pop'>
                 <div className='inner-pop-text'>
                   <h2>
@@ -235,15 +236,15 @@ class Locations extends Component {
                 </div>
               </div>
               <button onClick={() => this.removeLocation(deleteRequestedOffer)}>
-                Yes
+              { t('Yes')}
               </button>
-              <button onClick={() => this.handleDeletePopUp('')}>No</button>
+              <button onClick={() => this.handleDeletePopUp('')}>{ t('No')}</button>
             </div>
           </React.Fragment>
         )}
 
         <div className='profile-right-block' style={{ animationDelay: '0.1s' }}>
-          <h1>Locations</h1>
+          <h1>{ t('Locations')}</h1>
           <br />
 
           <div className='locations-page'>
@@ -254,7 +255,7 @@ class Locations extends Component {
                     type='text'
                     name='person'
                     className='form-control location-input'
-                    placeholder='Best person to reach (Name)'
+                    placeholder={ t('Best person to reach (Name)')}
                     value={object.person}
                     onChange={this.handleInput}
                     // onChange={(e) => this.handleInput(e.currentTarget.value)}
@@ -264,7 +265,7 @@ class Locations extends Component {
                     type='text'
                     name='branch'
                     className='form-control location-input'
-                    placeholder='Branch name'
+                    placeholder={ t('Branch name')}
                     value={object.branch}
                     onChange={this.handleInput}
                   />
@@ -272,7 +273,7 @@ class Locations extends Component {
                     type='text'
                     name='address'
                     className='form-control location-input'
-                    placeholder='Branch address'
+                    placeholder={ t('Branch address')}
                     value={object.address}
                     onChange={this.handleInput}
                   />
@@ -280,7 +281,7 @@ class Locations extends Component {
                     type='text'
                     name='phone'
                     className='form-control location-input'
-                    placeholder='Branch phone number'
+                    placeholder={ t('Branch phone number')}
                     value={object.phone}
                     onChange={this.handleInput}
                   />
@@ -288,7 +289,7 @@ class Locations extends Component {
                     type='text'
                     name='email'
                     className='form-control location-input'
-                    placeholder='Branch email'
+                    placeholder={ t('Branch email')}
                     value={object.email}
                     onChange={this.handleInput}
                   />
@@ -298,7 +299,8 @@ class Locations extends Component {
                       onClick={this.addLocation}
                       disabled={this.isEmpty()}
                     >
-                      Add Branch
+                      { t('Add Branch')}
+                      
                     </button>
                     <span
                       onClick={() =>
@@ -319,7 +321,8 @@ class Locations extends Component {
                         // textDecoration: 'underline',
                       }}
                     >
-                      Clear
+                      { t('Clear')}
+                      
                     </span>
                   </div>
                 </div>
@@ -332,23 +335,23 @@ class Locations extends Component {
                 <div className='location-box' key={l.id}>
                   <div>
                     <span>
-                      <span className='light-text'>Person: </span>
+                      <span className='light-text'>{ t('Person')}: </span>
                       {l.person}
                     </span>
                     <span>
-                      <span className='light-text'>Branch: </span>
+                      <span className='light-text'>{ t('Branch')}: </span>
                       {l.branch}
                     </span>
                     <span>
-                      <span className='light-text'>Address: </span>
+                      <span className='light-text'>{ t('Address')}: </span>
                       {l.address}
                     </span>
                     <span>
-                      <span className='light-text'>Phone: </span>
+                      <span className='light-text'>{ t('Phone')}: </span>
                       {l.phone}
                     </span>
                     <span>
-                      <span className='light-text'>Email: </span>
+                      <span className='light-text'>{ t('Email')}: </span>
                       {l.email}
                     </span>
                   </div>
@@ -357,13 +360,13 @@ class Locations extends Component {
                       className='update-pro'
                       onClick={() => this.handleUpdatePopUp(l)}
                     >
-                      Update
+{ t('Update')}
                     </button>
                     <button
                       className='delete-pro'
                       onClick={() => this.handleDeletePopUp(l)}
                     >
-                      Delete
+                      { t('Delete')}
                     </button>
                   </div>
                 </div>
@@ -376,23 +379,23 @@ class Locations extends Component {
                     <div className='location-box' key={l.id}>
                       <div>
                         <span>
-                          <span className='light-text'>Person: </span>
+                          <span className='light-text'>{ t('Person')}: </span>
                           {l.person}
                         </span>
                         <span>
-                          <span className='light-text'>Branch: </span>
+                          <span className='light-text'>{ t('Branch')}: </span>
                           {l.branch}
                         </span>
                         <span>
-                          <span className='light-text'>Address: </span>
+                          <span className='light-text'>{ t('Address')}: </span>
                           {l.address}
                         </span>
                         <span>
-                          <span className='light-text'>Phone: </span>
+                          <span className='light-text'>{ t('Phone')}: </span>
                           {l.phone}
                         </span>
                         <span>
-                          <span className='light-text'>Email: </span>
+                          <span className='light-text'>{ t('Email')}: </span>
                           {l.email}
                         </span>
                       </div>

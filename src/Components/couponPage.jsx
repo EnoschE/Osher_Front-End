@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { getProduct, getProducts } from '../services/productService';
+import { getUsers } from '../services/userService';
+import { withTranslation } from 'react-i18next';
 import Joi from 'joi-browser';
 import CouponRightBlock from './couponRightBlock';
 import RelatedBrands from './relatedBrands';
 import CouponLeftBlock from './couponLeftBlock';
 import Loader from './loader';
 import Input from './common/input';
-import { getUsers } from '../services/userService';
 import * as customerService from '../services/customerService';
 import * as orderService from '../services/orderService';
 
@@ -268,6 +269,7 @@ class CouponPage extends Component {
       agreesToReceive,
       isProcessing,
     } = this.state;
+    const { t } = this.props;
     let delay = 0;
 
     return (
@@ -290,23 +292,24 @@ class CouponPage extends Component {
                 </>
               )}
               {currentModal === 'coupon' && (
-                  <img
-                    className='getuserinfo-img'
-                    src='/img/signup.png'
-                    alt='SIGNUP'
-                  />
-
+                <img
+                  className='getuserinfo-img'
+                  src='/img/signup.png'
+                  alt='SIGNUP'
+                />
               )}
 
               {currentModal === 'email' && (
                 <div className='modal-animation'>
-                  <h1 className='visit'>Visiting Montreal?</h1>
+                  <h1 className='visit'>{t('Visiting Montreal')}?</h1>
                   <p>
-                    Join our list now to receive coupons! We promise - no spam!
+                    {t(
+                      'Join our list now to receive coupons! We promise - no spam!'
+                    )}
                   </p>
                   <Input
                     type='text'
-                    placeholder='Enter your e-mail'
+                    placeholder={t('Enter your e-mail')}
                     name='email'
                     value={userInfo.email}
                     onChange={this.handleInput}
@@ -317,17 +320,17 @@ class CouponPage extends Component {
                     onClick={this.handleEmail}
                     disabled={!userInfo.email}
                   >
-                    Continue
+                    {t('Continue')}
                   </button>
                 </div>
               )}
 
               {currentModal === 'name' && (
                 <div className='modal-animation'>
-                  <h3>Enter your full name</h3>
+                  <h3>{t('Enter your full name')}</h3>
                   <Input
                     type='text'
-                    placeholder='Full name'
+                    placeholder={t('Enter your full name')}
                     name='name'
                     value={userInfo.name}
                     onChange={this.handleInput}
@@ -338,11 +341,11 @@ class CouponPage extends Component {
                     onClick={this.handleName}
                     disabled={!userInfo.name}
                   >
-                    Continue
+                    {t('Continue')}
                   </button>
                   <div className='modal-back-btn'>
                     <p onClick={() => this.setState({ currentModal: 'email' })}>
-                      Back
+                    {t('Back')}
                     </p>
                   </div>
                 </div>
@@ -350,10 +353,10 @@ class CouponPage extends Component {
 
               {currentModal === 'phone' && (
                 <div className='modal-animation'>
-                  <h3>Enter your phone number</h3>
+                  <h3>{t('Enter your phone number')}</h3>
                   <Input
                     type='text'
-                    placeholder='Phone number'
+                    placeholder={t('Enter your phone number')}
                     name='phone'
                     value={userInfo.phone}
                     onChange={this.handleInput}
@@ -372,7 +375,9 @@ class CouponPage extends Component {
                         className='form-check-label'
                         htmlFor='exampleCheck1'
                       >
-                        I agree to receive coupons and promotions on my email.
+                        {t(
+                          'I agree to receive coupons and promotions on my email.'
+                        )}
                       </label>
                     </div>
                   </div>
@@ -384,16 +389,16 @@ class CouponPage extends Component {
                     }
                   >
                     {!isProcessing ? (
-                      'Receive Coupon'
+                      t('Receive Coupon')
                     ) : (
                       <span>
-                        Processing... <i className='fas fa-circle-notch'></i>
+                        {t('Processing')}... <i className='fas fa-circle-notch'></i>
                       </span>
                     )}
                   </button>
                   <div className='modal-back-btn'>
                     <p onClick={() => this.setState({ currentModal: 'name' })}>
-                      Back
+                    {t('Back')}
                     </p>
                   </div>
                 </div>
@@ -401,8 +406,8 @@ class CouponPage extends Component {
 
               {currentModal === 'coupon' && (
                 <div className='modal-animation'>
-                  <h1>Congratulations!</h1>
-                  <h4>Your coupon is</h4>
+                  <h1>{t('Congratulations')}!</h1>
+                  <h4>{t('Your coupon is')}</h4>
 
                   <div className='coupon-box'>
                     <h1>{coupon}</h1>
@@ -413,7 +418,7 @@ class CouponPage extends Component {
                     onClick={() => this.props.history.push('/')}
                     disabled={!userInfo.phone}
                   >
-                    Back to Home
+                    {t('Back to Home')}
                   </button>
                 </div>
               )}
@@ -434,7 +439,7 @@ class CouponPage extends Component {
 
                 <div className='row'>
                   <div className='col-sm-8'>
-                    <CouponLeftBlock brand={brand} />
+                    <CouponLeftBlock brand={brand} t={t} />
                   </div>
 
                   <div className='col-sm-4'>
@@ -444,6 +449,7 @@ class CouponPage extends Component {
                       currentOffer={offer}
                       radioFunction={this.handleChange}
                       handleCoupon={this.handleCoupon}
+                      t={t}
                     />
                   </div>
                 </div>
@@ -453,6 +459,7 @@ class CouponPage extends Component {
                   bundles={brands}
                   brands={this.state.userz}
                   delay={delay}
+                  t={t}
                 />
               </div>
             </div>
@@ -463,4 +470,4 @@ class CouponPage extends Component {
   }
 }
 
-export default CouponPage;
+export default withTranslation()(CouponPage);

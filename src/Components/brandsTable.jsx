@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 const BrandsTable = ({
   data: users,
@@ -9,6 +10,8 @@ const BrandsTable = ({
   length,
   dateFromNow,
 }) => {
+  const { t } = useTranslation();
+
   if (length) {
     users = users.slice(0, length);
   }
@@ -54,12 +57,12 @@ const BrandsTable = ({
     <table className=' orders-table'>
       <thead>
         <tr>
-          <th>Brand</th>
-          <th className='hide-col'>Joined</th>
-          <th className='hide-col'>Expiry</th>
-          <th className='hide-col'>Orders</th>
-          <th className='hide-col'>Customers</th>
-          <th className='hide-col'>Status</th>
+          <th>{t('Brand')}</th>
+          <th className='hide-col'>{t('Joined')}</th>
+          <th className='hide-col'>{t('Expiry')}</th>
+          <th className='hide-col'>{t('Orders')}</th>
+          <th className='hide-col'>{t('Customers')}</th>
+          <th className='hide-col'>{t('Status')}</th>
           <th></th>
         </tr>
       </thead>
@@ -91,13 +94,17 @@ const BrandsTable = ({
               <td className='hide-col purchased-col'>
                 {dateFromNow
                   ? moment(o.paymentExpiry).fromNow()
-                  : moment(o.paymentExpiry).format('ll') + ' - '+moment(o.paymentExpiry).fromNow()}
+                  : moment(o.paymentExpiry).format('ll') +
+                    ' - ' +
+                    moment(o.paymentExpiry).fromNow()}
                 {isActive(o.paymentExpiry)}
               </td>
               <td className='hide-col purchased-col'>
                 {calculateTotalOrders(o._id)}
               </td>
-              <td className='hide-col purchased-col'>{calculateTotalCustomers(o._id)}</td>
+              <td className='hide-col purchased-col'>
+                {calculateTotalCustomers(o._id)}
+              </td>
               {/* <td className='hide-col'>
                 {o.isActive? "Active": 'Disabled'}
               </td> */}
@@ -114,7 +121,7 @@ const BrandsTable = ({
 
               <td>
                 <Link to={`/dashboard/brands/brand/${o._id}`}>
-                  <button className='view-order'>View</button>
+                  <button className='view-order'>{t('View')}</button>
                 </Link>
               </td>
             </tr>

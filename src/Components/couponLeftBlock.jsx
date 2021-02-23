@@ -9,7 +9,7 @@ const settings = {
   slidesToScroll: 1,
 };
 
-const CouponLeftBlock = ({ brand }) => {
+const CouponLeftBlock = ({ brand, t }) => {
   return (
     <>
       <Slider {...settings}>
@@ -21,13 +21,13 @@ const CouponLeftBlock = ({ brand }) => {
       </Slider>
 
       <div className='coupon-details'>
-        <h3>About this deal</h3>
+        <h3>{t('About this deal')}</h3>
         <p>{brand.details}</p>
 
-        <h3>Need to know</h3>
+        <h3>{t('Need to know')}</h3>
         <p>{brand.description}</p>
 
-        <h3>Branches</h3>
+        <h3>{t('Branches')}</h3>
         {brand.branches.map((b) => (
           <li key={b.id}>{b.address}</li>
         ))}

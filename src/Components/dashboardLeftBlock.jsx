@@ -20,7 +20,7 @@ class DashboardLeftBlock extends Component {
 
   render() {
     const { user } = this.state;
-    const { currentBlock } = this.props;
+    const { currentBlock, t } = this.props;
 
     return (
       <div className='col-md-2 p-2'>
@@ -35,7 +35,7 @@ class DashboardLeftBlock extends Component {
           <Link to='/update-profile'>
             <div className='dashboard-left-text'>
               <h2>{user.name}</h2>
-              {user.isAdmin && <h6>Admin</h6>}
+              {user.isAdmin && <h6>{t('Admin')}</h6>}
               {user.isBrand && (
                 <div className='brand-status-bg'>
                   <div
@@ -65,7 +65,7 @@ class DashboardLeftBlock extends Component {
                     : 'left-menu-link'
                 }
               >
-                <h5>Dashboard</h5>
+                <h5>{t('Dashboard')}</h5>
                 <div></div>
               </div>
             </Link>
@@ -79,7 +79,7 @@ class DashboardLeftBlock extends Component {
                       : 'left-menu-link'
                   }
                 >
-                  <h5>Brands</h5>
+                  <h5>{t('Brands')}</h5>
                   <div></div>
                 </div>
               </Link>
@@ -94,7 +94,7 @@ class DashboardLeftBlock extends Component {
                       : 'left-menu-link'
                   }
                 >
-                  <h5>Locations</h5>
+                  <h5>{t('Locations')}</h5>
                   <div></div>
                 </div>
               </Link>
@@ -109,7 +109,7 @@ class DashboardLeftBlock extends Component {
                       : 'left-menu-link'
                   }
                 >
-                  <h5>Customers</h5>
+                  <h5>{t('Customers')}</h5>
                   <div></div>
                 </div>
               </Link>
@@ -123,11 +123,11 @@ class DashboardLeftBlock extends Component {
                     : 'left-menu-link'
                 }
               >
-                <h5>Orders</h5>
+                <h5>{t('Orders')}</h5>
                 <div></div>
               </div>
             </Link>
-           
+
             {(user.isAdmin || user.isBrand) && (
               <Link to='/dashboard/products'>
                 <div
@@ -137,12 +137,12 @@ class DashboardLeftBlock extends Component {
                       : 'left-menu-link'
                   }
                 >
-                  <h5>Products</h5>
+                  <h5>{t('Products')}</h5>
                   <div></div>
                 </div>
               </Link>
             )}
-           
+
             <Link to='/dashboard/report'>
               <div
                 className={
@@ -151,12 +151,11 @@ class DashboardLeftBlock extends Component {
                     : 'left-menu-link'
                 }
               >
-                <h5>Report</h5>
+                <h5>{t('Report')}</h5>
                 <div></div>
               </div>
             </Link>
 
-         
             {(user.isAdmin || user.isBrand) && (
               <Link to='/dashboard/financials'>
                 <div
@@ -166,7 +165,7 @@ class DashboardLeftBlock extends Component {
                       : 'left-menu-link'
                   }
                 >
-                  <h5>Financials</h5>
+                  <h5>{t('Financials')}</h5>
                   <div></div>
                 </div>
               </Link>
@@ -174,7 +173,7 @@ class DashboardLeftBlock extends Component {
 
             <Link to='/logout/'>
               <div className='left-menu-link'>
-                <h5>Logout</h5>
+                <h5>{t('Logout')}</h5>
                 <div></div>
               </div>
             </Link>

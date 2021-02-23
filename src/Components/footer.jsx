@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Clock from 'react-live-clock';
 
 const Footer = (props) => {
@@ -13,11 +14,25 @@ const Footer = (props) => {
     user,
   } = props;
 
+  const { i18n, t } = useTranslation();
+
+  const changeLanguage = (event) => {
+    i18n.language === 'en'
+      ? i18n.changeLanguage('fr')
+      : i18n.changeLanguage('en');
+    // i18n.changeLanguage(event.target.value)
+  };
+
   return (
     <div className='footer'>
       <Link to='/'>
         <img className='pc-only logo' src='/img/logo2.png' alt='OSHER' />
       </Link>
+
+      {/* <div onChange={changeLanguage}>
+        <input type='radio' value='en' name='language' defaultChecked /> English
+        <input type='radio' value='fr' name='language' /> French
+      </div> */}
 
       <div className='pc-only'>
         <div className='clock-date-block'>
@@ -43,28 +58,28 @@ const Footer = (props) => {
         {visibleBack && (
           <div className='icon-block' onClick={() => backAddress()}>
             <i className='fas fa-angle-double-left'></i>
-            <p>Back</p>
+            <p>{t('Back')}</p>
           </div>
         )}
 
-        {/* <div className='icon-block'>
+        <div className='icon-block' onClick={changeLanguage}>
           <i className='fas fa-language'></i>
-          <p>Language</p>
-        </div> */}
+          <p>{t('Language')}</p>
+        </div>
 
         <div className='icon-block' onClick={mutePage}>
           <i className='fas fa-volume-mute'></i>
-          <p>Mute</p>
+          <p>{t('Mute')}</p>
         </div>
 
         <div className='icon-block' onClick={handleVolumeDown}>
           <i className='fas fa-volume-down'></i>
-          <p>Down</p>
+          <p>{t('Down')}</p>
         </div>
 
         <div className='icon-block' onClick={handleVolumeUp}>
           <i className='fas fa-volume-up'></i>
-          <p>Up</p>
+          <p>{t('Up')}</p>
         </div>
 
         {/* <div className='icon-block'>
@@ -74,30 +89,30 @@ const Footer = (props) => {
 
         <div className='icon-block' onClick={handleNap}>
           <i className='far fa-moon'></i>
-          <p>Nap</p>
+          <p>{t('Nap')}</p>
         </div>
-        
+
         <Link to='/weather'>
-            <div className='icon-block'>
-              <i className='far fa-cloud-sun'></i>
-              <p>Weather</p>
-            </div>
+          <div className='icon-block'>
+            <i className='far fa-cloud-sun'></i>
+            <p>{t('Weather')}</p>
+          </div>
         </Link>
-        
-        {((user && !user.isAdmin) && (user && !user.isBrand)) && (
+
+        {user && !user.isAdmin && user && !user.isBrand && (
           <Link to='/profile'>
             <div className='icon-block'>
               <i className='far fa-user-tie'></i>
-              <p>Driver</p>
+              <p>{t('Driver')}</p>
             </div>
           </Link>
         )}
 
         {((user && user.isAdmin) || (user && user.isBrand)) && (
           <Link to='/dashboard'>
-            <div className='icon-block'>
+            <div className='icon-block dashboard-icon-block'>
               <i className='far fa-th'></i>
-              <p>Dashboard</p>
+              <p>{t('Dashboard')}</p>
             </div>
           </Link>
         )}

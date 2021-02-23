@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
-import Input from './common/input';
 import { Link, Redirect } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
+import Input from './common/input';
 import auth from '../services/authService';
 
 class LoginPage extends Component {
@@ -64,12 +65,13 @@ class LoginPage extends Component {
     try {
       this.setState({ isProcessing: true });
       const { data } = this.state;
+      const { t } = this.props;
       await auth.login(data.username, data.password);
       const user = auth.getCurrentUser();
       // auth.getCurrentUser();
 
       this.props.handleNotification({
-        message: 'Welcome, ' + user.name + '!',
+        message: t('Welcome') + ', ' + user.name + '!',
         img: user.profilePic,
       });
 
@@ -91,7 +93,8 @@ class LoginPage extends Component {
 
   render() {
     const { data, errors, isProcessing } = this.state;
-
+    const { t } = this.props;
+    
     if (auth.getCurrentUser()) return <Redirect to='/' />;
 
     return (
@@ -101,7 +104,7 @@ class LoginPage extends Component {
             <div className='col-md-3'></div>
 
             <div className='col-md-6 login-page-form'>
-              <h1>Login</h1>
+              <h1>{t('Login')}</h1>
               {/* <p>
                 Don't have an account yet?{' '}
                 <Link
@@ -116,7 +119,7 @@ class LoginPage extends Component {
               <form onSubmit={this.handleSubmit}>
                 <Input
                   type='text'
-                  placeholder='Username'
+                  placeholder={t('Username')}
                   name='username'
                   value={data.username}
                   onChange={this.handleChange}
@@ -124,7 +127,7 @@ class LoginPage extends Component {
                 />
                 <Input
                   type='password'
-                  placeholder='Password'
+                  placeholder={t('Password')}
                   name='password'
                   value={data.password}
                   onChange={this.handleChange}
@@ -133,7 +136,7 @@ class LoginPage extends Component {
 
                 <p>
                   <Link to='/forgot-password/'>
-                    <i>Forgot your password?</i>
+                    <i>{t('Forgot your password')}?</i>
                   </Link>
                 </p>
                 
@@ -143,10 +146,10 @@ class LoginPage extends Component {
                     className='login-btn continue-to-shipping'
                   >
                     {!isProcessing ? (
-                      'Login'
+                      t('Login')
                     ) : (
                       <span>
-                        Logining in... <i className='fas fa-circle-notch'></i>
+                        {t('Logging in')}... <i className='fas fa-circle-notch'></i>
                       </span>
                     )}
                   </button>
@@ -170,4 +173,4 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+export default withTranslation()(LoginPage);

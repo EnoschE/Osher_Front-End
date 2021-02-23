@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import ReactWeather, { useOpenWeather } from 'react-open-weather';
+import { useTranslation } from 'react-i18next';
+
+
 
 const Weather = ({ handleBack }) => {
+  const { t } = useTranslation();
   const { data, isLoading, errorMessage } = useOpenWeather({
     key: '308171c3470184fed25eb613f7ecf8a0',
     lat: '45.5017',
@@ -17,7 +21,7 @@ const Weather = ({ handleBack }) => {
   return (
     <div className='main-background'>
       <div className='weather-page'>
-        <h1>Weather</h1>
+        <h1>{t('Weather')}</h1>
         <ReactWeather
           isLoading={isLoading}
           errorMessage={errorMessage}

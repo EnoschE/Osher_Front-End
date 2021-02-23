@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import auth from '../services/authService';
+import { withTranslation } from 'react-i18next';
 import { Redirect } from 'react-router-dom';
 import { getOrders } from '../services/orderService';
+import auth from '../services/authService';
 import Loader from './loader';
 
 class DriverProfile extends Component {
@@ -26,6 +27,7 @@ class DriverProfile extends Component {
   render() {
     // const { user, orders, loading } = this.state;
     const { user, loading } = this.state;
+    const { t } = this.props;
 
     if (auth.getCurrentUser().isAdmin || auth.getCurrentUser().isBrand)
       return <Redirect to='/dashboard' />;
@@ -40,7 +42,7 @@ class DriverProfile extends Component {
               <div className='row'>
                 <div className='col-sm-6'>
                   <div className='profile-left-block'>
-                    <h5>You're riding with</h5>
+                    <h5>{t("You're riding with")}</h5>
                     <h1>
                       <b>{user.name}</b>
                     </h1>
@@ -58,27 +60,26 @@ class DriverProfile extends Component {
                   <div className='col-sm-6'>
                     <div className='profile-right-box'>
                       <h1>
-                        <b>About Me</b>
+                        <b>{t("About Me")}</b>
                       </h1>
 
-                      <h6 className='grey-text'>Hometown</h6>
+                      <h6 className='grey-text'>{t("Hometown")}</h6>
                       <h5>{user.address || 'Not set yet'}</h5>
 
-                      <h6 className='grey-text'>Favorite Food</h6>
+                      <h6 className='grey-text'>{t("Favorite Food")}</h6>
                       <h5>{user.city || 'Not set yet'}</h5>
 
-                        <h6 className='grey-text'>Favorite Hobby</h6>
+                      <h6 className='grey-text'>{t("Favorite Hobby")}</h6>
                       <h5>{user.country || 'Not set yet'}</h5>
 
-                      <h6 className='grey-text'>Favorite Sport or Team</h6>
+                      <h6 className='grey-text'>{t("Favorite Sport or Team")}</h6>
                       <h5>{user.postalCode || 'Not set yet'}</h5>
 
-                      <h6 className='grey-text'>Ask me about</h6>
+                      <h6 className='grey-text'>{t("Ask me about")}</h6>
                       <h5>{user.phone || 'Not set yet'}</h5>
 
-                      <h6 className='grey-text'>My tips go towards</h6>
+                      <h6 className='grey-text'>{t("My tips go towards")}</h6>
                       <h5>{user.trips || 'Not set yet'}</h5>
-
                     </div>
                     {/* <div className='row'>
                       <div className='col-sm-4 p-2'>
@@ -205,4 +206,4 @@ class DriverProfile extends Component {
   };
 }
 
-export default DriverProfile;
+export default withTranslation()(DriverProfile);

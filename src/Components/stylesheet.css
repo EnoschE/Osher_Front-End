@@ -455,8 +455,12 @@ a:hover {
   cursor: pointer;
 }
 
+.dashboard-icon-block {
+  width: 90px;
+}
+
 .icon-block p {
-  font-size: 11px;
+  font-size: 10px;
   margin-top: 6px;
   margin-bottom: 0px;
 }
@@ -707,7 +711,7 @@ a:hover {
 }
 
 .profile-left-block {
-  padding: 35px 30px;
+  padding: 35px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -723,6 +727,8 @@ a:hover {
 }
 
 .profile-left-block h5 {
+  text-align: center;
+  width: 100%;
   animation: 0.5s pop-out 0s ease-out both;
 }
 
@@ -1338,7 +1344,7 @@ h1.brand-name {
 }
 
 .visit  {
-font-size: 42px;
+font-size: 45px;
 }
 
 .modal-animation p {
@@ -1351,12 +1357,16 @@ font-size: 42px;
   width: 150px;
   padding-left: 0px;
   padding-right: 0px;
+  transition: all ease-in 0.3s;
+}
+
+.modal-continue-btn:hover {
+  box-shadow: var(--small-shadow);
 }
 
 .modal-continue-btn:disabled {
   background-color: rgb(255, 233, 220);
   border-color: rgb(255, 233, 220);
-  
 }
 
 .warning-red {
@@ -1367,6 +1377,7 @@ font-size: 42px;
   background-color: rgb(255, 233, 220);
   border-color: rgb(255, 233, 220);
   color: white;
+  box-shadow: none;
 }
 
 .hide-modal {
@@ -1490,6 +1501,11 @@ font-size: 42px;
 
 .dashboard-left-block h2 {
   font-size: 13px;
+  font-weight: 500;
+}
+
+.dashboard-left-block h6 {
+  font-size: 10px;
   font-weight: 500;
 }
 

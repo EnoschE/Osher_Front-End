@@ -4,8 +4,9 @@ import { Redirect, Link } from 'react-router-dom';
 import { storage } from '../firebase/firebase';
 import Joi from 'joi-browser';
 import Input from './common/input';
-import * as userService from '../services/userService';
 import auth from '../services/authService';
+import * as userService from '../services/userService';
+
 
 class UpdateProfile extends Component {
   state = {

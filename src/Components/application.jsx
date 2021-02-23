@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import MainPage from './mainPage';
@@ -23,16 +23,18 @@ import UpdatePassword from './updatePassword';
 import AddNewProduct from './addNewProduct';
 import BrandSignup from './brandSignup';
 import LogoutDriver from './logoutDriver';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
-import './stylesheet.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { getUsers, updatePayment } from '../services/userService';
 import { getOrders, saveOrder } from '../services/orderService';
 import AdminLoginPage from './adminLoginPage';
 import UpdateDriverProfile from './updateDriverProfile';
 import Weather from './weather';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import './stylesheet.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import '../i18n';
+import ForgotPasswordPage from './forgotPasswordPage';
 
 class Application extends Component {
   state = {
@@ -180,204 +182,219 @@ class Application extends Component {
 
     return (
       <div>
-        <Footer
-          handleNap={this.handleNap}
-          backAddress={backAddress}
-          mutePage={this.mutePage}
-          handleVolumeUp={this.handleVolumeUp}
-          handleVolumeDown={this.handleVolumeDown}
-          visibleBack={visibleBack}
-          user={user}
-        />
-
-        {notify && (
-          <NotificationBar message={notify.message} img={notify.img} />
-        )}
-
-        {nap && <Nap handleNap={this.handleNap} />}
-        {mute && <VolumeScreen role='mute' />}
-        {volumePop && <VolumeScreen role='volume' value={volume} />}
-
-        <Switch>
-          <ProtectedRoute
-            path='/profile'
-            render={(props) => (
-              <DriverProfile {...props} handleBack={this.handleBack} />
-            )}
+        <Suspense fallback={null}>
+          <Footer
+            handleNap={this.handleNap}
+            backAddress={backAddress}
+            mutePage={this.mutePage}
+            handleVolumeUp={this.handleVolumeUp}
+            handleVolumeDown={this.handleVolumeDown}
+            visibleBack={visibleBack}
+            user={user}
           />
 
-          <Route
-            path='/whattodo/brand/:id'
-            render={(props) => (
-              <CouponPage
-                {...props}
-                handleBack={this.handleBack}
-                handleNotification={this.handleNotification}
-              />
-            )}
-          ></Route>
+          {notify && (
+            <NotificationBar message={notify.message} img={notify.img} />
+          )}
 
-          <Route path='/whattodo' render={(props) => <WhatToDo {...props} />} />
+          {nap && <Nap handleNap={this.handleNap} />}
+          {mute && <VolumeScreen role='mute' />}
+          {volumePop && <VolumeScreen role='volume' value={volume} />}
 
-          <Route
-            path='/main'
-            render={(props) => (
-              <MainPage {...props} handleBack={this.handleBack} />
-            )}
-          />
-
-          <Route
-            path='/weather'
-            render={(props) => (
-              <Weather {...props} handleBack={this.handleBack} />
-            )}
-          />
-
-          <Route
-            path='/signup/'
-            render={(props) => {
-              if (auth.getCurrentUser()) {
-                return <Redirect to='/dashboard' />;
-              }
-              return (
-                <SignupPage
-                  {...props}
-                  updateUser={this.updateUser}
-                  handleNotification={this.handleNotification}
-                />
-              );
-            }}
-          />
-
-          <Route
-            path='/logout'
-            render={(props) => (
-              <Logout
-                {...props}
-                updateUser={this.updateUser}
-                handleBack={this.handleBack}
-              />
-            )}
-          />
-          <Route path='/logout-driver' component={LogoutDriver} />
-
-          <Route
-            path='/brand-signup/'
-            render={(props) => {
-              if (auth.getCurrentUser()) {
-                return <Redirect to='/dashboard' />;
-              }
-              return (
-                <BrandSignup
-                  {...props}
-                  updateUser={this.updateUser}
-                  handleNotification={this.handleNotification}
-                />
-              );
-            }}
-          />
-
-          <Route
-            path='/login/'
-            render={(props) => {
-              if (auth.getCurrentUser()) {
-                return <Redirect to='/profile' />;
-              }
-              return (
-                <LoginPage
-                  {...props}
-                  handleBack={this.handleBack}
-                  updateUser={this.updateUser}
-                  handleNotification={this.handleNotification}
-                />
-              );
-            }}
-          />
-
-          <Route
-            path='/admin-login/'
-            render={(props) => {
-              if (auth.getCurrentUser()) {
-                return <Redirect to='/dashboard' />;
-              }
-              return (
-                <AdminLoginPage
-                  {...props}
-                  handleBack={this.handleBack}
-                  updateUser={this.updateUser}
-                  handleNotification={this.handleNotification}
-                />
-              );
-            }}
-          />
-
-          <ProtectedRoute
-            path='/update-password/'
-            render={(props) => (
-              <UpdatePassword
-                {...props}
-                handleNotification={this.handleNotification}
-              />
-            )}
-          />
-
-          {((user && user.isAdmin) || (user && user.isBrand)) && (
-            <Route
-              path='/add-new-product/:id?'
+          <Switch>
+            <ProtectedRoute
+              path='/profile'
               render={(props) => (
-                <AddNewProduct
+                <DriverProfile {...props} handleBack={this.handleBack} />
+              )}
+            />
+
+            <Route
+              path='/whattodo/brand/:id'
+              render={(props) => (
+                <CouponPage
+                  {...props}
+                  handleBack={this.handleBack}
+                  handleNotification={this.handleNotification}
+                />
+              )}
+            ></Route>
+
+            <Route
+              path='/whattodo'
+              render={(props) => <WhatToDo {...props} />}
+            />
+
+            <Route
+              path='/main'
+              render={(props) => (
+                <MainPage {...props} handleBack={this.handleBack} />
+              )}
+            />
+
+            <Route
+              path='/weather'
+              render={(props) => (
+                <Weather {...props} handleBack={this.handleBack} />
+              )}
+            />
+
+            <Route
+              path='/signup/'
+              render={(props) => {
+                if (auth.getCurrentUser()) {
+                  return <Redirect to='/dashboard' />;
+                }
+                return (
+                  <SignupPage
+                    {...props}
+                    updateUser={this.updateUser}
+                    handleNotification={this.handleNotification}
+                  />
+                );
+              }}
+            />
+
+            <Route
+              path='/forgot-password/'
+              render={(props) => (
+                <ForgotPasswordPage
                   {...props}
                   handleNotification={this.handleNotification}
                 />
               )}
             />
-          )}
 
-          <ProtectedRoute
-            path='/update-profile'
-            render={(props) => (
-              <UpdateProfile
-                {...props}
-                updateUser={this.updateUser}
-                handleNotification={this.handleNotification}
+            <Route
+              path='/logout'
+              render={(props) => (
+                <Logout
+                  {...props}
+                  updateUser={this.updateUser}
+                  handleBack={this.handleBack}
+                />
+              )}
+            />
+            <Route path='/logout-driver' component={LogoutDriver} />
+
+            <Route
+              path='/brand-signup/'
+              render={(props) => {
+                if (auth.getCurrentUser()) {
+                  return <Redirect to='/dashboard' />;
+                }
+                return (
+                  <BrandSignup
+                    {...props}
+                    updateUser={this.updateUser}
+                    handleNotification={this.handleNotification}
+                  />
+                );
+              }}
+            />
+
+            <Route
+              path='/login/'
+              render={(props) => {
+                if (auth.getCurrentUser()) {
+                  return <Redirect to='/profile' />;
+                }
+                return (
+                  <LoginPage
+                    {...props}
+                    handleBack={this.handleBack}
+                    updateUser={this.updateUser}
+                    handleNotification={this.handleNotification}
+                  />
+                );
+              }}
+            />
+
+            <Route
+              path='/admin-login/'
+              render={(props) => {
+                if (auth.getCurrentUser()) {
+                  return <Redirect to='/dashboard' />;
+                }
+                return (
+                  <AdminLoginPage
+                    {...props}
+                    handleBack={this.handleBack}
+                    updateUser={this.updateUser}
+                    handleNotification={this.handleNotification}
+                  />
+                );
+              }}
+            />
+
+            <ProtectedRoute
+              path='/update-password/'
+              render={(props) => (
+                <UpdatePassword
+                  {...props}
+                  handleNotification={this.handleNotification}
+                />
+              )}
+            />
+
+            {((user && user.isAdmin) || (user && user.isBrand)) && (
+              <Route
+                path='/add-new-product/:id?'
+                render={(props) => (
+                  <AddNewProduct
+                    {...props}
+                    handleNotification={this.handleNotification}
+                  />
+                )}
               />
             )}
-          />
 
-          <ProtectedRoute
-            path='/update-driver'
-            render={(props) => (
-              <UpdateDriverProfile
-                {...props}
-                updateUser={this.updateUser}
-                handleNotification={this.handleNotification}
-              />
-            )}
-          />
+            <ProtectedRoute
+              path='/update-profile'
+              render={(props) => (
+                <UpdateProfile
+                  {...props}
+                  updateUser={this.updateUser}
+                  handleNotification={this.handleNotification}
+                />
+              )}
+            />
 
-          <ProtectedRoute
-            path='/dashboard'
-            render={(props) => (
-              <Dashboard {...props} handleBack={this.handleBack} />
-            )}
-          />
+            <ProtectedRoute
+              path='/update-driver'
+              render={(props) => (
+                <UpdateDriverProfile
+                  {...props}
+                  updateUser={this.updateUser}
+                  handleNotification={this.handleNotification}
+                />
+              )}
+            />
 
-          <Route
-            path='/not-found'
-            render={(props) => (
-              <NotFound {...props} handleBack={this.handleBack} />
-            )}
-          />
+            <ProtectedRoute
+              path='/dashboard'
+              render={(props) => (
+                <Dashboard {...props} handleBack={this.handleBack} />
+              )}
+            />
 
-          <Route
-            exact
-            path='/'
-            render={(props) => (
-              <QrPage {...props} handleBack={this.handleBack} />
-            )}
-          />
-          <Redirect to='/not-found' />
-        </Switch>
+            <Route
+              path='/not-found'
+              render={(props) => (
+                <NotFound {...props} handleBack={this.handleBack} />
+              )}
+            />
+
+            <Route
+              exact
+              path='/'
+              render={(props) => (
+                <QrPage {...props} handleBack={this.handleBack} />
+              )}
+            />
+            <Redirect to='/not-found' />
+          </Switch>
+        </Suspense>
       </div>
     );
   }

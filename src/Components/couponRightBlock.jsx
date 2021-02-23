@@ -8,6 +8,7 @@ const CouponRightBlock = ({
   radioFunction,
   handleCoupon,
   expiry,
+  t
 }) => {
   const [days, setDays] = useState('');
   const [hours, setHours] = useState('');
@@ -70,19 +71,19 @@ const CouponRightBlock = ({
         className='get-coupon orange-btn'
         onClick={handleCoupon}
       >
-        Get this coupon
+        {t('Get this coupon')}
       </button>
 
       <div className='choose-expiry-date'>
         <div className='linee'></div>
         <h3>
-          <span>Expiry: </span>
+          <span>{t('Expiry')}: </span>
           {moment(expiry).format('ll')}
         </h3>
         <div className='expiry-countdown'>
-          <span>Expire in: </span>
+          <span>{t('Expire in')}: </span>
           {expired ? (
-            <p>EXPIRED!!</p>
+            <p>{t('EXPIRED')}!!</p>
           ) : (
             <>
               <p>{days}d </p>
