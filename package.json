@@ -31,6 +31,7 @@
     "react-live-clock": "^5.0.16",
     "react-moment": "^1.1.1",
     "react-open-weather": "^1.1.1",
+    "react-player": "^2.9.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-slick": "^0.27.13",

@@ -30,7 +30,8 @@ const MainPage = ({ handleBack }) => {
               <h2>{t('WHAT TO DO')}</h2>
               <h2>{t('IN')}</h2>
               <h1 className='montreal-head'>
-                M<i className='far fa-search'></i>NTREAL
+                {/* M<i className="fas fa-search-location"></i>NTREAL */}
+                M<i className='fas fa-search'></i>NTREAL
               </h1>
               <div className='discount-badge'>
                 <h3>{t('UPTO')} 35% {t('OFF')}!</h3>

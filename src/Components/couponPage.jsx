@@ -10,12 +10,14 @@ import Loader from './loader';
 import Input from './common/input';
 import * as customerService from '../services/customerService';
 import * as orderService from '../services/orderService';
+import VideoBlock from './common/videoBlock';
 
 class CouponPage extends Component {
   state = {
     brand: {},
     brands: [],
     loading: true,
+    displayVideo: false,
     offer: '',
     emailModal: false,
     displayModal: false,
@@ -70,7 +72,23 @@ class CouponPage extends Component {
 
       const offer = brand.offers[0].price;
 
-      this.setState({ brand, brands, offer, loading: false });
+      this.setState({
+        brand,
+        brands,
+        offer,
+        loading: false,
+        displayVideo: true,
+        sec: 5,
+      });
+
+      setInterval(() => {
+        this.setState({ sec: this.state.sec - 1 });
+      }, 1000);
+
+      setTimeout(() => {
+        this.setState({ displayVideo: false });
+      }, 5000);
+
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         this.props.history.replace('/not-found');
@@ -268,9 +286,14 @@ class CouponPage extends Component {
       coupon,
       agreesToReceive,
       isProcessing,
+      sec,
+      displayVideo,
     } = this.state;
     const { t } = this.props;
     let delay = 0;
+
+    if (loading) return <loading />;
+    if (displayVideo) return <VideoBlock sec={sec} />;
 
     return (
       <>
@@ -345,7 +368,7 @@ class CouponPage extends Component {
                   </button>
                   <div className='modal-back-btn'>
                     <p onClick={() => this.setState({ currentModal: 'email' })}>
-                    {t('Back')}
+                      {t('Back')}
                     </p>
                   </div>
                 </div>
@@ -392,13 +415,14 @@ class CouponPage extends Component {
                       t('Receive Coupon')
                     ) : (
                       <span>
-                        {t('Processing')}... <i className='fas fa-circle-notch'></i>
+                        {t('Processing')}...{' '}
+                        <i className='fas fa-circle-notch'></i>
                       </span>
                     )}
                   </button>
                   <div className='modal-back-btn'>
                     <p onClick={() => this.setState({ currentModal: 'name' })}>
-                    {t('Back')}
+                      {t('Back')}
                     </p>
                   </div>
                 </div>

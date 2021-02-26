@@ -14,7 +14,7 @@ const QrPage = ({ handleBack }) => {
       <div className='qr-page'>
         <img src='/img/qr.png' alt='QR' className='qr-code' />
         <Link to='/main'>
-          <button>{t('Continue')}</button>
+          <button className='orange-btn'>{t('Continue')}</button>
           
         </Link>
 

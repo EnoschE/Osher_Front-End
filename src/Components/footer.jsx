@@ -94,7 +94,7 @@ const Footer = (props) => {
 
         <Link to='/weather'>
           <div className='icon-block'>
-            <i className='far fa-cloud-sun'></i>
+            <i className='fas fa-cloud-sun'></i>
             <p>{t('Weather')}</p>
           </div>
         </Link>
@@ -102,7 +102,7 @@ const Footer = (props) => {
         {user && !user.isAdmin && user && !user.isBrand && (
           <Link to='/profile'>
             <div className='icon-block'>
-              <i className='far fa-user-tie'></i>
+              <i className='fas fa-user-tie'></i>
               <p>{t('Driver')}</p>
             </div>
           </Link>
@@ -111,7 +111,7 @@ const Footer = (props) => {
         {((user && user.isAdmin) || (user && user.isBrand)) && (
           <Link to='/dashboard'>
             <div className='icon-block dashboard-icon-block'>
-              <i className='far fa-th'></i>
+              <i className='fas fa-th'></i>
               <p>{t('Dashboard')}</p>
             </div>
           </Link>
