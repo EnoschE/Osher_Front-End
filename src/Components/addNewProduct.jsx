@@ -15,6 +15,8 @@ import { getUsers } from '../services/userService';
 import moment from 'moment';
 import Loader from './loader';
 import ChooseBrand from './common/chooseBrand';
+import { getVideos } from '../services/videoService';
+import ChooseVideo from './common/chooseVideo';
 
 class AddNewProduct extends Component {
   state = {
@@ -46,6 +48,7 @@ class AddNewProduct extends Component {
     loaded: 0,
     locations: [],
     activeLocations: [],
+    videos: [],
     expiryDate: new Date(),
     loading: true,
   };
@@ -85,6 +88,7 @@ class AddNewProduct extends Component {
 
           this.setState({
             currentBrand: product.brandId,
+            currentVideo: product.video,
             // users,
             // currentBrand: users.filter((u) => u.isBrand)[0]._id,
           });
@@ -99,7 +103,7 @@ class AddNewProduct extends Component {
 
   async populateLocations(currentBrand) {
     try {
-      const { user } = this.state;
+      const user = auth.getCurrentUser();
       const id = user._id;
 
       let response;
@@ -137,11 +141,14 @@ class AddNewProduct extends Component {
 
     if (user.isAdmin) {
       const { data: users } = await getUsers();
-      this.setState({ users });
-      
+      const { data: videos } = await getVideos();
+      console.log(videos);
+      this.setState({ users, videos });
+
       if (!this.props.match.params.id) {
         this.setState({
           currentBrand: users.filter((u) => u.isBrand)[0]._id,
+          currentVideo: videos[0]._id,
         });
 
         await this.populateLocations(users.filter((u) => u.isBrand)[0]._id);
@@ -158,6 +165,7 @@ class AddNewProduct extends Component {
     return {
       _id: product._id,
       name: product.name,
+      video: product.video,
       category: product.category,
       brandId: product.brandId,
       details: product.details,
@@ -226,6 +234,10 @@ class AddNewProduct extends Component {
     await this.populateLocations(input.value);
   };
 
+  handleChooseVideo = async ({ currentTarget: input }) => {
+    this.setState({ currentVideo: input.value });
+  };
+
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
@@ -271,10 +283,12 @@ class AddNewProduct extends Component {
       activeLocations,
       expiryDate,
       currentBrand,
+      currentVideo
     } = this.state;
     product.img = img;
     product.offers = offers;
     if (user.isAdmin) product.brandId = currentBrand;
+    if (user.isAdmin) product.video = currentVideo;
     else product.brandId = user._id;
     product.branches = activeLocations;
     product.expiryDate = expiryDate;
@@ -382,6 +396,8 @@ class AddNewProduct extends Component {
       loading,
       user,
       currentBrand,
+      videos,
+      currentVideo,
       users,
     } = this.state;
 
@@ -425,6 +441,14 @@ class AddNewProduct extends Component {
                 value={currentBrand}
                 label={'Choosed brand'}
                 handleChange={this.handleChooseBrand}
+              />
+            )}
+            {user.isAdmin && (
+              <ChooseVideo
+                data={videos}
+                value={currentVideo}
+                label={'Choose Video'}
+                handleChange={this.handleChooseVideo}
               />
             )}
             <form onSubmit={this.handleSubmit}>

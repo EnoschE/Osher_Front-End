@@ -65,6 +65,7 @@
 
   "Admin": "Administrateur",
   "Brands": "Marques",
+  "Videos": "Vidéos",
   "Locations": "Emplacements",
   "Customers": "Clients",
   "Orders": "Ordres",
@@ -91,26 +92,30 @@
   "Amount": "Montant",
   "Status": "Statut",
   "Brand": "Marque",
-  "Joined": "Rejoint"
-  ,"Name": "Nom"
-  ,"Email": "E-mail"
-  ,"Information": "Informations"
-  
+  "Joined": "Rejoint",
+  "Name": "Nom",
+  "Email": "E-mail",
+  "Information": "Informations",
 
-  ,"Person": "La personne"
-  ,"Branch": "Branche"
-  ,"Phone": "Téléphone"
-  ,"Address": "Adresse"
-  ,"Update": "Mettre à jour"
-  ,"Delete": "Effacer"
-  ,"Clear": "Dégager"
-  ,"Add Branch": "Ajouter une branche"
-  ,"Yes": "Oui"
-  ,"No": "Non"
-  ,"Are you sure to remove this location": "Êtes-vous sûr de vouloir supprimer cet emplacement"
-  ,"Best person to reach (Name)": "Meilleure personne à contacter (Nom)"
-  ,"Branch name": "Nom de la filiale"
-  ,"Branch address": "Adresse de la succursale"
-  ,"Branch phone number": "Numéro de téléphone de la succursale"
-  ,"Branch email": "Courriel de la succursale"
+  "Person": "La personne",
+  "Branch": "Branche",
+  "Phone": "Téléphone",
+  "Address": "Adresse",
+  "Update": "Mettre à jour",
+  "Delete": "Effacer",
+  "Clear": "Dégager",
+  "Add Branch": "Ajouter une branche",
+  "Yes": "Oui",
+  "No": "Non",
+  "Are you sure to remove this location": "Êtes-vous sûr de vouloir supprimer cet emplacement",
+  "Best person to reach (Name)": "Meilleure personne à contacter (Nom)",
+  "Branch name": "Nom de la filiale",
+  "Branch address": "Adresse de la succursale",
+  "Branch phone number": "Numéro de téléphone de la succursale",
+  "Branch email": "Courriel de la succursale",
+
+  "Add Video": "Ajouter une vidéo",
+  "Are you sure to remove this video": "Êtes-vous sûr de vouloir supprimer cette vidéo"
+  ,"Enter Video Name": "Entrez le nom de la vidéo"
+  ,"Choose Video": "Choisissez la vidéo"
 }

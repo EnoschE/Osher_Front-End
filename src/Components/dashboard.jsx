@@ -16,6 +16,7 @@ import BrandDetailsPage from './brandDetailsPage';
 import { getMyDetails } from '../services/userService';
 import moment from 'moment';
 import Financials from './financials';
+import VideosPage from './videosPage';
 
 class Dashboard extends Component {
   state = {
@@ -199,6 +200,19 @@ class Dashboard extends Component {
                   />
                 )}
 
+                {user.isAdmin && (
+                  <Route
+                    path='/dashboard/videos'
+                    render={(props) => (
+                      <VideosPage
+                        {...props}
+                        t={t}
+                        updateDashboardMenu={this.updateDashboardMenu}
+                      />
+                    )}
+                  />
+              )}
+              
                 {user.isAdmin && (
                   <Route
                     path='/dashboard/brands'

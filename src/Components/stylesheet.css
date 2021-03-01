@@ -1250,7 +1250,7 @@ h1.brand-name {
   /* background-color: var(--primary);
   color: var(--white); */
   background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
-  color: white;  
+  color: white;
 }
 
 .orange-btn:disabled {
@@ -1345,8 +1345,8 @@ h1.brand-name {
   animation: 0.5s slide-up-small 0.1s ease-in-out both;
 }
 
-.visit  {
-font-size: 45px;
+.visit {
+  font-size: 45px;
 }
 
 .modal-animation p {
@@ -1355,7 +1355,7 @@ font-size: 45px;
 
 .modal-continue-btn {
   background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
-  color: white;  
+  color: white;
   width: 150px;
   padding-left: 0px;
   padding-right: 0px;
@@ -1488,7 +1488,7 @@ font-size: 45px;
 }
 
 .dashboard-left-block {
-  padding: 20px 5px;
+  padding: 8px 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2425,6 +2425,17 @@ td.purchased-col {
   width: 100%;
 }
 
+.location-input-block .img-box,
+.location-input-block .img-uploading-box,
+.location-input-block .image-input-label {
+  width: 100%;
+}
+
+.location-input-block .form-group,
+.locations-page-2 {
+  width: 100%;
+}
+
 .location-input-block button {
   padding: 7px 20px;
   margin: 0px;
@@ -2697,4 +2708,14 @@ td.purchased-col {
   text-align: center;
   width: 100%;
   top: 15px;
+}
+
+.video-table-thumb {
+  height: 60px;
+  width: 60px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }

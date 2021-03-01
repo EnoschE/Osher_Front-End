@@ -85,6 +85,21 @@ class DashboardLeftBlock extends Component {
               </Link>
             )}
 
+            {user.isAdmin && (
+              <Link to='/dashboard/videos/'>
+                <div
+                  className={
+                    currentBlock === 'videos'
+                      ? 'left-menu-link active-link'
+                      : 'left-menu-link'
+                  }
+                >
+                  <h5>{t('Videos')}</h5>
+                  <div></div>
+                </div>
+              </Link>
+            )}
+
             {(user.isAdmin || user.isBrand) && (
               <Link to='/dashboard/locations/'>
                 <div

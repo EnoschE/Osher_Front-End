@@ -11,6 +11,7 @@ import Input from './common/input';
 import * as customerService from '../services/customerService';
 import * as orderService from '../services/orderService';
 import VideoBlock from './common/videoBlock';
+import { getVideo, saveVideo } from '../services/videoService';
 
 class CouponPage extends Component {
   state = {
@@ -43,6 +44,13 @@ class CouponPage extends Component {
     try {
       const { id } = this.props.match.params;
       const { data: brand } = await getProduct(id);
+      if (brand.video) {
+        const { data: video } = await getVideo(brand.video);
+        this.setState({ video });
+
+        video.views = video.views + 1;
+        await saveVideo(video)
+      }
       let { data } = await getProducts();
       const { data: userz } = await getUsers();
       this.setState({ userz: userz });
@@ -88,7 +96,6 @@ class CouponPage extends Component {
       setTimeout(() => {
         this.setState({ displayVideo: false });
       }, 5000);
-
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         this.props.history.replace('/not-found');
@@ -288,12 +295,13 @@ class CouponPage extends Component {
       isProcessing,
       sec,
       displayVideo,
+      video
     } = this.state;
     const { t } = this.props;
     let delay = 0;
 
     if (loading) return <loading />;
-    if (displayVideo) return <VideoBlock sec={sec} />;
+    if (displayVideo) return <VideoBlock video={video} sec={sec} />;
 
     return (
       <>

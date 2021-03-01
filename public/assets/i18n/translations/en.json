@@ -65,6 +65,7 @@
   
   ,"Admin": "Admin"
   ,"Brands": "Brands"
+  ,"Videos": "Videos"
   ,"Locations": "Locations"
   ,"Customers": "Customers"
   ,"Orders": "Orders"
@@ -112,5 +113,9 @@
   ,"Branch address": "Branch address"
   ,"Branch phone number": "Branch phone number"
   ,"Branch email": "Branch email"
-
+  
+  ,"Add Video": "Add Video"
+  ,"Are you sure to remove this video": "Are you sure to remove this video"
+  ,"Enter Video Name": "Enter Video Name"
+  ,"Choose Video": "Choose Video"
 }
