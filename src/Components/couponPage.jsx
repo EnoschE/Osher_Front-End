@@ -49,7 +49,7 @@ class CouponPage extends Component {
         this.setState({ video });
 
         video.views = video.views + 1;
-        await saveVideo(video)
+        await saveVideo(video);
       }
       let { data } = await getProducts();
       const { data: userz } = await getUsers();
@@ -86,16 +86,16 @@ class CouponPage extends Component {
         offer,
         loading: false,
         displayVideo: true,
-        sec: 5,
+        sec: 7,
       });
 
       setInterval(() => {
-        this.setState({ sec: this.state.sec - 1 });
+        if (this.state.sec > 1) this.setState({ sec: this.state.sec - 1 });
       }, 1000);
 
       setTimeout(() => {
         this.setState({ displayVideo: false });
-      }, 5000);
+      }, 7000);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         this.props.history.replace('/not-found');
@@ -266,6 +266,7 @@ class CouponPage extends Component {
 
   async componentDidMount() {
     window.scrollTo(0, 0);
+    this.setState({ sec: 7 });
     await this.populateProducts();
   }
 
@@ -274,7 +275,7 @@ class CouponPage extends Component {
 
     if (id !== prevProps.match.params.id) {
       window.scrollTo(0, 0);
-      this.setState({ loading: true });
+      this.setState({ loading: true, sec: 7 });
       await this.populateProducts();
     }
   }
@@ -295,7 +296,7 @@ class CouponPage extends Component {
       isProcessing,
       sec,
       displayVideo,
-      video
+      video,
     } = this.state;
     const { t } = this.props;
     let delay = 0;
