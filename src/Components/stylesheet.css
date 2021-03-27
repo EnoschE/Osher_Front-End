@@ -1043,7 +1043,7 @@ a:hover {
   border: 1px solid var(--medium);
 }
 
-.brand-carousel {
+.brand-carousel, .brand-carousel-2 {
   height: 160px;
   width: 100%;
   border-radius: var(--small-radius);
@@ -1172,7 +1172,7 @@ h1.brand-name {
   font-size: var(--small-text);
 }
 
-.coupon-page-carousel {
+.coupon-page-carousel, .coupon-page-carousel-2 {
   height: 320px;
   width: 100%;
 

@@ -21,7 +21,9 @@ const BrandCard = ({ delay, brand, mainBrand }) => {
         <Slider {...settings}>
           {brand.img.map((b) => (
             <div className='brand-carousel' key={b}>
-              <img src={b} alt='Brand' />
+              <div className='brand-carousel-2'>
+                <img src={b} alt='Brand' />
+              </div>
             </div>
           ))}
         </Slider>
