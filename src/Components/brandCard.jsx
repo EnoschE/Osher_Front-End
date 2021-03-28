@@ -22,7 +22,7 @@ const BrandCard = ({ delay, brand, mainBrand }) => {
           {brand.img.map((b) => (
             <div className='brand-carousel' key={b}>
               <div className='brand-carousel-2'>
-                <img src={b} alt='Brand' />
+                <img width='100%' src={b} alt='Brand' />
               </div>
             </div>
           ))}

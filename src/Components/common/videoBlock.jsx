@@ -14,7 +14,7 @@ const VideoBlock = ({ sec, video }) => {
         height='100%'
       /> */}
       {/* <img src={video && video.videoUrl} width='100%' height='100%' alt=""/> */}
-      <video width='100%' height='100%' autoPlay='true'>
+      <video width='100%' height='100%' autoPlay={true}>
         <source src={video && video.videoUrl} type='video/mp4' />
       </video>
       {/* <ReactPlayer url='https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4' /> */}

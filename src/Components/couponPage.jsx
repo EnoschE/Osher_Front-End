@@ -301,7 +301,7 @@ class CouponPage extends Component {
     const { t } = this.props;
     let delay = 0;
 
-    if (loading) return <loading />;
+    if (loading) return <Loader />;
     if (displayVideo) return <VideoBlock video={video} sec={sec} />;
 
     return (

@@ -15,11 +15,11 @@ const CouponLeftBlock = ({ brand, t }) => {
       <Slider {...settings}>
         {brand.img.map((b) => (
           <div className='coupon-page-carousel' key={b}>
-          <div className='coupon-page-carousel-2'>
-            <img src={b} alt='Brand' />
+            <div className='coupon-page-carousel-2'>
+              <img src={b} alt='Brand' width='100%' />
+            </div>
           </div>
-          </div>
-        ))}
+        ))} 
       </Slider>
 
       <div className='coupon-details'>

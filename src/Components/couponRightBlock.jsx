@@ -8,7 +8,7 @@ const CouponRightBlock = ({
   radioFunction,
   handleCoupon,
   expiry,
-  t
+  t,
 }) => {
   const [days, setDays] = useState('');
   const [hours, setHours] = useState('');
@@ -34,10 +34,10 @@ const CouponRightBlock = ({
       setMinutes(Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60)));
       setSeconds(Math.floor((timeleft % (1000 * 60)) / 1000));
     }, 1000);
-    calcTime('-5')
+    calcTime('-5');
   }, [expiry]);
 
-  const calcTime = ( offset) => {
+  const calcTime = (offset) => {
     // create Date object for current location
     var d = new Date();
 
@@ -48,11 +48,9 @@ const CouponRightBlock = ({
 
     // create new Date object for different city
     // using supplied offset
-    var nd = new Date(utc + 3600000 * offset);
+    new Date(utc + 3600000 * offset);
 
     // return time as a string
-    console.log('Canada   ' + nd);
-    console.log('Pakistan ' + d);
   };
 
   return (
