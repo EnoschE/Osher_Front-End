@@ -524,7 +524,8 @@ a:hover {
 }
 
 .qr-code {
-  width: 140px;
+  /* width: 140px; */
+  width: 250px;
   animation: 0.5s pop-out 0s ease-in-out both;
 }
 

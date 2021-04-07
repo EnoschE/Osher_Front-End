@@ -12,12 +12,10 @@ const QrPage = ({ handleBack }) => {
   return (
     <div className='main-background'>
       <div className='qr-page'>
-        <img src='/img/qr.png' alt='QR' className='qr-code' />
+        <img src='/img/main-pic2.png' alt='QR' className='qr-code' />
         <Link to='/main'>
           <button className='orange-btn'>{t('Continue')}</button>
-          
         </Link>
-
         {/* <audio src='/img/audio.mp3' controls autoPlay /> */}
       </div>
     </div>
