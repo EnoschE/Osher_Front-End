@@ -2697,18 +2697,28 @@ td.purchased-col {
 .videoads {
   position: fixed;
   z-index: 4;
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   width: 100vw;
   height: 100vh;
 }
 
-.videoads h1 {
+.video-heading-block {
+  width: 100%;
   position: absolute;
-  font-size: 20px;
-  text-align: center;
   width: 100%;
   top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videoads h1 {
+  background-color: rgba(255, 255, 255, 0.842);
+  padding: 2px 20px;
+  border-radius: 20px;
+  font-size: 20px;
+  text-align: center;
 }
 
 .video-table-thumb {

@@ -89,17 +89,29 @@ class CouponPage extends Component {
         sec: 7,
       });
 
-      setInterval(() => {
-        if (this.state.sec > 1) this.setState({ sec: this.state.sec - 1 });
-      }, 1000);
+      // setInterval(() => {
+      //   if (this.state.sec > 1) this.setState({ sec: this.state.sec - 1 });
+      // }, 1000);
 
-      setTimeout(() => {
-        this.setState({ displayVideo: false });
-      }, 7000);
+      // setTimeout(() => {
+      //   this.setState({ displayVideo: false });
+      // }, 7000);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         this.props.history.replace('/not-found');
     }
+  };
+
+  videoLoaded = () => {
+    // this.setState({ videoLoading: false });
+
+    setInterval(() => {
+      if (this.state.sec > 1) this.setState({ sec: this.state.sec - 1 });
+    }, 1000);
+
+    setTimeout(() => {
+      this.setState({ displayVideo: false });
+    }, 7000);
   };
 
   handleChange = ({ target }) => {
@@ -302,7 +314,8 @@ class CouponPage extends Component {
     let delay = 0;
 
     if (loading) return <Loader />;
-    if (displayVideo) return <VideoBlock video={video} sec={sec} />;
+    if (displayVideo)
+      return <VideoBlock isLoaded={this.videoLoaded} video={video} sec={sec} />;
 
     return (
       <>
