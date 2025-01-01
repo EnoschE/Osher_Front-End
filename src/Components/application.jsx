@@ -219,7 +219,7 @@ class Application extends Component {
                 />
               )}
             ></Route>
-
+ 
             <Route
               path='/whattodo'
               render={(props) => <WhatToDo {...props} />}
