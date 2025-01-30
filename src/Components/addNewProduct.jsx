@@ -1,46 +1,46 @@
-import React, { Component } from 'react';
-import { saveProduct, getProduct } from '../services/productService';
+import React, { Component } from "react";
+import { saveProduct, getProduct } from "../services/productService";
 // import { uploadImage } from '../services/fileService';
-import { Link } from 'react-router-dom';
-import { Calendar } from 'react-date-range';
-import { getLocation } from '../services/locationService';
-import { storage } from '../firebase/firebase';
-import Joi from 'joi-browser';
-import Input from './common/input';
-import Select from './common/select';
-import categories from '../services/categories';
-import TextArea from './common/textArea';
-import auth from '../services/authService';
-import { getUsers } from '../services/userService';
-import moment from 'moment';
-import Loader from './loader';
-import ChooseBrand from './common/chooseBrand';
-import { getVideos } from '../services/videoService';
-import ChooseVideo from './common/chooseVideo';
+import { Link } from "react-router-dom";
+import { Calendar } from "react-date-range";
+import { getLocation } from "../services/locationService";
+import { storage } from "../firebase/firebase";
+import Joi from "joi-browser";
+import Input from "./common/input";
+import Select from "./common/select";
+import categories from "../services/categories";
+import TextArea from "./common/textArea";
+import auth from "../services/authService";
+import { getUsers } from "../services/userService";
+import moment from "moment";
+import Loader from "./loader";
+import ChooseBrand from "./common/chooseBrand";
+import { getVideos } from "../services/videoService";
+import ChooseVideo from "./common/chooseVideo";
 
 class AddNewProduct extends Component {
   state = {
-    file: '',
-    imagePreviewUrl: '/img/img1.jpg',
-    currentBrand: '',
+    file: "",
+    imagePreviewUrl: "/img/img1.jpg",
+    currentBrand: "",
     product: {
-      name: '',
-      brandId: '',
-      category: '',
-      details: '',
-      description: '',
-      inStock: '',
+      name: "",
+      brandId: "",
+      category: "",
+      details: "",
+      description: "",
+      inStock: "",
       img: [],
       offers: [],
     },
     categories: [],
     errors: {},
-    heading: 'Add New Bundle',
+    heading: "Add New Bundle",
     offers: [
       {
         id: 1,
-        offerDetails: '',
-        price: '',
+        offerDetails: "",
+        price: "",
       },
     ],
     img: [],
@@ -55,19 +55,20 @@ class AddNewProduct extends Component {
 
   schema = {
     _id: Joi.string(),
-    name: Joi.string().required().label('Name'),
-    size: Joi.string().required().label('Size'),
-    category: Joi.string().required().label('Category'),
-    details: Joi.string().required().label('Details'),
-    description: Joi.string().required().label('Description'),
-    inStock: Joi.number().min(0).max(10000).required().label('Stock quantity'),
+    name: Joi.string().required().label("Name"),
+    size: Joi.string().required().label("Size"),
+    category: Joi.string().required().label("Category"),
+    details: Joi.string().required().label("Details"),
+    description: Joi.string().required().label("Description"),
+    inStock: Joi.number().min(0).max(10000).required().label("Stock quantity"),
   };
 
   async populateProducts() {
     try {
       const productId = this.props.match.params.id;
+
       if (productId) {
-        if (productId === 'new') return;
+        if (productId === "new") return;
 
         const { data: product } = await getProduct(productId);
         this.setState({
@@ -78,7 +79,7 @@ class AddNewProduct extends Component {
           // imagePreviewUrl: product.img,
           img: product.img,
           offers: product.offers,
-          heading: 'Update Bundle',
+          heading: "Update Bundle",
           loading: false,
         });
 
@@ -97,7 +98,7 @@ class AddNewProduct extends Component {
       } else this.setState({ loading: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
-        this.props.history.replace('/not-found');
+        this.props.history.replace("/not-found");
     }
   }
 
@@ -130,7 +131,7 @@ class AddNewProduct extends Component {
 
   populateCategories() {
     // const categories = categories;
-    let cat = categories.filter((c) => c !== 'All');
+    let cat = categories.filter((c) => c !== "All");
     this.setState({ categories: cat });
   }
 
@@ -147,15 +148,15 @@ class AddNewProduct extends Component {
 
       if (!this.props.match.params.id) {
         this.setState({
-          currentBrand: users.filter((u) => u.isBrand)[0]._id,
+          currentBrand: users.filter((u) => u.isBrand)?.[0]?._id,
           currentVideo: videos[0]._id,
         });
 
-        await this.populateLocations(users.filter((u) => u.isBrand)[0]._id);
+        await this.populateLocations(users.filter((u) => u.isBrand)?.[0]?._id);
       }
     }
 
-    if (!user.isAdmin) await this.populateLocations('');
+    if (!user.isAdmin) await this.populateLocations("");
 
     this.populateCategories();
     await this.populateProducts();
@@ -217,7 +218,7 @@ class AddNewProduct extends Component {
       maxId++;
     }
 
-    offers.push({ id: maxId, offerDetails: '', price: '' });
+    offers.push({ id: maxId, offerDetails: "", price: "" });
 
     this.setState({ offers });
   };
@@ -226,7 +227,7 @@ class AddNewProduct extends Component {
     let offers = [...this.state.offers];
     offers = offers.filter((o) => o !== offer);
     this.setState({ offers });
-    this.handleDeletePopUp('');
+    this.handleDeletePopUp("");
   };
 
   handleChooseBrand = async ({ currentTarget: input }) => {
@@ -283,7 +284,7 @@ class AddNewProduct extends Component {
       activeLocations,
       expiryDate,
       currentBrand,
-      currentVideo
+      currentVideo,
     } = this.state;
     product.img = img;
     product.offers = offers;
@@ -295,16 +296,16 @@ class AddNewProduct extends Component {
 
     await saveProduct(product);
 
-    let message = 'Product added successfully!';
+    let message = "Product added successfully!";
 
-    if (this.props.match.params.id) message = 'Product updated successfully!';
+    if (this.props.match.params.id) message = "Product updated successfully!";
 
     this.props.handleNotification({
       message: message,
-      img: '/img/success.png',
+      img: "/img/success.png",
     });
 
-    this.props.history.push('/dashboard/products/');
+    this.props.history.push("/dashboard/products/");
   };
 
   _handleImageChange = (e) => {
@@ -319,7 +320,7 @@ class AddNewProduct extends Component {
 
     const uploadTask = storage.ref(`images/${file.name}`).put(file);
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       (snapshot) => {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
@@ -331,7 +332,7 @@ class AddNewProduct extends Component {
       },
       () => {
         storage
-          .ref('images')
+          .ref("images")
           .child(file.name)
           .getDownloadURL()
           .then((url) => {
@@ -353,11 +354,11 @@ class AddNewProduct extends Component {
 
   isActive = (location) => {
     const { activeLocations } = this.state;
-    let classes = 'branch branch-active';
+    let classes = "branch branch-active";
 
     const result = activeLocations.filter((l) => l.id === location.id);
 
-    if (result.length === 0) classes = 'branch';
+    if (result.length === 0) classes = "branch";
 
     return classes;
   };
@@ -428,7 +429,7 @@ class AddNewProduct extends Component {
               <button onClick={() => this.removeOffer(deleteRequestedOffer)}>
                 Yes
               </button>
-              <button onClick={() => this.handleDeletePopUp('')}>No</button>
+              <button onClick={() => this.handleDeletePopUp("")}>No</button>
             </div>
           </React.Fragment>
         )}
@@ -439,7 +440,7 @@ class AddNewProduct extends Component {
               <ChooseBrand
                 data={users}
                 value={currentBrand}
-                label={'Choosed brand'}
+                label={"Choosed brand"}
                 handleChange={this.handleChooseBrand}
               />
             )}
@@ -447,7 +448,7 @@ class AddNewProduct extends Component {
               <ChooseVideo
                 data={videos}
                 value={currentVideo}
-                label={'Choose Video'}
+                label={"Choose Video"}
                 handleChange={this.handleChooseVideo}
               />
             )}
@@ -487,11 +488,11 @@ class AddNewProduct extends Component {
                 ))}
                 {loaded > 0 && (
                   <div className='img-uploading-box'>
-                    <div className='progress' style={{ width: '100%' }}>
+                    <div className='progress' style={{ width: "100%" }}>
                       <div
                         className='progress-bar bg-warning progress-bar-striped progress-bar-animated'
                         role='progressbar'
-                        style={{ width: this.state.loaded + '%' }}
+                        style={{ width: this.state.loaded + "%" }}
                         aria-valuenow={this.state.loaded}
                         aria-valuemin='0'
                         aria-valuemax='100'
@@ -567,10 +568,10 @@ class AddNewProduct extends Component {
           </div>
 
           <div className='col-md-5 product-image'>
-            <div className='extendable-offers' style={{ width: '100%' }}>
+            <div className='extendable-offers' style={{ width: "100%" }}>
               {offers.map((o) => (
                 <div key={o.id} className='offer-input-block'>
-                  <div style={{ width: '100%' }}>
+                  <div style={{ width: "100%" }}>
                     <p>Offer Id: {o.id}</p>
                     <Input
                       type='text'
@@ -606,7 +607,7 @@ class AddNewProduct extends Component {
                 <div className='linee'></div>
                 <h3>
                   <span>Expires on: </span>
-                  {moment(expiryDate).format('ll')}
+                  {moment(expiryDate).format("ll")}
                 </h3>
                 <Calendar
                   onChange={(item) => this.setDate(item)}
