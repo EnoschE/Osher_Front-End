@@ -1,5 +1,6 @@
 {
-  "name": "osher",
+  "name": "Osher Frontend",
+  "author": "Muhammad Aqib Asif",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
