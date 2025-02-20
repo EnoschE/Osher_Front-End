@@ -1,0 +1,91 @@
+
+:root{
+    --rti-error :#B12F30;
+}
+.rti--container * {
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.rti--container {
+    --rti-bg: #fff;
+    --rti-border: #E6E6E6;
+    --rti-main: #7D26CD;
+    --rti-radius:3px;
+    --rti-s: 0.6rem;
+    --rti-tag: #edf2f7;
+    --rti-tag-remove: #B12F30;
+ 
+    --rti-tag-padding: 0.15rem 0.25rem;
+
+    /* Container Styles */
+    position: relative;
+    align-items: center;
+    background: var(--rti-bg);
+    border: 0.4px solid var(--rti-border);
+    border-radius: var(--rti-radius);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rti-s);
+    line-height: 1.4;
+    padding: var(--rti-s);
+
+
+  
+}
+.rti--container.disabled {  opacity: 0.5;
+    pointer-events: none;
+    user-select: none;}
+
+.rti--container:focus-within {
+    border-color: var(--rti-main);
+   
+}
+.error.rti--container {
+    border-color: var(--rti-error);
+
+}
+.rti--input {
+    border: 0;
+    outline: 0;
+    font-size: inherit;
+    line-height: inherit;
+    width: 50%;
+    color : #1C1D34;
+}
+.rti--input[type=number]::-webkit-inner-spin-button, 
+.rti--input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+.rti--input::placeholder {
+    color : #A6A6A6;
+  }
+.rti--tag {
+    align-items: center;
+    background: var(--rti-tag);
+    border-radius: var(--rti-radius);
+    display: inline-flex;
+    justify-content: center;
+    padding: var(--rti-tag-padding);
+}
+
+.rti--tag button {
+    background: none;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    line-height: inherit;
+    padding: 0 var(--rti-s);
+}
+
+.rti--tag button:hover {
+    color: var(--rti-tag-remove);
+}
+
+.error-message {
+    color: var(--rti-error);
+    margin-left: 10px;
+    margin-top: 5px;
+    display: block;
+}

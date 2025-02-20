@@ -1,0 +1,12 @@
+.Toastify__toast {
+	-webkit-backdrop-filter: saturate(180%) blur(15px);
+	backdrop-filter: saturate(180%) blur(15px);
+	background-color: rgba(255, 255, 255, 0.6);
+	border-radius: 12px;
+	box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+	border: 0.5px solid lightgray;
+}
+
+.Toastify__toast-body {
+	padding: 18px;
+}
