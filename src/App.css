@@ -1,17 +1,44 @@
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-	--selection-color: #ffa80030;
+  --selection-color: #ffa80030;
 }
 
 ::selection {
-	background: var(--selection-color);
+  background: var(--selection-color);
 }
 
+.heading-overflow-hidden {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* min-width: max-content; */
+  flex-wrap: wrap;
+}
+
+.heading-overflow-hidden > * {
+  /* font-size: calc(10px + (150 - 14) * ((100vw - 300px) / (1600 - 300))); */
+  /* font-size: 3.4rem;
+  line-height: 1;
+  font-weight: 500; */
+  animation: 0.9s slide-up 0.1s cubic-bezier(0, 0.01, 0.01, 1) both;
+  letter-spacing: 0px;
+  transition: all cubic-bezier(0, 0.01, 0.01, 1) 0.3s;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(150%) rotate(10deg);
+  }
+  to {
+    transform: translateY(0%) rotate(0deg);
+  }
+}
 
 /* Keeping for future use */
 

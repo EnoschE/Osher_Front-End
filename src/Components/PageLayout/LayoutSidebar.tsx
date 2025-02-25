@@ -19,6 +19,13 @@ import {
   SupportAgentOutlined,
   TuneOutlined,
   TextSnippetOutlined,
+  WidgetsOutlined,
+  BusinessOutlined,
+  BusinessCenterOutlined,
+  StoreOutlined,
+  StorefrontOutlined,
+  StyleOutlined,
+  SellOutlined,
 } from "@mui/icons-material";
 import { Collapse, Typography } from "@mui/material";
 import { useState } from "react";
@@ -161,13 +168,23 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
   const isPsl = isPslLoggedIn();
 
   const menuItems: MenuItem[] = [
-    { icon: <HomeOutlined />, text: "Dashboard", path: allRoutes.DASHBOARD },
+    { icon: <WidgetsOutlined />, text: "Dashboard", path: allRoutes.DASHBOARD },
     ...(isSuperAdmin
       ? [
           {
-            icon: <RecordVoiceOverOutlined />,
+            icon: <StorefrontOutlined />,
             text: "Brands",
             path: allRoutes.BRANDS,
+          },
+          {
+            icon: <StyleOutlined />,
+            text: "Categories",
+            path: allRoutes.CATEGORIES,
+          },
+          {
+            icon: <SellOutlined />,
+            text: "Ads",
+            path: allRoutes.ADS,
           },
         ]
       : []),

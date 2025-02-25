@@ -59,7 +59,7 @@ const ColorTheme = () => {
 			console.log("Colors got updated!", output);
 
 			// updating colors in redux
-			dispatch(fetchColors());
+			// dispatch(fetchColors());
 
 			toast.success("Color theme updated successfully!");
 			navigate(allRoutes.CONFIGURATIONS);

@@ -4,12 +4,13 @@ import ImageUploader from "./ImageUploader"; // Adjust path accordingly
 import CustomTextField, { Asterisk } from "./CustomTextField";
 import CustomButton from "./CustomButton";
 import React, { FormEvent } from "react";
+import AnimatedHeading from "./AnimatedHeading";
 
 export interface FormField {
   label: string;
   name: string;
   required?: boolean;
-  type: "text" | "email" | "password" | "phone" | "image";
+  type?: "text" | "email" | "password" | "phone" | "image";
   value: string | number | undefined;
   onChange: (event: any) => void;
   error?: string;
@@ -37,12 +38,12 @@ const CustomForm = ({
 }: FormProps) => {
   return (
     <>
-      {!!heading && (
-        <Typography variant='h5' mb={10}>
-          {heading}
+      {!!heading && <AnimatedHeading heading={heading} variant='h3' />}
+      {!!subHeading && (
+        <Typography fontSize={15} mt={heading ? 10 : 0}>
+          {subHeading}
         </Typography>
       )}
-      {!!subHeading && <Typography fontSize={15}>{subHeading}</Typography>}
       {(heading || subHeading) && <Divider sx={{ mt: 14, mb: 24 }} />}
 
       <form onSubmit={onSave}>
@@ -83,6 +84,8 @@ const CustomForm = ({
                   size='small'
                   value={field.value}
                   InputLabelProps={{ shrink: true }}
+                  error={!!field.error}
+                  helperText={field.error}
                 />
               ) : (
                 <CustomTextField

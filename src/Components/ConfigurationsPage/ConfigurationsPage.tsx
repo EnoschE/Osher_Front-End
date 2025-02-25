@@ -375,7 +375,7 @@ const ConfigurationsPage = () => {
 			const output = await updateParameters(formData);
 			console.log("Parameters Updated: ", output);
 			toast.success("Parameters updated successfully!");
-			dispatch(fetchLogo());
+			// dispatch(fetchLogo());
 		} catch (error: any) {
 			toast.error(error);
 		}

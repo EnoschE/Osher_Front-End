@@ -13,6 +13,7 @@ import { OsherLogo } from "../../Utils/Images";
 import { useSelector } from "../../Redux/reduxHooks";
 import { selectColors } from "../../Redux/Slices/generalSlice";
 import { sidebarWidth } from "../../Utils/spacings";
+import CustomAvatar from "../Common/CustomAvatar";
 
 const Navbar = ({
   navbarForNonProtectedRoutes,
@@ -40,10 +41,7 @@ const Navbar = ({
     {
       text: (
         <Box display='flex' alignItems='center' gap={8}>
-          <Avatar
-            sx={{ width: 40, height: 40, border: `1px solid ${colors.border}` }}
-            src={user.picture}
-          />
+          <CustomAvatar src={user.picture} />
           <Box>
             <Typography variant='h6' mb={4}>
               {user.name || "User Name"}
@@ -124,14 +122,8 @@ const Navbar = ({
         {isUserLoggedIn() && (
           <CustomMenu
             anchorComponent={(props: any) => (
-              <Avatar
-                sx={{
-                  width: 40,
-                  height: 40,
-                  ml: 8,
-                  cursor: "pointer",
-                  border: `1px solid ${colors.border}`,
-                }}
+              <CustomAvatar
+                sx={{ ml: 8, cursor: "pointer" }}
                 src={user.picture}
                 {...props}
               />

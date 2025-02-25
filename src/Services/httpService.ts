@@ -15,7 +15,11 @@ http.interceptors.response.use(
       logoutUser();
       toast.warn("Token has been expired. Please login again.");
     } else {
-      throw error.response?.data || "Something went wrong!";
+      throw (
+        error?.response?.data?.message ||
+        error?.response?.data ||
+        "Something went wrong!"
+      );
     }
   }
 );

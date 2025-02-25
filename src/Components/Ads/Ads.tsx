@@ -9,7 +9,7 @@ import { getAllBrands } from "../../Services/brandsService";
 import CustomAvatar from "../Common/CustomAvatar";
 import { Box, Typography } from "@mui/material";
 
-const Brands = () => {
+const Ads = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -83,18 +83,18 @@ const Brands = () => {
   return (
     <PageLayout loading={loading} hideBackButton>
       <TableBlock
-        heading='Brands'
-        subHeading='These are all the brands'
+        heading='Ads'
+        subHeading='These are all the ads'
         tableData={data}
-        addButtonText='Add Brand'
+        addButtonText='Add ad'
         addButtonPath={allRoutes.ADD_BRAND}
         detailsPagePath={allRoutes.VIEW_BRAND}
         tableHeaders={tableHeaders}
-        emptyStateMessage='There are no brands present. Please add a brand.'
+        emptyStateMessage='There are no ads present. Please add a ad.'
         rowsPerPage={10}
       />
     </PageLayout>
   );
 };
 
-export default Brands;
+export default Ads;

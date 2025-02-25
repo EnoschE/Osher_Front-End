@@ -22,7 +22,7 @@ import { isSuperAdminLoggedIn } from "../../Services/userService";
 import UnassignTechnicianDialog from "../Technicians/UnassignTechnicianDialog";
 import { deleteBrand, getBrandById } from "../../Services/brandsService";
 
-const BrandDetails = () => {
+const AdDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -185,4 +185,4 @@ const BrandDetails = () => {
   );
 };
 
-export default BrandDetails;
+export default AdDetails;

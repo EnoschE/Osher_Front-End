@@ -15,7 +15,8 @@ import { useDispatch } from "../../Redux/reduxHooks";
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import { getProfile } from "../../Services/profileService";
 import { navbarHeight } from "../../Utils/spacings";
-import { HomeImage } from "../../Utils/Images";
+import { HomeImage, MainPic } from "../../Utils/Images";
+import AnimatedHeading from "../Common/AnimatedHeading";
 
 interface DataProps {
   email: string;
@@ -100,9 +101,11 @@ const Login = () => {
       <Navbar navbarForNonProtectedRoutes />
       <LoginContainer mt={navbarHeight}>
         <LoginLeftBlock>
-          <Typography variant={isMobileView ? "h3" : "h2"}>
-            Sign in to your account
-          </Typography>
+          <AnimatedHeading
+            heading='Sign in to your account'
+            variant={isMobileView ? "h3" : "h2"}
+            animationSpeed="fast"
+          />
           <Typography mt={10} mb={47}>
             Sign in to your account
           </Typography>
@@ -166,9 +169,7 @@ const Login = () => {
         </LoginLeftBlock>
 
         <LoginRightBlock>
-          <Box 
-          component='img' src={HomeImage}
-           className='purple-box' />
+          <Box component='img' src={HomeImage} className='purple-box' />
         </LoginRightBlock>
       </LoginContainer>
 

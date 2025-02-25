@@ -68,6 +68,12 @@ import Brands from "../Components/Brands/Brands";
 import AddBrand from "../Components/Brands/AddBrand";
 import EditBrand from "../Components/Brands/EditBrand";
 import BrandDetails from "../Components/Brands/BrandDetails";
+import { getAllCategories } from "../Services/categoriesService";
+import Categories from "../Components/Categories/Categories";
+import Ads from "../Components/Ads/Ads";
+import AddAd from "../Components/Ads/AddAd";
+import EditAd from "../Components/Ads/EditAd";
+import AdDetails from "../Components/Ads/AdDetails";
 // import SignUp from "../Components/SignUp/SignUp";
 // import Home from "../Components/Home/Home";
 // import Estimate from "../Components/Estimate/Estimate";
@@ -101,6 +107,15 @@ const routesWithComponents = {
     Component: Dashboard,
     isPrivate: true,
   },
+  CATEGORIES: {
+    path: allRoutes.CATEGORIES,
+    Component: Categories,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true, // TODO: replace it with admin
+    },
+  },
+
   BRANDS: {
     path: allRoutes.BRANDS,
     Component: Brands,
@@ -128,6 +143,39 @@ const routesWithComponents = {
   VIEW_BRAND: {
     path: allRoutes.VIEW_BRAND,
     Component: BrandDetails,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true, // TODO: replace it with admin
+    },
+  },
+
+  ADS: {
+    path: allRoutes.ADS,
+    Component: Ads,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true, // TODO: replace it with admin
+    },
+  },
+  ADD_AD: {
+    path: allRoutes.ADD_AD,
+    Component: AddAd,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true, // TODO: replace it with admin
+    },
+  },
+  EDIT_AD: {
+    path: allRoutes.EDIT_AD,
+    Component: EditAd,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true, // TODO: replace it with admin
+    },
+  },
+  VIEW_AD: {
+    path: allRoutes.VIEW_AD,
+    Component: AdDetails,
     isPrivate: true,
     accessTo: {
       superAdmin: true, // TODO: replace it with admin
@@ -570,12 +618,12 @@ const routesWithComponents = {
     path: allRoutes.ACCOUNT_SETTINGS,
     Component: AccountSettings,
     isPrivate: true,
-    accessTo: {
-      superAdmin: true,
-      director: true,
-      psl: true,
-      adminManager: true,
-    },
+    // accessTo: {
+    //   superAdmin: true,
+    //   director: true,
+    //   psl: true,
+    //   adminManager: true,
+    // },
   },
   ACCOUNT_CREATION: {
     path: allRoutes.ACCOUNT_CREATION,

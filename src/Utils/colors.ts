@@ -6,7 +6,7 @@ const colors = {
 	primaryLight: "#FFA80080",
 	primaryMidLight: "#FFDB96",
 	primaryExtraLight: "#FFF6E6",
-	primaryLightNew: "#FFF6E6",
+	primaryLightNew: "#FFF6E6", // TODO: remove all unnecessary color from here
 	text: "#1C1D34",
 	textMid: "#475467",
 	textDarkBlue: "#090F4E",

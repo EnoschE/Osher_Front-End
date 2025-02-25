@@ -30,7 +30,7 @@ const defaultData = {
   confirmPassword: "",
 };
 
-const AddBrand = () => {
+const AddAd = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -262,4 +262,4 @@ const AddBrand = () => {
   );
 };
 
-export default AddBrand;
+export default AddAd;

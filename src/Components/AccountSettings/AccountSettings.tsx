@@ -61,10 +61,6 @@ const AccountSettings = () => {
     }));
   };
 
-  const handleSelectImage = (image: any) => {
-    setData((state) => ({ ...state, picture: image }));
-  };
-
   const validateData = () => {
     const updatedErrors = { ...errors };
 
@@ -96,7 +92,7 @@ const AccountSettings = () => {
       }
 
       const formData = new FormData();
-      // formData.append("picture", profilePicture ?? "");
+
       formData.append("picture", data.picture ?? "");
       formData.append("name", data.name ?? "");
       formData.append("email", data.email ?? "");
@@ -126,9 +122,7 @@ const AccountSettings = () => {
     setLoading(false);
   };
 
-  const handleCancel = () => {
-    navigate(allRoutes.DASHBOARD);
-  };
+  const handleCancel = () => navigate(allRoutes.DASHBOARD);
 
   // const openOtpDialog = () => setOtpDialog(true);
   // const closeOtpDialog = () => setOtpDialog(false);
@@ -139,16 +133,14 @@ const AccountSettings = () => {
       placeholder: "This will be displayed on your profile",
       name: "profilePicture",
       type: "image",
-      // value: profilePicture,
       value: data.picture,
-      onChange: handleSelectImage,
+      onChange: (picture: any) => setData((state) => ({ ...state, picture })),
     },
     {
       required: true,
       label: "Name",
       placeholder: "Name",
       name: "name",
-      type: "text",
       value: data.name,
       onChange: handleOnChange,
       error: errors.name,
@@ -167,7 +159,6 @@ const AccountSettings = () => {
       label: "Address",
       placeholder: "Address",
       name: "address",
-      type: "text",
       value: data.address,
       onChange: handleOnChange,
       error: errors.address,

@@ -14,6 +14,7 @@ interface ForgotPasswordDialogProps {
   onDelete?: () => void;
   user: { name: string };
   userType:
+    | "Brand"
     | "Admin"
     | "Customer"
     | "Technician"
@@ -29,7 +30,6 @@ const DeleteDialog = ({
   onDelete,
   user,
 }: ForgotPasswordDialogProps) => {
-  const colors = useSelector(selectColors);
   const { IconSquareBox } = useLoginStyles();
   userType = userType === "Technician" ? "Installation Crew" : userType;
 
@@ -39,7 +39,6 @@ const DeleteDialog = ({
     setLoading(true);
     try {
       await onDelete?.();
-      console.log("Deleting...");
     } catch (error: any) {
       toast.error(error);
     }

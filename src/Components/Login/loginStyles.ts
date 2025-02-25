@@ -1,7 +1,6 @@
 import { Box, keyframes, styled } from "@mui/material";
-import { selectColors } from "../../Redux/Slices/generalSlice";
 import { borderRadius, navbarHeight } from "../../Utils/spacings";
-import { useSelector } from "../../Redux/reduxHooks";
+import colors from "../../Utils/colors";
 
 export const LoginContainer = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -45,17 +44,20 @@ export const LoginRightBlock = styled(Box)(({ theme }) => ({
     justifyContent: "center",
     position: "relative",
     objectFit: "cover",
-
+    // backgroundColor: colors.primary + "10",
+    // objectFit: "contain",
+    // padding: 80,
+    // filter: 'drop-shadow(5px 5px 30px rgba(0,0,0,0.15))'
 
     // backgroundImage: `radial-gradient(
-		// 	circle 40vw at 95.6% 30%,
-		// 	 rgb(53, 178, 255, 0.45) 0.2%,
-		// 	#ffffff00 100.2%
-		// 	), radial-gradient(
-		// 	circle 45vw at 5.6% 70%,
-		// 	rgb(255, 53, 184, 0.4) 0.2%,
-		// 	#ffffff00 100.2%
-		// 	)`,
+    // 	circle 40vw at 95.6% 30%,
+    // 	 rgb(53, 178, 255, 0.45) 0.2%,
+    // 	#ffffff00 100.2%
+    // 	), radial-gradient(
+    // 	circle 45vw at 5.6% 70%,
+    // 	rgb(255, 53, 184, 0.4) 0.2%,
+    // 	#ffffff00 100.2%
+    // 	)`,
   },
 
   [theme.breakpoints.down("md")]: {
@@ -66,8 +68,6 @@ export const LoginRightBlock = styled(Box)(({ theme }) => ({
 }));
 
 const useLoginStyles = () => {
-  const colors = useSelector(selectColors);
-
   const IconSquareBox = styled(Box)(() => ({
     height: 53,
     width: 53,

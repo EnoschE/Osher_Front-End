@@ -6,8 +6,8 @@ export const StyledDrawerBox = styled(Box)(() => ({
 	height: "max-content",
 	paddingTop: "10px",
 	overflowY: "auto",
-	WebkitBackdropFilter: "saturate(180%) blur(20px)",
-	backdropFilter: "saturate(180%) blur(20px)",
+	WebkitBackdropFilter: "saturate(200%) blur(20px)",
+	backdropFilter: "saturate(200%) blur(20px)",
 	backgroundColor: "rgba(255, 255, 255, 0.7)",
 	"&::-webkit-scrollbar": { display: "none" },
 }));

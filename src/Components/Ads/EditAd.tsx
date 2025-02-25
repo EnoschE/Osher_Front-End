@@ -246,7 +246,7 @@ const defaultData = {
   newPassword: "",
 };
 
-const EditBrand = () => {
+const EditAd = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -465,4 +465,4 @@ const EditBrand = () => {
   );
 };
 
-export default EditBrand;
+export default EditAd;

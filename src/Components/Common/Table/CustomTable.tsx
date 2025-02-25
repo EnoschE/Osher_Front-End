@@ -29,13 +29,14 @@ interface HeaderProps {
   maxWidth?: number;
   // align?: "center" | "left" | "right" | "inherit" | "justify" | undefined;
   align?: any;
-  customComponent?: (props: {
-    text: string;
-    id: string;
-    fullObject: any;
-    mongoId?: string;
-    sequentialId?: string;
-  }) => any;
+  // customComponent?: (props: {
+  //   text: string;
+  //   id: string;
+  //   fullObject: any;
+  //   mongoId?: string;
+  //   sequentialId?: string;
+  // }) => any;
+  customComponent?: (props: any) => any;
   notClickable?: boolean;
   sortable?: boolean;
   sequentialId?: string;
@@ -122,7 +123,6 @@ const CustomTable = ({
     });
   }, [rows, sortConfig]);
   const handleRowClick = (id: string, row: any) => {
-    console.log({ id });
     if (detailsPagePath)
       navigate(
         id === user.id
@@ -170,16 +170,16 @@ const CustomTable = ({
                         sortConfig.direction === 1 ? (
                           <ArrowUpwardOutlinedIcon
                             sx={{
-                              fontSize: "18px",
-                              color: colors.gray,
+                              fontSize: "12px",
+                              color: colors.text,
                               ml: "5px",
                             }}
                           />
                         ) : (
                           <ArrowDownwardOutlinedIcon
                             sx={{
-                              fontSize: "18px",
-                              color: colors.gray,
+                              fontSize: "12px",
+                              color: colors.text,
                               ml: "5px",
                             }}
                           />
@@ -224,27 +224,22 @@ const CustomTable = ({
                         onClick={
                           header.notClickable
                             ? undefined
-                            : () =>
-                                handleRowClick(
-                                  user.id === row._id
-                                    ? row._id
-                                    : row.sequentialId,
-                                  row
-                                )
+                            : () => handleRowClick(row._id, row)
                         }
                       >
                         {header.customComponent ? (
-                          header.customComponent({
-                            text: row[header.key]
-                              ? row[header.key]
-                              : header.alternateKey
-                              ? row[header.alternateKey]
-                              : "-",
-                            id: row._id,
-                            mongoId: row.mongoId,
-                            sequentialId: row.sequentialId,
-                            fullObject: row,
-                          })
+                          // header.customComponent({
+                          //   text: row[header.key]
+                          //     ? row[header.key]
+                          //     : header.alternateKey
+                          //     ? row[header.alternateKey]
+                          //     : "-",
+                          //   id: row._id,
+                          //   mongoId: row.mongoId,
+                          //   sequentialId: row.sequentialId,
+                          //   fullObject: row,
+                          // })
+                          header.customComponent(row)
                         ) : header?.showEllipses ? (
                           <Box style={{ maxWidth: header?.maxWidth ?? 150 }}>
                             <Tooltip
@@ -309,7 +304,7 @@ const CustomTable = ({
         </Table>
       </TableContainer>
 
-      {!hidePagination && (
+      {!hidePagination && totalPages > 1 && (
         <CustomTablePagination
           page={page}
           totalPages={totalPages}

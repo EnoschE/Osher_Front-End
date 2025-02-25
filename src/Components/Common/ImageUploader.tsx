@@ -75,7 +75,7 @@ const ImageUploader = ({
             : ""
         }
         onClick={() => inputRef?.current?.click()}
-        imgProps={{ style: { objectFit: "contain" } }}
+        imgProps={{ style: { objectFit: "cover" } }}
       />
 
       {!!imageFile && (
@@ -85,10 +85,16 @@ const ImageUploader = ({
             top: 2,
             right: 2,
             p: 0,
-            bgcolor: "#ffffff",
+            // bgcolor: "#ffffff",
+
+            WebkitBackdropFilter: "saturate(200%) blur(8px)",
+            backdropFilter: "saturate(200%) blur(8px)",
+            backgroundColor: "rgba(255, 255, 255, 0.7)",
+            transition: 'all ease 0.2s',
 
             "&:hover": {
-              bgcolor: '#f6f6f6',
+              backgroundColor: "rgba(255, 255, 255, 0.5)",
+              // bgcolor: "#f6f6f6",
             },
           }}
           onClick={handleRemoveImage}
