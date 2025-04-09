@@ -5,9 +5,9 @@ import { allRoutes } from "../../Routes/AllRoutes";
 import TableBlock from "../Common/Table/TableBlock";
 import CustomTableOptions from "../Common/CustomTableOptions";
 import { useNavigate } from "react-router-dom";
-import { getAllBrands } from "../../Services/brandsService";
-import CustomAvatar from "../Common/CustomAvatar";
-import { Box, Typography } from "@mui/material";
+import { getAllAds } from "../../Services/adsService";
+import moment from "moment";
+import AvatarWithName from "../Common/AvatarWithName";
 
 const Ads = () => {
   const navigate = useNavigate();
@@ -17,33 +17,38 @@ const Ads = () => {
 
   const tableHeaders = [
     {
-      text: "Brand",
+      text: "Ad",
       key: "name",
       customComponent: (props: { picture: string; name: string }) => (
-        <Box display='flex' alignItems='center' gap={8}>
-          <CustomAvatar src={props.picture} />
-          <Typography>{props.name}</Typography>
-        </Box>
+        <AvatarWithName name={props.name} picture={props.picture} />
       ),
     },
     {
-      text: "Email address",
-      key: "email",
+      text: "Category",
+      key: "categoryName",
       showEllipses: true,
       maxWidth: 130,
       sortable: true,
     },
     {
-      text: "Address",
-      key: "address",
-      showEllipses: true,
-      maxWidth: 130,
+      text: "Brand",
+      key: "brand",
       sortable: true,
+      customComponent: (props: { brandName: string }) => props.brandName,
     },
     {
-      text: "Phone",
-      key: "phone",
+      text: "Publish Date",
+      key: "publishDate",
       sortable: true,
+      customComponent: (props: { publishDate: string }) =>
+        moment(props.publishDate).format("LL"),
+    },
+    {
+      text: "Expiry Date",
+      key: "expiryDate",
+      sortable: true, // DO THE SAME LOGIC FOR DATES HERE AS WELL LIKE IN PAGEDETAILSBLOCK
+      customComponent: (props: { expiryDate: string }) =>
+        moment(props.expiryDate).format("LL"),
     },
     {
       text: "",
@@ -54,9 +59,9 @@ const Ads = () => {
         <CustomTableOptions
           menuOptions={[
             {
-              text: "Edit Brand",
+              text: "Edit Ad",
               onClick: () => {
-                navigate(allRoutes.EDIT_BRAND.replace(":id", props._id));
+                navigate(allRoutes.EDIT_AD.replace(":id", props._id));
               },
             },
           ]}
@@ -72,7 +77,7 @@ const Ads = () => {
   const getData = async () => {
     setLoading(true);
     try {
-      const data: any = await getAllBrands();
+      const data: any = await getAllAds();
       setData(data);
     } catch (error: any) {
       toast.error(error);
@@ -87,10 +92,10 @@ const Ads = () => {
         subHeading='These are all the ads'
         tableData={data}
         addButtonText='Add ad'
-        addButtonPath={allRoutes.ADD_BRAND}
-        detailsPagePath={allRoutes.VIEW_BRAND}
+        addButtonPath={allRoutes.ADD_AD}
+        detailsPagePath={allRoutes.VIEW_AD}
         tableHeaders={tableHeaders}
-        emptyStateMessage='There are no ads present. Please add a ad.'
+        emptyStateMessage='There are no ads present. Please add an ad.'
         rowsPerPage={10}
       />
     </PageLayout>

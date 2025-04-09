@@ -9,31 +9,14 @@ const Categories = () => {
   const cats = useSelector(selectCategories);
 
   const tableHeaders = [
-    {
-      text: "ID",
-      key: "_id",
-      // showEllipses: true,
-      // maxWidth: 120,
-      sortable: true,
-    },
-    { text: "Category name", key: "name", sortable: true },
-    {
-      text: "Color",
-      key: "color",
-      customComponent: (props: any) => (
-        <Box
-          bgcolor={props.color + "20"}
-          borderRadius={borderRadius.xs}
-          color={props.color}
-          border={`1px solid ${props.color}`}
-          padding={"4px 12px"}
-          display='inline'
-          boxShadow={`0px 2px 12px ${props.color + "60"}`}
-        >
-          {props.name}
-        </Box>
-      ),
-    },
+    // {
+    //   text: "ID",
+    //   key: "_id",
+    //   // showEllipses: true,
+    //   // maxWidth: 120,
+    //   sortable: true,
+    // },
+    { text: "Category", key: "name", sortable: true },
   ];
 
   return (

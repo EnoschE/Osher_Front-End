@@ -42,6 +42,7 @@ import {
   StyledDrawerListItem,
   StyledDrawerListSubItem,
 } from "./pageLayoutStyles";
+import colors from "../../Utils/colors";
 interface ItemProps {
   icon: any;
   text: string;
@@ -97,6 +98,9 @@ const SidebarItem = ({ item, onClick }: SidebarItemProps) => {
         onClick={() => handleOnClick(item.path, containSubItems)}
         sx={{
           backgroundColor: isActive(item.path) ? "primary.main" : "transparent",
+          boxShadow: isActive(item.path)
+            ? `0px 8px 20px ${colors.primary}99`
+            : "none",
           color: isActive(item.path) ? "white" : "text.primary",
           svg: {
             path: { fill: isActive(item.path) ? "white" : "text.primary" },

@@ -9,6 +9,7 @@ import { updateProfile } from "../../Services/profileService";
 import PageLayout from "../PageLayout/PageLayout";
 import { validateEmail, validatePassword } from "../../Utils/utils";
 import CustomForm, { FormField } from "../Common/CustomForm";
+import { FormOnChange } from "../../Utils/types";
 
 interface AccountSettingsData extends UserState {
   newPassword?: string;
@@ -47,8 +48,7 @@ const AccountSettings = () => {
     }
   }, [user]);
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleOnChange = ({ name, value }: FormOnChange) => {
     setData((state) => ({ ...state, [name]: value }));
     setErrors((state) => ({
       ...state,
@@ -131,10 +131,10 @@ const AccountSettings = () => {
     {
       label: "Your Photo",
       placeholder: "This will be displayed on your profile",
-      name: "profilePicture",
+      name: "picture",
       type: "image",
       value: data.picture,
-      onChange: (picture: any) => setData((state) => ({ ...state, picture })),
+      onChange: handleOnChange,
     },
     {
       required: true,
@@ -169,7 +169,7 @@ const AccountSettings = () => {
       name: "phone",
       type: "phone",
       value: data.phone,
-      onChange: (phone: string) => setData({ ...data, phone }),
+      onChange: handleOnChange,
     },
     {
       label: "Password",

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { getAllBrands } from "../../Services/brandsService";
 import CustomAvatar from "../Common/CustomAvatar";
 import { Box, Typography } from "@mui/material";
+import AvatarWithName from "../Common/AvatarWithName";
 
 const Brands = () => {
   const navigate = useNavigate();
@@ -20,10 +21,7 @@ const Brands = () => {
       text: "Brand",
       key: "name",
       customComponent: (props: { picture: string; name: string }) => (
-        <Box display='flex' alignItems='center' gap={8}>
-          <CustomAvatar src={props.picture} />
-          <Typography>{props.name}</Typography>
-        </Box>
+        <AvatarWithName picture={props.picture} name={props.name} />
       ),
     },
     {

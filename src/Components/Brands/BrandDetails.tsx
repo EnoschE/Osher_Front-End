@@ -21,6 +21,7 @@ import CustomTableOptions from "../Common/CustomTableOptions";
 import { isSuperAdminLoggedIn } from "../../Services/userService";
 import UnassignTechnicianDialog from "../Technicians/UnassignTechnicianDialog";
 import { deleteBrand, getBrandById } from "../../Services/brandsService";
+import PageDetailsBlock from "../Common/PageDetailsBlock";
 
 const BrandDetails = () => {
   const { id } = useParams();
@@ -140,22 +141,7 @@ const BrandDetails = () => {
         hideButtons={!isSuperAdminLoggedIn()}
       />
 
-      <Box
-        display='grid'
-        gridTemplateColumns={{ xs: "1fr", md: "340px 1fr" }}
-        gap={{ xs: 10, md: 32 }}
-        alignItems='center'
-        mt={45}
-      >
-        {fields?.map((field) => (
-          <React.Fragment key={field.key}>
-            <Typography variant='h6'>{field.text}</Typography>
-            <Typography>{data?.[field.key] || "Not given"}</Typography>
-          </React.Fragment>
-        ))}
-      </Box>
-
-      <Divider sx={{ my: { xs: 16, md: 42 } }} />
+      <PageDetailsBlock data={data} fields={fields} showBottomDivider />
 
       <TableBlock
         heading={"Brand's vouchers"}

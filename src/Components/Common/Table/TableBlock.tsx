@@ -10,6 +10,7 @@ import { getAllInstallerCompanies } from "../../../Services/dashboardService";
 import { toast } from "react-toastify";
 import CustomDropdown from "../CustomDropdown";
 import AnimatedHeading from "../AnimatedHeading";
+import AnimatedBlock from "../AnimatedBlock";
 
 export const TableBlock = ({
   heading,
@@ -123,7 +124,22 @@ export const TableBlock = ({
         mb={32}
         mt={8}
       >
-        <Typography fontSize={16}>{subHeading}</Typography>
+        {/* <AnimatedHeading
+          heading={subHeading}
+          variant='body2'
+          animationSpeed='fast'
+          animationDelay={0.1}
+        /> */}
+        {/* <AnimatedBlock animationDelay={0.3}> */}
+        <Typography
+          variant='body2'
+          className='animated-block'
+          sx={{ animationDelay: `${1 / 21}s` }}
+        >
+          {subHeading}
+        </Typography>
+        {/* </AnimatedBlock> */}
+
         <Box
           display='flex'
           alignItems={{ xs: "stretch", md: "center" }}
@@ -144,19 +160,29 @@ export const TableBlock = ({
                   disabled={loading}
                 />
               )}
+              {/* <AnimatedBlock animationDelay={0.35}> */}
               <CustomTextField
                 value={search}
                 onChange={handleOnChange}
                 placeholder='Search here'
                 startIcon={<SearchOutlined sx={{ opacity: 0.7 }} />}
+                className='animated-block'
+                style={{ animationDelay: `${2 / 21}s` }}
               />
+              {/* </AnimatedBlock> */}
             </>
           )}
           {addButtonText && (
+            // <AnimatedBlock animationDelay={0.45}>
             <Tooltip title={addButtonTooltip} arrow>
               {/* <span> */}
               <CustomButton
-                sx={{ height: 40.13, minWidth: "max-content" }}
+                className='animated-block'
+                sx={{
+                  animationDelay: `${3 / 21}s`,
+                  height: 40.13,
+                  minWidth: "max-content",
+                }}
                 startIcon={<Add />}
                 onClick={() =>
                   addButtonClick?.() ||
@@ -168,21 +194,24 @@ export const TableBlock = ({
               </CustomButton>
               {/* </span> */}
             </Tooltip>
+            // </AnimatedBlock>
           )}
         </Box>
       </Box>
 
-      {tableData?.length ? (
-        <CustomTable
-          headers={tableHeaders}
-          rows={searchedTableData}
-          detailsPagePath={detailsPagePath}
-          rowsPerPage={rowsPerPage}
-          onRowClick={onRowClick}
-        />
-      ) : (
-        <PlaceholderForEmptyTable message={emptyStateMessage} />
-      )}
+      <Box className='animated-block' sx={{ animationDelay: `${4 / 21}s` }}>
+        {tableData?.length ? (
+          <CustomTable
+            headers={tableHeaders}
+            rows={searchedTableData}
+            detailsPagePath={detailsPagePath}
+            rowsPerPage={rowsPerPage}
+            onRowClick={onRowClick}
+          />
+        ) : (
+          <PlaceholderForEmptyTable message={emptyStateMessage} />
+        )}
+      </Box>
     </>
   );
 };

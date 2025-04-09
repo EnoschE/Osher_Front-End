@@ -228,17 +228,6 @@ const CustomTable = ({
                         }
                       >
                         {header.customComponent ? (
-                          // header.customComponent({
-                          //   text: row[header.key]
-                          //     ? row[header.key]
-                          //     : header.alternateKey
-                          //     ? row[header.alternateKey]
-                          //     : "-",
-                          //   id: row._id,
-                          //   mongoId: row.mongoId,
-                          //   sequentialId: row.sequentialId,
-                          //   fullObject: row,
-                          // })
                           header.customComponent(row)
                         ) : header?.showEllipses ? (
                           <Box style={{ maxWidth: header?.maxWidth ?? 150 }}>

@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "../../Redux/reduxHooks";
 import { validateEmail, validatePassword } from "../../Utils/utils";
 import { updateProfile } from "../../Services/profileService";
 import CustomForm, { FormField } from "../Common/CustomForm";
+import { FormOnChange } from "../../Utils/types";
 
 // interface AccountSettingsData extends UserState {
 //   _id?: string;
@@ -297,8 +298,7 @@ const EditBrand = () => {
     setLoading(false);
   };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleOnChange = ({ name, value }: FormOnChange) => {
     setData((state) => ({ ...state, [name]: value }));
     setErrors((state) => ({
       ...state,
@@ -387,7 +387,7 @@ const EditBrand = () => {
       name: "profilePicture",
       type: "image",
       value: data.picture,
-      onChange: (picture: any) => setData((state) => ({ ...state, picture })),
+      onChange: handleOnChange
     },
     {
       required: true,
@@ -424,7 +424,7 @@ const EditBrand = () => {
       name: "phone",
       type: "phone",
       value: data.phone,
-      onChange: (phone: string) => setData({ ...data, phone }),
+      onChange: handleOnChange
     },
     {
       label: "Password",

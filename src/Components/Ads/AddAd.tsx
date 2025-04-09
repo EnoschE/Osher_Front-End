@@ -14,67 +14,96 @@ import EmailSentDialog from "../Common/EmailSentModal";
 import CustomDropdown from "../Common/CustomDropdown";
 import { getAllInstallerCompanies } from "../../Services/dashboardService";
 import CustomForm, { FormField } from "../Common/CustomForm";
-import { addBrand } from "../../Services/brandsService";
+import { addBrand, getAllBrands } from "../../Services/brandsService";
+import { addAd } from "../../Services/adsService";
+import { useSelector } from "../../Redux/reduxHooks";
+import { selectCategories } from "../../Redux/Slices/categoriesSlice";
+import { FormOnChange } from "../../Utils/types";
 
-interface BrandState extends UserState {
-  confirmPassword?: string;
+interface AdState {
+  name: string;
+  video: string;
+  brandId: string;
+  categoryId: string;
+  description: string;
+  picture: any;
 }
 
 const defaultData = {
-  picture: "",
   name: "",
-  email: "",
-  phone: "",
-  address: "",
-  password: "",
-  confirmPassword: "",
+  video: "",
+  brandId: "",
+  categoryId: "",
+  description: "",
+  picture: "",
 };
 
 const AddAd = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const categories = useSelector(selectCategories);
 
-  const [data, setData] = useState<BrandState>(defaultData);
-  const [errors, setErrors] = useState<BrandState>(defaultData);
+  const [data, setData] = useState<AdState>(defaultData);
+  const [errors, setErrors] = useState<AdState>(defaultData);
   const [loading, setLoading] = useState<boolean>(false);
+  const [brands, setBrands] = useState<Array<any>>([]);
 
-  // const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setData((state) => ({ ...state, [name]: value }));
-  //   setErrors((state) => ({
-  //     ...state,
-  //     [name]: name === "password" ? validatePassword(value) : "",
-  //   }));
-  // };
+  useEffect(() => {
+    const fetchBrands = async () => {
+      setLoading(true);
+      try {
+        const response: any = await getAllBrands();
+        setBrands(
+          response?.map((item: any) => ({
+            value: item._id,
+            text: item.name,
+            picture: item.picture,
+          })) || []
+        );
+      } catch (error) {
+        toast.error("Failed to fetch brands");
+      }
+      setLoading(false);
+    };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    fetchBrands();
+  }, []);
+
+  const handleOnChange = ({ name, value }: FormOnChange) => {
     setData((state) => ({ ...state, [name]: value }));
     setErrors((state) => ({
       ...state,
-      [name]:
-        name === "email" && value
-          ? validateEmail(value)
-          : name === "password" && value
-          ? validatePassword(value)
-          : name === "confirmPassword" && value
-          ? data.password === value
-            ? ""
-            : "Passwords do not match"
-          : "",
+      [name]: "",
+      // name === "email" && value
+      //   ? validateEmail(value)
+      //   : name === "password" && value
+      //   ? validatePassword(value)
+      //   : name === "confirmPassword" && value
+      //   ? data.password === value
+      //     ? ""
+      //     : "Passwords do not match"
+      //   : "",
     }));
   };
 
   const validateData = () => {
     const updatedErrors = { ...errors };
 
+    updatedErrors.picture = data.picture ? "" : "Picture cannot be empty";
     updatedErrors.name = data.name ? "" : "Name cannot be empty";
-    updatedErrors.address = data.address ? "" : "Address cannot be empty";
-    updatedErrors.phone = data.phone ? "" : "Phone Number cannot be empty";
-    updatedErrors.email = validateEmail(data.email);
-    updatedErrors.password = validatePassword(data.password);
-    updatedErrors.confirmPassword =
-      data.password === data.confirmPassword ? "" : "Passwords do not match";
+    updatedErrors.description = data.description
+      ? ""
+      : "Description cannot be empty";
+    updatedErrors.brandId = data.brandId ? "" : "Brand cannot be empty";
+    updatedErrors.categoryId = data.categoryId
+      ? ""
+      : "Category cannot be empty";
+
+    // updatedErrors.address = data.address ? "" : "Address cannot be empty";
+    // updatedErrors.phone = data.phone ? "" : "Phone Number cannot be empty";
+    // updatedErrors.email = validateEmail(data.email);
+    // updatedErrors.password = validatePassword(data.password);
+    // updatedErrors.confirmPassword =
+    //   data.password === data.confirmPassword ? "" : "Passwords do not match";
 
     setErrors(updatedErrors);
     return !Object.values(updatedErrors).find(Boolean);
@@ -87,20 +116,20 @@ const AddAd = () => {
     setLoading(true);
     try {
       const formData = new FormData();
+
       formData.append("picture", data.picture ?? "");
       formData.append("name", data.name ?? "");
-      formData.append("email", data.email ?? "");
-      formData.append("address", data.address ?? "");
-      formData.append("phone", data.phone ?? "");
-      formData.append("password", data.password ?? "");
+      formData.append("categoryId", data.categoryId ?? "");
+      formData.append("brandId", data.brandId ?? "");
+      formData.append("description", data.description ?? "");
 
-      await addBrand(formData);
+      await addAd(formData);
 
-      toast.success("Brand added successfully!");
-      navigate(allRoutes.BRANDS);
+      toast.success("Ad added successfully!");
+      navigate(allRoutes.ADS);
     } catch (error: any) {
-      if (error.includes("A brand with this email already exists")) {
-        setErrors({ ...errors, email: error });
+      if (error.includes("An Ad with this name already exists")) {
+        setErrors({ ...errors, name: error });
       } else {
         toast.error(error);
       }
@@ -110,14 +139,26 @@ const AddAd = () => {
 
   const handleCancel = () => navigate(allRoutes.BRANDS);
 
+  // if (!body.name) error = "Name is missing";
+  // if (!body.description) error = "Description is missing";
+  // if (!body.categoryId) error = "Category is not selected";
+  // if (!body.brandId) error = "Brand is not selected";
+  // if (!body.quantity) error = "Quantity is missing";
+  // if (!body.video) error = "Video is missing";
+  // if (!body.pictures) error = "Pictures are missing";
+  // if (!body.publishDate) error = "ublishDate is missing";
+  // if (!body.expiryDate) error = "expiryDate is missing";
+
   const fields: FormField[] = [
     {
-      label: "Brand Photo",
-      placeholder: "This will be displayed on the profile of Brand",
-      name: "profilePicture",
+      label: "Ad Photo",
+      placeholder: "This will be displayed on the profile of Ad",
+      name: "picture",
       type: "image",
       value: data.picture,
-      onChange: (picture: any) => setData((state) => ({ ...state, picture })),
+      onChange: handleOnChange,
+      required: true,
+      error: errors.picture,
     },
     {
       required: true,
@@ -131,133 +172,53 @@ const AddAd = () => {
     },
     {
       required: true,
-      label: "Email",
-      placeholder: "@example",
-      name: "email",
-      type: "email",
-      value: data.email,
-      onChange: handleOnChange,
-      error: errors.email,
-    },
-    {
-      required: true,
-      label: "Address",
-      placeholder: "Address",
-      name: "address",
+      label: "Description",
+      placeholder: "Description",
+      name: "description",
       type: "text",
-      value: data.address,
+      value: data.description,
       onChange: handleOnChange,
-      error: errors.address,
+      error: errors.description,
+      multiline: true,
     },
     {
       required: true,
-      label: "Phone Number",
-      placeholder: "Phone Number",
-      name: "phone",
-      type: "phone",
-      value: data.phone,
-      onChange: (phone: string) => {
-        setData({ ...data, phone });
-        setErrors({
-          ...errors,
-          phone: phone ? "" : "Phone Number cannot be empty",
-        });
-      },
-      error: errors.phone,
+      label: "Brand",
+      placeholder: "Select Brand",
+      name: "brandId",
+      type: "dropdown",
+      value: data.brandId,
+      onChange: handleOnChange,
+      error: errors.brandId,
+      options: brands,
     },
     {
       required: true,
-      label: "Password",
-      placeholder: "********",
-      name: "password",
-      type: "password",
-      value: data.password,
+      label: "Category",
+      placeholder: "Select Category",
+      name: "categoryId",
+      type: "dropdown",
+      value: data.categoryId,
       onChange: handleOnChange,
-      error: errors.password,
-    },
-    {
-      required: true,
-      label: "Confirm Password",
-      placeholder: "********",
-      name: "confirmPassword",
-      type: "password",
-      value: data.confirmPassword,
-      onChange: handleOnChange,
-      error: errors.confirmPassword,
+      error: errors.categoryId,
+      options: categories.map((category) => ({
+        value: category._id,
+        text: category.name,
+      })),
     },
   ];
+
+  // TODO: move errors logic to customForm and we can extra errors here as well for additional cases
 
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Add new Brand'
-        subHeading='Please provide the details to add a new brand'
+        heading='Add new Ad'
+        subHeading='Please provide the details to add a new Ad'
         fields={fields}
         onSave={handleUpdate}
         onCancel={handleCancel}
       />
-      {/* <Typography variant="h5">Add new Brand</Typography>
-			<Typography fontSize={15} mt={10}>
-				After Registration it will send a email to brand to add his information.
-			</Typography>
-			<Divider sx={{ mt: 14, mb: 24 }} />
-
-			<form onSubmit={handleUpdate}>
-				<Box
-					display="grid"
-					gridTemplateColumns={{ xs: "1fr", md: "340px 1fr" }}
-					gap={{ xs: 10, md: 32 }}
-					alignItems="center"
-				>
-					<Typography variant="h6" fontSize={18} mt={{ xs: 12, md: 0 }}>
-						Name
-						<Asterisk />
-					</Typography>
-					<CustomTextField
-						onChange={handleOnChange}
-						value={data.name}
-						name="name"
-						placeholder="Name"
-						error={errors.name}
-					/>
-
-					<Typography variant="h6" fontSize={18} mt={{ xs: 12, md: 0 }}>
-						Email address
-						<Asterisk />
-					</Typography>
-					<CustomTextField
-						onChange={handleOnChange}
-						value={data.email}
-						error={errors.email}
-						name="email"
-						type="email"
-						placeholder="@example"
-					/>
-
-					<Typography variant="h6" fontSize={18} mt={{ xs: 12, md: 0 }}>
-						Installer Company
-						<Asterisk />
-					</Typography>
-					<CustomDropdown
-						options={companies}
-						value={data.companyId}
-						onChange={(value: string) => handleDropdown(value, "companyId")}
-						minWidth="100%"
-						error={errors.companyId}
-						label="Select installer company"
-						disabled={searchParams.get("companyId") ? true : false}
-					/>
-
-					<Box />
-					<Box display="flex" alignItems="center" justifyContent="flex-end" gap={20}>
-						<CustomButton variant="outlined" color="secondary" onClick={handleCancel}>
-							Cancel
-						</CustomButton>
-						<CustomButton type="submit">Register Installation Crew</CustomButton>
-					</Box>
-					<EmailSentDialog open={open} onClose={() => navigate(allRoutes.TECHNICIANS)} />
-				</Box>
-			</form> */}
     </PageLayout>
   );
 };

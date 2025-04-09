@@ -14,6 +14,7 @@ interface ForgotPasswordDialogProps {
   onDelete?: () => void;
   user: { name: string };
   userType:
+    | "Ad"
     | "Brand"
     | "Admin"
     | "Customer"
@@ -56,7 +57,9 @@ const DeleteDialog = ({
         Delete {userType}
       </Typography>
       <Typography fontSize={16} textAlign='center' color='text.secondary'>
-        Are you sure you want to delete the account of {user.name}?
+        Are you sure you want to delete
+        {userType === "Ad" ? " " : " the account of "}
+        {user.name}?
       </Typography>
 
       <Box display='grid' gridTemplateColumns='1fr 1fr' gap={10} mt={32}>

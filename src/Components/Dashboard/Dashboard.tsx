@@ -29,7 +29,12 @@ const Dashboard = () => {
         variant="body2"
       /> */}
 
-      <Typography color='text.secondary' mb={32}>
+      <Typography
+        variant='body2'
+        mb={32}
+        className='animated-block'
+        style={{ animationDelay: `${4 / 21}s` }}
+      >
         Let's check your stats!
       </Typography>
 

@@ -14,11 +14,18 @@ import {
   getCustomerDetails,
   updateCustomer,
 } from "../../Services/dashboardService";
-import { editBrand, getBrandById } from "../../Services/brandsService";
+import {
+  editBrand,
+  getAllBrands,
+  getBrandById,
+} from "../../Services/brandsService";
 import { useDispatch, useSelector } from "../../Redux/reduxHooks";
 import { validateEmail, validatePassword } from "../../Utils/utils";
 import { updateProfile } from "../../Services/profileService";
 import CustomForm, { FormField } from "../Common/CustomForm";
+import { FormOnChange } from "../../Utils/types";
+import { editAd, getAdById } from "../../Services/adsService";
+import { selectCategories } from "../../Redux/Slices/categoriesSlice";
 
 // interface AccountSettingsData extends UserState {
 //   _id?: string;
@@ -231,19 +238,24 @@ import CustomForm, { FormField } from "../Common/CustomForm";
 
 // export default EditBrand;
 
-interface AccountSettingsData extends UserState {
-  newPassword?: string;
-  picture?: any;
+interface AdState {
   _id: string;
+  name: string;
+  video: string;
+  brandId: string;
+  categoryId: string;
+  description: string;
+  picture: any;
 }
 
 const defaultData = {
   _id: "",
   name: "",
-  email: "",
-  phone: "",
-  password: "",
-  newPassword: "",
+  video: "",
+  brandId: "",
+  categoryId: "",
+  description: "",
+  picture: "",
 };
 
 const EditAd = () => {
@@ -251,216 +263,196 @@ const EditAd = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
+  const categories = useSelector(selectCategories);
 
-  const [data, setData] = useState<AccountSettingsData>(defaultData);
-  const [errors, setErrors] = useState<AccountSettingsData>(defaultData);
+  const [data, setData] = useState<AdState>(defaultData);
+  const [errors, setErrors] = useState<AdState>(defaultData);
   const [loading, setLoading] = useState<boolean>(false);
-  // const [otpDialog, setOtpDialog] = useState<boolean>(false);
-  // const [updatingEmail, setUpdatingEmail] = useState<any>("");
+  const [brands, setBrands] = useState<Array<any>>([]);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     const userData = {
-  //       name: user.name,
-  //       email: user.email,
-  //       address: user.address,
-  //       phone: user.phone,
-  //       picture: user.picture,
-  //     };
-  //     setData(userData);
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    const fetchBrands = async () => {
+      setLoading(true);
+      try {
+        const response: any = await getAllBrands();
+        setBrands(
+          response?.map((item: any) => ({
+            value: item._id,
+            text: item.name,
+            picture: item.picture,
+          })) || []
+        );
+      } catch (error) {
+        toast.error("Failed to fetch brands"); // TODO: move these to redux as well
+      }
+      setLoading(false);
+    };
+
+    fetchBrands();
+  }, []);
 
   useEffect(() => {
     getDetails();
   }, []);
 
   const getDetails = async () => {
-    if (!id) navigate(allRoutes.BRANDS);
+    if (!id) navigate(allRoutes.ADS);
 
     setLoading(true);
     try {
-      const data: any = await getBrandById((id || "")?.toString());
-
-      const currentData = {
-        _id: data?._id || "",
-        name: data?.name || "",
-        email: data?.email || "",
-        phone: data?.phone || "",
-        address: data?.address || "",
-        picture: data?.picture || "",
-      };
-      setData(currentData);
+      const adData: any = await getAdById((id || "")?.toString());
+      setData(adData);
     } catch (error: any) {
       toast.error(error);
     }
     setLoading(false);
   };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleOnChange = ({ name, value }: FormOnChange) => {
     setData((state) => ({ ...state, [name]: value }));
     setErrors((state) => ({
       ...state,
-      [name]:
-        name === "email" && value
-          ? validateEmail(value)
-          : name === "password" && value
-          ? validatePassword(value)
-          : "",
+      [name]: "",
+      // name === "email" && value
+      //   ? validateEmail(value)
+      //   : name === "password" && value
+      //   ? validatePassword(value)
+      //   : name === "confirmPassword" && value
+      //   ? data.password === value
+      //     ? ""
+      //     : "Passwords do not match"
+      //   : "",
     }));
   };
 
   const validateData = () => {
     const updatedErrors = { ...errors };
 
+    updatedErrors.picture = data.picture ? "" : "Picture cannot be empty";
     updatedErrors.name = data.name ? "" : "Name cannot be empty";
-    updatedErrors.email = validateEmail(data.email);
-    updatedErrors.address = data.address ? "" : "Address cannot be empty";
-    updatedErrors.phone = data.phone ? "" : "Phone Number cannot be empty";
-    if (data.password || data.newPassword) {
-      updatedErrors.password = validatePassword(data.password);
-      updatedErrors.newPassword = data.newPassword
-        ? data.newPassword === data.password
-          ? "New password should be different"
-          : ""
-        : "New password cannot be empty";
-    }
+    updatedErrors.description = data.description
+      ? ""
+      : "Description cannot be empty";
+    updatedErrors.brandId = data.brandId ? "" : "Brand cannot be empty";
+    updatedErrors.categoryId = data.categoryId
+      ? ""
+      : "Category cannot be empty";
+
+    // updatedErrors.address = data.address ? "" : "Address cannot be empty";
+    // updatedErrors.phone = data.phone ? "" : "Phone Number cannot be empty";
+    // updatedErrors.email = validateEmail(data.email);
+    // updatedErrors.password = validatePassword(data.password);
+    // updatedErrors.confirmPassword =
+    //   data.password === data.confirmPassword ? "" : "Passwords do not match";
 
     setErrors(updatedErrors);
     return !Object.values(updatedErrors).find(Boolean);
   };
 
-  const handleUpdateProfile = async (e: FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateData()) return;
 
     setLoading(true);
     try {
-      let newEmail;
-      if (user.email?.trim() !== data.email?.trim()) {
-        newEmail = data.email;
-        // setUpdatingEmail(newEmail);
-      }
-
       const formData = new FormData();
 
       formData.append("picture", data.picture ?? "");
       formData.append("name", data.name ?? "");
-      formData.append("email", data.email ?? "");
-      formData.append("address", data.address ?? "");
-      formData.append("phone", data.phone ?? "");
-      formData.append("password", data.password ?? "");
-      formData.append("newPassword", data.newPassword ?? "");
+      formData.append("categoryId", data.categoryId ?? "");
+      formData.append("brandId", data.brandId ?? "");
+      formData.append("description", data.description ?? "");
 
-      await editBrand(data._id, formData);
+      await editAd(data._id, formData);
 
-      // if (newEmail) {
-      //   // setting the old email in input field, if user decides to close the verify otp dialog the input will display the active previous email of user
-      //   setData((state) => ({ ...state, email: user.email }));
-      //   openOtpDialog();
-      // } else {
-      toast.success("Brand updated successfully!");
-      navigate(allRoutes.VIEW_BRAND.replace(":id", (id || "")?.toString()));
+      toast.success("Ad updated successfully!");
+      navigate(allRoutes.VIEW_AD.replace(":id", (id || "")?.toString()));
       // }
     } catch (error: any) {
-      if (error.includes("Incorrect current password")) {
-        setErrors({ ...errors, password: error });
-      } else if (error.includes("A brand with this email already exists")) {
-        setErrors({ ...errors, email: error });
-      } else {
-        toast.error(error);
-      }
+      // if (error.includes("Incorrect current password")) {
+      //   setErrors({ ...errors, password: error });
+      // } else if (error.includes("A brand with this email already exists")) {
+      //   setErrors({ ...errors, email: error });
+      // } else {
+      toast.error(error);
+      // }
     }
     setLoading(false);
   };
 
-  const handleCancel = () => navigate(allRoutes.BRANDS);
+  const handleCancel = () => navigate(allRoutes.ADS);
 
   // const openOtpDialog = () => setOtpDialog(true);
   // const closeOtpDialog = () => setOtpDialog(false);
 
   const fields: FormField[] = [
     {
-      label: "Brand Photo",
-      placeholder: "This will be displayed on the profile of Brand",
-      name: "profilePicture",
+      label: "Ad Photo",
+      placeholder: "This will be displayed on the profile of Ad",
+      name: "picture",
       type: "image",
       value: data.picture,
-      onChange: (picture: any) => setData((state) => ({ ...state, picture })),
+      onChange: handleOnChange,
+      required: true,
+      error: errors.picture,
     },
     {
       required: true,
       label: "Name",
       placeholder: "Name",
       name: "name",
+      type: "text",
       value: data.name,
       onChange: handleOnChange,
       error: errors.name,
     },
     {
       required: true,
-      label: "Email",
-      placeholder: "@example",
-      name: "email",
-      type: "email",
-      value: data.email,
+      label: "Description",
+      placeholder: "Description",
+      name: "description",
+      type: "text",
+      value: data.description,
       onChange: handleOnChange,
-      error: errors.email,
+      error: errors.description,
+      multiline: true,
     },
     {
       required: true,
-      label: "Address",
-      placeholder: "Address",
-      name: "address",
-      value: data.address,
+      label: "Brand",
+      placeholder: "Select Brand",
+      name: "brandId",
+      type: "dropdown",
+      value: data.brandId,
       onChange: handleOnChange,
-      error: errors.address,
+      error: errors.brandId,
+      options: brands,
     },
     {
       required: true,
-      label: "Phone Number",
-      placeholder: "Phone Number",
-      name: "phone",
-      type: "phone",
-      value: data.phone,
-      onChange: (phone: string) => setData({ ...data, phone }),
-    },
-    {
-      label: "Password",
-      placeholder: "********",
-      name: "password",
-      type: "password",
-      value: data.password,
+      label: "Category",
+      placeholder: "Select Category",
+      name: "categoryId",
+      type: "dropdown",
+      value: data.categoryId,
       onChange: handleOnChange,
-      error: errors.password,
-    },
-    {
-      label: "New Password",
-      placeholder: "********",
-      name: "newPassword",
-      type: "password",
-      value: data.newPassword,
-      onChange: handleOnChange,
-      error: errors.newPassword,
+      error: errors.categoryId,
+      options: categories.map((category) => ({
+        value: category._id,
+        text: category.name,
+      })),
     },
   ];
 
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Edit Brand'
+        heading='Edit Ad'
         subHeading={`Edit the details of ${data?.name}`}
         fields={fields}
-        onSave={handleUpdateProfile}
+        onSave={handleUpdate}
         onCancel={handleCancel}
       />
-
-      {/* <OtpVerifyDialog
-        open={otpDialog}
-        onClose={closeOtpDialog}
-        email={updatingEmail}
-      /> */}
     </PageLayout>
   );
 };

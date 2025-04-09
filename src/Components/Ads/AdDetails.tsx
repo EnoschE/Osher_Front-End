@@ -1,26 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
-import { Box, Divider, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { allRoutes } from "../../Routes/AllRoutes";
 import DeleteDialog from "../Customers/DeleteDialog";
 import ProfileHeader from "../Admins/ProfileHeader";
-
 import { toast } from "react-toastify";
-import {
-  deleteCustomer,
-  getCustomerDetails,
-  getTechnicianCustomers,
-} from "../../Services/dashboardService";
-import {
-  customerTableHeaders,
-  downloadPDFFiles,
-} from "../Installers/Representatives/RepresentativeDetails";
-import TableBlock from "../Common/Table/TableBlock";
-import CustomTableOptions from "../Common/CustomTableOptions";
 import { isSuperAdminLoggedIn } from "../../Services/userService";
-import UnassignTechnicianDialog from "../Technicians/UnassignTechnicianDialog";
-import { deleteBrand, getBrandById } from "../../Services/brandsService";
+import { deleteAd, getAdById } from "../../Services/adsService";
+import PageDetailsBlock from "../Common/PageDetailsBlock";
+import { PageDetailsField } from "../../Utils/types";
+import AvatarWithName from "../Common/AvatarWithName";
+import moment from "moment";
 
 const AdDetails = () => {
   const { id } = useParams();
@@ -28,29 +18,19 @@ const AdDetails = () => {
 
   const [data, setData] = useState<any>({});
   const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
-  const [unassignCustomer, setUnassignCustomer] = useState<{
-    text: string;
-    id: string;
-  } | null>(null);
-  const [projects, setProjects] = useState<Array<any>>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     getDetails();
   }, []);
 
-  const getDetails = async (onlyGetProject?: boolean) => {
-    if (!id) navigate(allRoutes.BRANDS);
+  const getDetails = async () => {
+    if (!id) navigate(allRoutes.ADS);
 
-    setLoading(!onlyGetProject);
+    setLoading(true);
     try {
-      const data = await getBrandById((id || "")?.toString());
+      const data = await getAdById((id || "")?.toString());
       setData(data);
-
-      // const { data: assignedCustomers } = await getTechnicianCustomers(
-      //   (userData?._id || "")?.toString()
-      // );
-      // setProjects(assignedCustomers || []);
     } catch (error: any) {
       toast.error(error);
     }
@@ -60,126 +40,62 @@ const AdDetails = () => {
   const openDeleteDialog = () => setDeleteDialog(true);
   const closeDeleteDialog = () => setDeleteDialog(false);
 
-  const openUnassignDialog = (props: { text: string; id: string }) =>
-    setUnassignCustomer(props);
-  const closeUnassignDialog = () => setUnassignCustomer(null);
-
   const handleEdit = () =>
-    navigate(allRoutes.EDIT_BRAND.replace(":id", (id || "")?.toString()));
+    navigate(allRoutes.EDIT_AD.replace(":id", (id || "")?.toString()));
 
   const handleDelete = async () => {
     try {
-      const data: any = await deleteBrand(id || "");
+      const data: any = await deleteAd(id || "");
 
-      if (data === "Brand deleted successfully!") {
+      if (data === "Ad deleted successfully!") {
         toast.success(data);
-        navigate(allRoutes.BRANDS);
+        navigate(allRoutes.ADS);
       }
     } catch (error: any) {
       toast.error(error);
-      if (error === "Brand with the given id was not found")
-        navigate(allRoutes.BRANDS);
+      if (error === "Ad with the given id was not found")
+        navigate(allRoutes.ADS);
     }
   };
 
-  const fields = [
+  const fields: PageDetailsField[] = [
     { text: "Name", key: "name" },
-    { text: "Email", key: "email" },
-    { text: "Address", key: "address" },
-    { text: "Phone Number", key: "phone" },
-  ];
-
-  const headers = [
-    ...customerTableHeaders.filter((item) => item.text !== "Report"),
+    { text: "Category", key: "categoryName" },
     {
-      text: "",
-      key: "name",
-      align: "right",
-      notClickable: true,
-      customComponent: (props: any) => {
-        const notReportsPresent =
-          !props.fullObject?.summaryProposalPdfLink &&
-          !props.fullObject?.billAnalysisPdfLink;
-        return (
-          <CustomTableOptions
-            menuOptions={[
-              {
-                text: "Reassign",
-                onClick: () => openUnassignDialog(props),
-              },
-              {
-                text: "Download Report",
-                onClick: () => {
-                  if (!notReportsPresent) {
-                    downloadPDFFiles([
-                      props.fullObject?.summaryProposalPdfLink,
-                      props.fullObject?.billAnalysisPdfLink,
-                    ]);
-                  }
-                },
-                disabled: notReportsPresent,
-                tooltip: notReportsPresent
-                  ? "Reports have not been generated for this customer"
-                  : "Download Reports",
-              },
-            ]}
-          />
-        );
-      },
+      text: "Brand",
+      key: "brandName",
+      customComponent: (
+        <AvatarWithName
+          name={data?.brandName}
+          picture={data?.brandPicture}
+          onClick={() =>
+            navigate(allRoutes.VIEW_BRAND.replace(":id", data.brandId))
+          }
+        />
+      ),
     },
+    { text: "Publish Date", key: "publishDate", type: "date" },
+    { text: "Expiry Date", key: "expiryDate", type: "date" },
   ];
 
   return (
     <PageLayout loading={loading}>
       <ProfileHeader
         data={data}
-        userType='Brand'
+        userType='Ad'
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
-        disableDeleteButton={!!projects?.length}
         hideButtons={!isSuperAdminLoggedIn()}
       />
 
-      <Box
-        display='grid'
-        gridTemplateColumns={{ xs: "1fr", md: "340px 1fr" }}
-        gap={{ xs: 10, md: 32 }}
-        alignItems='center'
-        mt={45}
-      >
-        {fields?.map((field) => (
-          <React.Fragment key={field.key}>
-            <Typography variant='h6'>{field.text}</Typography>
-            <Typography>{data?.[field.key] || "Not given"}</Typography>
-          </React.Fragment>
-        ))}
-      </Box>
-
-      <Divider sx={{ my: { xs: 16, md: 42 } }} />
-
-      <TableBlock
-        heading={"Brand's vouchers"}
-        subHeading={`These are all the vouchers of ${data?.name}`}
-        tableData={projects}
-        tableHeaders={headers}
-        emptyStateMessage={`There are no vouchers generated by ${data?.name}`}
-        detailsPagePath={allRoutes.VIEW_CUSTOMER}
-      />
+      <PageDetailsBlock data={data} fields={fields} />
 
       <DeleteDialog
         open={deleteDialog}
         onClose={closeDeleteDialog}
-        userType='Brand'
+        userType='Ad'
         user={data}
         onDelete={handleDelete}
-      />
-      <UnassignTechnicianDialog
-        // open
-        open={!!unassignCustomer}
-        unassignedCustomer={unassignCustomer}
-        onClose={closeUnassignDialog}
-        currentTechnician={data}
-        onUnassign={() => getDetails(true)}
       />
     </PageLayout>
   );

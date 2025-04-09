@@ -1,20 +1,13 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { UserState } from "../../Redux/Slices/userSlice";
-import CustomButton from "../Common/CustomButton";
-import CustomTextField, { Asterisk } from "../Common/CustomTextField";
-import { Box, Divider, Typography } from "@mui/material";
 import { toast } from "react-toastify";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import * as EmailValidator from "email-validator";
+import { useNavigate } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
 import { validateEmail, validatePassword } from "../../Utils/utils";
-import { registerNewTechnician } from "../../Services/technicianService";
-import EmailSentDialog from "../Common/EmailSentModal";
-import CustomDropdown from "../Common/CustomDropdown";
-import { getAllInstallerCompanies } from "../../Services/dashboardService";
 import CustomForm, { FormField } from "../Common/CustomForm";
 import { addBrand } from "../../Services/brandsService";
+import { FormOnChange } from "../../Utils/types";
 
 interface BrandState extends UserState {
   confirmPassword?: string;
@@ -32,23 +25,12 @@ const defaultData = {
 
 const AddBrand = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
 
   const [data, setData] = useState<BrandState>(defaultData);
   const [errors, setErrors] = useState<BrandState>(defaultData);
   const [loading, setLoading] = useState<boolean>(false);
 
-  // const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setData((state) => ({ ...state, [name]: value }));
-  //   setErrors((state) => ({
-  //     ...state,
-  //     [name]: name === "password" ? validatePassword(value) : "",
-  //   }));
-  // };
-
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleOnChange = ({ name, value }: FormOnChange) => {
     setData((state) => ({ ...state, [name]: value }));
     setErrors((state) => ({
       ...state,
@@ -114,10 +96,10 @@ const AddBrand = () => {
     {
       label: "Brand Photo",
       placeholder: "This will be displayed on the profile of Brand",
-      name: "profilePicture",
+      name: "picture",
       type: "image",
       value: data.picture,
-      onChange: (picture: any) => setData((state) => ({ ...state, picture })),
+      onChange: handleOnChange,
     },
     {
       required: true,
@@ -156,13 +138,7 @@ const AddBrand = () => {
       name: "phone",
       type: "phone",
       value: data.phone,
-      onChange: (phone: string) => {
-        setData({ ...data, phone });
-        setErrors({
-          ...errors,
-          phone: phone ? "" : "Phone Number cannot be empty",
-        });
-      },
+      onChange: handleOnChange,
       error: errors.phone,
     },
     {
@@ -196,68 +172,6 @@ const AddBrand = () => {
         onSave={handleUpdate}
         onCancel={handleCancel}
       />
-      {/* <Typography variant="h5">Add new Brand</Typography>
-			<Typography fontSize={15} mt={10}>
-				After Registration it will send a email to brand to add his information.
-			</Typography>
-			<Divider sx={{ mt: 14, mb: 24 }} />
-
-			<form onSubmit={handleUpdate}>
-				<Box
-					display="grid"
-					gridTemplateColumns={{ xs: "1fr", md: "340px 1fr" }}
-					gap={{ xs: 10, md: 32 }}
-					alignItems="center"
-				>
-					<Typography variant="h6" fontSize={18} mt={{ xs: 12, md: 0 }}>
-						Name
-						<Asterisk />
-					</Typography>
-					<CustomTextField
-						onChange={handleOnChange}
-						value={data.name}
-						name="name"
-						placeholder="Name"
-						error={errors.name}
-					/>
-
-					<Typography variant="h6" fontSize={18} mt={{ xs: 12, md: 0 }}>
-						Email address
-						<Asterisk />
-					</Typography>
-					<CustomTextField
-						onChange={handleOnChange}
-						value={data.email}
-						error={errors.email}
-						name="email"
-						type="email"
-						placeholder="@example"
-					/>
-
-					<Typography variant="h6" fontSize={18} mt={{ xs: 12, md: 0 }}>
-						Installer Company
-						<Asterisk />
-					</Typography>
-					<CustomDropdown
-						options={companies}
-						value={data.companyId}
-						onChange={(value: string) => handleDropdown(value, "companyId")}
-						minWidth="100%"
-						error={errors.companyId}
-						label="Select installer company"
-						disabled={searchParams.get("companyId") ? true : false}
-					/>
-
-					<Box />
-					<Box display="flex" alignItems="center" justifyContent="flex-end" gap={20}>
-						<CustomButton variant="outlined" color="secondary" onClick={handleCancel}>
-							Cancel
-						</CustomButton>
-						<CustomButton type="submit">Register Installation Crew</CustomButton>
-					</Box>
-					<EmailSentDialog open={open} onClose={() => navigate(allRoutes.TECHNICIANS)} />
-				</Box>
-			</form> */}
     </PageLayout>
   );
 };

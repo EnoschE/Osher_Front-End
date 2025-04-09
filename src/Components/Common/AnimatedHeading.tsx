@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, SxProps, Typography } from "@mui/material";
 import { Variant } from "@mui/material/styles/createTypography";
 import React from "react";
 
@@ -15,6 +15,7 @@ interface AnimatedHeadingProps {
   justifyContent?: React.CSSProperties["justifyContent"];
   lineHeight?: string | number;
   variant?: Variant;
+  sx?: SxProps;
 }
 
 const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
@@ -30,6 +31,7 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
   gapBetweenChars,
   justifyContent,
   lineHeight,
+  sx,
 }) => {
   // Split heading into words or characters based on charactersBaseAnimation
   const headingParts =
@@ -43,7 +45,7 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
         onClick ? "pointer" : ""
       } ${className}`}
       onClick={onClick}
-      style={{ gap: gapBetweenChars, justifyContent }}
+      sx={{ gap: gapBetweenChars, justifyContent, ...sx }}
     >
       {headingParts.map((char, i) => (
         <Typography

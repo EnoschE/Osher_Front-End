@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton } from "@mui/material";
+import { Avatar, Box, IconButton, SxProps } from "@mui/material";
 import { useRef } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "../../Redux/reduxHooks";
@@ -10,6 +10,8 @@ interface ImageUploaderProps {
   imageFile?: any;
   size?: number;
   isLogo?: boolean;
+  className?: string;
+  sx?: SxProps;
 }
 
 const ImageUploader = ({
@@ -17,6 +19,8 @@ const ImageUploader = ({
   imageFile,
   size = 129,
   isLogo = false,
+  className,
+  sx,
 }: ImageUploaderProps) => {
   const colors = useSelector(selectColors);
   const inputRef = useRef<any>(null);
@@ -43,10 +47,12 @@ const ImageUploader = ({
 
   return (
     <Box
+      className={className}
       sx={{
         position: "relative",
         width: isLogo ? size * 1.5 : size,
         height: isLogo ? size / 2 : size,
+        ...sx,
       }}
     >
       <input
@@ -90,7 +96,7 @@ const ImageUploader = ({
             WebkitBackdropFilter: "saturate(200%) blur(8px)",
             backdropFilter: "saturate(200%) blur(8px)",
             backgroundColor: "rgba(255, 255, 255, 0.7)",
-            transition: 'all ease 0.2s',
+            transition: "all ease 0.2s",
 
             "&:hover": {
               backgroundColor: "rgba(255, 255, 255, 0.5)",

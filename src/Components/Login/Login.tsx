@@ -2,10 +2,9 @@ import React, { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { allRoutes } from "../../Routes/AllRoutes";
 import Navbar from "../Navbar/Navbar";
-import { LoginContainer, LoginLeftBlock, LoginRightBlock } from "./loginStyles";
+import { LoginContainer, LoginLeftBlock } from "./loginStyles";
 import { Box, Theme, Typography, useMediaQuery } from "@mui/material";
 import CustomTextField from "../Common/CustomTextField";
-import CustomCheckBox from "../Common/CustomCheckBox";
 import * as EmailValidator from "email-validator";
 import { toast } from "react-toastify";
 import { loginUser } from "../../Services/userService";
@@ -15,7 +14,6 @@ import { useDispatch } from "../../Redux/reduxHooks";
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import { getProfile } from "../../Services/profileService";
 import { navbarHeight } from "../../Utils/spacings";
-import { HomeImage, MainPic } from "../../Utils/Images";
 import AnimatedHeading from "../Common/AnimatedHeading";
 
 interface DataProps {
@@ -98,28 +96,20 @@ const Login = () => {
   return (
     <>
       <Loader open={loading} />
-      <Navbar navbarForNonProtectedRoutes />
+      <Navbar navbarForNonProtectedRoutes hideBackButton />
       <LoginContainer mt={navbarHeight}>
         <LoginLeftBlock>
           <AnimatedHeading
-            heading='Sign in to your account'
+            heading='Sign in'
             variant={isMobileView ? "h3" : "h2"}
-            animationSpeed="fast"
+            animationSpeed='fast'
           />
-          <Typography mt={10} mb={47}>
-            Sign in to your account
+          <Typography
+            className='animated-block'
+            sx={{ animationDelay: `${1 / 21}s`, mt: 10, mb: 40 }}
+          >
+            Sign in to your Osher account
           </Typography>
-
-          {/* <GoogleLoginButton onSuccess={onLoginSuccess} onFailure={onLoginFailure} />
-					<FacebookLoginButton onSuccess={onLoginSuccess} onFailure={onLoginFailure} />
-
-					<div className="fb-like" data-share="true" data-width="450" data-show-faces="true"></div>
-
-					<Divider sx={{ my: 32 }}>
-						<Typography px={16} color='text.secondary'>
-							Or
-						</Typography>
-					</Divider> */}
 
           <form onSubmit={handleLoginSubmit}>
             <CustomTextField
@@ -129,8 +119,12 @@ const Login = () => {
               value={data.email}
               error={errors.email}
               onChange={handleOnChange}
+              className='animated-block'
+              style={{ animationDelay: `${2 / 21}s` }}
             />
             <CustomTextField
+              className='animated-block'
+              style={{ animationDelay: `${3 / 21}s` }}
               type='password'
               name='password'
               label='Password'
@@ -144,18 +138,20 @@ const Login = () => {
               alignItems='center'
               justifyContent='space-between'
               mb={30}
+              className='animated-block'
+              sx={{ animationDelay: `${4 / 21}s` }}
             >
-              {/* <CustomCheckBox
-                text='Remember me'
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-              /> */}
               <Box />
               <Typography className='link' onClick={openForgotPasswordDialog}>
                 Forgot your password?
               </Typography>
             </Box>
-            <CustomButton type='submit' fullWidth sx={{ mb: 20 }}>
+            <CustomButton
+              type='submit'
+              fullWidth
+              className='animated-block'
+              sx={{ animationDelay: `${5 / 21}s`, mb: 20 }}
+            >
               Sign In
             </CustomButton>
           </form>
@@ -167,10 +163,6 @@ const Login = () => {
 						</span>
 					</Typography> */}
         </LoginLeftBlock>
-
-        <LoginRightBlock>
-          <Box component='img' src={HomeImage} className='purple-box' />
-        </LoginRightBlock>
       </LoginContainer>
 
       <ForgotPasswordDialog

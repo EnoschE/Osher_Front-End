@@ -35,7 +35,7 @@ const NotFound = () => {
 
 	return (
 		<>
-			<Navbar navbarForNonProtectedRoutes />
+			<Navbar navbarForNonProtectedRoutes hideBackButton />
 			<Box
 				sx={{
 					display: "flex",

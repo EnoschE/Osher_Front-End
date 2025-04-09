@@ -90,7 +90,7 @@ const CustomMenu = ({
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         BackdropProps={{
-          style: { backdropFilter: "unset" },
+          style: { backdropFilter: "unset", backgroundColor: "unset" },
         }}
         PaperProps={{
           style: {

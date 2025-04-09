@@ -36,6 +36,7 @@ interface ProfileHeaderProps {
   userType:
     | "Admin"
     | "Brand"
+    | "Ad"
     | "Super Admin"
     | "Customer"
     | "Technician"
@@ -71,42 +72,49 @@ const ProfileHeader = ({
 
   return (
     <>
-      <Box>
+      <Box className='animated-block'>
         <CustomMarquee text={data?.name || userType} />
       </Box>
 
       <Box display='flex' alignItems='center' gap={8} flexDirection='column'>
-        <CustomAvatar
-          sx={{
-            mt: "-30px",
-            width: 130,
-            height: 130,
-            border: `1px solid ${colors.border}`,
-            mb: 10,
-            filter: "blur(15px)",
-            opacity: 0.7,
-          }}
-          src={data?.picture}
-        />
-        <CustomAvatar
-          sx={{
-            mt: "-160px",
-            width: 130,
-            height: 130,
-            // border: `1px solid ${colors.border}`,
-            mb: 10,
-            border: "2px solid white",
-          }}
-          src={data?.picture}
-        />
+        <Box 
+        // className='animated-block' 
+        sx={{ animationDelay: `${2 / 21}s` }}>
+          <CustomAvatar
+            sx={{
+              mt: "-30px",
+              width: 130,
+              height: 130,
+              border: `1px solid ${colors.border}`,
+              mb: 10,
+              filter: "blur(15px)",
+              opacity: 0.7,
+            }}
+            src={data?.picture}
+          />
+
+          <CustomAvatar
+            sx={{
+              mt: "-160px",
+              width: 130,
+              height: 130,
+              // border: `1px solid ${colors.border}`,
+              mb: 10,
+              border: "2px solid white",
+            }}
+            src={data?.picture}
+          />
+        </Box>
 
         <AnimatedHeading
+          className='animated-block'
           heading={data?.name}
           charactersBaseAnimation
           animationSpeed='fast'
+          sx={{ animationDelay: `${3 / 21}s` }}
         />
 
-        <Typography
+        {/* <Typography
           variant='h1'
           style={{
             background: `radial-gradient(circle 200px at 100% 50%, ${colors.primary} 0.2%,     ${colors.text} 100.2%)`,
@@ -115,12 +123,24 @@ const ProfileHeader = ({
           }}
         >
           {data?.name}
+        </Typography> */}
+        <Typography
+          className='animated-block'
+          sx={{ animationDelay: `${4 / 21}s` }}
+        >
+          {userType}
         </Typography>
-        <Typography>{userType}</Typography>
         {hideButtons ? (
           <></>
         ) : (
-          <Box display='grid' gridTemplateColumns='1fr 1fr' gap={8} mt={12}>
+          <Box
+            className='animated-block'
+            sx={{ animationDelay: `${5 / 21}s` }}
+            display='grid'
+            gridTemplateColumns='1fr 1fr'
+            gap={8}
+            mt={12}
+          >
             <CustomButton variant='outlined' onClick={handleEdit}>
               Edit
             </CustomButton>

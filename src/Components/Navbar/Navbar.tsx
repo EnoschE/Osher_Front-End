@@ -1,7 +1,12 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Avatar, IconButton } from "@mui/material";
-import { LogoutOutlined, SettingsOutlined, Menu } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import {
+  LogoutOutlined,
+  SettingsOutlined,
+  Menu,
+  KeyboardArrowLeftOutlined,
+} from "@mui/icons-material";
 import { StyledAppBar, StyledMenuBlock } from "./navbarStyles";
 import CustomMenu from "../Common/CustomMenu";
 import { isUserLoggedIn, logoutUser } from "../../Services/userService";
@@ -14,13 +19,19 @@ import { useSelector } from "../../Redux/reduxHooks";
 import { selectColors } from "../../Redux/Slices/generalSlice";
 import { sidebarWidth } from "../../Utils/spacings";
 import CustomAvatar from "../Common/CustomAvatar";
+import CustomButton from "../Common/CustomButton";
+import AnimatedBlock from "../Common/AnimatedBlock";
 
 const Navbar = ({
   navbarForNonProtectedRoutes,
   handleDrawerToggle,
+  backButtonPath,
+  hideBackButton,
 }: {
   navbarForNonProtectedRoutes?: boolean;
   handleDrawerToggle?: () => void;
+  backButtonPath?: string;
+  hideBackButton?: boolean;
 }) => {
   const colors = useSelector(selectColors);
   const navigate = useNavigate();
@@ -79,14 +90,13 @@ const Navbar = ({
             }),
       }}
     >
-      <Box display='flex' alignItems='center'>
+      <Box display='flex' alignItems='center' gap={7}>
         <IconButton
           color='inherit'
           aria-label='open drawer'
           edge='start'
           onClick={handleDrawerToggle}
           sx={{
-            mr: 7,
             display: navbarForNonProtectedRoutes ? "none" : { sm: "none" },
           }}
         >
@@ -105,6 +115,21 @@ const Navbar = ({
           }}
           onClick={handleLogoClick}
         />
+        {!hideBackButton && (
+          <AnimatedBlock>
+            <CustomButton
+              sx={{ py: 2, px: 6 }}
+              variant='outlined'
+              color='secondary'
+              onClick={() =>
+                backButtonPath ? navigate(backButtonPath) : navigate(-1)
+              }
+              startIcon={<KeyboardArrowLeftOutlined fontSize='small' />}
+            >
+              Back
+            </CustomButton>
+          </AnimatedBlock>
+        )}
       </Box>
 
       <StyledMenuBlock>

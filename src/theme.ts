@@ -23,6 +23,7 @@ const createAppTheme = () => {
       text: {
         primary: colors.text,
         secondary: colors.textMid,
+        disabled: colors.textPlaceholder,
       },
       success: {
         main: colors.success,
@@ -69,7 +70,7 @@ const createAppTheme = () => {
         fontWeight: 500,
       },
       h5: {
-        fontSize: "20px",
+        fontSize: "18px",
         fontWeight: 500,
       },
       h6: {
@@ -110,7 +111,7 @@ const createAppTheme = () => {
       MuiInputBase: {
         styleOverrides: {
           root: {
-            "& textarea, input": {
+            "& textarea, & input": {
               padding: 0,
               paddingBlock: 10,
               color: colors.text,
@@ -119,13 +120,24 @@ const createAppTheme = () => {
               "&:-internal-autofill-selected": {
                 boxShadow: "0 0 0 50px white inset",
               },
+
+              "&:-webkit-autofill, &:-webkit-autofill-strong-password, &:-webkit-autofill-strong-password-viewable, &:-webkit-autofill-and-obscured":
+                {
+                  backgroundColor: "#fff !important",
+                  color: `${colors.text} !important`,
+                  WebkitBoxShadow: "0 0 0px 1000px #fff inset !important",
+                },
             },
+
             fieldset: {
               borderColor: colors.border,
             },
 
             "&.MuiInputBase-root": {
               backgroundColor: "white",
+              "&:has(> input), &:has(input)": {
+                height: 40,
+              },
             },
             "&.MuiInput-underline input": {
               paddingBlock: 10,
@@ -144,6 +156,12 @@ const createAppTheme = () => {
                   "&:-internal-autofill-selected": {
                     boxShadow: "0 0 0 50px white inset",
                   },
+                  "&:-webkit-autofill, &:-webkit-autofill-strong-password, &:-webkit-autofill-strong-password-viewable, &:-webkit-autofill-and-obscured":
+                    {
+                      backgroundColor: "#fff !important",
+                      color: `${colors.text} !important`,
+                      WebkitBoxShadow: "0 0 0px 1000px #fff inset !important",
+                    },
                 },
               },
 
@@ -160,8 +178,9 @@ const createAppTheme = () => {
             },
 
             "& input::placeholder, & textarea::placeholder": {
-              color: "gray",
-              opacity: 0.7,
+              // color: "gray",
+              color: colors.textPlaceholder,
+              opacity: 1,
               textAlign: "left",
             },
           },
@@ -184,6 +203,11 @@ const createAppTheme = () => {
             },
 
             "&.MuiButton-containedPrimary": {
+              transition: "all ease 0.3s",
+              boxShadow: `0px 8px 20px ${colors.primary}99`,
+              // boxShadow:
+              //   `0px 8px 20px ${colors.primary}99, 0 17px 50px 0 rgba(0,0,0,.19)`,
+
               "&:disabled": {
                 color: "white",
                 backgroundColor: colors.primaryLight,
@@ -354,4 +378,3 @@ const createAppTheme = () => {
 };
 
 export default createAppTheme;
-
