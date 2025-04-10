@@ -27,7 +27,9 @@ const PageDetailsBlock = ({
           <React.Fragment key={field.key}>
             <Typography variant='h6'>{field.text}</Typography>
             <Typography>
-              {field?.customComponent || field.type === "date"
+              {!!field?.customComponent
+                ? field?.customComponent
+                : field.type === "date"
                 ? moment(data?.[field.key]).format("LL")
                 : data?.[field.key] || "Not given"}
             </Typography>

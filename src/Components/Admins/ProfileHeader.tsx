@@ -66,10 +66,8 @@ const ProfileHeader = ({
   handleDelete,
   disableDeleteButton,
   hideButtons,
-  tooltipText = "You cannot delete accounts that have customers assigned to them",
+  tooltipText = "You cannot delete brands those have generated ads",
 }: ProfileHeaderProps) => {
-  const colors = useSelector(selectColors);
-
   return (
     <>
       <Box className='animated-block'>
@@ -77,15 +75,17 @@ const ProfileHeader = ({
       </Box>
 
       <Box display='flex' alignItems='center' gap={8} flexDirection='column'>
-        <Box 
-        // className='animated-block' 
-        sx={{ animationDelay: `${2 / 21}s` }}>
+        <Box
+          // className='animated-block'
+          sx={{ animationDelay: `${2 / 21}s` }}
+        >
           <CustomAvatar
+            size='xl'
             sx={{
               mt: "-30px",
-              width: 130,
-              height: 130,
-              border: `1px solid ${colors.border}`,
+              // width: 130,
+              // height: 130,
+              // border: `1px solid ${colors.border}`,
               mb: 10,
               filter: "blur(15px)",
               opacity: 0.7,
@@ -94,13 +94,14 @@ const ProfileHeader = ({
           />
 
           <CustomAvatar
+            size='xl'
             sx={{
               mt: "-160px",
-              width: 130,
-              height: 130,
+              // width: 130,
+              // height: 130,
               // border: `1px solid ${colors.border}`,
               mb: 10,
-              border: "2px solid white",
+              // border: "2px solid white",
             }}
             src={data?.picture}
           />

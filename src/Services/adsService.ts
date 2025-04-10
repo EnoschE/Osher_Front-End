@@ -9,6 +9,10 @@ const AdsService = {
   getAllAds: () => http.get(`${apiEndpoint}`, { headers: getAuthHeader() }),
   getAdById: (id: string) =>
     http.get(`${apiEndpoint}/ad/${id}`, { headers: getAuthHeader() }),
+  getAdsOfBrand: (brandId: string) =>
+    http.get(`${apiEndpoint}/ads-of-brand/${brandId}`, {
+      headers: getAuthHeader(),
+    }),
   addAd: (data: any) =>
     http.post(`${apiEndpoint}/add-ad`, data, {
       headers: { "Content-Type": "multipart/form-data", ...getAuthHeader() },
@@ -35,3 +39,6 @@ export const editAd = (id: string, formData: any) =>
   AdsService.editAd(id, formData);
 
 export const deleteAd = (id: string) => AdsService.deleteAd(id);
+
+export const getAdsOfBrand = (brandId: string) =>
+  AdsService.getAdsOfBrand(brandId);

@@ -60,6 +60,7 @@ const AdDetails = () => {
 
   const fields: PageDetailsField[] = [
     { text: "Name", key: "name" },
+    { text: "Description", key: "description" },
     { text: "Category", key: "categoryName" },
     {
       text: "Brand",

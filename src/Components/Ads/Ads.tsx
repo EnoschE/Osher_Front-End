@@ -9,6 +9,43 @@ import { getAllAds } from "../../Services/adsService";
 import moment from "moment";
 import AvatarWithName from "../Common/AvatarWithName";
 
+export const commonAdsTableHeaders = [
+  {
+    text: "Ad",
+    key: "name",
+    customComponent: (props: { picture: string; name: string }) => (
+      <AvatarWithName name={props.name} picture={props.picture} />
+    ),
+  },
+  {
+    text: "Category",
+    key: "categoryName",
+    showEllipses: true,
+    maxWidth: 130,
+    sortable: true,
+  },
+  {
+    text: "Brand",
+    key: "brand",
+    sortable: true,
+    customComponent: (props: { brandName: string }) => props.brandName,
+  },
+  {
+    text: "Publish Date",
+    key: "publishDate",
+    sortable: true,
+    customComponent: (props: { publishDate: string }) =>
+      moment(props.publishDate).format("LL"),
+  },
+  {
+    text: "Expiry Date",
+    key: "expiryDate",
+    sortable: true, // DO THE SAME LOGIC FOR DATES HERE AS WELL LIKE IN PAGEDETAILSBLOCK
+    customComponent: (props: { expiryDate: string }) =>
+      moment(props.expiryDate).format("LL"),
+  },
+];
+
 const Ads = () => {
   const navigate = useNavigate();
 
@@ -16,40 +53,7 @@ const Ads = () => {
   const [data, setData] = useState<Array<any>>([]);
 
   const tableHeaders = [
-    {
-      text: "Ad",
-      key: "name",
-      customComponent: (props: { picture: string; name: string }) => (
-        <AvatarWithName name={props.name} picture={props.picture} />
-      ),
-    },
-    {
-      text: "Category",
-      key: "categoryName",
-      showEllipses: true,
-      maxWidth: 130,
-      sortable: true,
-    },
-    {
-      text: "Brand",
-      key: "brand",
-      sortable: true,
-      customComponent: (props: { brandName: string }) => props.brandName,
-    },
-    {
-      text: "Publish Date",
-      key: "publishDate",
-      sortable: true,
-      customComponent: (props: { publishDate: string }) =>
-        moment(props.publishDate).format("LL"),
-    },
-    {
-      text: "Expiry Date",
-      key: "expiryDate",
-      sortable: true, // DO THE SAME LOGIC FOR DATES HERE AS WELL LIKE IN PAGEDETAILSBLOCK
-      customComponent: (props: { expiryDate: string }) =>
-        moment(props.expiryDate).format("LL"),
-    },
+    ...commonAdsTableHeaders,
     {
       text: "",
       key: "name",

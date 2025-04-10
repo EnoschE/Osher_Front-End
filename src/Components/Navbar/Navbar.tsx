@@ -148,7 +148,10 @@ const Navbar = ({
           <CustomMenu
             anchorComponent={(props: any) => (
               <CustomAvatar
-                sx={{ ml: 8, cursor: "pointer" }}
+                sx={{
+                  // ml: 8,
+                  cursor: "pointer",
+                }}
                 src={user.picture}
                 {...props}
               />

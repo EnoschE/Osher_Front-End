@@ -1,9 +1,10 @@
-import { Avatar, SxProps } from "@mui/material";
+import { Avatar, Box, Skeleton, SxProps } from "@mui/material";
 import colors from "../../Utils/colors";
+import { useState } from "react";
 
 interface CustomAvatarProps {
   src?: string;
-  size?: "xs" | "sm";
+  size?: "xs" | "sm" | "xl";
   sx?: SxProps;
 }
 
@@ -13,24 +14,40 @@ const CustomAvatar = ({
   size = "sm",
   ...props
 }: CustomAvatarProps) => {
-  const sizeMap = {
-    xs: 24,
-    sm: 40,
-  };
+  const sizeMap = { xs: 24, sm: 40, xl: 130 };
+  const borderWidth = size === "xl" ? 2 : 1;
+
+  const [loading, setLoading] = useState(true);
 
   return (
-    <Avatar
-      sx={{
-        width: sizeMap[size],
-        height: sizeMap[size],
-        minWidth: sizeMap[size],
-        minHeight: sizeMap[size],
-        border: `1px solid ${colors.border}`,
-        ...sx,
-      }}
-      src={src}
-      {...props}
-    />
+    <Box position='relative' sx={{ ...sx }}>
+      <Avatar
+        sx={{
+          width: sizeMap[size],
+          height: sizeMap[size],
+          minWidth: sizeMap[size],
+          minHeight: sizeMap[size],
+          border: `${borderWidth}px solid ${colors.border}`,
+        }}
+        src={src}
+        onLoad={() => setLoading(false)}
+        {...props}
+      />
+
+      <Skeleton
+        variant='circular'
+        sx={{
+          position: "absolute",
+          inset: 0,
+          width: sizeMap[size],
+          height: sizeMap[size],
+          minWidth: sizeMap[size],
+          minHeight: sizeMap[size],
+          display: loading ? "block" : "none",
+        }}
+        animation='wave'
+      />
+    </Box>
   );
 };
 
