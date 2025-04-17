@@ -8,6 +8,11 @@ export const allRoutes = {
   EDIT_BRAND: "/brands/edit/:id",
   ADD_BRAND: "/brands/add-brand",
 
+  INFLUENCERS: "/influencers",
+  VIEW_INFLUENCER: "/influencers/view/:id",
+  EDIT_INFLUENCER: "/influencers/edit/:id",
+  ADD_INFLUENCER: "/influencers/add-brand",
+
   CATEGORIES: "/categories",
 
   ADS: "/ads",

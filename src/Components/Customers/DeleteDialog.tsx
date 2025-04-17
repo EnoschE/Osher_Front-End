@@ -16,6 +16,7 @@ interface ForgotPasswordDialogProps {
   userType:
     | "Ad"
     | "Brand"
+    | "Influencer"
     | "Admin"
     | "Customer"
     | "Technician"

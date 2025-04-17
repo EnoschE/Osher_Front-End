@@ -7,25 +7,14 @@ import { sidebarWidth } from "../../Utils/spacings";
 import { OsherLogo } from "../../Utils/Images";
 import { allRoutes } from "../../Routes/AllRoutes";
 import {
-  AdminPanelSettingsOutlined,
-  ApartmentOutlined,
-  HomeOutlined,
   KeyboardArrowDownRounded,
-  ManageAccountsOutlined,
-  Person4Outlined,
-  RecordVoiceOverOutlined,
   SettingsOutlined,
-  SupervisorAccountOutlined,
-  SupportAgentOutlined,
-  TuneOutlined,
-  TextSnippetOutlined,
   WidgetsOutlined,
-  BusinessOutlined,
-  BusinessCenterOutlined,
-  StoreOutlined,
   StorefrontOutlined,
   StyleOutlined,
   SellOutlined,
+  InterpreterMode,
+  InterpreterModeOutlined,
 } from "@mui/icons-material";
 import { Collapse, Typography } from "@mui/material";
 import { useState } from "react";
@@ -181,6 +170,11 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
             path: allRoutes.BRANDS,
           },
           {
+            icon: <InterpreterModeOutlined />,
+            text: "Influencers",
+            path: allRoutes.INFLUENCERS,
+          },
+          {
             icon: <StyleOutlined />,
             text: "Categories",
             path: allRoutes.CATEGORIES,
@@ -192,82 +186,6 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
           },
         ]
       : []),
-    // ...(isSuperAdmin || isDirector || isAdminManager
-    //   ? [
-    //       {
-    //         icon: <RecordVoiceOverOutlined />,
-    //         text: "My Organization",
-    //         path: allRoutes.ADMINS,
-    //       },
-    //     ]
-    //   : []),
-    // {
-    //   icon: <ManageAccountsOutlined />,
-    //   text: "Installers",
-    //   subItems: [
-    //     ...(isSuperAdmin || isDirector
-    //       ? [
-    //           {
-    //             icon: <ApartmentOutlined />,
-    //             text: "Installer Companies",
-    //             path: allRoutes.INSTALLER_COMPANIES,
-    //           },
-    //           {
-    //             icon: <AdminPanelSettingsOutlined />,
-    //             text: "Installer Admins",
-    //             path: allRoutes.INSTALLER_ADMINS,
-    //           },
-    //           {
-    //             icon: <Person4Outlined />,
-    //             text: "Office Managers",
-    //             path: allRoutes.OFFICE_MANAGERS,
-    //           },
-    //         ]
-    //       : []),
-    //     ...(isSuperAdmin || isDirector || isAdminManager || isPsl
-    //       ? [
-    //           {
-    //             icon: <SupervisorAccountOutlined />,
-    //             text: "Managers",
-    //             path: allRoutes.MANAGERS,
-    //           },
-    //           {
-    //             icon: <SupportAgentOutlined />,
-    //             text: "Representatives",
-    //             path: allRoutes.REPRESENTATIVES,
-    //           },
-    //         ]
-    //       : []),
-    //   ],
-    // },
-    // ...(isSuperAdmin || isDirector || isAdminManager || isPsl
-    //   ? [
-    //       {
-    //         icon: <SupervisorAccountOutlined />,
-    //         text: "Customers",
-    //         path: allRoutes.CUSTOMERS,
-    //       },
-    //     ]
-    //   : []),
-    // ...(isSuperAdmin
-    //   ? [
-    //       {
-    //         icon: <SupportAgentOutlined />,
-    //         text: "Installation Crew",
-    //         path: allRoutes.TECHNICIANS,
-    //       },
-    //       {
-    //         icon: <TuneOutlined />,
-    //         text: "Configurations",
-    //         path: allRoutes.CONFIGURATIONS,
-    //       },
-    //       {
-    //         icon: <TextSnippetOutlined />,
-    //         text: "Text Snippets",
-    //         path: allRoutes.TEXT_SNIPPETS,
-    //       },
-    //     ]
-    //   : []),
 
     {
       icon: <SettingsOutlined />,

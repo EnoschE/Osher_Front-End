@@ -74,18 +74,10 @@ import Ads from "../Components/Ads/Ads";
 import AddAd from "../Components/Ads/AddAd";
 import EditAd from "../Components/Ads/EditAd";
 import AdDetails from "../Components/Ads/AdDetails";
-// import SignUp from "../Components/SignUp/SignUp";
-// import Home from "../Components/Home/Home";
-// import Estimate from "../Components/Estimate/Estimate";
-// import WhyUs from "../Components/WhyUs/WhyUs";
-// import SolarReport from "../Components/SolarReport/SolarReport";
-// import ResetPassword from "../Components/ResetPassword/ResetPassword";
-// import VerifyEmail from "../Components/VerifyEmail/VerifyEmail";
-// import Scheduling from "../Components/Scheduling/Scheduling";
-// import ProposalAcceptance from "../Components/Scheduling/SubPages/ProposalAcceptance";
-// import SiteSurvey from "../Components/Scheduling/SubPages/SiteSurvey";
-// import Payment from "../Components/Payment/Payment";
-// import CADDesign from "../Components/Scheduling/SubPages/CADDesgin";
+import Influencers from "../Components/Influencers/Influencers";
+import InfluencerDetails from "../Components/Influencers/InfluencerDetails";
+import EditInfluencer from "../Components/Influencers/EditInfluencer";
+import AddInfluencer from "../Components/Influencers/AddInfluencer";
 
 interface RouteWithComponent {
   path: string;
@@ -143,6 +135,39 @@ const routesWithComponents = {
   VIEW_BRAND: {
     path: allRoutes.VIEW_BRAND,
     Component: BrandDetails,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true, // TODO: replace it with admin
+    },
+  },
+
+  INFLUENCERS: {
+    path: allRoutes.INFLUENCERS,
+    Component: Influencers,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true, // TODO: replace it with admin
+    },
+  },
+  ADD_INFLUENCER: {
+    path: allRoutes.ADD_INFLUENCER,
+    Component: AddInfluencer,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true, // TODO: replace it with admin
+    },
+  },
+  EDIT_INFLUENCER: {
+    path: allRoutes.EDIT_INFLUENCER,
+    Component: EditInfluencer,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true, // TODO: replace it with admin
+    },
+  },
+  VIEW_INFLUENCER: {
+    path: allRoutes.VIEW_INFLUENCER,
+    Component: InfluencerDetails,
     isPrivate: true,
     accessTo: {
       superAdmin: true, // TODO: replace it with admin
