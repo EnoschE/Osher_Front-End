@@ -82,6 +82,7 @@ import Posts from "../Components/Posts/Posts";
 import AddPost from "../Components/Posts/AddPost";
 import EditPost from "../Components/Posts/EditPost";
 import PostDetails from "../Components/Posts/PostDetails";
+import Feed from "../Components/Feed/Feed";
 
 interface RouteWithComponent {
   path: string;
@@ -101,6 +102,11 @@ const routesWithComponents = {
   DASHBOARD: {
     path: allRoutes.DASHBOARD,
     Component: Dashboard,
+    isPrivate: true,
+  },
+  FEED: {
+    path: allRoutes.FEED,
+    Component: Feed,
     isPrivate: true,
   },
   CATEGORIES: {

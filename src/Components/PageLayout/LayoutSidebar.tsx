@@ -163,6 +163,8 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
 
   const menuItems: MenuItem[] = [
     { icon: <WidgetsOutlined />, text: "Dashboard", path: allRoutes.DASHBOARD },
+    { icon: <WidgetsOutlined />, text: "Feed", path: allRoutes.FEED },
+
     ...(isSuperAdmin
       ? [
           {

@@ -24,6 +24,8 @@ const DashboardCard = ({
   onClick: () => void;
   animationDelay?: number;
 }) => {
+  const formattedDigit = digit < 10 ? `0${digit}` : digit.toString();
+
   return (
     <Box
       className='animated-block'
@@ -46,9 +48,12 @@ const DashboardCard = ({
       }}
       onClick={onClick}
     >
-      <Typography fontSize={{ md: 120, sm: 42 }} variant='h1'>
-        {digit}
-      </Typography>
+      <AnimatedHeading
+        heading={formattedDigit}
+        charactersBaseAnimation
+        fontSize={120}
+        animationDelay={animationDelay}
+      />
       <Typography variant='h5' display='flex' alignItems='center' gap={8}>
         {text} <ArrowButton onClick={onClick} />
       </Typography>
@@ -105,7 +110,7 @@ const Dashboard = () => {
               digit={card.digit}
               text={card.text}
               onClick={() => navigate(card.path)}
-              animationDelay={index * 0.1 + 0.2}
+              animationDelay={index * 0.2 + 0.2}
             />
           ))}
         </Box>

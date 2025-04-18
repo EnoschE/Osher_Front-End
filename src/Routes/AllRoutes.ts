@@ -2,6 +2,7 @@ export const allRoutes = {
   HOME: "/",
   ACCOUNT_SETTINGS: "/account-settings",
   DASHBOARD: "/dashboard",
+  FEED: "/feed",
 
   BRANDS: "/brands",
   VIEW_BRAND: "/brands/view/:id",
