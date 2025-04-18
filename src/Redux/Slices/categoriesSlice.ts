@@ -20,7 +20,7 @@ export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async (_, { rejectWithValue }) => {
     try {
-      const data = await getAllCategories();
+      const data: any = await getAllCategories();
       return data;
     } catch (error) {
       return rejectWithValue("Failed to fetch categories");
@@ -29,7 +29,7 @@ export const fetchCategories = createAsyncThunk(
 );
 
 export const categoriesSlice = createSlice({
-  name: "categoriesSlice",
+  name: "categories",
   initialState,
   reducers: {
     // Reducer logic here
@@ -39,10 +39,13 @@ export const categoriesSlice = createSlice({
       .addCase(fetchCategories.pending, (state) => {
         // Optionally, handle loading state
       })
-      .addCase(fetchCategories.fulfilled, (state, action) => {
-        // Action payload is the fetched logo URL
-        state.categories = action.payload;
-      })
+      .addCase(
+        fetchCategories.fulfilled,
+        (state, action: PayloadAction<CategoryInterface[]>) => {
+          // Action payload is the fetched logo URL
+          state.categories = action.payload;
+        }
+      )
       .addCase(fetchCategories.rejected, (state, action) => {
         console.error(action.payload);
       });

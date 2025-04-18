@@ -1,6 +1,7 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import CustomAvatar from "./CustomAvatar";
 import { ArrowOutward } from "@mui/icons-material";
+import ArrowButton from "./ArrowButton";
 
 const AvatarWithName = ({
   name,
@@ -16,11 +17,7 @@ const AvatarWithName = ({
       <CustomAvatar src={picture} />
       <Typography>{name}</Typography>
 
-      {!!onClick && (
-        <IconButton size='small' sx={{ p: 3 }} onClick={onClick}>
-          <ArrowOutward fontSize='small' color='primary' />
-        </IconButton>
-      )}
+      {!!onClick && <ArrowButton onClick={onClick} />}
     </Box>
   );
 };

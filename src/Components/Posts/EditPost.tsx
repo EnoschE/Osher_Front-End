@@ -3,19 +3,15 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
-import { getAllBrands } from "../../Services/brandsService";
 import CustomForm, { FormField } from "../Common/CustomForm";
-import { useSelector } from "../../Redux/reduxHooks";
 import { FormOnChange } from "../../Utils/types";
-import { editAd, getAdById } from "../../Services/adsService";
-import { selectCategories } from "../../Redux/Slices/categoriesSlice";
+import { getAllInfluencers } from "../../Services/influencersService";
+import { editPost, getPostById } from "../../Services/postsService";
 
-interface AdState {
+interface PostState {
   _id: string;
   name: string;
-  video: string;
-  brandId: string;
-  categoryId: string;
+  userId: string;
   description: string;
   picture: any;
 }
@@ -23,29 +19,26 @@ interface AdState {
 const defaultData = {
   _id: "",
   name: "",
-  video: "",
-  brandId: "",
-  categoryId: "",
+  userId: "",
   description: "",
   picture: "",
 };
 
-const EditAd = () => {
+const EditPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const categories = useSelector(selectCategories);
 
-  const [data, setData] = useState<AdState>(defaultData);
-  const [errors, setErrors] = useState<AdState>(defaultData);
+  const [data, setData] = useState<PostState>(defaultData);
+  const [errors, setErrors] = useState<PostState>(defaultData);
   const [loading, setLoading] = useState<boolean>(false);
-  const [brands, setBrands] = useState<Array<any>>([]);
+  const [users, setUsers] = useState<Array<any>>([]);
 
   useEffect(() => {
-    const fetchBrands = async () => {
+    const fetchInfluencers = async () => {
       setLoading(true);
       try {
-        const response: any = await getAllBrands();
-        setBrands(
+        const response: any = await getAllInfluencers();
+        setUsers(
           response?.map((item: any) => ({
             value: item._id,
             text: item.name,
@@ -53,12 +46,12 @@ const EditAd = () => {
           })) || []
         );
       } catch (error) {
-        toast.error("Failed to fetch brands"); // TODO: move these to redux as well
+        toast.error("Failed to fetch influencers");
       }
       setLoading(false);
     };
 
-    fetchBrands();
+    fetchInfluencers();
   }, []);
 
   useEffect(() => {
@@ -70,7 +63,7 @@ const EditAd = () => {
 
     setLoading(true);
     try {
-      const adData: any = await getAdById((id || "")?.toString());
+      const adData: any = await getPostById((id || "")?.toString());
       setData(adData);
     } catch (error: any) {
       toast.error(error);
@@ -80,19 +73,7 @@ const EditAd = () => {
 
   const handleOnChange = ({ name, value }: FormOnChange) => {
     setData((state) => ({ ...state, [name]: value }));
-    setErrors((state) => ({
-      ...state,
-      [name]: "",
-      // name === "email" && value
-      //   ? validateEmail(value)
-      //   : name === "password" && value
-      //   ? validatePassword(value)
-      //   : name === "confirmPassword" && value
-      //   ? data.password === value
-      //     ? ""
-      //     : "Passwords do not match"
-      //   : "",
-    }));
+    setErrors((state) => ({ ...state, [name]: "" }));
   };
 
   const validateData = () => {
@@ -103,17 +84,7 @@ const EditAd = () => {
     updatedErrors.description = data.description
       ? ""
       : "Description cannot be empty";
-    updatedErrors.brandId = data.brandId ? "" : "Brand cannot be empty";
-    updatedErrors.categoryId = data.categoryId
-      ? ""
-      : "Category cannot be empty";
-
-    // updatedErrors.address = data.address ? "" : "Address cannot be empty";
-    // updatedErrors.phone = data.phone ? "" : "Phone Number cannot be empty";
-    // updatedErrors.email = validateEmail(data.email);
-    // updatedErrors.password = validatePassword(data.password);
-    // updatedErrors.confirmPassword =
-    //   data.password === data.confirmPassword ? "" : "Passwords do not match";
+    updatedErrors.userId = data.userId ? "" : "Influencer cannot be empty";
 
     setErrors(updatedErrors);
     return !Object.values(updatedErrors).find(Boolean);
@@ -129,36 +100,26 @@ const EditAd = () => {
 
       formData.append("picture", data.picture ?? "");
       formData.append("name", data.name ?? "");
-      formData.append("categoryId", data.categoryId ?? "");
-      formData.append("brandId", data.brandId ?? "");
+      formData.append("userId", data.userId ?? "");
       formData.append("description", data.description ?? "");
 
-      await editAd(data._id, formData);
+      await editPost(data._id, formData);
 
-      toast.success("Ad updated successfully!");
+      toast.success("Post updated successfully!");
       navigate(allRoutes.VIEW_POST.replace(":id", (id || "")?.toString()));
       // }
     } catch (error: any) {
-      // if (error.includes("Incorrect current password")) {
-      //   setErrors({ ...errors, password: error });
-      // } else if (error.includes("A brand with this email already exists")) {
-      //   setErrors({ ...errors, email: error });
-      // } else {
       toast.error(error);
-      // }
     }
     setLoading(false);
   };
 
   const handleCancel = () => navigate(allRoutes.ADS);
 
-  // const openOtpDialog = () => setOtpDialog(true);
-  // const closeOtpDialog = () => setOtpDialog(false);
-
   const fields: FormField[] = [
     {
-      label: "Ad Photo",
-      placeholder: "This will be displayed on the profile of Ad",
+      label: "Post Photo",
+      placeholder: "This will be the photo of post",
       name: "picture",
       type: "image",
       value: data.picture,
@@ -189,35 +150,22 @@ const EditAd = () => {
     },
     {
       required: true,
-      label: "Brand",
-      placeholder: "Select Brand",
-      name: "brandId",
+      label: "Influencer",
+      placeholder: "Select Influencer",
+      name: "userId",
       type: "dropdown",
-      value: data.brandId,
+      value: data.userId,
       onChange: handleOnChange,
-      error: errors.brandId,
-      options: brands,
-    },
-    {
-      required: true,
-      label: "Category",
-      placeholder: "Select Category",
-      name: "categoryId",
-      type: "dropdown",
-      value: data.categoryId,
-      onChange: handleOnChange,
-      error: errors.categoryId,
-      options: categories.map((category) => ({
-        value: category._id,
-        text: category.name,
-      })),
+      error: errors.userId,
+      options: users,
+      disabled: true
     },
   ];
 
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Edit Ad'
+        heading='Edit Post'
         subHeading={`Edit the details of ${data?.name}`}
         fields={fields}
         onSave={handleUpdate}
@@ -227,4 +175,4 @@ const EditAd = () => {
   );
 };
 
-export default EditAd;
+export default EditPost;

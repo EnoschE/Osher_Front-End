@@ -15,6 +15,7 @@ import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import { getProfile } from "../../Services/profileService";
 import { navbarHeight } from "../../Utils/spacings";
 import AnimatedHeading from "../Common/AnimatedHeading";
+import { fetchDashboardData } from "../../Redux/Slices/dashboardSlice";
 
 interface DataProps {
   email: string;

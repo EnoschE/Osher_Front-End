@@ -37,6 +37,7 @@ interface ProfileHeaderProps {
     | "Admin"
     | "Brand"
     | "Ad"
+    | "Post"
     | "Influencer"
     | "Super Admin"
     | "Customer"

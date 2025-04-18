@@ -33,12 +33,6 @@ const CategoriesService = {
 //     }
 //   };
 
-export const getAllCategories = async () => {
-  try {
-    const data: any = await CategoriesService.getAllCategories();
-    return data;
-  } catch (error) {
-    console.error("getAllCategories (API): ", error);
-    throw error;
-  }
+export const getAllCategories = () => {
+  return CategoriesService.getAllCategories();
 };

@@ -78,6 +78,10 @@ import Influencers from "../Components/Influencers/Influencers";
 import InfluencerDetails from "../Components/Influencers/InfluencerDetails";
 import EditInfluencer from "../Components/Influencers/EditInfluencer";
 import AddInfluencer from "../Components/Influencers/AddInfluencer";
+import Posts from "../Components/Posts/Posts";
+import AddPost from "../Components/Posts/AddPost";
+import EditPost from "../Components/Posts/EditPost";
+import PostDetails from "../Components/Posts/PostDetails";
 
 interface RouteWithComponent {
   path: string;
@@ -204,6 +208,39 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true, // TODO: replace it with admin
+    },
+  },
+
+  POSTS: {
+    path: allRoutes.POSTS,
+    Component: Posts,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true,
+    },
+  },
+  ADD_POST: {
+    path: allRoutes.ADD_POST,
+    Component: AddPost,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true,
+    },
+  },
+  EDIT_POST: {
+    path: allRoutes.EDIT_POST,
+    Component: EditPost,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true,
+    },
+  },
+  VIEW_POST: {
+    path: allRoutes.VIEW_POST,
+    Component: PostDetails,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true,
     },
   },
 
@@ -710,7 +747,7 @@ const RouteNavigation = () => {
     if (isUserLoggedIn()) {
       setLoading(true);
       try {
-        await dispatch(getProfile());
+        await dispatch(getProfile()); // change this to fetchProfile as well like categories and dashbaord
       } catch (error: any) {
         toast.error(error);
       }

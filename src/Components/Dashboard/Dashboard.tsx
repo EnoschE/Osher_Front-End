@@ -1,33 +1,86 @@
-import { useState } from "react";
-import { Typography } from "@mui/material";
+import { useEffect } from "react";
+import { Box, Typography } from "@mui/material";
 import PageLayout from "../PageLayout/PageLayout";
-import { useSelector } from "../../Redux/reduxHooks";
+import { useDispatch, useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
 import AnimatedHeading from "../Common/AnimatedHeading";
-import { selectCategories } from "../../Redux/Slices/categoriesSlice";
+import { borderRadius } from "../../Utils/spacings";
+import ArrowButton from "../Common/ArrowButton";
+import { useNavigate } from "react-router-dom";
+import { allRoutes } from "../../Routes/AllRoutes";
+import {
+  fetchDashboardData,
+  selectDashboardData,
+} from "../../Redux/Slices/dashboardSlice";
 
-// import DashboardData from "./DashboardData";
+const DashboardCard = ({
+  digit,
+  text,
+  onClick,
+  animationDelay,
+}: {
+  digit: number;
+  text: string;
+  onClick: () => void;
+  animationDelay?: number;
+}) => {
+  return (
+    <Box
+      className='animated-block'
+      sx={{
+        padding: "14px 24px",
+        borderRadius: borderRadius.md,
+        boxShadow: "rgba(17, 17, 26, 0.1) 0px 0px 16px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "flex-end",
+        backgroundColor: "white",
+        transition: "all 0.2s ease-in-out",
+        animationDelay: `${animationDelay}s`,
+
+        "&:hover": {
+          boxShadow: "rgba(17, 17, 26, 0.1) 0px 0px 46px 3px",
+          cursor: "pointer",
+        },
+      }}
+      onClick={onClick}
+    >
+      <Typography fontSize={{ md: 120, sm: 42 }} variant='h1'>
+        {digit}
+      </Typography>
+      <Typography variant='h5' display='flex' alignItems='center' gap={8}>
+        {text} <ArrowButton onClick={onClick} />
+      </Typography>
+    </Box>
+  );
+};
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const dashboardData = useSelector(selectDashboardData);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  useEffect(() => {
+    dispatch(fetchDashboardData());
+  }, []);
+
+  const cards = [
+    { digit: dashboardData.brands, text: "Brands", path: allRoutes.BRANDS },
+    {
+      digit: dashboardData.influencers,
+      text: "Influencers",
+      path: allRoutes.INFLUENCERS,
+    },
+    { digit: dashboardData.ads, text: "Ads", path: allRoutes.ADS },
+  ];
 
   return (
-    <PageLayout loading={loading} hideBackButton>
-      {/* <Typography variant='h1' mb={8}>
-        Welcome back, {user.name ? `${user.name}! 👋` : ""}
-      </Typography> */}
-
+    <PageLayout loading={dashboardData.loading} hideBackButton>
       <AnimatedHeading
         heading={`Welcome back, ${user.name ? `${user.name}! 👋` : ""}`}
       />
-
-      {/* <AnimatedHeading
-        heading={`Let's check your stats!`}
-        wordBaseAnimation
-        variant="body2"
-      /> */}
 
       <Typography
         variant='body2'
@@ -38,11 +91,25 @@ const Dashboard = () => {
         Let's check your stats!
       </Typography>
 
-      {/* <DashboardData
-        loading={loading}
-        setLoading={setLoading}
-        funnelName='All Customers Funnel'
-      /> */}
+      {!dashboardData.loading && (
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { md: "repeat(3, 1fr)", sm: "repeat(2, 1fr)" },
+            gap: 20,
+          }}
+        >
+          {cards.map((card, index) => (
+            <DashboardCard
+              key={index}
+              digit={card.digit}
+              text={card.text}
+              onClick={() => navigate(card.path)}
+              animationDelay={index * 0.1 + 0.2}
+            />
+          ))}
+        </Box>
+      )}
     </PageLayout>
   );
 };

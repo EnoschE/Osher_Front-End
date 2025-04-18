@@ -20,6 +20,7 @@ export interface FormField {
   error?: string;
   placeholder?: string;
   options?: Array<DropDownOptionProps>;
+  disabled?: boolean;
 }
 
 interface FormProps {
@@ -122,7 +123,7 @@ const CustomForm = ({
                     minWidth='100%'
                     error={field.error}
                     label={field.placeholder}
-                    disabled={field.options?.length === 0}
+                    disabled={field.options?.length === 0 || field.disabled}
                     sx={{ animationDelay: delay }}
                   />
                 ) : field.type === "phone" ? (

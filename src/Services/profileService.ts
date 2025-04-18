@@ -14,6 +14,8 @@ const ProfileService = {
     http.put(`${apiEndpoint}/edit-profile`, data, {
       headers: { "Content-Type": "multipart/form-data", ...getAuthHeader() },
     }),
+  getDashboardAllData: () =>
+    http.get(`${apiEndpoint}/dashboard-data`, { headers: getAuthHeader() }),
   verifyEmailOtp: (data: any) =>
     http.post(`${apiEndpoint}/verifyOTP`, data, { headers: getAuthHeader() }),
 };
@@ -25,6 +27,7 @@ export const getProfile =
   async (dispatch: AppDispatch): Promise<any | void> => {
     try {
       const data: any = await ProfileService.getProfile();
+
       console.log("Profile: ", data);
 
       const userData = getUserObjectForRedux(data);
@@ -55,6 +58,10 @@ export const updateProfile =
       throw error;
     }
   };
+
+export const getDashboardAllData = () => {
+  return ProfileService.getDashboardAllData();
+};
 
 export const verifyEmailOtp = (data: any) => {
   return ProfileService.verifyEmailOtp(data);

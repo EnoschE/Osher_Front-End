@@ -15,6 +15,7 @@ interface ForgotPasswordDialogProps {
   user: { name: string };
   userType:
     | "Ad"
+    | "Post"
     | "Brand"
     | "Influencer"
     | "Admin"
@@ -59,7 +60,7 @@ const DeleteDialog = ({
       </Typography>
       <Typography fontSize={16} textAlign='center' color='text.secondary'>
         Are you sure you want to delete
-        {userType === "Ad" ? " " : " the account of "}
+        {["Post", "Ad"].includes(userType) ? " " : " the account of "}
         {user.name}?
       </Typography>
 

@@ -20,6 +20,11 @@ export const allRoutes = {
   EDIT_AD: "/ads/edit/:id",
   ADD_AD: "/ads/add-ad",
 
+  POSTS: "/posts",
+  VIEW_POST: "/posts/view/:id",
+  EDIT_POST: "/posts/edit/:id",
+  ADD_POST: "/posts/add-post",
+
   UPDATE_STATUS: "/customers/update-status/:id",
   INSTALLER_COMPANIES: "/installers/companies",
   VIEW_INSTALLER_COMPANY: "/installers/companies/view/:id",

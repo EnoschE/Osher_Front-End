@@ -15,6 +15,7 @@ import {
   SellOutlined,
   InterpreterMode,
   InterpreterModeOutlined,
+  AllInboxOutlined,
 } from "@mui/icons-material";
 import { Collapse, Typography } from "@mui/material";
 import { useState } from "react";
@@ -183,6 +184,11 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
             icon: <SellOutlined />,
             text: "Ads",
             path: allRoutes.ADS,
+          },
+          {
+            icon: <AllInboxOutlined />,
+            text: "Posts",
+            path: allRoutes.POSTS,
           },
         ]
       : []),

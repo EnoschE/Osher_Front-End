@@ -48,6 +48,7 @@ const CustomDropdown = ({
         minWidth: isLargeDropdown ? { xs: "100%", md: 560 } : minWidth,
       }}
       error={!!error}
+      disabled={disabled}
     >
       <Select
         name={name}
