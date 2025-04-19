@@ -82,6 +82,7 @@ const AdDetails = () => {
   return (
     <PageLayout loading={loading}>
       <ProfileHeader
+        isSquarish
         data={data}
         userType='Ad'
         handleEdit={handleEdit}

@@ -14,7 +14,7 @@ export const commonAdsTableHeaders = [
     text: "Ad",
     key: "name",
     customComponent: (props: { picture: string; name: string }) => (
-      <AvatarWithName name={props.name} picture={props.picture} />
+      <AvatarWithName isSquarish name={props.name} picture={props.picture} />
     ),
   },
   {

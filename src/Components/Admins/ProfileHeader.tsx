@@ -58,6 +58,7 @@ interface ProfileHeaderProps {
   handleDelete?: () => void;
   disableDeleteButton?: boolean;
   hideButtons?: boolean;
+  isSquarish?: boolean;
   tooltipText?: string;
 }
 
@@ -68,6 +69,7 @@ const ProfileHeader = ({
   handleDelete,
   disableDeleteButton,
   hideButtons,
+  isSquarish,
   tooltipText = "You cannot delete brands those have generated ads",
 }: ProfileHeaderProps) => {
   return (
@@ -82,29 +84,16 @@ const ProfileHeader = ({
           sx={{ animationDelay: `${2 / 21}s` }}
         >
           <CustomAvatar
-            size='xl'
-            sx={{
-              mt: "-30px",
-              // width: 130,
-              // height: 130,
-              // border: `1px solid ${colors.border}`,
-              mb: 10,
-              filter: "blur(15px)",
-              opacity: 0.7,
-            }}
+            isSquarish={isSquarish}
+            size='lg'
+            sx={{ mt: "-30px", mb: 10, filter: "blur(15px)", opacity: 0.7 }}
             src={data?.picture}
           />
 
           <CustomAvatar
-            size='xl'
-            sx={{
-              mt: "-160px",
-              // width: 130,
-              // height: 130,
-              // border: `1px solid ${colors.border}`,
-              mb: 10,
-              // border: "2px solid white",
-            }}
+            isSquarish={isSquarish}
+            size='lg'
+            sx={{ mt: "-160px", mb: 10 }}
             src={data?.picture}
           />
         </Box>

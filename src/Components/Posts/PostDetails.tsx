@@ -79,6 +79,7 @@ const PostDetails = () => {
   return (
     <PageLayout loading={loading}>
       <ProfileHeader
+        isSquarish
         data={data}
         userType='Post'
         handleEdit={handleEdit}
