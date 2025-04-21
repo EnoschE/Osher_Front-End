@@ -67,7 +67,7 @@ export const signUpUser =
         imageUrl: userData.picture ?? "",
         ...(isSocialLogin
           ? {
-              googleId: userData.id,
+              googleId: userData._id,
               isgooglesignup: true,
             }
           : {}),
@@ -196,6 +196,11 @@ export const isSuperAdminLoggedIn = (): boolean => {
 export const isBrandLoggedIn = (): boolean => {
   const loggedInUser: any = getLoggedInUser();
   return loggedInUser?.role === roles.BRAND || false;
+};
+
+export const isInfluencerLoggedIn = (): boolean => {
+  const loggedInUser: any = getLoggedInUser();
+  return loggedInUser?.role === roles.INFLUENCER || false;
 };
 
 export const isDirectorLoggedIn = (): boolean => {

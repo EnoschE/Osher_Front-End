@@ -22,4 +22,5 @@ export const roles = {
   // new roles
   ADMIN: "admin",
   BRAND: "brand",
+  INFLUENCER: "influencer",
 };

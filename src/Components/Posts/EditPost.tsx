@@ -7,6 +7,7 @@ import CustomForm, { FormField } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
 import { getAllInfluencers } from "../../Services/influencersService";
 import { editPost, getPostById } from "../../Services/postsService";
+import { isInfluencerLoggedIn } from "../../Services/userService";
 
 interface PostState {
   _id: string;
@@ -27,6 +28,7 @@ const defaultData = {
 const EditPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const isInfluencer = isInfluencerLoggedIn();
 
   const [data, setData] = useState<PostState>(defaultData);
   const [errors, setErrors] = useState<PostState>(defaultData);
@@ -114,7 +116,7 @@ const EditPost = () => {
     setLoading(false);
   };
 
-  const handleCancel = () => navigate(allRoutes.ADS);
+  const handleCancel = () => navigate(allRoutes.POSTS);
 
   const fields: FormField[] = [
     {
@@ -158,7 +160,7 @@ const EditPost = () => {
       onChange: handleOnChange,
       error: errors.userId,
       options: users,
-      disabled: true
+      disabled: isInfluencer,
     },
   ];
 

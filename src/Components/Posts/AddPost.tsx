@@ -7,6 +7,9 @@ import CustomForm, { FormField } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
 import { getAllInfluencers } from "../../Services/influencersService";
 import { addPost } from "../../Services/postsService";
+import { useSelector } from "../../Redux/reduxHooks";
+import { selectUser } from "../../Redux/Slices/userSlice";
+import { isInfluencerLoggedIn } from "../../Services/userService";
 
 interface PostState {
   name: string;
@@ -26,11 +29,19 @@ const defaultData = {
 
 const AddPost = () => {
   const navigate = useNavigate();
+  const user = useSelector(selectUser);
+  const isInfluencer = isInfluencerLoggedIn();
 
   const [data, setData] = useState<PostState>(defaultData);
   const [errors, setErrors] = useState<PostState>(defaultData);
   const [loading, setLoading] = useState<boolean>(false);
   const [users, setUsers] = useState<Array<any>>([]);
+
+  useEffect(() => {
+    if (isInfluencer) {
+      setData({ ...defaultData, userId: user._id || "" });
+    }
+  }, [user, isInfluencer]);
 
   useEffect(() => {
     const fetchInfluencers = async () => {
@@ -139,6 +150,7 @@ const AddPost = () => {
       onChange: handleOnChange,
       error: errors.userId,
       options: users,
+      disabled: isInfluencer,
     },
   ];
 

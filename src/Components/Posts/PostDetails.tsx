@@ -5,7 +5,10 @@ import { allRoutes } from "../../Routes/AllRoutes";
 import DeleteDialog from "../Customers/DeleteDialog";
 import ProfileHeader from "../Admins/ProfileHeader";
 import { toast } from "react-toastify";
-import { isSuperAdminLoggedIn } from "../../Services/userService";
+import {
+  isInfluencerLoggedIn,
+  isSuperAdminLoggedIn,
+} from "../../Services/userService";
 import PageDetailsBlock from "../Common/PageDetailsBlock";
 import { PageDetailsField } from "../../Utils/types";
 import AvatarWithName from "../Common/AvatarWithName";
@@ -14,6 +17,7 @@ import { deletePost, getPostById } from "../../Services/postsService";
 const PostDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const isInfluencer = isInfluencerLoggedIn();
 
   const [data, setData] = useState<any>({});
   const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
@@ -68,7 +72,9 @@ const PostDetails = () => {
           name={data?.userName}
           picture={data?.userPicture}
           onClick={() =>
-            navigate(allRoutes.VIEW_INFLUENCER.replace(":id", data.userId))
+            isInfluencer
+              ? navigate(allRoutes.MY_PROFILE)
+              : navigate(allRoutes.VIEW_INFLUENCER.replace(":id", data.userId))
           }
         />
       ),
@@ -84,7 +90,7 @@ const PostDetails = () => {
         userType='Post'
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
-        hideButtons={!isSuperAdminLoggedIn()}
+        // hideButtons={!isSuperAdminLoggedIn()}
       />
 
       <PageDetailsBlock data={data} fields={fields} />

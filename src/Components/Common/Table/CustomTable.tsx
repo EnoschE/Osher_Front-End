@@ -125,7 +125,7 @@ const CustomTable = ({
   const handleRowClick = (id: string, row: any) => {
     if (detailsPagePath)
       navigate(
-        id === user.id
+        id === user._id
           ? allRoutes.ACCOUNT_SETTINGS
           : detailsPagePath?.replace(":id", id)
       );
@@ -270,7 +270,7 @@ const CustomTable = ({
                               : row?.[header.alternateKey]
                             : "") || "-"
                         )}
-                        {row._id === user.id && header.key === "name" ? (
+                        {row._id === user._id && header.key === "name" ? (
                           <Typography
                             component='span'
                             fontSize='12px'

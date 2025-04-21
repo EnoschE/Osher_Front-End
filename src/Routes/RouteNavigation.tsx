@@ -6,7 +6,9 @@ import AccountSettings from "../Components/AccountSettings/AccountSettings";
 import { useEffect, useState } from "react";
 import {
   isAdminManagerLoggedIn,
+  isBrandLoggedIn,
   isDirectorLoggedIn,
+  isInfluencerLoggedIn,
   isPslLoggedIn,
   isSuperAdminLoggedIn,
   isUserLoggedIn,
@@ -83,6 +85,7 @@ import AddPost from "../Components/Posts/AddPost";
 import EditPost from "../Components/Posts/EditPost";
 import PostDetails from "../Components/Posts/PostDetails";
 import Feed from "../Components/Feed/Feed";
+import MyProfile from "../Components/MyProfile/MyProfile";
 
 interface RouteWithComponent {
   path: string;
@@ -90,6 +93,9 @@ interface RouteWithComponent {
   isPrivate?: boolean;
   accessTo?: {
     superAdmin?: boolean;
+    brand?: boolean;
+    influencer?: boolean;
+
     director?: boolean;
     adminManager?: boolean;
     psl?: boolean;
@@ -190,6 +196,7 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true, // TODO: replace it with admin
+      brand: true, // TODO: replace it with admin
     },
   },
   ADD_AD: {
@@ -198,6 +205,7 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true, // TODO: replace it with admin
+      brand: true, // TODO: replace it with admin
     },
   },
   EDIT_AD: {
@@ -206,6 +214,7 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true, // TODO: replace it with admin
+      brand: true, // TODO: replace it with admin
     },
   },
   VIEW_AD: {
@@ -214,6 +223,7 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true, // TODO: replace it with admin
+      brand: true, // TODO: replace it with admin
     },
   },
 
@@ -223,6 +233,7 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true,
+      influencer: true,
     },
   },
   ADD_POST: {
@@ -231,6 +242,7 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true,
+      influencer: true,
     },
   },
   EDIT_POST: {
@@ -239,6 +251,7 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true,
+      influencer: true,
     },
   },
   VIEW_POST: {
@@ -247,6 +260,7 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true,
+      influencer: true,
     },
   },
 
@@ -682,16 +696,15 @@ const routesWithComponents = {
       adminManager: true,
     },
   },
+  MY_PROFILE: {
+    path: allRoutes.MY_PROFILE,
+    Component: MyProfile,
+    isPrivate: true,
+  },
   ACCOUNT_SETTINGS: {
     path: allRoutes.ACCOUNT_SETTINGS,
     Component: AccountSettings,
     isPrivate: true,
-    // accessTo: {
-    //   superAdmin: true,
-    //   director: true,
-    //   psl: true,
-    //   adminManager: true,
-    // },
   },
   ACCOUNT_CREATION: {
     path: allRoutes.ACCOUNT_CREATION,
@@ -709,6 +722,13 @@ const routesWithComponents = {
 const RouteNavigation = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const isLoggedIn = isUserLoggedIn();
+  const isSuperAdmin = isSuperAdminLoggedIn();
+  const isAdminManager = isAdminManagerLoggedIn();
+  const isDirector = isDirectorLoggedIn();
+  const isPsl = isPslLoggedIn();
+  const isBrand = isBrandLoggedIn();
+  const isInfluencer = isInfluencerLoggedIn();
   // const isFirstRender = useRef(true);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -731,26 +751,32 @@ const RouteNavigation = () => {
     const allRoutes = Object.values(routesWithComponents).filter(
       (item: RouteWithComponent) =>
         item.accessTo
-          ? isSuperAdminLoggedIn()
+          ? isSuperAdmin
             ? item.accessTo.superAdmin
-            : isDirectorLoggedIn()
+            : isBrand
+            ? item.accessTo.brand
+            : isInfluencer
+            ? item.accessTo.influencer
+            : isDirector
             ? item.accessTo.director
-            : isAdminManagerLoggedIn()
+            : isAdminManager
             ? item.accessTo.adminManager
-            : isPslLoggedIn() && item.accessTo.psl
+            : isPsl && item.accessTo.psl
           : item
     );
     setRenderingRoutes(allRoutes);
   }, [
-    user.id,
-    isSuperAdminLoggedIn(),
-    isAdminManagerLoggedIn(),
-    isDirectorLoggedIn(),
-    isPslLoggedIn(),
+    user._id,
+    isSuperAdmin,
+    isBrand,
+    isInfluencer,
+    isAdminManager,
+    isDirector,
+    isPsl,
   ]);
 
   const fetchUserProfile = async () => {
-    if (isUserLoggedIn()) {
+    if (isLoggedIn) {
       setLoading(true);
       try {
         await dispatch(getProfile()); // change this to fetchProfile as well like categories and dashbaord

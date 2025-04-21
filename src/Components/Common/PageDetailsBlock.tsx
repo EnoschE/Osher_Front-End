@@ -18,7 +18,7 @@ const PageDetailsBlock = ({
     <>
       <Box
         display='grid'
-        gridTemplateColumns={{ xs: "1fr", md: "340px 1fr" }}
+        gridTemplateColumns={{ xs: "1fr", md: "300px 1fr" }}
         gap={{ xs: 10, md: 32 }}
         alignItems='center'
         mt={45}

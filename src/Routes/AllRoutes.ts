@@ -1,6 +1,7 @@
 export const allRoutes = {
   HOME: "/",
   ACCOUNT_SETTINGS: "/account-settings",
+  MY_PROFILE: "/my-profile",
   DASHBOARD: "/dashboard",
   FEED: "/feed",
 

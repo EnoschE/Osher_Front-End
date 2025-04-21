@@ -10,7 +10,7 @@ import { getAllInstallerCompanies } from "../../../Services/dashboardService";
 import { toast } from "react-toastify";
 import CustomDropdown from "../CustomDropdown";
 import AnimatedHeading from "../AnimatedHeading";
-import AnimatedBlock from "../AnimatedBlock";
+
 
 export const TableBlock = ({
   heading,
@@ -85,15 +85,12 @@ export const TableBlock = ({
   let searchedTableData = search
     ? tableData?.filter(
         (item) =>
-          // item._id?.toString()?.includes(search?.toLowerCase()) ||
           item.name?.toLowerCase()?.includes(search?.toLowerCase()) ||
+          item.description?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.address?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.phone?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          // item.currentStep?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          // item.status?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          // item.log?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          // item.company?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          // item.timeStamp?.toLowerCase()?.includes(search?.toLowerCase()) ||
+          item.userName?.toLowerCase()?.includes(search?.toLowerCase()) ||
+          item.brandName?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.email?.toLowerCase()?.includes(search?.toLowerCase()) // TODO: in future, change this logic to dynamic and add all tableHeaders here
       )
     : tableData;

@@ -51,7 +51,7 @@ const DashboardCard = ({
       <AnimatedHeading
         heading={formattedDigit}
         charactersBaseAnimation
-        fontSize={120}
+        fontSize={150}
         animationDelay={animationDelay}
       />
       <Typography variant='h5' display='flex' alignItems='center' gap={8}>
@@ -100,7 +100,7 @@ const Dashboard = () => {
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: { md: "repeat(3, 1fr)", sm: "repeat(2, 1fr)" },
+            gridTemplateColumns: { md: "repeat(2, 1fr)", sm: "repeat(1, 1fr)" },
             gap: 20,
           }}
         >

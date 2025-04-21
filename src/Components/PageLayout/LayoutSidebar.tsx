@@ -16,12 +16,15 @@ import {
   InterpreterMode,
   InterpreterModeOutlined,
   AllInboxOutlined,
+  AccountCircleOutlined,
 } from "@mui/icons-material";
 import { Collapse, Typography } from "@mui/material";
 import { useState } from "react";
 import {
   isAdminManagerLoggedIn,
+  isBrandLoggedIn,
   isDirectorLoggedIn,
+  isInfluencerLoggedIn,
   isPslLoggedIn,
   isSuperAdminLoggedIn,
 } from "../../Services/userService";
@@ -156,7 +159,11 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
   const navigate = useNavigate();
 
   // User role checks
+
   const isSuperAdmin = isSuperAdminLoggedIn();
+  const isBrand = isBrandLoggedIn();
+  const isInfluencer = isInfluencerLoggedIn();
+
   const isDirector = isDirectorLoggedIn();
   const isAdminManager = isAdminManagerLoggedIn();
   const isPsl = isPslLoggedIn();
@@ -182,11 +189,21 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
             text: "Categories",
             path: allRoutes.CATEGORIES,
           },
+        ]
+      : []),
+      
+    ...(isSuperAdmin || isBrand
+      ? [
           {
             icon: <SellOutlined />,
             text: "Ads",
             path: allRoutes.ADS,
           },
+        ]
+      : []),
+
+    ...(isSuperAdmin || isInfluencer
+      ? [
           {
             icon: <AllInboxOutlined />,
             text: "Posts",
@@ -195,6 +212,11 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
         ]
       : []),
 
+    {
+      icon: <AccountCircleOutlined />,
+      text: "My Profile",
+      path: allRoutes.MY_PROFILE,
+    },
     {
       icon: <SettingsOutlined />,
       text: "Account Settings",

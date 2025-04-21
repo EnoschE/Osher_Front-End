@@ -62,7 +62,7 @@ const OtpVerifyDialog = ({
     setLoading(true);
     try {
       const data = {
-        userId: user.id,
+        userId: user._id,
         otp,
         email,
       };

@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { UserState } from "../../Redux/Slices/userSlice";
+import { selectUser, UserState } from "../../Redux/Slices/userSlice";
 import CustomButton from "../Common/CustomButton";
 import CustomTextField, { Asterisk } from "../Common/CustomTextField";
 import { Box, Divider, Typography } from "@mui/material";
@@ -19,6 +19,7 @@ import { addAd } from "../../Services/adsService";
 import { useSelector } from "../../Redux/reduxHooks";
 import { selectCategories } from "../../Redux/Slices/categoriesSlice";
 import { FormOnChange } from "../../Utils/types";
+import { isBrandLoggedIn } from "../../Services/userService";
 
 interface AdState {
   name: string;
@@ -39,13 +40,21 @@ const defaultData = {
 };
 
 const AddAd = () => {
+  const user = useSelector(selectUser);
   const navigate = useNavigate();
   const categories = useSelector(selectCategories);
+  const isBrand = isBrandLoggedIn();
 
   const [data, setData] = useState<AdState>(defaultData);
   const [errors, setErrors] = useState<AdState>(defaultData);
   const [loading, setLoading] = useState<boolean>(false);
   const [brands, setBrands] = useState<Array<any>>([]);
+
+  useEffect(() => {
+    if (isBrand) {
+      setData({ ...defaultData, brandId: user._id || "" });
+    }
+  }, [user, isBrand]);
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -191,6 +200,7 @@ const AddAd = () => {
       onChange: handleOnChange,
       error: errors.brandId,
       options: brands,
+      disabled: isBrand,
     },
     {
       required: true,

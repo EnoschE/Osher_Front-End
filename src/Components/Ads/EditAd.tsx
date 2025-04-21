@@ -9,6 +9,7 @@ import { useSelector } from "../../Redux/reduxHooks";
 import { FormOnChange } from "../../Utils/types";
 import { editAd, getAdById } from "../../Services/adsService";
 import { selectCategories } from "../../Redux/Slices/categoriesSlice";
+import { isBrandLoggedIn } from "../../Services/userService";
 
 interface AdState {
   _id: string;
@@ -34,6 +35,7 @@ const EditAd = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const categories = useSelector(selectCategories);
+  const isBrand = isBrandLoggedIn();
 
   const [data, setData] = useState<AdState>(defaultData);
   const [errors, setErrors] = useState<AdState>(defaultData);
@@ -136,7 +138,7 @@ const EditAd = () => {
       await editAd(data._id, formData);
 
       toast.success("Ad updated successfully!");
-      navigate(allRoutes.VIEW_POST.replace(":id", (id || "")?.toString()));
+      navigate(allRoutes.VIEW_AD.replace(":id", (id || "")?.toString()));
       // }
     } catch (error: any) {
       // if (error.includes("Incorrect current password")) {
@@ -197,6 +199,7 @@ const EditAd = () => {
       onChange: handleOnChange,
       error: errors.brandId,
       options: brands,
+      disabled: isBrand,
     },
     {
       required: true,

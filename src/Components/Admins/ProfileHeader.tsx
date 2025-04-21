@@ -58,6 +58,7 @@ interface ProfileHeaderProps {
   handleDelete?: () => void;
   disableDeleteButton?: boolean;
   hideButtons?: boolean;
+  hideDeleteButton?: boolean;
   isSquarish?: boolean;
   tooltipText?: string;
 }
@@ -69,6 +70,7 @@ const ProfileHeader = ({
   handleDelete,
   disableDeleteButton,
   hideButtons,
+  hideDeleteButton,
   isSquarish,
   tooltipText = "You cannot delete brands those have generated ads",
 }: ProfileHeaderProps) => {
@@ -129,25 +131,27 @@ const ProfileHeader = ({
             className='animated-block'
             sx={{ animationDelay: `${5 / 21}s` }}
             display='grid'
-            gridTemplateColumns='1fr 1fr'
+            gridTemplateColumns={hideDeleteButton ? "1fr" : "1fr 1fr"}
             gap={8}
             mt={12}
           >
             <CustomButton variant='outlined' onClick={handleEdit}>
               Edit
             </CustomButton>
-            <Tooltip arrow title={disableDeleteButton ? tooltipText : ""}>
-              <span>
-                <CustomButton
-                  disabled={disableDeleteButton}
-                  color='error'
-                  variant='outlined'
-                  onClick={handleDelete}
-                >
-                  Delete
-                </CustomButton>
-              </span>
-            </Tooltip>
+            {!hideDeleteButton && (
+              <Tooltip arrow title={disableDeleteButton ? tooltipText : ""}>
+                <span>
+                  <CustomButton
+                    disabled={disableDeleteButton}
+                    color='error'
+                    variant='outlined'
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </CustomButton>
+                </span>
+              </Tooltip>
+            )}
           </Box>
         )}
       </Box>

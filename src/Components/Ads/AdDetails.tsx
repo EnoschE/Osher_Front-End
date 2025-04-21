@@ -5,7 +5,10 @@ import { allRoutes } from "../../Routes/AllRoutes";
 import DeleteDialog from "../Customers/DeleteDialog";
 import ProfileHeader from "../Admins/ProfileHeader";
 import { toast } from "react-toastify";
-import { isSuperAdminLoggedIn } from "../../Services/userService";
+import {
+  isBrandLoggedIn,
+  isSuperAdminLoggedIn,
+} from "../../Services/userService";
 import { deleteAd, getAdById } from "../../Services/adsService";
 import PageDetailsBlock from "../Common/PageDetailsBlock";
 import { PageDetailsField } from "../../Utils/types";
@@ -15,6 +18,7 @@ import moment from "moment";
 const AdDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const isBrand = isBrandLoggedIn();
 
   const [data, setData] = useState<any>({});
   const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
@@ -70,7 +74,9 @@ const AdDetails = () => {
           name={data?.brandName}
           picture={data?.brandPicture}
           onClick={() =>
-            navigate(allRoutes.VIEW_BRAND.replace(":id", data.brandId))
+            isBrand
+              ? navigate(allRoutes.MY_PROFILE)
+              : navigate(allRoutes.VIEW_BRAND.replace(":id", data.brandId))
           }
         />
       ),
@@ -87,7 +93,7 @@ const AdDetails = () => {
         userType='Ad'
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
-        hideButtons={!isSuperAdminLoggedIn()}
+        // hideButtons={!isSuperAdminLoggedIn()}
       />
 
       <PageDetailsBlock data={data} fields={fields} />

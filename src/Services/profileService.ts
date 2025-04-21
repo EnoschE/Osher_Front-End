@@ -79,7 +79,7 @@ export const getGoogleProfile = async (accessToken: string) => {
 };
 
 const getUserObjectForRedux = (user: any) => ({
-  id: user?._id,
+  _id: user?._id,
   address: user?.address,
   name: user?.name,
   email: user?.email,
