@@ -35,6 +35,7 @@ const defaultData = {
   name: "",
   email: "",
   phone: "",
+  picture: "",
   password: "",
   newPassword: "",
 };
@@ -77,6 +78,7 @@ const EditInfluencer = () => {
 
   const handleOnChange = ({ name, value }: FormOnChange) => {
     setData((state) => ({ ...state, [name]: value }));
+
     setErrors((state) => ({
       ...state,
       [name]:
@@ -162,7 +164,7 @@ const EditInfluencer = () => {
     {
       label: "Influencer Photo",
       placeholder: "This will be displayed on the profile of Influencer",
-      name: "profilePicture",
+      name: "picture",
       type: "image",
       value: data.picture,
       onChange: handleOnChange,

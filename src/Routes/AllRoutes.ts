@@ -1,5 +1,9 @@
 export const allRoutes = {
   HOME: "/",
+  LOGIN: "/login",
+  SIGN_UP: "/register",
+  RESET_PASSWORD: "/reset-password/:userId?/:token?",
+  VERIFY_EMAIL: "/auth/verify-email/:userId?/:token?",
   ACCOUNT_SETTINGS: "/account-settings",
   MY_PROFILE: "/my-profile",
   DASHBOARD: "/dashboard",
@@ -84,10 +88,7 @@ export const allRoutes = {
 
   ESTIMATE: "/estimate",
   SOLAR_REPORT: "/solar-report",
-  LOGIN: "/login",
-  SIGN_UP: "/register",
-  RESET_PASSWORD: "/reset-password/:userId?/:token?",
-  VERIFY_EMAIL: "/auth/verify-email/:userId?/:token?",
+  
   WHY_US: "/why-us",
   PROPOSAL_ACCEPTANCE: "/scheduling/proposal-acceptance",
   SITE_SURVEY: "/scheduling/site-survey",

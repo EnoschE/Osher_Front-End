@@ -5,7 +5,11 @@ import { allRoutes } from "../../Routes/AllRoutes";
 import DeleteDialog from "../Customers/DeleteDialog";
 import ProfileHeader from "../Admins/ProfileHeader";
 import { toast } from "react-toastify";
-import { isSuperAdminLoggedIn } from "../../Services/userService";
+import {
+  isBrandLoggedIn,
+  isSuperAdminLoggedIn,
+  isUserLoggedIn,
+} from "../../Services/userService";
 import PageDetailsBlock from "../Common/PageDetailsBlock";
 import {
   getInfluencerById,
@@ -18,6 +22,8 @@ import { commonPostsTableHeaders } from "../Posts/Posts";
 const InfluencerDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const isBrand = isBrandLoggedIn();
+  const isLoggedIn = isUserLoggedIn();
 
   const [data, setData] = useState<any>({});
   const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
@@ -75,7 +81,11 @@ const InfluencerDetails = () => {
   const headers = commonPostsTableHeaders;
 
   return (
-    <PageLayout loading={loading}>
+    <PageLayout
+      loading={loading}
+      hideBackButton={!isLoggedIn}
+      hideSidebar={!isLoggedIn}
+    >
       <ProfileHeader
         data={data}
         userType='Influencer'

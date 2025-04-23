@@ -12,26 +12,33 @@ export const LoginContainer = styled(Box)(({ theme }) => ({
   height: `calc(100vh - ${navbarHeight}px)`,
 
   backgroundImage: `radial-gradient(
-    circle 35vw at 105% 55%,
+    circle 35vw at 105% 45%,
    ${colors.primary}40 0.2%,
    #ffffff00 100.2%
    ), radial-gradient(
-    circle 40vw at 10.6% 105%,
+    circle 40vw at 10.6% 25%,
     ${colors.primary}40 0.2%,
     #fff 100.2%
     )`,
-  // rgb(53, 178, 255, 0.25) 0.2%,
-  //   rgb(255, 53, 184, 0.1) 0.2%,
+
+    // backgroundImage: `radial-gradient(
+  //   circle 35vw at 105% 55%,
+  //  ${colors.primary}40 0.2%,
+  //  #ffffff00 100.2%
+  //  ), radial-gradient(
+  //   circle 40vw at 10.6% 105%,
+  //   ${colors.primary}40 0.2%,
+  //   #fff 100.2%
+  //   )`,
 
   [theme.breakpoints.down("md")]: {
     gridTemplateColumns: "1fr",
   },
 }));
 
-export const LoginLeftBlock = styled(Box)(({ theme }) => ({
+export const LoginInnerBlock = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-
   maxWidth: 390,
   width: "100%",
 

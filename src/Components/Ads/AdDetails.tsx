@@ -14,11 +14,14 @@ import PageDetailsBlock from "../Common/PageDetailsBlock";
 import { PageDetailsField } from "../../Utils/types";
 import AvatarWithName from "../Common/AvatarWithName";
 import moment from "moment";
+import { useSelector } from "../../Redux/reduxHooks";
+import { selectUser } from "../../Redux/Slices/userSlice";
 
 const AdDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isBrand = isBrandLoggedIn();
+  const user = useSelector(selectUser);
 
   const [data, setData] = useState<any>({});
   const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
@@ -74,7 +77,7 @@ const AdDetails = () => {
           name={data?.brandName}
           picture={data?.brandPicture}
           onClick={() =>
-            isBrand
+            isBrand && data?.brandId === user?._id
               ? navigate(allRoutes.MY_PROFILE)
               : navigate(allRoutes.VIEW_BRAND.replace(":id", data.brandId))
           }
@@ -93,7 +96,9 @@ const AdDetails = () => {
         userType='Ad'
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
-        // hideButtons={!isSuperAdminLoggedIn()}
+        hideButtons={
+          !(isSuperAdminLoggedIn() || (isBrand && data?.brandId === user?._id))
+        }
       />
 
       <PageDetailsBlock data={data} fields={fields} />

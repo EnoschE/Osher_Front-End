@@ -15,6 +15,7 @@ import { commonPostsTableHeaders } from "../Posts/Posts";
 import { useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
 import { getAdsOfBrand } from "../../Services/adsService";
+import { commonAdsTableHeaders } from "../Ads/Ads";
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const MyProfile = () => {
     { text: "Phone Number", key: "phone" },
   ];
 
-  const headers = commonPostsTableHeaders;
+  const headers = isBrand ? commonAdsTableHeaders : commonPostsTableHeaders;
 
   return (
     <PageLayout loading={loading} hideBackButton>

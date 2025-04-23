@@ -10,6 +10,7 @@ import { FormOnChange } from "../../Utils/types";
 import { editAd, getAdById } from "../../Services/adsService";
 import { selectCategories } from "../../Redux/Slices/categoriesSlice";
 import { isBrandLoggedIn } from "../../Services/userService";
+import { selectUser } from "../../Redux/Slices/userSlice";
 
 interface AdState {
   _id: string;
@@ -36,32 +37,12 @@ const EditAd = () => {
   const navigate = useNavigate();
   const categories = useSelector(selectCategories);
   const isBrand = isBrandLoggedIn();
+  const user = useSelector(selectUser);
 
   const [data, setData] = useState<AdState>(defaultData);
   const [errors, setErrors] = useState<AdState>(defaultData);
   const [loading, setLoading] = useState<boolean>(false);
   const [brands, setBrands] = useState<Array<any>>([]);
-
-  useEffect(() => {
-    const fetchBrands = async () => {
-      setLoading(true);
-      try {
-        const response: any = await getAllBrands();
-        setBrands(
-          response?.map((item: any) => ({
-            value: item._id,
-            text: item.name,
-            picture: item.picture,
-          })) || []
-        );
-      } catch (error) {
-        toast.error("Failed to fetch brands"); // TODO: move these to redux as well
-      }
-      setLoading(false);
-    };
-
-    fetchBrands();
-  }, []);
 
   useEffect(() => {
     getDetails();
@@ -74,6 +55,20 @@ const EditAd = () => {
     try {
       const adData: any = await getAdById((id || "")?.toString());
       setData(adData);
+      if (isBrand && adData.brandId !== user._id) {
+        toast.error("You are not allowed to edit this ad");
+        navigate(allRoutes.ADS);
+        return;
+      }
+
+      const response: any = await getAllBrands();
+      setBrands(
+        response?.map((item: any) => ({
+          value: item._id,
+          text: item.name,
+          picture: item.picture,
+        })) || []
+      );
     } catch (error: any) {
       toast.error(error);
     }

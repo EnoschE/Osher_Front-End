@@ -1,38 +1,39 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { LoginContainer, LoginInnerBlock } from "../Login/loginStyles";
+import { Box } from "@mui/material";
+import CustomButton from "../Common/CustomButton";
+import PageLayout from "../PageLayout/PageLayout";
+import { HomeImage } from "../../Utils/Images";
 import { allRoutes } from "../../Routes/AllRoutes";
-import { HomeContainer, HomeButton } from "./homeStyles";
-import { useEffect, useState } from "react";
-import VerifyEmailDialog from "../SignUp/VerifyEmailDialog";
 
 const Home = () => {
-	const navigate = useNavigate();
-	const { state }: any = useLocation();
-	const newAccountCreated = state?.newAccountCreated;
+  const navigate = useNavigate();
 
-	const [verificationDialog, setVerificationDialog] = useState<boolean>(false);
+  const goToFeed = () => navigate(allRoutes.FEED);
 
-	useEffect(() => {
-		if (newAccountCreated) {
-			openVerificationDialog();
-		}
-	}, []);
-
-	const handleStart = () => {
-		navigate(allRoutes.ESTIMATE);
-	};
-
-	const openVerificationDialog = () => setVerificationDialog(true);
-	const closeVerificationDialog = () => {
-		navigate(allRoutes.HOME);
-		setVerificationDialog(false);
-	};
-
-	return (
-		<HomeContainer>
-			<HomeButton onClick={handleStart}>START YOUR JOURNEY</HomeButton>
-			<VerifyEmailDialog open={verificationDialog} onClose={closeVerificationDialog} />
-		</HomeContainer>
-	);
+  return (
+    <PageLayout hideSidebar hideBackButton sx={{ p: 0 }}>
+      <LoginContainer>
+        <LoginInnerBlock gap={50}>
+          <Box
+            className='pop-out-animation'
+            component='img'
+            src={HomeImage}
+            alt='Home'
+          />
+          <CustomButton
+            type='submit'
+            fullWidth
+            className='slide-down-bounce'
+            sx={{ animationDelay: `0.2s` }}
+						onClick={goToFeed}
+          >
+            Continue
+          </CustomButton>
+        </LoginInnerBlock>
+      </LoginContainer>
+    </PageLayout>
+  );
 };
 
 export default Home;

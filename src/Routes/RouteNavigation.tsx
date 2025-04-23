@@ -3,7 +3,7 @@ import Login from "../Components/Login/Login";
 import { PrivateRoute } from "./PrivateRoutes";
 import { PublicRoute } from "./PublicRoutes";
 import AccountSettings from "../Components/AccountSettings/AccountSettings";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   isAdminManagerLoggedIn,
   isBrandLoggedIn,
@@ -86,11 +86,13 @@ import EditPost from "../Components/Posts/EditPost";
 import PostDetails from "../Components/Posts/PostDetails";
 import Feed from "../Components/Feed/Feed";
 import MyProfile from "../Components/MyProfile/MyProfile";
+import Home from "../Components/Home/Home";
 
 interface RouteWithComponent {
   path: string;
   Component: React.FC;
   isPrivate?: boolean;
+  isBoth?: boolean;
   accessTo?: {
     superAdmin?: boolean;
     brand?: boolean;
@@ -103,7 +105,8 @@ interface RouteWithComponent {
 }
 
 const routesWithComponents = {
-  HOME: { path: allRoutes.HOME, Component: Login },
+  HOME: { path: allRoutes.HOME, Component: Home },
+  LOGIN: { path: allRoutes.LOGIN, Component: Login },
   RESET_PASSWORD: { path: allRoutes.RESET_PASSWORD, Component: ResetPassword },
   DASHBOARD: {
     path: allRoutes.DASHBOARD,
@@ -113,7 +116,8 @@ const routesWithComponents = {
   FEED: {
     path: allRoutes.FEED,
     Component: Feed,
-    isPrivate: true,
+    // isPrivate: true,
+    isBoth: true,
   },
   CATEGORIES: {
     path: allRoutes.CATEGORIES,
@@ -154,6 +158,7 @@ const routesWithComponents = {
     isPrivate: true,
     accessTo: {
       superAdmin: true, // TODO: replace it with admin
+      brand: true, // TODO: replace it with admin
     },
   },
 
@@ -184,10 +189,13 @@ const routesWithComponents = {
   VIEW_INFLUENCER: {
     path: allRoutes.VIEW_INFLUENCER,
     Component: InfluencerDetails,
-    isPrivate: true,
-    accessTo: {
-      superAdmin: true, // TODO: replace it with admin
-    },
+    isBoth: true,
+    // isPrivate: true,
+    // accessTo: {
+    //   superAdmin: true, // TODO: replace it with admin
+    //   brand: true, // TODO: replace it with admin
+    //   influencer: true, // TODO: replace it with admin
+    // },
   },
 
   ADS: {
@@ -257,11 +265,13 @@ const routesWithComponents = {
   VIEW_POST: {
     path: allRoutes.VIEW_POST,
     Component: PostDetails,
-    isPrivate: true,
-    accessTo: {
-      superAdmin: true,
-      influencer: true,
-    },
+    isBoth: true, 
+    // isPrivate: true,
+    // accessTo: {
+    //   superAdmin: true,
+    //   influencer: true,
+    //   brand: true,
+    // },
   },
 
   LOGS: { path: allRoutes.LOGS, Component: Logs, isPrivate: true },
@@ -792,7 +802,11 @@ const RouteNavigation = () => {
       <Loader open={loading} />
       <Routes>
         {renderingRoutes.map((item: RouteWithComponent) => {
-          const ComponentWrapper = item.isPrivate ? PrivateRoute : PublicRoute;
+          const ComponentWrapper = item.isBoth
+            ? React.Fragment
+            : item.isPrivate
+            ? PrivateRoute
+            : PublicRoute;
 
           return (
             <Route

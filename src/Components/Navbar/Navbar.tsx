@@ -80,7 +80,8 @@ const Navbar = ({
       position='fixed'
       sx={{
         zIndex: 30,
-        borderBottom: `1px solid ${colors.border}`,
+        borderTop: `1px solid ${colors.border}`,
+        // borderBottom: `1px solid ${colors.border}`,
         color: colors.text,
         ...(navbarForNonProtectedRoutes
           ? {}

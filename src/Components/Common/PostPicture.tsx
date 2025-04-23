@@ -5,10 +5,11 @@ import { borderRadius } from "../../Utils/spacings";
 
 interface PostPictureProps {
   src?: string;
+  onClick?: () => void;
   sx?: SxProps;
 }
 
-const PostPicture = ({ src, sx, ...props }: PostPictureProps) => {
+const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
   const [loaded, setLoaded] = useState(false);
   const [inView, setInView] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -47,8 +48,10 @@ const PostPicture = ({ src, sx, ...props }: PostPictureProps) => {
         borderRadius: borderRadius.xl,
         // boxShadow: "rgba(168, 81, 0, 0.15) 0px 65px 50px -30px",
         boxShadow: `rgba(23, 58, 90, 0.25) 0px 50px 50px -10px`,
+        cursor: onClick ? "pointer" : "default",
         ...sx,
       }}
+      onClick={onClick}
     >
       {inView && (
         <Box

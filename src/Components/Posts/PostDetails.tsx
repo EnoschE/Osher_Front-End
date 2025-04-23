@@ -8,16 +8,21 @@ import { toast } from "react-toastify";
 import {
   isInfluencerLoggedIn,
   isSuperAdminLoggedIn,
+  isUserLoggedIn,
 } from "../../Services/userService";
 import PageDetailsBlock from "../Common/PageDetailsBlock";
 import { PageDetailsField } from "../../Utils/types";
 import AvatarWithName from "../Common/AvatarWithName";
 import { deletePost, getPostById } from "../../Services/postsService";
+import { useSelector } from "../../Redux/reduxHooks";
+import { selectUser } from "../../Redux/Slices/userSlice";
 
 const PostDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isInfluencer = isInfluencerLoggedIn();
+  const user = useSelector(selectUser);
+  const isLoggedIn = isUserLoggedIn();
 
   const [data, setData] = useState<any>({});
   const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
@@ -72,7 +77,7 @@ const PostDetails = () => {
           name={data?.userName}
           picture={data?.userPicture}
           onClick={() =>
-            isInfluencer
+            isInfluencer && data?.userId === user?._id
               ? navigate(allRoutes.MY_PROFILE)
               : navigate(allRoutes.VIEW_INFLUENCER.replace(":id", data.userId))
           }
@@ -83,14 +88,19 @@ const PostDetails = () => {
   ];
 
   return (
-    <PageLayout loading={loading}>
+    <PageLayout loading={loading} hideBackButton={!isLoggedIn} hideSidebar={!isLoggedIn}>
       <ProfileHeader
         isSquarish
         data={data}
         userType='Post'
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
-        // hideButtons={!isSuperAdminLoggedIn()}
+        hideButtons={
+          !(
+            isSuperAdminLoggedIn() ||
+            (isInfluencer && data?.userId === user?._id)
+          )
+        }
       />
 
       <PageDetailsBlock data={data} fields={fields} />

@@ -8,12 +8,14 @@ interface CustomAvatarProps {
   isSquarish?: boolean;
   size?: "xs" | "sm" | "lg";
   sx?: SxProps;
+  showLoader?: boolean;
 }
 
 const CustomAvatar = ({
   src,
   isSquarish,
   sx,
+  showLoader,
   size = "sm",
   ...props
 }: CustomAvatarProps) => {
@@ -52,7 +54,7 @@ const CustomAvatar = ({
           height: sizeMap[size],
           minWidth: sizeMap[size],
           minHeight: sizeMap[size],
-          display: loading ? "block" : "none",
+          display: loading || showLoader ? "block" : "none",
           borderRadius: radius,
         }}
         animation='wave'

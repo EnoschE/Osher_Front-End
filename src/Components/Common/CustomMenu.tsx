@@ -87,8 +87,8 @@ const CustomMenu = ({
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "bottom", horizontal: "right" }}
         BackdropProps={{
           style: { backdropFilter: "unset", backgroundColor: "unset" },
         }}

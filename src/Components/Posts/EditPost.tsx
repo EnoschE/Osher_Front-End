@@ -8,6 +8,8 @@ import { FormOnChange } from "../../Utils/types";
 import { getAllInfluencers } from "../../Services/influencersService";
 import { editPost, getPostById } from "../../Services/postsService";
 import { isInfluencerLoggedIn } from "../../Services/userService";
+import { useSelector } from "../../Redux/reduxHooks";
+import { selectUser } from "../../Redux/Slices/userSlice";
 
 interface PostState {
   _id: string;
@@ -29,32 +31,12 @@ const EditPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isInfluencer = isInfluencerLoggedIn();
+  const user = useSelector(selectUser);
 
   const [data, setData] = useState<PostState>(defaultData);
   const [errors, setErrors] = useState<PostState>(defaultData);
   const [loading, setLoading] = useState<boolean>(false);
   const [users, setUsers] = useState<Array<any>>([]);
-
-  useEffect(() => {
-    const fetchInfluencers = async () => {
-      setLoading(true);
-      try {
-        const response: any = await getAllInfluencers();
-        setUsers(
-          response?.map((item: any) => ({
-            value: item._id,
-            text: item.name,
-            picture: item.picture,
-          })) || []
-        );
-      } catch (error) {
-        toast.error("Failed to fetch influencers");
-      }
-      setLoading(false);
-    };
-
-    fetchInfluencers();
-  }, []);
 
   useEffect(() => {
     getDetails();
@@ -65,8 +47,23 @@ const EditPost = () => {
 
     setLoading(true);
     try {
-      const adData: any = await getPostById((id || "")?.toString());
-      setData(adData);
+      const postData: any = await getPostById((id || "")?.toString());
+      setData(postData);
+
+      if (isInfluencer && postData.userId !== user._id) {
+        toast.error("You are not allowed to edit this post");
+        navigate(allRoutes.POSTS);
+        return;
+      }
+
+      const response: any = await getAllInfluencers();
+      setUsers(
+        response?.map((item: any) => ({
+          value: item._id,
+          text: item.name,
+          picture: item.picture,
+        })) || []
+      );
     } catch (error: any) {
       toast.error(error);
     }

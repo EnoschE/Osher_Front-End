@@ -1,21 +1,18 @@
 import React, { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { allRoutes } from "../../Routes/AllRoutes";
-import Navbar from "../Navbar/Navbar";
-import { LoginContainer, LoginLeftBlock } from "./loginStyles";
+import { LoginContainer, LoginInnerBlock } from "./loginStyles";
 import { Box, Theme, Typography, useMediaQuery } from "@mui/material";
 import CustomTextField from "../Common/CustomTextField";
 import * as EmailValidator from "email-validator";
 import { toast } from "react-toastify";
 import { loginUser } from "../../Services/userService";
-import Loader from "../Common/Loader";
 import CustomButton from "../Common/CustomButton";
 import { useDispatch } from "../../Redux/reduxHooks";
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import { getProfile } from "../../Services/profileService";
-import { navbarHeight } from "../../Utils/spacings";
 import AnimatedHeading from "../Common/AnimatedHeading";
-import { fetchDashboardData } from "../../Redux/Slices/dashboardSlice";
+import PageLayout from "../PageLayout/PageLayout";
 
 interface DataProps {
   email: string;
@@ -95,11 +92,9 @@ const Login = () => {
   const closeForgotPasswordDialog = () => setForgotPasswordDialog(false);
 
   return (
-    <>
-      <Loader open={loading} />
-      <Navbar navbarForNonProtectedRoutes hideBackButton />
-      <LoginContainer mt={navbarHeight}>
-        <LoginLeftBlock>
+    <PageLayout loading={loading} hideSidebar hideBackButton sx={{ p: 0 }}>
+      <LoginContainer>
+        <LoginInnerBlock>
           <AnimatedHeading
             heading='Sign in'
             variant={isMobileView ? "h3" : "h2"}
@@ -163,14 +158,14 @@ const Login = () => {
 							Create an Account
 						</span>
 					</Typography> */}
-        </LoginLeftBlock>
+        </LoginInnerBlock>
       </LoginContainer>
 
       <ForgotPasswordDialog
         open={forgotPasswordDialog}
         onClose={closeForgotPasswordDialog}
       />
-    </>
+    </PageLayout>
   );
 };
 

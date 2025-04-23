@@ -26,7 +26,7 @@ const PageDetailsBlock = ({
         {fields?.map((field: PageDetailsField) => (
           <React.Fragment key={field.key}>
             <Typography variant='h6'>{field.text}</Typography>
-            <Typography>
+            <Typography component={field.customComponent ? "span" : "p"}>
               {!!field?.customComponent
                 ? field?.customComponent
                 : field.type === "date"

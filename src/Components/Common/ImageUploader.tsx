@@ -29,12 +29,13 @@ const ImageUploader = ({
     const selectedImage = event.target.files[0];
 
     if (!selectedImage) return;
-    if (selectedImage?.size > 1572864) {
-      // Max image size set to 1.5MB, 1,048,576 * 1.5 = 1,572,864 Bytes
+    if (selectedImage?.size > 2572864) {
+      // Max image size set to 2.5MB, 1,048,576 * 1.5 = 1,572,864 Bytes
       // 1MB = 1,048,576 Bytes
       toast.error(
         "The selected image exceeds the maximum allowed size. Please choose a smaller image file."
       );
+      // TODO: URGENT working loading screens of post,ad,profiles, etc like feed card skeleton
     } else {
       onUpdate(selectedImage);
     }
