@@ -1,4 +1,11 @@
-import { Avatar, Box, Tooltip, Typography, keyframes } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Skeleton,
+  Tooltip,
+  Typography,
+  keyframes,
+} from "@mui/material";
 import CustomButton from "../Common/CustomButton";
 // import CustomMarquee from "../Common/CustomMarquee";
 import { roles } from "../../Utils/tokenKeyValue";
@@ -7,6 +14,7 @@ import { selectColors } from "../../Redux/Slices/generalSlice";
 import CustomMarquee from "../Common/CustomMarquee";
 import AnimatedHeading from "../Common/AnimatedHeading";
 import CustomAvatar from "../Common/CustomAvatar";
+import { borderRadius } from "../../Utils/spacings";
 
 // const fadeUp = keyframes`
 //   0% {
@@ -60,6 +68,7 @@ interface ProfileHeaderProps {
   hideButtons?: boolean;
   hideDeleteButton?: boolean;
   isSquarish?: boolean;
+  isLoading?: boolean;
   tooltipText?: string;
 }
 
@@ -72,6 +81,7 @@ const ProfileHeader = ({
   hideButtons,
   hideDeleteButton,
   isSquarish,
+  isLoading,
   tooltipText = "You cannot delete brands those have generated ads",
 }: ProfileHeaderProps) => {
   return (
@@ -82,14 +92,15 @@ const ProfileHeader = ({
 
       <Box display='flex' alignItems='center' gap={8} flexDirection='column'>
         <Box
-          // className='animated-block'
-          sx={{ animationDelay: `${2 / 21}s` }}
+        // className='animated-block'
+        // sx={{ animationDelay: `${2 / 21}s` }}
         >
           <CustomAvatar
             isSquarish={isSquarish}
             size='lg'
             sx={{ mt: "-30px", mb: 10, filter: "blur(15px)", opacity: 0.7 }}
             src={data?.picture}
+            showLoader={isLoading}
           />
 
           <CustomAvatar
@@ -97,16 +108,27 @@ const ProfileHeader = ({
             size='lg'
             sx={{ mt: "-160px", mb: 10 }}
             src={data?.picture}
+            showLoader={isLoading}
           />
         </Box>
 
-        <AnimatedHeading
-          className='animated-block'
-          heading={data?.name}
-          charactersBaseAnimation
-          animationSpeed='fast'
-          sx={{ animationDelay: `${3 / 21}s` }}
-        />
+        <Box className='animated-block' sx={{ animationDelay: `${3 / 21}s` }}>
+          {isLoading ? (
+            <Skeleton
+              sx={{
+                width: { xs: 200, sm: 230 },
+                height: { xs: 45, sm: 71 },
+                borderRadius: borderRadius.sm,
+              }}
+            />
+          ) : (
+            <AnimatedHeading
+              heading={data?.name}
+              charactersBaseAnimation
+              animationSpeed='fast'
+            />
+          )}
+        </Box>
 
         {/* <Typography
           variant='h1'
@@ -135,14 +157,18 @@ const ProfileHeader = ({
             gap={8}
             mt={12}
           >
-            <CustomButton variant='outlined' onClick={handleEdit}>
+            <CustomButton
+              disabled={isLoading}
+              variant='outlined'
+              onClick={handleEdit}
+            >
               Edit
             </CustomButton>
             {!hideDeleteButton && (
               <Tooltip arrow title={disableDeleteButton ? tooltipText : ""}>
                 <span>
                   <CustomButton
-                    disabled={disableDeleteButton}
+                    disabled={disableDeleteButton || isLoading}
                     color='error'
                     variant='outlined'
                     onClick={handleDelete}

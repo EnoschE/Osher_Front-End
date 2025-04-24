@@ -89,7 +89,7 @@ const AdDetails = () => {
   ];
 
   return (
-    <PageLayout loading={loading}>
+    <PageLayout>
       <ProfileHeader
         isSquarish
         data={data}
@@ -99,9 +99,10 @@ const AdDetails = () => {
         hideButtons={
           !(isSuperAdminLoggedIn() || (isBrand && data?.brandId === user?._id))
         }
+        isLoading={loading}
       />
 
-      <PageDetailsBlock data={data} fields={fields} />
+      <PageDetailsBlock data={data} fields={fields} isLoading={loading} />
 
       <DeleteDialog
         open={deleteDialog}

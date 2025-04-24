@@ -77,8 +77,9 @@ const Influencers = () => {
   };
 
   return (
-    <PageLayout loading={loading} hideBackButton>
+    <PageLayout hideBackButton>
       <TableBlock
+        isLoading={loading}
         heading='Influencers'
         subHeading='These are all the influencers'
         tableData={data}

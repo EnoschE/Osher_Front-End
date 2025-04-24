@@ -62,34 +62,31 @@ const MyProfile = () => {
   const headers = isBrand ? commonAdsTableHeaders : commonPostsTableHeaders;
 
   return (
-    <PageLayout loading={loading} hideBackButton>
+    <PageLayout hideBackButton>
       <ProfileHeader
         data={data}
         userType={isBrand ? "Brand" : isInfluencer ? "Influencer" : "Admin"}
         handleEdit={handleEdit}
         hideDeleteButton
+        isLoading={loading}
       />
 
       <PageDetailsBlock
         data={data}
         fields={fields}
         showBottomDivider={isInfluencer || isBrand}
+        isLoading={loading}
       />
 
       {(isBrand || isInfluencer) && (
         <TableBlock
-          heading={`${isBrand ? "Ads" : "Posts"} of ${
-            data?.name || (isBrand ? "Brand" : "Influencer")
-          }`}
-          subHeading={`These are all the ${
-            isBrand ? "ads" : "posts"
-          } of ${data?.name}`}
+          heading={`My ${isBrand ? "Ads" : "Posts"}`}
+          subHeading={`These are all my ${isBrand ? "ads" : "posts"}`}
           tableData={items}
           tableHeaders={headers}
-          emptyStateMessage={`There are no ${
-            isBrand ? "ads" : "posts"
-          } by ${data?.name}`}
+          emptyStateMessage={`There are no ${isBrand ? "ads" : "posts"} by me`}
           detailsPagePath={isBrand ? allRoutes.VIEW_AD : allRoutes.VIEW_POST}
+          isLoading={loading}
         />
       )}
     </PageLayout>

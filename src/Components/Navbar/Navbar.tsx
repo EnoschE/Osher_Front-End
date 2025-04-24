@@ -1,11 +1,12 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { IconButton } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
 import {
   LogoutOutlined,
   SettingsOutlined,
   Menu,
   KeyboardArrowLeftOutlined,
+  AccountCircleOutlined,
 } from "@mui/icons-material";
 import { StyledAppBar, StyledMenuBlock } from "./navbarStyles";
 import CustomMenu from "../Common/CustomMenu";
@@ -112,7 +113,7 @@ const Navbar = ({
             display: navbarForNonProtectedRoutes
               ? "inline-block"
               : { sm: "none" },
-            height: "50px",
+            height: "45px",
           }}
           onClick={handleLogoClick}
         />
@@ -145,20 +146,21 @@ const Navbar = ({
 					<Typography display={{ xs: "none", sm: "inline-block" }}>US</Typography>
 				</Box> */}
 
-        {isUserLoggedIn() && (
+        {isUserLoggedIn() ? (
           <CustomMenu
             anchorComponent={(props: any) => (
               <CustomAvatar
-                sx={{
-                  // ml: 8,
-                  cursor: "pointer",
-                }}
+                sx={{ cursor: "pointer" }}
                 src={user.picture}
                 {...props}
               />
             )}
             options={menuOptions}
           />
+        ) : (
+          <IconButton sx={{ p: 0 }} onClick={() => navigate(allRoutes.LOGIN)}>
+            <Avatar sx={{ width: 40, height: 40 }} />
+          </IconButton>
         )}
       </StyledMenuBlock>
     </StyledAppBar>

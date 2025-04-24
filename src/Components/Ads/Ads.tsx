@@ -90,8 +90,9 @@ const Ads = () => {
   };
 
   return (
-    <PageLayout loading={loading} hideBackButton>
+    <PageLayout hideBackButton>
       <TableBlock
+        isLoading={loading}
         heading='Ads'
         subHeading='These are all the ads'
         tableData={data}

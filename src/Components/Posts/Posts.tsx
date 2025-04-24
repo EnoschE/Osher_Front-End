@@ -73,6 +73,7 @@ const Posts = () => {
     setLoading(true);
     try {
       const data: any = await getAllPosts();
+
       setData(data);
     } catch (error: any) {
       toast.error(error);
@@ -81,8 +82,9 @@ const Posts = () => {
   };
 
   return (
-    <PageLayout loading={loading} hideBackButton>
+    <PageLayout hideBackButton>
       <TableBlock
+        isLoading={loading}
         heading='Posts'
         subHeading='These are all the posts'
         tableData={data}

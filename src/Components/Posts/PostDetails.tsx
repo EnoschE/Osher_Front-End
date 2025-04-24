@@ -88,7 +88,7 @@ const PostDetails = () => {
   ];
 
   return (
-    <PageLayout loading={loading} hideBackButton={!isLoggedIn} hideSidebar={!isLoggedIn}>
+    <PageLayout hideBackButton={!isLoggedIn} hideSidebar={!isLoggedIn}>
       <ProfileHeader
         isSquarish
         data={data}
@@ -101,9 +101,10 @@ const PostDetails = () => {
             (isInfluencer && data?.userId === user?._id)
           )
         }
+        isLoading={loading}
       />
 
-      <PageDetailsBlock data={data} fields={fields} />
+      <PageDetailsBlock data={data} fields={fields} isLoading={loading} />
 
       <DeleteDialog
         open={deleteDialog}

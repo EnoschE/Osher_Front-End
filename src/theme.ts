@@ -134,7 +134,7 @@ const createAppTheme = () => {
             },
 
             "&.MuiInputBase-root": {
-              backgroundColor: "white",
+              backgroundColor: "transparent",
               "&:has(> input), &:has(input)": {
                 height: 40,
               },

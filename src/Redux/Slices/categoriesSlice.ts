@@ -9,10 +9,12 @@ export interface CategoryInterface {
 }
 
 export interface CategoriesSlice {
+  loading: boolean;
   categories: CategoryInterface[];
 }
 
 const initialState: CategoriesSlice = {
+  loading: true,
   categories: [],
 };
 
@@ -44,9 +46,11 @@ export const categoriesSlice = createSlice({
         (state, action: PayloadAction<CategoryInterface[]>) => {
           // Action payload is the fetched logo URL
           state.categories = action.payload;
+          state.loading = false;
         }
       )
       .addCase(fetchCategories.rejected, (state, action) => {
+        state.loading = false;
         console.error(action.payload);
       });
   },
@@ -54,5 +58,7 @@ export const categoriesSlice = createSlice({
 
 export const selectCategories = (state: RootState) =>
   state.categories.categories;
+export const selectCategoriesLoading = (state: RootState) =>
+  state.categories.loading;
 
 export default categoriesSlice.reducer;

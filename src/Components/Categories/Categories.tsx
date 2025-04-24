@@ -1,27 +1,21 @@
 import PageLayout from "../PageLayout/PageLayout";
 import TableBlock from "../Common/Table/TableBlock";
 import { useSelector } from "../../Redux/reduxHooks";
-import { selectCategories } from "../../Redux/Slices/categoriesSlice";
-import { Box } from "@mui/material";
-import { borderRadius } from "../../Utils/spacings";
+import {
+  selectCategories,
+  selectCategoriesLoading,
+} from "../../Redux/Slices/categoriesSlice";
 
 const Categories = () => {
   const cats = useSelector(selectCategories);
+  const catsLoading = useSelector(selectCategoriesLoading);
 
-  const tableHeaders = [
-    // {
-    //   text: "ID",
-    //   key: "_id",
-    //   // showEllipses: true,
-    //   // maxWidth: 120,
-    //   sortable: true,
-    // },
-    { text: "Category", key: "name", sortable: true },
-  ];
+  const tableHeaders = [{ text: "Category", key: "name", sortable: true }];
 
   return (
     <PageLayout hideBackButton>
       <TableBlock
+        isLoading={catsLoading}
         heading='Categories'
         subHeading='These are all the categories'
         tableData={cats}

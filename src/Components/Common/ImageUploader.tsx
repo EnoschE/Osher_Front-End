@@ -35,7 +35,6 @@ const ImageUploader = ({
       toast.error(
         "The selected image exceeds the maximum allowed size. Please choose a smaller image file."
       );
-      // TODO: URGENT working loading screens of post,ad,profiles, etc like feed card skeleton
     } else {
       onUpdate(selectedImage);
     }

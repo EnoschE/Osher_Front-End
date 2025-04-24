@@ -5,6 +5,7 @@ import { isUserLoggedIn } from "../../Services/userService";
 
 interface DashboardState {
   ads: number;
+  posts: number;
   brands: number;
   influencers: number;
   loading: boolean;
@@ -12,6 +13,7 @@ interface DashboardState {
 
 const initialState: DashboardState = {
   ads: 0,
+  posts: 0,
   brands: 0,
   influencers: 0,
   loading: true,
@@ -46,6 +48,7 @@ export const dashboardSlice = createSlice({
         fetchDashboardData.fulfilled,
         (state, action: PayloadAction<DashboardState>) => {
           state.ads = action.payload?.ads || 0;
+          state.posts = action.payload?.posts || 0;
           state.brands = action.payload?.brands || 0;
           state.influencers = action.payload?.influencers || 0;
           state.loading = false;

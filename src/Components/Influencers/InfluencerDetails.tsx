@@ -22,7 +22,6 @@ import { commonPostsTableHeaders } from "../Posts/Posts";
 const InfluencerDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isBrand = isBrandLoggedIn();
   const isLoggedIn = isUserLoggedIn();
 
   const [data, setData] = useState<any>({});
@@ -81,29 +80,33 @@ const InfluencerDetails = () => {
   const headers = commonPostsTableHeaders;
 
   return (
-    <PageLayout
-      loading={loading}
-      hideBackButton={!isLoggedIn}
-      hideSidebar={!isLoggedIn}
-    >
+    <PageLayout hideBackButton={!isLoggedIn} hideSidebar={!isLoggedIn}>
       <ProfileHeader
         data={data}
         userType='Influencer'
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
-        // disableDeleteButton={!!ads?.length}
         hideButtons={!isSuperAdminLoggedIn()}
+        isLoading={loading}
       />
 
-      <PageDetailsBlock data={data} fields={fields} showBottomDivider />
+      <PageDetailsBlock
+        data={data}
+        fields={fields}
+        showBottomDivider
+        isLoading={loading}
+      />
 
       <TableBlock
         heading={`Posts of ${data?.name || "Influencer"}`}
-        subHeading={`These are all the posts of ${data?.name}`}
+        subHeading={`These are all the posts of ${data?.name || "Influencer"}`}
         tableData={ads}
         tableHeaders={headers}
-        emptyStateMessage={`There are no posts by ${data?.name}`}
+        emptyStateMessage={`There are no posts by ${
+          data?.name || "Influencer"
+        }`}
         detailsPagePath={allRoutes.VIEW_POST}
+        isLoading={loading}
       />
 
       <DeleteDialog

@@ -109,6 +109,7 @@ const AccountSettings = () => {
       //   openOtpDialog();
       // } else {
       toast.success("Profile updated successfully!");
+      navigate(allRoutes.MY_PROFILE);
       // }
     } catch (error: any) {
       if (error.includes("Incorrect current password")) {

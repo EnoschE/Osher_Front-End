@@ -79,8 +79,9 @@ const Brands = () => {
   };
 
   return (
-    <PageLayout loading={loading} hideBackButton>
+    <PageLayout hideBackButton>
       <TableBlock
+        isLoading={loading}
         heading='Brands'
         subHeading='These are all the brands'
         tableData={data}

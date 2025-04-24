@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useSelector } from "../../../Redux/reduxHooks";
 import { selectColors } from "../../../Redux/Slices/generalSlice";
 
@@ -6,14 +6,28 @@ import { borderRadius } from "../../../Utils/spacings";
 
 interface PlaceholderForEmptyTableProps {
   message?: string;
+  isLoading?: boolean;
 }
 
 const PlaceholderForEmptyTable = ({
   message,
+  isLoading,
 }: PlaceholderForEmptyTableProps) => {
   const colors = useSelector(selectColors);
 
-  return (
+  return isLoading ? (
+    <Box display='flex' flexDirection='column' gap={5}>
+      {[...Array(5)].map((_, index) => (
+        <Skeleton
+          key={index}
+          variant='rectangular'
+          height={30}
+          width={"100%"}
+          sx={{ borderRadius: borderRadius.sm }}
+        />
+      ))}
+    </Box>
+  ) : (
     <Box
       p='60px 20px'
       display='flex'

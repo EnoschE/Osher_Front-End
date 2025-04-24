@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import PageLayout from "../PageLayout/PageLayout";
 import { useDispatch, useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
@@ -12,21 +12,35 @@ import {
   fetchDashboardData,
   selectDashboardData,
 } from "../../Redux/Slices/dashboardSlice";
+import {
+  isBrandLoggedIn,
+  isInfluencerLoggedIn,
+  isSuperAdminLoggedIn,
+} from "../../Services/userService";
 
 const DashboardCard = ({
   digit,
   text,
   onClick,
   animationDelay,
+  isLoading,
 }: {
   digit: number;
   text: string;
   onClick: () => void;
   animationDelay?: number;
+  isLoading?: boolean;
 }) => {
   const formattedDigit = digit < 10 ? `0${digit}` : digit.toString();
 
-  return (
+  return isLoading ? (
+    <Skeleton
+      variant='rectangular'
+      width='100%'
+      height={251}
+      sx={{ borderRadius: borderRadius.md }}
+    />
+  ) : (
     <Box
       className='animated-block'
       sx={{
@@ -51,7 +65,7 @@ const DashboardCard = ({
       <AnimatedHeading
         heading={formattedDigit}
         charactersBaseAnimation
-        fontSize={150}
+        fontSize={140}
         animationDelay={animationDelay}
       />
       <Typography variant='h5' display='flex' alignItems='center' gap={8}>
@@ -66,23 +80,51 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const dashboardData = useSelector(selectDashboardData);
+  const isBrand = isBrandLoggedIn();
+  const isInfluencer = isInfluencerLoggedIn();
+  const isSuperAdmin = isSuperAdminLoggedIn();
 
   useEffect(() => {
     dispatch(fetchDashboardData());
   }, []);
 
   const cards = [
-    { digit: dashboardData.brands, text: "Brands", path: allRoutes.BRANDS },
-    {
-      digit: dashboardData.influencers,
-      text: "Influencers",
-      path: allRoutes.INFLUENCERS,
-    },
-    { digit: dashboardData.ads, text: "Ads", path: allRoutes.ADS },
+    ...(!isBrand && !isInfluencer
+      ? [
+          {
+            digit: dashboardData.brands,
+            text: "Brands",
+            path: allRoutes.BRANDS,
+          },
+          {
+            digit: dashboardData.influencers,
+            text: "Influencers",
+            path: allRoutes.INFLUENCERS,
+          },
+        ]
+      : []),
+    ...(isSuperAdmin || isBrand
+      ? [
+          {
+            digit: dashboardData.ads,
+            text: `${isBrand ? "My " : ""}Ads`,
+            path: allRoutes.ADS,
+          },
+        ]
+      : []),
+    ...(isSuperAdmin || isInfluencer
+      ? [
+          {
+            digit: dashboardData.posts,
+            text: `${isInfluencer ? "My " : ""}Posts`,
+            path: allRoutes.POSTS,
+          },
+        ]
+      : []),
   ];
 
   return (
-    <PageLayout loading={dashboardData.loading} hideBackButton>
+    <PageLayout hideBackButton>
       <AnimatedHeading
         heading={`Welcome back, ${user.name ? `${user.name}! 👋` : ""}`}
       />
@@ -96,25 +138,35 @@ const Dashboard = () => {
         Let's check your stats!
       </Typography>
 
-      {!dashboardData.loading && (
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: { md: "repeat(2, 1fr)", sm: "repeat(1, 1fr)" },
-            gap: 20,
-          }}
-        >
-          {cards.map((card, index) => (
-            <DashboardCard
-              key={index}
-              digit={card.digit}
-              text={card.text}
-              onClick={() => navigate(card.path)}
-              animationDelay={index * 0.2 + 0.2}
-            />
-          ))}
-        </Box>
-      )}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { md: "repeat(2, 1fr)", sm: "repeat(1, 1fr)" },
+          gap: 20,
+        }}
+      >
+        {dashboardData.loading
+          ? [...Array(2)].map((_, index) => (
+              <DashboardCard
+                key={index}
+                isLoading
+                digit={0}
+                text={""}
+                animationDelay={index * 0.2 + 0.2}
+                onClick={() => {}}
+              />
+            ))
+          : cards.map((card, index) => (
+              <DashboardCard
+                key={index}
+                digit={card.digit}
+                text={card.text}
+                onClick={() => navigate(card.path)}
+                animationDelay={index * 0.2 + 0.2}
+              />
+            ))}
+      </Box>
+      {/* )} */}
     </PageLayout>
   );
 };

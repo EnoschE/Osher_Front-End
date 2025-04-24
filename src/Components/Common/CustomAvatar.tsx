@@ -30,20 +30,31 @@ const CustomAvatar = ({
   const [loading, setLoading] = useState(true);
 
   return (
-    <Box position='relative' sx={{ ...sx }}>
-      <Avatar
-        sx={{
-          width: sizeMap[size],
-          height: sizeMap[size],
-          minWidth: sizeMap[size],
-          minHeight: sizeMap[size],
-          border: `${borderWidth}px solid ${colors.border}`,
-          borderRadius: radius,
-        }}
-        src={src}
-        onLoad={() => setLoading(false)}
-        {...props}
-      />
+    <Box
+      position='relative'
+      sx={{
+        width: sizeMap[size],
+        height: sizeMap[size],
+        minWidth: sizeMap[size],
+        minHeight: sizeMap[size],
+        ...sx,
+      }}
+    >
+      {!showLoader && (
+        <Avatar
+          sx={{
+            width: sizeMap[size],
+            height: sizeMap[size],
+            minWidth: sizeMap[size],
+            minHeight: sizeMap[size],
+            border: `${borderWidth}px solid ${colors.border}`,
+            borderRadius: radius,
+          }}
+          src={src}
+          onLoad={() => setLoading(false)}
+          {...props}
+        />
+      )}
 
       <Skeleton
         variant='circular'
@@ -56,6 +67,7 @@ const CustomAvatar = ({
           minHeight: sizeMap[size],
           display: loading || showLoader ? "block" : "none",
           borderRadius: radius,
+          bgcolor: "#EBEBEE",
         }}
         animation='wave'
       />

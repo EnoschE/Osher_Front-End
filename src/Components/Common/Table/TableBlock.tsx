@@ -28,6 +28,7 @@ export const TableBlock = ({
   addButtonTooltip,
   filterByCompany = false,
   onRowClick,
+  isLoading
 }: {
   heading: string;
   subHeading: string;
@@ -44,6 +45,7 @@ export const TableBlock = ({
   tableHeaders: Array<any>;
   filterByCompany?: boolean;
   onRowClick?: (row: any) => void;
+  isLoading?: boolean;
 }) => {
   const navigate = useNavigate();
 
@@ -197,7 +199,7 @@ export const TableBlock = ({
       </Box>
 
       <Box className='animated-block' sx={{ animationDelay: `${4 / 21}s` }}>
-        {tableData?.length ? (
+        {tableData?.length && !isLoading ? (
           <CustomTable
             headers={tableHeaders}
             rows={searchedTableData}
@@ -206,7 +208,7 @@ export const TableBlock = ({
             onRowClick={onRowClick}
           />
         ) : (
-          <PlaceholderForEmptyTable message={emptyStateMessage} />
+          <PlaceholderForEmptyTable message={emptyStateMessage} isLoading={isLoading}/>
         )}
       </Box>
     </>
