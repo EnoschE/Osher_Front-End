@@ -7,29 +7,34 @@ import { Box } from "@mui/material";
 import { navbarHeight } from "../../Utils/spacings";
 
 const ResetPassword = () => {
-	const navigate = useNavigate();
-	const { token, userId } = useParams();
+  const navigate = useNavigate();
+  const { token, userId } = useParams();
 
-	const [setPasswordDialog, setSetPasswordDialog] = useState<boolean>(false);
+  const [setPasswordDialog, setSetPasswordDialog] = useState<boolean>(false);
 
-	useEffect(() => {
-		if (token || userId) {
-			openSetPasswordDialog();
-		} else {
-			navigate(allRoutes.HOME);
-		}
-	}, []);
+  useEffect(() => {
+    if (token || userId) {
+      openSetPasswordDialog();
+    } else {
+      navigate(allRoutes.HOME);
+    }
+  }, []);
 
-	const openSetPasswordDialog = () => setSetPasswordDialog(true);
-	const closeSetPasswordDialog = () => navigate(allRoutes.HOME);
+  const openSetPasswordDialog = () => setSetPasswordDialog(true);
+  const closeSetPasswordDialog = () => navigate(allRoutes.HOME);
 
-	return (
-		<>
-			<Navbar />
-			<Box sx={{ width: "100vw", height: `100vh - ${navbarHeight}` }} />
-			<SetPasswordDialog token={token} userId={userId} open={setPasswordDialog} onClose={closeSetPasswordDialog} />
-		</>
-	);
+  return (
+    <>
+      <Navbar />
+      <Box sx={{ width: "100vw", height: `100vh - ${navbarHeight}` }} />
+      <SetPasswordDialog
+        token={token}
+        userId={userId}
+        open={setPasswordDialog}
+        onClose={closeSetPasswordDialog}
+      />
+    </>
+  );
 };
 
 export default ResetPassword;

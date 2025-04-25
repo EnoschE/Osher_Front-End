@@ -6,8 +6,6 @@ import TableBlock from "../Common/Table/TableBlock";
 import CustomTableOptions from "../Common/CustomTableOptions";
 import { useNavigate } from "react-router-dom";
 import { getAllBrands } from "../../Services/brandsService";
-import CustomAvatar from "../Common/CustomAvatar";
-import { Box, Typography } from "@mui/material";
 import AvatarWithName from "../Common/AvatarWithName";
 
 const Brands = () => {
@@ -82,14 +80,14 @@ const Brands = () => {
     <PageLayout hideBackButton>
       <TableBlock
         isLoading={loading}
-        heading='Brands'
-        subHeading='These are all the brands'
+        heading="Brands"
+        subHeading="These are all the brands"
         tableData={data}
-        addButtonText='Add Brand'
+        addButtonText="Add Brand"
         addButtonPath={allRoutes.ADD_BRAND}
         detailsPagePath={allRoutes.VIEW_BRAND}
         tableHeaders={tableHeaders}
-        emptyStateMessage='There are no brands present. Please add a brand.'
+        emptyStateMessage="There are no brands present. Please add a brand."
         rowsPerPage={10}
       />
     </PageLayout>

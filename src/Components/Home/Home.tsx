@@ -16,17 +16,17 @@ const Home = () => {
       <LoginContainer>
         <LoginInnerBlock gap={50}>
           <Box
-            className='pop-out-animation'
-            component='img'
+            className="pop-out-animation"
+            component="img"
             src={HomeImage}
-            alt='Home'
+            alt="Home"
           />
           <CustomButton
-            type='submit'
+            type="submit"
             fullWidth
-            className='slide-down-bounce'
+            className="slide-down-bounce"
             sx={{ animationDelay: `0.2s` }}
-						onClick={goToFeed}
+            onClick={goToFeed}
           >
             Continue
           </CustomButton>

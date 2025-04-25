@@ -85,14 +85,14 @@ const Posts = () => {
     <PageLayout hideBackButton>
       <TableBlock
         isLoading={loading}
-        heading='Posts'
-        subHeading='These are all the posts'
+        heading="Posts"
+        subHeading="These are all the posts"
         tableData={data}
-        addButtonText='Add post'
+        addButtonText="Add post"
         addButtonPath={allRoutes.ADD_POST}
         detailsPagePath={allRoutes.VIEW_POST}
         tableHeaders={tableHeaders}
-        emptyStateMessage='There are no posts present. Please add a post.'
+        emptyStateMessage="There are no posts present. Please add a post."
         rowsPerPage={10}
       />
     </PageLayout>

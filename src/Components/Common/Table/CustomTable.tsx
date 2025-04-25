@@ -96,12 +96,14 @@ const CustomTable = ({
     }
     setSortConfig({ key: keyToBeSet, direction });
   };
+
   const sortedRows = useMemo(() => {
     if (!sortConfig.key || !rows) return rows;
 
     const rowsCopy = [...rows];
 
     return rowsCopy.sort((a, b) => {
+      
       const key = sortConfig.key!;
       let x = a[key];
       let y = b[key];
@@ -120,12 +122,13 @@ const CustomTable = ({
       }
     });
   }, [rows, sortConfig]);
+  
   const handleRowClick = (id: string, row: any) => {
     if (detailsPagePath)
       navigate(
         id === user._id
           ? allRoutes.ACCOUNT_SETTINGS
-          : detailsPagePath?.replace(":id", id)
+          : detailsPagePath?.replace(":id", id),
       );
     if (onRowClick) onRowClick(row);
   };
@@ -151,7 +154,7 @@ const CustomTable = ({
                 >
                   <Box
                     display={"flex"}
-                    alignItems='center'
+                    alignItems="center"
                     justifyContent={
                       header.align === "right"
                         ? "end"
@@ -231,12 +234,12 @@ const CustomTable = ({
                           <Box style={{ maxWidth: header?.maxWidth ?? 150 }}>
                             <Tooltip
                               title={row?.[header.key] ?? "-"}
-                              placement='top'
+                              placement="top"
                               arrow
                             >
                               <Typography
-                                fontSize='inherit'
-                                fontWeight='inherit'
+                                fontSize="inherit"
+                                fontWeight="inherit"
                                 sx={{
                                   overflow: "hidden",
                                   whiteSpace: "nowrap",
@@ -270,9 +273,9 @@ const CustomTable = ({
                         )}
                         {row._id === user._id && header.key === "name" ? (
                           <Typography
-                            component='span'
-                            fontSize='12px'
-                            color='text.secondary'
+                            component="span"
+                            fontSize="12px"
+                            color="text.secondary"
                           >
                             {" "}
                             (Me)

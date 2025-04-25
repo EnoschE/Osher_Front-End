@@ -11,4 +11,11 @@ import { ReactComponent as ApplePayIcon } from "../Assets/Icons/applePayIcon.svg
 import SuccessIcon from "../Assets/Icons/successIcon.png";
 import LossIcon from "../Assets/Icons/lossIcon.png";
 
-export { FacebookIcon, GoogleIcon, SuccessIcon, LossIcon, ApplePayIcon, PaypalIcon };
+export {
+  FacebookIcon,
+  GoogleIcon,
+  SuccessIcon,
+  LossIcon,
+  ApplePayIcon,
+  PaypalIcon,
+};

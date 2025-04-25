@@ -21,7 +21,7 @@ const CustomMarquee = ({
 }) => {
   return (
     <Box
-      className='text-wrapper'
+      className="text-wrapper"
       sx={{
         ...sx,
         display: "flex",
@@ -54,15 +54,15 @@ const CustomMarquee = ({
         },
       }}
     >
-      <Typography component='h2'>{text}</Typography>
-      <Typography component='h2'>{text}</Typography>
-      <Typography component='h2'>{text}</Typography>
-      <Typography component='h2'>{text}</Typography>
-      <Typography component='h2'>{text}</Typography>
-      <Typography component='h2'>{text}</Typography>
-      <Typography component='h2'>{text}</Typography>
-      <Typography component='h2'>{text}</Typography>
-      <Typography component='h2'>{text}</Typography>
+      <Typography component="h2">{text}</Typography>
+      <Typography component="h2">{text}</Typography>
+      <Typography component="h2">{text}</Typography>
+      <Typography component="h2">{text}</Typography>
+      <Typography component="h2">{text}</Typography>
+      <Typography component="h2">{text}</Typography>
+      <Typography component="h2">{text}</Typography>
+      <Typography component="h2">{text}</Typography>
+      <Typography component="h2">{text}</Typography>
     </Box>
   );
 };

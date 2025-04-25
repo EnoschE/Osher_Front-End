@@ -57,7 +57,7 @@ const AddAd = () => {
             value: item._id,
             text: item.name,
             picture: item.picture,
-          })) || []
+          })) || [],
         );
       } catch (error) {
         toast.error("Failed to fetch brands");
@@ -214,8 +214,8 @@ const AddAd = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Add new Ad'
-        subHeading='Please provide the details to add a new Ad'
+        heading="Add new Ad"
+        subHeading="Please provide the details to add a new Ad"
         fields={fields}
         onSave={handleUpdate}
         onCancel={handleCancel}

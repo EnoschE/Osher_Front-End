@@ -75,18 +75,18 @@ const ProfileHeader = ({
 }: ProfileHeaderProps) => {
   return (
     <>
-      <Box className='animated-block'>
+      <Box className="animated-block">
         <CustomMarquee text={data?.name || userType} />
       </Box>
 
-      <Box display='flex' alignItems='center' gap={8} flexDirection='column'>
+      <Box display="flex" alignItems="center" gap={8} flexDirection="column">
         <Box
         // className='animated-block'
         // sx={{ animationDelay: `${2 / 21}s` }}
         >
           <CustomAvatar
             isSquarish={isSquarish}
-            size='lg'
+            size="lg"
             sx={{ mt: "-30px", mb: 10, filter: "blur(15px)", opacity: 0.7 }}
             src={data?.picture}
             showLoader={isLoading}
@@ -94,14 +94,14 @@ const ProfileHeader = ({
 
           <CustomAvatar
             isSquarish={isSquarish}
-            size='lg'
+            size="lg"
             sx={{ mt: "-160px", mb: 10 }}
             src={data?.picture}
             showLoader={isLoading}
           />
         </Box>
 
-        <Box className='animated-block' sx={{ animationDelay: `${3 / 21}s` }}>
+        <Box className="animated-block" sx={{ animationDelay: `${3 / 21}s` }}>
           {isLoading ? (
             <Skeleton
               sx={{
@@ -114,7 +114,7 @@ const ProfileHeader = ({
             <AnimatedHeading
               heading={data?.name}
               charactersBaseAnimation
-              animationSpeed='fast'
+              animationSpeed="fast"
             />
           )}
         </Box>
@@ -130,7 +130,7 @@ const ProfileHeader = ({
           {data?.name}
         </Typography> */}
         <Typography
-          className='animated-block'
+          className="animated-block"
           sx={{ animationDelay: `${4 / 21}s` }}
         >
           {userType}
@@ -139,16 +139,16 @@ const ProfileHeader = ({
           <></>
         ) : (
           <Box
-            className='animated-block'
+            className="animated-block"
             sx={{ animationDelay: `${5 / 21}s` }}
-            display='grid'
+            display="grid"
             gridTemplateColumns={hideDeleteButton ? "1fr" : "1fr 1fr"}
             gap={8}
             mt={12}
           >
             <CustomButton
               disabled={isLoading}
-              variant='outlined'
+              variant="outlined"
               onClick={handleEdit}
             >
               Edit
@@ -158,8 +158,8 @@ const ProfileHeader = ({
                 <span>
                   <CustomButton
                     disabled={disableDeleteButton || isLoading}
-                    color='error'
-                    variant='outlined'
+                    color="error"
+                    variant="outlined"
                     onClick={handleDelete}
                   >
                     Delete

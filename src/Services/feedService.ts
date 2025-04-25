@@ -1,5 +1,4 @@
 import http from "./httpService";
-import { getAuthHeader } from "./userService";
 
 const apiEndpoint = "/feed";
 
@@ -8,7 +7,7 @@ const apiEndpoint = "/feed";
 const FeedService = {
   getFeedData: () =>
     http.get(
-      `${apiEndpoint}/`
+      `${apiEndpoint}/`,
       // { headers: getAuthHeader() }
     ),
 };

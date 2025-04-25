@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import CustomDropdown from "../CustomDropdown";
 import AnimatedHeading from "../AnimatedHeading";
 
-
 export const TableBlock = ({
   heading,
   subHeading,
@@ -28,7 +27,7 @@ export const TableBlock = ({
   addButtonTooltip,
   filterByCompany = false,
   onRowClick,
-  isLoading
+  isLoading,
 }: {
   heading: string;
   subHeading: string;
@@ -93,13 +92,13 @@ export const TableBlock = ({
           item.phone?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.userName?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.brandName?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          item.email?.toLowerCase()?.includes(search?.toLowerCase()) // TODO: in future, change this logic to dynamic and add all tableHeaders here
+          item.email?.toLowerCase()?.includes(search?.toLowerCase()), // TODO: in future, change this logic to dynamic and add all tableHeaders here
       )
     : tableData;
 
   if (selectedId && searchedTableData && filterByCompany) {
     searchedTableData = searchedTableData.filter(
-      (item) => item.companyId === selectedId
+      (item) => item.companyId === selectedId,
     );
   }
 
@@ -112,12 +111,12 @@ export const TableBlock = ({
         heading={`${heading} ${
           tableData?.length ? `(${searchedTableData?.length})` : ""
         }`}
-        variant='h3'
+        variant="h3"
       />
       <Box
-        display='flex'
+        display="flex"
         alignItems={{ xs: "stretch", md: "center" }}
-        justifyContent='space-between'
+        justifyContent="space-between"
         flexDirection={{ xs: "column", md: "row" }}
         gap={12}
         mb={32}
@@ -131,8 +130,8 @@ export const TableBlock = ({
         /> */}
         {/* <AnimatedBlock animationDelay={0.3}> */}
         <Typography
-          variant='body2'
-          className='animated-block'
+          variant="body2"
+          className="animated-block"
           sx={{ animationDelay: `${1 / 21}s` }}
         >
           {subHeading}
@@ -140,9 +139,9 @@ export const TableBlock = ({
         {/* </AnimatedBlock> */}
 
         <Box
-          display='flex'
+          display="flex"
           alignItems={{ xs: "stretch", md: "center" }}
-          justifyContent='flex-end'
+          justifyContent="flex-end"
           gap={12}
           flexDirection={{ xs: "column", md: "row" }}
         >
@@ -153,8 +152,8 @@ export const TableBlock = ({
                   options={allCompanies}
                   value={selectedId}
                   onChange={handleDropdown}
-                  minWidth='220px'
-                  label='Filter by Company'
+                  minWidth="220px"
+                  label="Filter by Company"
                   defaultSelectable={true}
                   disabled={loading}
                 />
@@ -163,9 +162,9 @@ export const TableBlock = ({
               <CustomTextField
                 value={search}
                 onChange={handleOnChange}
-                placeholder='Search here'
+                placeholder="Search here"
                 startIcon={<SearchOutlined sx={{ opacity: 0.7 }} />}
-                className='animated-block'
+                className="animated-block"
                 style={{ animationDelay: `${2 / 21}s` }}
               />
               {/* </AnimatedBlock> */}
@@ -176,7 +175,7 @@ export const TableBlock = ({
             <Tooltip title={addButtonTooltip} arrow>
               {/* <span> */}
               <CustomButton
-                className='animated-block'
+                className="animated-block"
                 sx={{
                   animationDelay: `${3 / 21}s`,
                   height: 40.13,
@@ -198,7 +197,7 @@ export const TableBlock = ({
         </Box>
       </Box>
 
-      <Box className='animated-block' sx={{ animationDelay: `${4 / 21}s` }}>
+      <Box className="animated-block" sx={{ animationDelay: `${4 / 21}s` }}>
         {tableData?.length && !isLoading ? (
           <CustomTable
             headers={tableHeaders}
@@ -208,7 +207,10 @@ export const TableBlock = ({
             onRowClick={onRowClick}
           />
         ) : (
-          <PlaceholderForEmptyTable message={emptyStateMessage} isLoading={isLoading}/>
+          <PlaceholderForEmptyTable
+            message={emptyStateMessage}
+            isLoading={isLoading}
+          />
         )}
       </Box>
     </>

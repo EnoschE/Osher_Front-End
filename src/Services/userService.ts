@@ -167,26 +167,6 @@ const getLoggedInUser = (): null | { role: string } => {
   }
 };
 
-// export const isAdminLoggedIn = (): boolean => {
-//   const loggedInUser: any = getLoggedInUser();
-//   return loggedInUser?.role === roles.INSTALLER_ADMIN || false;
-// };
-
-export const isOfficeManagerLoggedIn = (): boolean => {
-  const loggedInUser: any = getLoggedInUser();
-  return loggedInUser?.role === roles.OFFICE_MANAGER || false;
-};
-
-export const isManagerLoggedIn = (): boolean => {
-  const loggedInUser: any = getLoggedInUser();
-  return loggedInUser?.role === roles.MANAGER || false;
-};
-
-export const isRepresentativeLoggedIn = (): boolean => {
-  const loggedInUser: any = getLoggedInUser();
-  return loggedInUser?.role === roles.REPRESENTATIVE || false;
-};
-
 // TODO: change the name to isAdminLoggedIn
 export const isSuperAdminLoggedIn = (): boolean => {
   const loggedInUser: any = getLoggedInUser();
@@ -201,21 +181,6 @@ export const isBrandLoggedIn = (): boolean => {
 export const isInfluencerLoggedIn = (): boolean => {
   const loggedInUser: any = getLoggedInUser();
   return loggedInUser?.role === roles.INFLUENCER || false;
-};
-
-export const isDirectorLoggedIn = (): boolean => {
-  const loggedInUser: any = getLoggedInUser();
-  return loggedInUser?.role === roles.DIRECTOR || false;
-};
-
-export const isAdminManagerLoggedIn = (): boolean => {
-  const loggedInUser: any = getLoggedInUser();
-  return loggedInUser?.role === roles.ADMIN_MANGER || false;
-};
-
-export const isPslLoggedIn = (): boolean => {
-  const loggedInUser: any = getLoggedInUser();
-  return loggedInUser?.role === roles.PSL || false;
 };
 
 export const verifyTokenService = (data: any) => {

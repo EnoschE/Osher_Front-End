@@ -34,12 +34,12 @@ const FeedCard = ({
 
   return (
     <Box
-      className='animated-block'
-      position='relative'
-      display='flex'
-      flexDirection='column'
-      gap='28px'
-      width='100%'
+      className="animated-block"
+      position="relative"
+      display="flex"
+      flexDirection="column"
+      gap="28px"
+      width="100%"
     >
       <Box
         sx={{
@@ -71,13 +71,13 @@ const FeedCard = ({
       >
         <CustomAvatar
           src={item?.userPicture}
-          size='sm'
+          size="sm"
           showLoader={isLoading}
         />
-        <Box display='flex' flexDirection='column'>
+        <Box display="flex" flexDirection="column">
           {isLoading ? (
             <Skeleton
-              variant='text'
+              variant="text"
               width={100}
               height={16}
               sx={{ borderRadius: borderRadius.sm }}
@@ -85,7 +85,7 @@ const FeedCard = ({
           ) : (
             <Typography
               // color='white'
-              variant='h6'
+              variant="h6"
             >
               {item?.userName}
             </Typography>
@@ -94,7 +94,7 @@ const FeedCard = ({
             <Typography
               // color='lightgray'
               // color='text.secondary'
-              variant='body2'
+              variant="body2"
             >
               {moment(item?.publishDate).fromNow()}
             </Typography>
@@ -112,34 +112,34 @@ const FeedCard = ({
       {isLoading ? (
         <Box>
           <Skeleton
-            variant='text'
-            width='100%'
+            variant="text"
+            width="100%"
             height={16}
             sx={{ borderRadius: borderRadius.sm }}
           />
           <Skeleton
-            variant='text'
-            width='100%'
+            variant="text"
+            width="100%"
             height={16}
             sx={{ borderRadius: borderRadius.sm }}
           />
           <Skeleton
-            variant='text'
-            width='100%'
+            variant="text"
+            width="100%"
             height={16}
             sx={{ borderRadius: borderRadius.sm }}
           />
           <Skeleton
-            variant='text'
-            width='85%'
+            variant="text"
+            width="85%"
             height={16}
             sx={{ borderRadius: borderRadius.sm }}
           />
         </Box>
       ) : (
-        <Box display='flex' flexDirection='column' gap={8}>
+        <Box display="flex" flexDirection="column" gap={8}>
           <Typography fontWeight={500}>{item?.name}</Typography>
-          <Typography color='text.secondary' whiteSpace='pre-wrap'>
+          <Typography color="text.secondary" whiteSpace="pre-wrap">
             {item?.description}
           </Typography>
         </Box>

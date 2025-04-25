@@ -82,7 +82,7 @@ const InfluencerDetails = () => {
     <PageLayout hideBackButton={!isLoggedIn} hideSidebar={!isLoggedIn}>
       <ProfileHeader
         data={data}
-        userType='Influencer'
+        userType="Influencer"
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
         hideButtons={!isSuperAdminLoggedIn()}
@@ -111,7 +111,7 @@ const InfluencerDetails = () => {
       <DeleteDialog
         open={deleteDialog}
         onClose={closeDeleteDialog}
-        userType='Influencer'
+        userType="Influencer"
         user={data}
         onDelete={handleDelete}
       />

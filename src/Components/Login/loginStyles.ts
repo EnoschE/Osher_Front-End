@@ -21,7 +21,7 @@ export const LoginContainer = styled(Box)(({ theme }) => ({
     #fff 100.2%
     )`,
 
-    // backgroundImage: `radial-gradient(
+  // backgroundImage: `radial-gradient(
   //   circle 35vw at 105% 55%,
   //  ${colors.primary}40 0.2%,
   //  #ffffff00 100.2%

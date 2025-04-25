@@ -21,7 +21,7 @@ http.interceptors.response.use(
         "Something went wrong!"
       );
     }
-  }
+  },
 );
 
 export default http;

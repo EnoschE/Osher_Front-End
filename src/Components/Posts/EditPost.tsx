@@ -62,7 +62,7 @@ const EditPost = () => {
           value: item._id,
           text: item.name,
           picture: item.picture,
-        })) || []
+        })) || [],
       );
     } catch (error: any) {
       toast.error(error);
@@ -164,7 +164,7 @@ const EditPost = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Edit Post'
+        heading="Edit Post"
         subHeading={`Edit the details of ${data?.name}`}
         fields={fields}
         onSave={handleUpdate}

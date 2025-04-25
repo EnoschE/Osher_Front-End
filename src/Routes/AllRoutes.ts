@@ -88,7 +88,7 @@ export const allRoutes = {
 
   ESTIMATE: "/estimate",
   SOLAR_REPORT: "/solar-report",
-  
+
   WHY_US: "/why-us",
   PROPOSAL_ACCEPTANCE: "/scheduling/proposal-acceptance",
   SITE_SURVEY: "/scheduling/site-survey",

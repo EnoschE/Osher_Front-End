@@ -257,7 +257,7 @@ const RouteNavigation = () => {
             : isBrand
             ? item.accessTo.brand
             : isInfluencer && item.accessTo.influencer
-          : item
+          : item,
     );
     setRenderingRoutes(allRoutes);
   }, [user._id, isSuperAdmin, isBrand, isInfluencer]);

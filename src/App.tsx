@@ -4,7 +4,6 @@ import { ThemeProvider } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import "./ToastStyles.css";
-import "chart.js/auto";
 import createAppTheme from "./theme";
 
 const App = () => {

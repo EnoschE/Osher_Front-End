@@ -19,14 +19,14 @@ const VerifyEmailDialog = ({ open, onClose }: VerifyEmailDialogProps) => {
         <EmailOutlined />
       </IconSquareBox>
 
-      <Typography variant='h2' my={16} textAlign='center'>
+      <Typography variant="h2" my={16} textAlign="center">
         Verify your Email
       </Typography>
       <Typography
         fontSize={16}
-        textAlign='center'
+        textAlign="center"
         mb={32}
-        color='text.secondary'
+        color="text.secondary"
       >
         We've sent you an email to complete your registration.
         <br />

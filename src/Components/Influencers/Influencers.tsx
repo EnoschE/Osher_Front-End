@@ -80,14 +80,14 @@ const Influencers = () => {
     <PageLayout hideBackButton>
       <TableBlock
         isLoading={loading}
-        heading='Influencers'
-        subHeading='These are all the influencers'
+        heading="Influencers"
+        subHeading="These are all the influencers"
         tableData={data}
-        addButtonText='Add Influencer'
+        addButtonText="Add Influencer"
         addButtonPath={allRoutes.ADD_INFLUENCER}
         detailsPagePath={allRoutes.VIEW_INFLUENCER}
         tableHeaders={tableHeaders}
-        emptyStateMessage='There are no influencers present. Please add an influencer.'
+        emptyStateMessage="There are no influencers present. Please add an influencer."
         rowsPerPage={10}
       />
     </PageLayout>

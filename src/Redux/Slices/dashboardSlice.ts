@@ -30,7 +30,7 @@ export const fetchDashboardData = createAsyncThunk(
     } catch (error) {
       return rejectWithValue("Failed to fetch dashboard data");
     }
-  }
+  },
 );
 
 export const dashboardSlice = createSlice({
@@ -41,7 +41,7 @@ export const dashboardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchDashboardData.pending, (state) => {
+      .addCase(fetchDashboardData.pending, () => {
         // state.loading = true;
       })
       .addCase(
@@ -52,7 +52,7 @@ export const dashboardSlice = createSlice({
           state.brands = action.payload?.brands || 0;
           state.influencers = action.payload?.influencers || 0;
           state.loading = false;
-        }
+        },
       )
       .addCase(fetchDashboardData.rejected, (state, action) => {
         state.loading = false;

@@ -71,16 +71,16 @@ const CustomMenu = ({
   return (
     <div>
       <AnchorComponent
-        id='custom-menu-anchor'
+        id="custom-menu-anchor"
         aria-controls={open ? "custom-menu" : undefined}
-        aria-haspopup='true'
+        aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       />
 
       <Menu
-        id='custom-menu'
-        aria-labelledby='custom-menu-anchor'
+        id="custom-menu"
+        aria-labelledby="custom-menu-anchor"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

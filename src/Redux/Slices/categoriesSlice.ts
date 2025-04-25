@@ -38,7 +38,7 @@ export const categoriesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCategories.pending, (state) => {
+      .addCase(fetchCategories.pending, () => {
         // Optionally, handle loading state
       })
       .addCase(

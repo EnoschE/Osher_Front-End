@@ -53,18 +53,18 @@ const DeleteDialog = ({
         <DeleteOutline />
       </IconSquareBox>
 
-      <Typography variant='h2' my={16} textAlign='center'>
+      <Typography variant="h2" my={16} textAlign="center">
         Delete {userType}
       </Typography>
-      <Typography fontSize={16} textAlign='center' color='text.secondary'>
+      <Typography fontSize={16} textAlign="center" color="text.secondary">
         Are you sure you want to delete
         {["Post", "Ad"].includes(userType) ? " " : " the account of "}
         {user.name}?
       </Typography>
 
-      <Box display='grid' gridTemplateColumns='1fr 1fr' gap={10} mt={32}>
+      <Box display="grid" gridTemplateColumns="1fr 1fr" gap={10} mt={32}>
         <CustomButton
-          variant='outlined'
+          variant="outlined"
           fullWidth
           disabled={loading}
           onClick={onClose}

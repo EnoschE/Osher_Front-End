@@ -24,13 +24,12 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const isMobileView = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down("sm")
+    theme.breakpoints.down("sm"),
   );
 
   const [data, setData] = useState<DataProps>({ email: "", password: "" });
   const [errors, setErrors] = useState<DataProps>({ email: "", password: "" });
   const [loading, setLoading] = useState<boolean>(false);
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [forgotPasswordDialog, setForgotPasswordDialog] =
     useState<boolean>(false);
 
@@ -65,7 +64,7 @@ const Login = () => {
 
       if (user.token === "An Email sent to your account please verify") {
         toast.warn(
-          "An email has been sent to your account. Please check your inbox and verify your email address."
+          "An email has been sent to your account. Please check your inbox and verify your email address.",
         );
       } else if (user) {
         await onLoginSuccess();
@@ -96,12 +95,12 @@ const Login = () => {
       <LoginContainer>
         <LoginInnerBlock>
           <AnimatedHeading
-            heading='Sign in'
+            heading="Sign in"
             variant={isMobileView ? "h3" : "h2"}
-            animationSpeed='fast'
+            animationSpeed="fast"
           />
           <Typography
-            className='animated-block'
+            className="animated-block"
             sx={{ animationDelay: `${1 / 21}s`, mt: 10, mb: 40 }}
           >
             Sign in to your Osher account
@@ -109,43 +108,43 @@ const Login = () => {
 
           <form onSubmit={handleLoginSubmit}>
             <CustomTextField
-              name='email'
-              label='Email Address'
+              name="email"
+              label="Email Address"
               bottom={24}
               value={data.email}
               error={errors.email}
               onChange={handleOnChange}
-              className='animated-block'
+              className="animated-block"
               style={{ animationDelay: `${2 / 21}s` }}
             />
             <CustomTextField
-              className='animated-block'
+              className="animated-block"
               style={{ animationDelay: `${3 / 21}s` }}
-              type='password'
-              name='password'
-              label='Password'
+              type="password"
+              name="password"
+              label="Password"
               bottom={19}
               value={data.password}
               error={errors.password}
               onChange={handleOnChange}
             />
             <Box
-              display='flex'
-              alignItems='center'
-              justifyContent='space-between'
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
               mb={30}
-              className='animated-block'
+              className="animated-block"
               sx={{ animationDelay: `${4 / 21}s` }}
             >
               <Box />
-              <Typography className='link' onClick={openForgotPasswordDialog}>
+              <Typography className="link" onClick={openForgotPasswordDialog}>
                 Forgot your password?
               </Typography>
             </Box>
             <CustomButton
-              type='submit'
+              type="submit"
               fullWidth
-              className='animated-block'
+              className="animated-block"
               sx={{ animationDelay: `${5 / 21}s`, mb: 20 }}
             >
               Sign In

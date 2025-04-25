@@ -166,8 +166,8 @@ const AddBrand = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Add new Brand'
-        subHeading='Please provide the details to add a new brand'
+        heading="Add new Brand"
+        subHeading="Please provide the details to add a new brand"
         fields={fields}
         onSave={handleUpdate}
         onCancel={handleCancel}

@@ -127,7 +127,7 @@ const EditInfluencer = () => {
       // } else {
       toast.success("Influencer updated successfully!");
       navigate(
-        allRoutes.VIEW_INFLUENCER.replace(":id", (id || "")?.toString())
+        allRoutes.VIEW_INFLUENCER.replace(":id", (id || "")?.toString()),
       );
       // }
     } catch (error: any) {
@@ -215,7 +215,7 @@ const EditInfluencer = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Edit Influencer'
+        heading="Edit Influencer"
         subHeading={`Edit the details of ${data?.name}`}
         fields={fields}
         onSave={handleUpdateProfile}

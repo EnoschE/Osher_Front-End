@@ -166,8 +166,8 @@ const AddInfluencer = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Add new Influencer'
-        subHeading='Please provide the details to add a new influencer'
+        heading="Add new Influencer"
+        subHeading="Please provide the details to add a new influencer"
         fields={fields}
         onSave={handleUpdate}
         onCancel={handleCancel}

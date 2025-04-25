@@ -35,14 +35,14 @@ const DashboardCard = ({
 
   return isLoading ? (
     <Skeleton
-      variant='rectangular'
-      width='100%'
+      variant="rectangular"
+      width="100%"
       height={251}
       sx={{ borderRadius: borderRadius.md }}
     />
   ) : (
     <Box
-      className='animated-block'
+      className="animated-block"
       sx={{
         padding: "14px 24px",
         borderRadius: borderRadius.md,
@@ -68,7 +68,7 @@ const DashboardCard = ({
         fontSize={140}
         animationDelay={animationDelay}
       />
-      <Typography variant='h5' display='flex' alignItems='center' gap={8}>
+      <Typography variant="h5" display="flex" alignItems="center" gap={8}>
         {text} <ArrowButton onClick={onClick} />
       </Typography>
     </Box>
@@ -130,9 +130,9 @@ const Dashboard = () => {
       />
 
       <Typography
-        variant='body2'
+        variant="body2"
         mb={32}
-        className='animated-block'
+        className="animated-block"
         style={{ animationDelay: `${4 / 21}s` }}
       >
         Let's check your stats!
@@ -153,7 +153,7 @@ const Dashboard = () => {
                 digit={0}
                 text={""}
                 animationDelay={index * 0.2 + 0.2}
-                onClick={() => {}}
+                onClick={() => undefined}
               />
             ))
           : cards.map((card, index) => (

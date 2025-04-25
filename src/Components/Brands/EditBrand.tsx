@@ -1,11 +1,10 @@
 import { FormEvent, useEffect, useState } from "react";
-import { selectUser, UserState } from "../../Redux/Slices/userSlice";
+import { UserState } from "../../Redux/Slices/userSlice";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
 import { editBrand, getBrandById } from "../../Services/brandsService";
-import { useSelector } from "../../Redux/reduxHooks";
 import { validateEmail, validatePassword } from "../../Utils/utils";
 import CustomForm, { FormField } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
@@ -28,7 +27,6 @@ const defaultData = {
 const EditBrand = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const user = useSelector(selectUser);
 
   const [data, setData] = useState<AccountSettingsData>(defaultData);
   const [errors, setErrors] = useState<AccountSettingsData>(defaultData);
@@ -99,11 +97,11 @@ const EditBrand = () => {
 
     setLoading(true);
     try {
-      let newEmail;
-      if (user.email?.trim() !== data.email?.trim()) {
-        newEmail = data.email;
-        // setUpdatingEmail(newEmail);
-      }
+      // let newEmail;
+      // if (user.email?.trim() !== data.email?.trim()) {
+      //   newEmail = data.email;
+      //   // setUpdatingEmail(newEmail);
+      // }
 
       const formData = new FormData();
 

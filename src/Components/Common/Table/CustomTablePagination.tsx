@@ -27,9 +27,9 @@ const CustomTablePagination = ({
       }}
     >
       <Pagination
-        size='small'
-        color='primary'
-        shape='rounded'
+        size="small"
+        color="primary"
+        shape="rounded"
         page={page}
         onChange={handleOnChange}
         count={totalPages}

@@ -33,5 +33,6 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": ["off"],
     "react/no-unescaped-entities": "off",
     "no-mixed-spaces-and-tabs": "off",
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
 };

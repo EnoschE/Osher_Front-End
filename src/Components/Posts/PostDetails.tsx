@@ -92,7 +92,7 @@ const PostDetails = () => {
       <ProfileHeader
         isSquarish
         data={data}
-        userType='Post'
+        userType="Post"
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
         hideButtons={
@@ -109,7 +109,7 @@ const PostDetails = () => {
       <DeleteDialog
         open={deleteDialog}
         onClose={closeDeleteDialog}
-        userType='Post'
+        userType="Post"
         user={data}
         onDelete={handleDelete}
       />

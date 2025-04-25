@@ -75,7 +75,7 @@ const BrandDetails = () => {
     <PageLayout>
       <ProfileHeader
         data={data}
-        userType='Brand'
+        userType="Brand"
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
         disableDeleteButton={!!ads?.length}
@@ -105,7 +105,7 @@ const BrandDetails = () => {
       <DeleteDialog
         open={deleteDialog}
         onClose={closeDeleteDialog}
-        userType='Brand'
+        userType="Brand"
         user={data}
         onDelete={handleDelete}
       />

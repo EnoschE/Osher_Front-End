@@ -93,14 +93,14 @@ const Ads = () => {
     <PageLayout hideBackButton>
       <TableBlock
         isLoading={loading}
-        heading='Ads'
-        subHeading='These are all the ads'
+        heading="Ads"
+        subHeading="These are all the ads"
         tableData={data}
-        addButtonText='Add ad'
+        addButtonText="Add ad"
         addButtonPath={allRoutes.ADD_AD}
         detailsPagePath={allRoutes.VIEW_AD}
         tableHeaders={tableHeaders}
-        emptyStateMessage='There are no ads present. Please add an ad.'
+        emptyStateMessage="There are no ads present. Please add an ad."
         rowsPerPage={10}
       />
     </PageLayout>

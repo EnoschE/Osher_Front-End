@@ -27,11 +27,11 @@ const CustomAvatar = ({
       : borderRadius.sm
     : "50%";
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!!src);
 
   return (
     <Box
-      position='relative'
+      position="relative"
       sx={{
         width: sizeMap[size],
         height: sizeMap[size],
@@ -57,7 +57,7 @@ const CustomAvatar = ({
       )}
 
       <Skeleton
-        variant='circular'
+        variant="circular"
         sx={{
           position: "absolute",
           inset: 0,
@@ -69,7 +69,7 @@ const CustomAvatar = ({
           borderRadius: radius,
           bgcolor: "#EBEBEE",
         }}
-        animation='wave'
+        animation="wave"
       />
     </Box>
   );

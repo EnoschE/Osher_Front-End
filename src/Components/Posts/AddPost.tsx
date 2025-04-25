@@ -53,7 +53,7 @@ const AddPost = () => {
             value: item._id,
             text: item.name,
             picture: item.picture,
-          })) || []
+          })) || [],
         );
       } catch (error) {
         toast.error("Failed to fetch influencers");
@@ -157,8 +157,8 @@ const AddPost = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Add new Post'
-        subHeading='Please provide the details to add a new Post'
+        heading="Add new Post"
+        subHeading="Please provide the details to add a new Post"
         fields={fields}
         onSave={handleUpdate}
         onCancel={handleCancel}

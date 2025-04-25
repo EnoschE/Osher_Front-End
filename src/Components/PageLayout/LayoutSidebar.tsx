@@ -13,7 +13,6 @@ import {
   StorefrontOutlined,
   StyleOutlined,
   SellOutlined,
-  InterpreterMode,
   InterpreterModeOutlined,
   AllInboxOutlined,
   AccountCircleOutlined,
@@ -21,11 +20,8 @@ import {
 import { Collapse, Typography } from "@mui/material";
 import { useState } from "react";
 import {
-  isAdminManagerLoggedIn,
   isBrandLoggedIn,
-  isDirectorLoggedIn,
   isInfluencerLoggedIn,
-  isPslLoggedIn,
   isSuperAdminLoggedIn,
 } from "../../Services/userService";
 import {
@@ -159,14 +155,9 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
   const navigate = useNavigate();
 
   // User role checks
-
   const isSuperAdmin = isSuperAdminLoggedIn();
   const isBrand = isBrandLoggedIn();
   const isInfluencer = isInfluencerLoggedIn();
-
-  const isDirector = isDirectorLoggedIn();
-  const isAdminManager = isAdminManagerLoggedIn();
-  const isPsl = isPslLoggedIn();
 
   const menuItems: MenuItem[] = [
     { icon: <WidgetsOutlined />, text: "Dashboard", path: allRoutes.DASHBOARD },
@@ -191,7 +182,7 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
           },
         ]
       : []),
-      
+
     ...(isSuperAdmin || isBrand
       ? [
           {

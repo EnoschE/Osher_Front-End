@@ -49,7 +49,7 @@ const PageLayout = ({
       )}
 
       <Box
-        component='main'
+        component="main"
         sx={{
           flexGrow: 1,
           width: hideSidebar

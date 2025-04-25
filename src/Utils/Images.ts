@@ -6,7 +6,6 @@ import SolarPowerNightImage from "../Assets/Images/solar-power-night.png";
 import HomeImage from "../Assets/Images/home-page-img.png";
 import MainPic from "../Assets/Images/signup.png";
 
-
 export {
   MainPic,
   OsherLogo,

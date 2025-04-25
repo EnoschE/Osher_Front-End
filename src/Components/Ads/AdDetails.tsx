@@ -92,7 +92,7 @@ const AdDetails = () => {
       <ProfileHeader
         isSquarish
         data={data}
-        userType='Ad'
+        userType="Ad"
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
         hideButtons={
@@ -106,7 +106,7 @@ const AdDetails = () => {
       <DeleteDialog
         open={deleteDialog}
         onClose={closeDeleteDialog}
-        userType='Ad'
+        userType="Ad"
         user={data}
         onDelete={handleDelete}
       />

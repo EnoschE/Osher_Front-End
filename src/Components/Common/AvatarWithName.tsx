@@ -1,6 +1,5 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CustomAvatar from "./CustomAvatar";
-import { ArrowOutward } from "@mui/icons-material";
 import ArrowButton from "./ArrowButton";
 
 const AvatarWithName = ({

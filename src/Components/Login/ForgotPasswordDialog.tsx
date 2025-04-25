@@ -99,21 +99,21 @@ const ForgotPasswordDialog = ({ open, onClose }: ForgotPasswordDialogProps) => {
         {emailSent ? <EmailOutlined /> : <KeyOutlined />}
       </IconSquareBox>
 
-      <Typography variant='h2' my={16} textAlign='center'>
+      <Typography variant="h2" my={16} textAlign="center">
         {emailSent ? "Check your email" : "Forgot password?"}
       </Typography>
       <Typography
         fontSize={16}
-        textAlign='center'
+        textAlign="center"
         mb={emailSent ? 6 : 32}
-        color='text.secondary'
+        color="text.secondary"
       >
         {emailSent
           ? "We've sent you a password reset link"
           : "No worries we’ll send you reset instructions"}
       </Typography>
       {emailSent && (
-        <Typography variant='body2' textAlign='center' mb={32}>
+        <Typography variant="body2" textAlign="center" mb={32}>
           {email || "test@sungroup.com"}
         </Typography>
       )}
@@ -121,8 +121,8 @@ const ForgotPasswordDialog = ({ open, onClose }: ForgotPasswordDialogProps) => {
       {!emailSent && (
         <CustomTextField
           autoFocus
-          label='Email'
-          type='email'
+          label="Email"
+          type="email"
           bottom={24}
           value={email}
           onChange={handleChangeEmail}
@@ -147,14 +147,14 @@ const ForgotPasswordDialog = ({ open, onClose }: ForgotPasswordDialogProps) => {
       )}
       <Typography
         fontSize={12}
-        color='text.secondary'
-        textAlign='center'
+        color="text.secondary"
+        textAlign="center"
         mt={32}
         mb={10}
       >
         {emailSent ? "Didn’t receive the email? " : "Remember your password? "}
         <span
-          className='link'
+          className="link"
           onClick={handleSignInClick}
           style={{ fontWeight: 600 }}
         >

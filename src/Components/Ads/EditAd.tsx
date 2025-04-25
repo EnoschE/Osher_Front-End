@@ -67,7 +67,7 @@ const EditAd = () => {
           value: item._id,
           text: item.name,
           picture: item.picture,
-        })) || []
+        })) || [],
       );
     } catch (error: any) {
       toast.error(error);
@@ -215,7 +215,7 @@ const EditAd = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading='Edit Ad'
+        heading="Edit Ad"
         subHeading={`Edit the details of ${data?.name}`}
         fields={fields}
         onSave={handleUpdate}

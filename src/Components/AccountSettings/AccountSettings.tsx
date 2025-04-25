@@ -85,11 +85,11 @@ const AccountSettings = () => {
 
     setLoading(true);
     try {
-      let newEmail;
-      if (user.email?.trim() !== data.email?.trim()) {
-        newEmail = data.email;
-        // setUpdatingEmail(newEmail);
-      }
+      // let newEmail;
+      // if (user.email?.trim() !== data.email?.trim()) {
+      //   newEmail = data.email;
+      //   // setUpdatingEmail(newEmail);
+      // }
 
       const formData = new FormData();
 
@@ -195,8 +195,8 @@ const AccountSettings = () => {
   return (
     <PageLayout loading={loading} hideBackButton>
       <CustomForm
-        heading='Account Settings'
-        subHeading='Update your photo and personal details'
+        heading="Account Settings"
+        subHeading="Update your photo and personal details"
         fields={fields}
         onSave={handleUpdateProfile}
         onCancel={handleCancel}
