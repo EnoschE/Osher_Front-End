@@ -2,8 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { useEffect, useState } from "react";
 import { allRoutes } from "../../Routes/AllRoutes";
-import DeleteDialog from "../Customers/DeleteDialog";
-import ProfileHeader from "../Admins/ProfileHeader";
+import DeleteDialog from "../Common/DeleteDialog";
 import { toast } from "react-toastify";
 import {
   isInfluencerLoggedIn,
@@ -16,6 +15,7 @@ import AvatarWithName from "../Common/AvatarWithName";
 import { deletePost, getPostById } from "../../Services/postsService";
 import { useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
+import ProfileHeader from "../Common/ProfileHeader";
 
 const PostDetails = () => {
   const { id } = useParams();

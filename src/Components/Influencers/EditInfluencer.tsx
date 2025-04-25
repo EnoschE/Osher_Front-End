@@ -1,22 +1,10 @@
 import { FormEvent, useEffect, useState } from "react";
-import { selectUser, UserState } from "../../Redux/Slices/userSlice";
-import CustomButton from "../Common/CustomButton";
-import CustomTextField, { Asterisk } from "../Common/CustomTextField";
-import { Box, Divider, Typography } from "@mui/material";
+import { UserState } from "../../Redux/Slices/userSlice";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import ImageUploader from "../Common/ImageUploader";
-import * as EmailValidator from "email-validator";
-import GoogleMapsTextField, { PlaceType } from "../Common/GoogleMapsTextField";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
-import {
-  getCustomerDetails,
-  updateCustomer,
-} from "../../Services/dashboardService";
-import { useDispatch, useSelector } from "../../Redux/reduxHooks";
 import { validateEmail, validatePassword } from "../../Utils/utils";
-import { updateProfile } from "../../Services/profileService";
 import CustomForm, { FormField } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
 import {
@@ -42,9 +30,7 @@ const defaultData = {
 
 const EditInfluencer = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(selectUser);
 
   const [data, setData] = useState<AccountSettingsData>(defaultData);
   const [errors, setErrors] = useState<AccountSettingsData>(defaultData);
@@ -116,11 +102,11 @@ const EditInfluencer = () => {
 
     setLoading(true);
     try {
-      let newEmail;
-      if (user.email?.trim() !== data.email?.trim()) {
-        newEmail = data.email;
-        // setUpdatingEmail(newEmail);
-      }
+      // let newEmail;
+      // if (user.email?.trim() !== data.email?.trim()) {
+      //   newEmail = data.email;
+      //   // setUpdatingEmail(newEmail);
+      // }
 
       const formData = new FormData();
 

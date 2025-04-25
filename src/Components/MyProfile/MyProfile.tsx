@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { useEffect, useState } from "react";
 import { allRoutes } from "../../Routes/AllRoutes";
-import ProfileHeader from "../Admins/ProfileHeader";
+import ProfileHeader from "../Common/ProfileHeader";
 import { toast } from "react-toastify";
 import {
   isBrandLoggedIn,

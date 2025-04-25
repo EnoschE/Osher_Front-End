@@ -1,9 +1,6 @@
 import { Typography } from "@mui/material";
 import CustomDialog from "../Common/CustomDialog";
 import { EmailOutlined, KeyOutlined } from "@mui/icons-material";
-import { useSelector } from "../../Redux/reduxHooks";
-import { selectColors } from "../../Redux/Slices/generalSlice";
-
 import CustomTextField from "../Common/CustomTextField";
 import CustomButton from "../Common/CustomButton";
 import { allRoutes } from "../../Routes/AllRoutes";
@@ -20,7 +17,6 @@ interface ForgotPasswordDialogProps {
 }
 
 const ForgotPasswordDialog = ({ open, onClose }: ForgotPasswordDialogProps) => {
-  const colors = useSelector(selectColors);
   const navigate = useNavigate();
   const { IconSquareBox } = useLoginStyles();
 

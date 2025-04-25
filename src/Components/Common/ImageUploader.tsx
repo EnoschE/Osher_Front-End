@@ -1,9 +1,8 @@
 import { Avatar, Box, IconButton, SxProps } from "@mui/material";
 import { useRef } from "react";
 import { toast } from "react-toastify";
-import { useSelector } from "../../Redux/reduxHooks";
-import { selectColors } from "../../Redux/Slices/generalSlice";
 import { CancelOutlined } from "@mui/icons-material";
+import colors from "../../Utils/colors";
 
 interface ImageUploaderProps {
   onUpdate: any;
@@ -22,7 +21,7 @@ const ImageUploader = ({
   className,
   sx,
 }: ImageUploaderProps) => {
-  const colors = useSelector(selectColors);
+
   const inputRef = useRef<any>(null);
 
   const handleImageUploader = (event: any) => {

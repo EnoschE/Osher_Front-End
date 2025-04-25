@@ -10,7 +10,7 @@ import { borderRadius } from "../../Utils/spacings";
 import { verifyEmailOtp } from "../../Services/profileService";
 import { useDispatch, useSelector } from "../../Redux/reduxHooks";
 import { saveEmail, selectUser } from "../../Redux/Slices/userSlice";
-import { selectColors } from "../../Redux/Slices/generalSlice";
+import colors from "../../Utils/colors";
 
 interface OtpVerifyDialogProps {
   open: boolean;
@@ -25,7 +25,6 @@ const OtpVerifyDialog = ({
 }: OtpVerifyDialogProps) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const colors = useSelector(selectColors);
   const { IconSquareBox } = useLoginStyles();
 
   const [otp, setOtp] = useState<string>("");

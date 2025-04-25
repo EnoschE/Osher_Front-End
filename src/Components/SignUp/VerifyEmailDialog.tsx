@@ -1,9 +1,7 @@
 import { Typography } from "@mui/material";
 import CustomDialog from "../Common/CustomDialog";
 import { EmailOutlined } from "@mui/icons-material";
-import { useSelector } from "../../Redux/reduxHooks";
-import { selectColors } from "../../Redux/Slices/generalSlice";
-
+import colors from "../../Utils/colors";
 import CustomButton from "../Common/CustomButton";
 import useLoginStyles from "../Login/loginStyles";
 
@@ -14,7 +12,6 @@ interface VerifyEmailDialogProps {
 
 const VerifyEmailDialog = ({ open, onClose }: VerifyEmailDialogProps) => {
   const { IconSquareBox } = useLoginStyles();
-  const colors = useSelector(selectColors);
 
   return (
     <CustomDialog open={open} onClose={onClose}>

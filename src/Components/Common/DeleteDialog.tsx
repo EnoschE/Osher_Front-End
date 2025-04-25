@@ -5,8 +5,6 @@ import CustomButton from "../Common/CustomButton";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useLoginStyles from "../Login/loginStyles";
-import { useSelector } from "../../Redux/reduxHooks";
-import { selectColors } from "../../Redux/Slices/generalSlice";
 
 interface ForgotPasswordDialogProps {
   open: boolean;
@@ -14,13 +12,15 @@ interface ForgotPasswordDialogProps {
   onDelete?: () => void;
   user: { name: string };
   userType:
+    | "Ad"
+    | "Post"
+    | "Brand"
+    | "Influencer"
     | "Admin"
     | "Customer"
     | "Technician"
     | "Installer"
-    | "Office Manager"
-    | "Manager"
-    | "Representative"
+    | "Utility Company"
     | "Installation Crew";
 }
 
@@ -31,9 +31,8 @@ const DeleteDialog = ({
   onDelete,
   user,
 }: ForgotPasswordDialogProps) => {
-  userType = userType === "Technician" ? "Installation Crew" : userType;
-  const colors = useSelector(selectColors);
   const { IconSquareBox } = useLoginStyles();
+  userType = userType === "Technician" ? "Installation Crew" : userType;
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -41,7 +40,6 @@ const DeleteDialog = ({
     setLoading(true);
     try {
       await onDelete?.();
-      console.log("Deleting...");
     } catch (error: any) {
       toast.error(error);
     }
@@ -59,7 +57,9 @@ const DeleteDialog = ({
         Delete {userType}
       </Typography>
       <Typography fontSize={16} textAlign='center' color='text.secondary'>
-        Are you sure you want to delete the account of {user.name}?
+        Are you sure you want to delete
+        {["Post", "Ad"].includes(userType) ? " " : " the account of "}
+        {user.name}?
       </Typography>
 
       <Box display='grid' gridTemplateColumns='1fr 1fr' gap={10} mt={32}>

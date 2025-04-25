@@ -2,8 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { useEffect, useState } from "react";
 import { allRoutes } from "../../Routes/AllRoutes";
-import DeleteDialog from "../Customers/DeleteDialog";
-import ProfileHeader from "../Admins/ProfileHeader";
+import DeleteDialog from "../Common/DeleteDialog";
+import ProfileHeader from "../Common/ProfileHeader";
 import { toast } from "react-toastify";
 import {
   isBrandLoggedIn,
@@ -13,7 +13,6 @@ import { deleteAd, getAdById } from "../../Services/adsService";
 import PageDetailsBlock from "../Common/PageDetailsBlock";
 import { PageDetailsField } from "../../Utils/types";
 import AvatarWithName from "../Common/AvatarWithName";
-import moment from "moment";
 import { useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
 

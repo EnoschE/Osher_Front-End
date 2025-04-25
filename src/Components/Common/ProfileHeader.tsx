@@ -1,16 +1,5 @@
-import {
-  Avatar,
-  Box,
-  Skeleton,
-  Tooltip,
-  Typography,
-  keyframes,
-} from "@mui/material";
+import { Box, Skeleton, Tooltip, Typography } from "@mui/material";
 import CustomButton from "../Common/CustomButton";
-// import CustomMarquee from "../Common/CustomMarquee";
-import { roles } from "../../Utils/tokenKeyValue";
-import { useSelector } from "../../Redux/reduxHooks";
-import { selectColors } from "../../Redux/Slices/generalSlice";
 import CustomMarquee from "../Common/CustomMarquee";
 import AnimatedHeading from "../Common/AnimatedHeading";
 import CustomAvatar from "../Common/CustomAvatar";

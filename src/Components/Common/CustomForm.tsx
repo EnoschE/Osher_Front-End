@@ -5,7 +5,6 @@ import CustomTextField, { Asterisk } from "./CustomTextField";
 import CustomButton from "./CustomButton";
 import React, { FormEvent } from "react";
 import AnimatedHeading from "./AnimatedHeading";
-import AnimatedBlock from "./AnimatedBlock";
 import CustomDropdown from "./CustomDropdown";
 import { DropDownOptionProps } from "../../Utils/types";
 

@@ -2,9 +2,6 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import colors from "../../Utils/colors";
-import { useSelector } from "../../Redux/reduxHooks";
-import { selectColors } from "../../Redux/Slices/generalSlice";
-
 import { styled } from "@mui/material";
 
 const StyledCalendar = styled(Calendar)(() => ({

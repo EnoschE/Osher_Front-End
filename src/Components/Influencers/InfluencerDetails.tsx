@@ -2,11 +2,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { useEffect, useState } from "react";
 import { allRoutes } from "../../Routes/AllRoutes";
-import DeleteDialog from "../Customers/DeleteDialog";
-import ProfileHeader from "../Admins/ProfileHeader";
+import DeleteDialog from "../Common/DeleteDialog";
+import ProfileHeader from "../Common/ProfileHeader";
 import { toast } from "react-toastify";
 import {
-  isBrandLoggedIn,
   isSuperAdminLoggedIn,
   isUserLoggedIn,
 } from "../../Services/userService";

@@ -12,14 +12,13 @@ import {
 } from "@mui/material";
 import CustomTablePagination from "./CustomTablePagination";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "../../../Redux/reduxHooks";
+import colors from "../../../Utils/colors";
 import { selectUser } from "../../../Redux/Slices/userSlice";
-import { selectColors } from "../../../Redux/Slices/generalSlice";
-
 import { allRoutes } from "../../../Routes/AllRoutes";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import { formatNumber } from "../../../Utils/utils";
+import { useSelector } from "../../../Redux/reduxHooks";
 
 interface HeaderProps {
   text: string;
@@ -73,7 +72,6 @@ const CustomTable = ({
   rowsPerPage = 10, // total rows to be displayed on table on one page
   onRowClick,
 }: CustomTableProps) => {
-  const colors = useSelector(selectColors);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
 

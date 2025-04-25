@@ -6,7 +6,6 @@ import {
   SettingsOutlined,
   Menu,
   KeyboardArrowLeftOutlined,
-  AccountCircleOutlined,
 } from "@mui/icons-material";
 import { StyledAppBar, StyledMenuBlock } from "./navbarStyles";
 import CustomMenu from "../Common/CustomMenu";
@@ -17,11 +16,10 @@ import { useDispatch } from "react-redux";
 import { resetUserState, selectUser } from "../../Redux/Slices/userSlice";
 import { OsherLogo } from "../../Utils/Images";
 import { useSelector } from "../../Redux/reduxHooks";
-import { selectColors } from "../../Redux/Slices/generalSlice";
+import colors from "../../Utils/colors";
 import { sidebarWidth } from "../../Utils/spacings";
 import CustomAvatar from "../Common/CustomAvatar";
 import CustomButton from "../Common/CustomButton";
-import AnimatedBlock from "../Common/AnimatedBlock";
 
 const Navbar = ({
   navbarForNonProtectedRoutes,
@@ -34,7 +32,6 @@ const Navbar = ({
   backButtonPath?: string;
   hideBackButton?: boolean;
 }) => {
-  const colors = useSelector(selectColors);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -118,19 +115,18 @@ const Navbar = ({
           onClick={handleLogoClick}
         />
         {!hideBackButton && (
-          <AnimatedBlock>
-            <CustomButton
-              sx={{ py: 2, px: 6 }}
-              variant='outlined'
-              color='secondary'
-              onClick={() =>
-                backButtonPath ? navigate(backButtonPath) : navigate(-1)
-              }
-              startIcon={<KeyboardArrowLeftOutlined fontSize='small' />}
-            >
-              Back
-            </CustomButton>
-          </AnimatedBlock>
+          <CustomButton
+            className='animated-block'
+            sx={{ py: 2, px: 6 }}
+            variant='outlined'
+            color='secondary'
+            onClick={() =>
+              backButtonPath ? navigate(backButtonPath) : navigate(-1)
+            }
+            startIcon={<KeyboardArrowLeftOutlined fontSize='small' />}
+          >
+            Back
+          </CustomButton>
         )}
       </Box>
 

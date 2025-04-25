@@ -6,8 +6,7 @@ import {
   CheckCircleOutline,
   LockOutlined,
 } from "@mui/icons-material";
-import { useSelector } from "../../Redux/reduxHooks";
-import { selectColors } from "../../Redux/Slices/generalSlice";
+import colors from "../../Utils/colors";
 import CustomTextField from "../Common/CustomTextField";
 import CustomButton from "../Common/CustomButton";
 import { allRoutes } from "../../Routes/AllRoutes";
@@ -40,7 +39,6 @@ const SetPasswordDialog = ({
   token = "",
   userId = "",
 }: SetPasswordDialogProps) => {
-  const colors = useSelector(selectColors);
   const navigate = useNavigate();
   const { IconSquareBox } = useLoginStyles();
 

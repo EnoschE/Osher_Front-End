@@ -8,15 +8,14 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   justifyContent: "space-between",
   WebkitBackdropFilter: "saturate(200%) blur(15px)",
   backdropFilter: "saturate(200%) blur(15px)",
-  backgroundColor: "rgba(255, 255, 255, 0.65)",
-  // backgroundColor: "white",
+  backgroundColor: "rgba(255, 255, 255, 0.5)",
+
+  // TODO: work on ADS of epom only
+
   boxShadow: "none",
-  // color: colors.text,
-  // borderBottom: `1px solid ${colors.border}`,
   padding: "8px 61px",
-  // position: "sticky",
   bottom: 0,
-  top: 'auto',
+  top: "auto",
   zIndex: 10,
   height: navbarHeight,
 

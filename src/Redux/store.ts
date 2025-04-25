@@ -1,9 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./Slices/userSlice";
-import dashboardSlice, { fetchDashboardData } from "./Slices/dashboardSlice";
-import surveySlice from "./Slices/surveySlice";
-// import { fetchColors, fetchLogo } from "./Slices/generalSlice";
-import generalSlice from "./Slices/generalSlice";
+import dashboardSlice from "./Slices/dashboardSlice";
 import categoriesSlice, { fetchCategories } from "./Slices/categoriesSlice";
 
 export const store = configureStore({
@@ -11,13 +8,10 @@ export const store = configureStore({
     user: userSlice,
     dashboard: dashboardSlice,
     categories: categoriesSlice,
-    survey: surveySlice,
-    general: generalSlice, // TODO: REMOVE THIS AS WELL
   },
 });
 
 store.dispatch(fetchCategories());
-// store.dispatch(fetchDashboardData());
-// store.dispatch(fetchColors());
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

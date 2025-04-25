@@ -4,8 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Box, Divider, Tooltip } from "@mui/material";
 import { borderRadius } from "../../Utils/spacings";
-import { useSelector } from "../../Redux/reduxHooks";
-import { selectColors } from "../../Redux/Slices/generalSlice";
+import colors from "../../Utils/colors";
 
 interface CustomMenuProps {
   anchorComponent?: any;
@@ -24,8 +23,6 @@ const CustomMenu = ({
   anchorComponent: AnchorComponent = Button,
   options = [],
 }: CustomMenuProps) => {
-  const colors = useSelector(selectColors);
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);

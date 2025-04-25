@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { PlaceType } from "../../Components/Common/GoogleMapsTextField";
 
 export interface BillDataState {
   file?: string;
@@ -15,7 +14,6 @@ export interface UserState {
   password?: string;
   address?: string;
   bill?: number | string;
-  addressObject?: PlaceType | any;
   role?: string;
   phone?: string;
   picture?: string;
@@ -30,7 +28,6 @@ const initialState: UserState = {
   password: "",
   address: "",
   bill: undefined,
-  addressObject: null,
   role: "",
   phone: "",
   picture: "",
@@ -67,8 +64,7 @@ export const userSlice = createSlice({
     saveBillDetails: (state, action: PayloadAction<BillDataState>) => {
       state.billData = action.payload;
     },
-    saveAddressObject: (state, action: PayloadAction<PlaceType | null>) => {
-      state.addressObject = action.payload;
+    saveAddressObject: (state, action: PayloadAction<any | null>) => {
       state.address = action.payload?.description || "";
     },
     resetUserState: (state) => {
@@ -77,7 +73,6 @@ export const userSlice = createSlice({
       state.email = initialState.email;
       state.password = initialState.password;
       state.address = initialState.address;
-      state.addressObject = initialState.addressObject;
       state.bill = initialState.bill;
       state.role = initialState.role;
       state.phone = initialState.phone;
@@ -102,7 +97,5 @@ export const selectUser = (state: RootState) => state.user;
 export const selectBill = (state: RootState) => state.user.bill;
 export const selectBillData = (state: RootState) => state.user.bill;
 export const selectAddress = (state: RootState) => state.user.address;
-export const selectAddressObject = (state: RootState) =>
-  state.user.addressObject;
 
 export default userSlice.reducer;

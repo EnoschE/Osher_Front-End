@@ -83,7 +83,7 @@ const Influencers = () => {
         heading='Influencers'
         subHeading='These are all the influencers'
         tableData={data}
-        addButtonText='Add Brand'
+        addButtonText='Add Influencer'
         addButtonPath={allRoutes.ADD_INFLUENCER}
         detailsPagePath={allRoutes.VIEW_INFLUENCER}
         tableHeaders={tableHeaders}
