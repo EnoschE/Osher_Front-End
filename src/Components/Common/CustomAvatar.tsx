@@ -6,7 +6,7 @@ import { borderRadius } from "../../Utils/spacings";
 interface CustomAvatarProps {
   src?: string;
   isSquarish?: boolean;
-  size?: "xs" | "sm" | "lg";
+  size?: "xs" | "sm" | "lg" | "xl";
   sx?: SxProps;
   showLoader?: boolean;
 }
@@ -19,19 +19,20 @@ const CustomAvatar = ({
   size = "sm",
   ...props
 }: CustomAvatarProps) => {
-  const sizeMap = { xs: 24, sm: 40, lg: 130 };
-  const borderWidth = size === "lg" ? 2 : 1;
+  const sizeMap = { xs: 24, sm: 40, lg: 130, xl: 180 };
+  const borderWidth = size === "lg" || size === "xl" ? 2 : 1;
   const radius = isSquarish
-    ? size === "lg"
+    ? size === "lg" || size === "xl"
       ? borderRadius.xl
       : borderRadius.sm
     : "50%";
 
-  const [loading, setLoading] = useState(!!src);
+  // const [loading, setLoading] = useState(!!src);
+  const [loading, setLoading] = useState(true);
 
   return (
     <Box
-      position="relative"
+      position='relative'
       sx={{
         width: sizeMap[size],
         height: sizeMap[size],
@@ -49,6 +50,9 @@ const CustomAvatar = ({
             minHeight: sizeMap[size],
             border: `${borderWidth}px solid ${colors.border}`,
             borderRadius: radius,
+            boxShadow: ["lg", "xl"].includes(size)
+              ? `rgba(23, 58, 90, 0.25) 0px 50px 50px -10px` // TODO: extract color from img later
+              : "none",
           }}
           src={src}
           onLoad={() => setLoading(false)}
@@ -57,7 +61,7 @@ const CustomAvatar = ({
       )}
 
       <Skeleton
-        variant="circular"
+        variant='circular'
         sx={{
           position: "absolute",
           inset: 0,
@@ -69,7 +73,7 @@ const CustomAvatar = ({
           borderRadius: radius,
           bgcolor: "#EBEBEE",
         }}
-        animation="wave"
+        animation='wave'
       />
     </Box>
   );

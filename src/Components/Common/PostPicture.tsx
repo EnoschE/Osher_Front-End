@@ -29,7 +29,7 @@ const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
       {
         threshold: 0.1,
         rootMargin: "0px 0px 150px 0px",
-      },
+      }
     );
 
     observer.observe(containerRef.current);
@@ -42,10 +42,11 @@ const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
   return (
     <Box
       ref={containerRef}
-      position="relative"
+      position='relative'
       sx={{
         minHeight: isVisible ? "auto" : 350,
         borderRadius: borderRadius.xl,
+        width: "100%",
         // boxShadow: "rgba(168, 81, 0, 0.15) 0px 65px 50px -30px",
         boxShadow: `rgba(23, 58, 90, 0.25) 0px 50px 50px -10px`,
         cursor: onClick ? "pointer" : "default",
@@ -55,7 +56,7 @@ const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
     >
       {inView && (
         <Box
-          component="img"
+          component='img'
           src={src}
           sx={{
             maxWidth: "100%",
@@ -66,14 +67,14 @@ const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
             border: `0.5px solid ${colors.border}`,
             display: loaded ? "block" : "none",
           }}
-          alt="Post Picture"
+          alt='Post Picture'
           onLoad={() => setLoaded(true)}
           {...props}
         />
       )}
 
       <Skeleton
-        variant="rectangular"
+        variant='rectangular'
         sx={{
           position: "absolute",
           inset: 0,
@@ -84,8 +85,9 @@ const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
           display: isVisible ? "none" : "block",
           borderRadius: borderRadius.xl,
           border: `0.5px solid ${colors.border}`,
+          bgcolor: "#EBEBEE",
         }}
-        animation="wave"
+        animation='wave'
       />
     </Box>
   );

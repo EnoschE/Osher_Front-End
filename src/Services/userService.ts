@@ -186,3 +186,5 @@ export const isInfluencerLoggedIn = (): boolean => {
 export const verifyTokenService = (data: any) => {
   return UserService.verifyTokenService(data);
 };
+
+// const output = 60 + 13 + 60 + 42 + 60 + 38 + 43 + 120 + 4 + 31 + 60 + 17 + 60 + 28 + 49 + 48 + 60 + 7 + 57 + 36;

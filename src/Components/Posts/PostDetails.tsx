@@ -33,16 +33,23 @@ const PostDetails = () => {
   }, []);
 
   const getDetails = async () => {
-    if (!id) navigate(allRoutes.POSTS);
+    if (!id) return navigate(isLoggedIn ? allRoutes.POSTS : allRoutes.FEED);
 
     setLoading(true);
     try {
       const data = await getPostById((id || "")?.toString());
-      setData(data);
+      setTimeout(() => {
+        setData(data);
+      }, 2000);
     } catch (error: any) {
+      if (error === "This post is not available") {
+        navigate(isLoggedIn ? allRoutes.POSTS : allRoutes.FEED);
+      }
       toast.error(error);
     }
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   };
 
   const openDeleteDialog = () => setDeleteDialog(true);
@@ -92,7 +99,7 @@ const PostDetails = () => {
       <ProfileHeader
         isSquarish
         data={data}
-        userType="Post"
+        userType='Post'
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
         hideButtons={
@@ -109,7 +116,7 @@ const PostDetails = () => {
       <DeleteDialog
         open={deleteDialog}
         onClose={closeDeleteDialog}
-        userType="Post"
+        userType='Post'
         user={data}
         onDelete={handleDelete}
       />

@@ -227,7 +227,7 @@ const routesWithComponents = {
   NOT_FOUND: {
     path: "*",
     Component: NotFound,
-    isPrivate: true,
+    isBoth: true,
   },
 };
 

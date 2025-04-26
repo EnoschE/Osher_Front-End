@@ -22,11 +22,11 @@ const PageDetailsBlock = ({
   return (
     <>
       <Box
-        className="animated-block"
-        display="grid"
+        className='animated-block'
+        display='grid'
         gridTemplateColumns={{ xs: "1fr", md: "300px 1fr" }}
-        gap={{ xs: 16, md: 32 }}
-        alignItems="center"
+        gap={{ xs: 16, md: 20 }}
+        alignItems='center'
         mt={45}
         sx={{ animationDelay: `${animationDelay}s` }}
       >
@@ -35,21 +35,21 @@ const PageDetailsBlock = ({
             {isLoading ? (
               <>
                 <Skeleton
-                  variant="text"
-                  width="100%"
+                  variant='text'
+                  width='100%'
                   height={20}
                   sx={{ borderRadius: borderRadius.sm }}
                 />
                 <Skeleton
-                  variant="text"
-                  width="100%"
+                  variant='text'
+                  width='100%'
                   height={20}
-                  sx={{ borderRadius: borderRadius.sm }}
+                  sx={{ borderRadius: borderRadius.sm, maxWidth: 450 }}
                 />
               </>
             ) : (
               <>
-                <Typography variant="h6">{field.text}</Typography>
+                <Typography variant='h6'>{field.text}</Typography>
                 <Typography
                   component={field.customComponent ? "span" : "p"}
                   whiteSpace={

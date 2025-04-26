@@ -11,6 +11,7 @@ import colors from "../../Utils/colors";
 import moment from "moment";
 import PostPicture from "../Common/PostPicture";
 import CustomAvatar from "../Common/CustomAvatar";
+import AnimatedHeading from "../Common/AnimatedHeading";
 
 type FeedCardItem = {
   _id: string;
@@ -26,20 +27,23 @@ type FeedCardItem = {
 const FeedCard = ({
   item,
   isLoading,
+  animationDelay,
 }: {
   item?: FeedCardItem;
   isLoading?: boolean;
+  animationDelay?: number;
 }) => {
   const navigate = useNavigate();
 
   return (
     <Box
-      className="animated-block"
-      position="relative"
-      display="flex"
-      flexDirection="column"
-      gap="28px"
-      width="100%"
+      className='animated-block'
+      position='relative'
+      display='flex'
+      flexDirection='column'
+      gap='28px'
+      width='100%'
+      sx={{ animationDelay: `${animationDelay}s` }}
     >
       <Box
         sx={{
@@ -71,13 +75,13 @@ const FeedCard = ({
       >
         <CustomAvatar
           src={item?.userPicture}
-          size="sm"
+          size='sm'
           showLoader={isLoading}
         />
-        <Box display="flex" flexDirection="column">
+        <Box display='flex' flexDirection='column'>
           {isLoading ? (
             <Skeleton
-              variant="text"
+              variant='text'
               width={100}
               height={16}
               sx={{ borderRadius: borderRadius.sm }}
@@ -85,7 +89,7 @@ const FeedCard = ({
           ) : (
             <Typography
               // color='white'
-              variant="h6"
+              variant='h6'
             >
               {item?.userName}
             </Typography>
@@ -94,7 +98,7 @@ const FeedCard = ({
             <Typography
               // color='lightgray'
               // color='text.secondary'
-              variant="body2"
+              variant='body2'
             >
               {moment(item?.publishDate).fromNow()}
             </Typography>
@@ -112,34 +116,34 @@ const FeedCard = ({
       {isLoading ? (
         <Box>
           <Skeleton
-            variant="text"
-            width="100%"
+            variant='text'
+            width='100%'
             height={16}
             sx={{ borderRadius: borderRadius.sm }}
           />
           <Skeleton
-            variant="text"
-            width="100%"
+            variant='text'
+            width='100%'
             height={16}
             sx={{ borderRadius: borderRadius.sm }}
           />
           <Skeleton
-            variant="text"
-            width="100%"
+            variant='text'
+            width='100%'
             height={16}
             sx={{ borderRadius: borderRadius.sm }}
           />
           <Skeleton
-            variant="text"
-            width="85%"
+            variant='text'
+            width='85%'
             height={16}
             sx={{ borderRadius: borderRadius.sm }}
           />
         </Box>
       ) : (
-        <Box display="flex" flexDirection="column" gap={8}>
+        <Box display='flex' flexDirection='column' gap={8}>
           <Typography fontWeight={500}>{item?.name}</Typography>
-          <Typography color="text.secondary" whiteSpace="pre-wrap">
+          <Typography color='text.secondary' whiteSpace='pre-wrap'>
             {item?.description}
           </Typography>
         </Box>
@@ -171,8 +175,9 @@ const Feed = () => {
 
   return (
     <PageLayout hideBackButton hideSidebar={!user._id}>
+      <AnimatedHeading heading={`Our Feed`} />
+
       <Box
-        // className='animated-block'
         sx={{
           marginInline: "auto",
           display: "flex",
@@ -183,6 +188,7 @@ const Feed = () => {
           padding: "12px",
           gap: "20px",
           maxWidth: "600px",
+          mt: 20,
         }}
       >
         {loading ? (
@@ -201,7 +207,7 @@ const Feed = () => {
         ) : (
           data?.map((item: FeedCardItem, index: number) => (
             <React.Fragment key={index}>
-              <FeedCard key={index} item={item} />
+              <FeedCard key={index} item={item} animationDelay={index * 0.1} />
               {index !== data?.length - 1 && (
                 <Box
                   sx={{

@@ -33,7 +33,8 @@ const InfluencerDetails = () => {
   }, []);
 
   const getDetails = async (onlyGetProject?: boolean) => {
-    if (!id) navigate(allRoutes.INFLUENCERS);
+    if (!id)
+      return navigate(isLoggedIn ? allRoutes.INFLUENCERS : allRoutes.FEED);
 
     setLoading(!onlyGetProject);
     try {
@@ -43,6 +44,8 @@ const InfluencerDetails = () => {
       const adsOfInfluencer: any = await getPostsOfInfluencer(id || "");
       setAds(adsOfInfluencer || []);
     } catch (error: any) {
+      if (error === "Invalid influencer id")
+        navigate(isLoggedIn ? allRoutes.INFLUENCERS : allRoutes.FEED);
       toast.error(error);
     }
     setLoading(false);
@@ -82,7 +85,7 @@ const InfluencerDetails = () => {
     <PageLayout hideBackButton={!isLoggedIn} hideSidebar={!isLoggedIn}>
       <ProfileHeader
         data={data}
-        userType="Influencer"
+        userType='Influencer'
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
         hideButtons={!isSuperAdminLoggedIn()}
@@ -111,7 +114,7 @@ const InfluencerDetails = () => {
       <DeleteDialog
         open={deleteDialog}
         onClose={closeDeleteDialog}
-        userType="Influencer"
+        userType='Influencer'
         user={data}
         onDelete={handleDelete}
       />

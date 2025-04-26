@@ -1,5 +1,6 @@
 export const allRoutes = {
   HOME: "/",
+  NOT_FOUND: "/*",
   LOGIN: "/login",
   SIGN_UP: "/register",
   RESET_PASSWORD: "/reset-password/:userId?/:token?",

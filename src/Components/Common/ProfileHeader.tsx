@@ -4,6 +4,8 @@ import CustomMarquee from "../Common/CustomMarquee";
 import AnimatedHeading from "../Common/AnimatedHeading";
 import CustomAvatar from "../Common/CustomAvatar";
 import { borderRadius } from "../../Utils/spacings";
+import PostPicture from "./PostPicture";
+import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 
 // const fadeUp = keyframes`
 //   0% {
@@ -75,33 +77,46 @@ const ProfileHeader = ({
 }: ProfileHeaderProps) => {
   return (
     <>
-      <Box className="animated-block">
+      <Box className='animated-block'>
         <CustomMarquee text={data?.name || userType} />
       </Box>
 
-      <Box display="flex" alignItems="center" gap={8} flexDirection="column">
-        <Box
-        // className='animated-block'
-        // sx={{ animationDelay: `${2 / 21}s` }}
-        >
-          <CustomAvatar
-            isSquarish={isSquarish}
-            size="lg"
-            sx={{ mt: "-30px", mb: 10, filter: "blur(15px)", opacity: 0.7 }}
+      <Box display='flex' alignItems='center' gap={8} flexDirection='column'>
+        {/* <Box
+          // className='animated-block'
+          // sx={{ animationDelay: `${2 / 21}s` }}
+          display='flex'
+          flexDirection='column'
+          width='100%'
+          alignItems='center'
+        > */}
+        {isSquarish ? (
+          <PostPicture
             src={data?.picture}
-            showLoader={isLoading}
+            sx={{ mt: "-90px", mb: 10, maxWidth: 450 }}
           />
+        ) : (
+          <>
+            {/* <CustomAvatar
+                isSquarish={isSquarish}
+                size='lg'
+                sx={{ mt: "-30px", mb: 10, filter: "blur(15px)", opacity: 0.7 }}
+                src={data?.picture}
+                showLoader={isLoading}
+              /> */}
 
-          <CustomAvatar
-            isSquarish={isSquarish}
-            size="lg"
-            sx={{ mt: "-160px", mb: 10 }}
-            src={data?.picture}
-            showLoader={isLoading}
-          />
-        </Box>
+            <CustomAvatar
+              isSquarish={isSquarish}
+              size='xl'
+              sx={{ mt: "-90px", mb: 10 }}
+              src={data?.picture}
+              showLoader={isLoading}
+            />
+          </>
+        )}
+        {/* </Box> */}
 
-        <Box className="animated-block" sx={{ animationDelay: `${3 / 21}s` }}>
+        <Box className='animated-block' sx={{ animationDelay: `${3 / 21}s` }}>
           {isLoading ? (
             <Skeleton
               sx={{
@@ -114,7 +129,7 @@ const ProfileHeader = ({
             <AnimatedHeading
               heading={data?.name}
               charactersBaseAnimation
-              animationSpeed="fast"
+              animationSpeed='fast'
             />
           )}
         </Box>
@@ -130,26 +145,30 @@ const ProfileHeader = ({
           {data?.name}
         </Typography> */}
         <Typography
-          className="animated-block"
+          className='animated-block'
           sx={{ animationDelay: `${4 / 21}s` }}
+          color='text.secondary'
         >
           {userType}
         </Typography>
+
         {hideButtons ? (
           <></>
         ) : (
           <Box
-            className="animated-block"
+            className='animated-block'
             sx={{ animationDelay: `${5 / 21}s` }}
-            display="grid"
+            display='grid'
             gridTemplateColumns={hideDeleteButton ? "1fr" : "1fr 1fr"}
             gap={8}
             mt={12}
           >
             <CustomButton
+              size='small'
               disabled={isLoading}
-              variant="outlined"
+              variant='outlined'
               onClick={handleEdit}
+              startIcon={<EditOutlined />}
             >
               Edit
             </CustomButton>
@@ -157,10 +176,12 @@ const ProfileHeader = ({
               <Tooltip arrow title={disableDeleteButton ? tooltipText : ""}>
                 <span>
                   <CustomButton
+                    size='small'
                     disabled={disableDeleteButton || isLoading}
-                    color="error"
-                    variant="outlined"
+                    color='error'
+                    variant='outlined'
                     onClick={handleDelete}
+                    startIcon={<DeleteOutline />}
                   >
                     Delete
                   </CustomButton>
@@ -170,6 +191,55 @@ const ProfileHeader = ({
           </Box>
         )}
       </Box>
+
+      {/* <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          position: "sticky",
+          bottom: {
+            xs: "2px",
+            sm: "4px",
+          },
+          padding: "12px",
+          gap: "12px",
+          borderRadius: "16px",
+          WebkitBackdropFilter: "saturate(180%) blur(20px)",
+          backdropFilter: "saturate(180%) blur(20px)",
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
+          border: `1px solid ${colors.border}`,
+          boxShadow: "rgba(17, 12, 46, 0.1) 0px 28px 60px 0px",
+          overflow: "hidden",
+          m: { xs: "32px auto 0 auto", sm: "32px 0 0 auto" },
+
+          animationDelay: "0.05s",
+
+          "& button": {
+            animationDelay: "0.47s",
+            "&:nth-child(2)": {
+              animationDelay: "0.52s",
+            },
+          },
+        }}
+        className='floating-action-buttons'
+      >
+        <CustomButton
+          className='slide-up-bounce'
+          variant='outlined'
+          // onClick={() => setEditMode(true)}
+          startIcon={<EditOutlined />}
+        >
+          Edit
+        </CustomButton>
+        <CustomButton
+          className='slide-up-bounce'
+          variant='outlined'
+          // onClick={() => setOpenDeleteDialog(true)}
+          startIcon={<DeleteOutline />}
+        >
+          Delete
+        </CustomButton>
+      </Box> */}
     </>
   );
 };

@@ -6,6 +6,7 @@ import { allRoutes } from "../../Routes/AllRoutes";
 import colors from "../../Utils/colors";
 import Navbar from "../Navbar/Navbar";
 import { navbarHeight } from "../../Utils/spacings";
+import { isUserLoggedIn } from "../../Services/userService";
 
 const fadeUpAnimation = keyframes`
   0% {
@@ -27,8 +28,10 @@ const fadeUpAnimation = keyframes`
 
 const NotFound = () => {
   const navigate = useNavigate();
+  const isLoggedIn = isUserLoggedIn();
 
-  const navigateToHome = () => navigate(allRoutes.DASHBOARD);
+  const navigateToHome = () =>
+    navigate(isLoggedIn ? allRoutes.DASHBOARD : allRoutes.HOME);
 
   return (
     <>
@@ -57,9 +60,11 @@ const NotFound = () => {
           },
         }}
       >
-        <Typography variant="h1">404</Typography>
-        <Typography variant="h4">Page not found!</Typography>
-        <CustomButton onClick={navigateToHome}>Back to Dashboard</CustomButton>
+        <Typography variant='h1'>404</Typography>
+        <Typography variant='h4'>Page not found!</Typography>
+        <CustomButton onClick={navigateToHome}>
+          Back to {isLoggedIn ? `Dashboard` : "Home"}
+        </CustomButton>
       </Box>
     </>
   );
