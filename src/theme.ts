@@ -27,13 +27,9 @@ const createAppTheme = () => {
       },
       success: {
         main: colors.success,
-        light: colors.successBg,
-        dark: colors.successLight,
       },
       error: {
         main: colors.error,
-        light: colors.errorBg,
-        dark: colors.errorLight,
       },
     },
 
@@ -101,7 +97,7 @@ const createAppTheme = () => {
         styleOverrides: {
           root: {
             "& .link, &.link": {
-              color: colors.link,
+              color: colors.primary,
               cursor: "pointer",
             },
           },
@@ -235,13 +231,13 @@ const createAppTheme = () => {
               },
 
               "&.MuiButton-outlinedError": {
-                borderColor: colors.errorLight,
-                color: colors.errorLight,
+                borderColor: colors.error ,
+                color: colors.error ,
 
                 "&:disabled": {
-                  color: colors.errorLight + 40,
-                  borderColor: colors.errorLight + 60,
-                  backgroundColor: colors.errorLight + 20,
+                  color: colors.error + 90,
+                  borderColor: colors.error + 70,
+                  backgroundColor: colors.error + 20,
                 },
               },
             },
@@ -285,7 +281,7 @@ const createAppTheme = () => {
         styleOverrides: {
           root: {
             thead: {
-              background: colors.lightGray,
+              background: "#f6f6f6",
 
               th: {
                 borderBottom: 0,

@@ -11,7 +11,6 @@ import colors from "../../Utils/colors";
 import moment from "moment";
 import PostPicture from "../Common/PostPicture";
 import CustomAvatar from "../Common/CustomAvatar";
-import AnimatedHeading from "../Common/AnimatedHeading";
 
 type FeedCardItem = {
   _id: string;
@@ -57,14 +56,14 @@ const FeedCard = ({
           zIndex: 1,
           WebkitBackdropFilter: "blur(12px) saturate(200%)",
           backdropFilter: "blur(12px) saturate(200%)",
-          backgroundColor: "rgba(256,256,256, 0.5)",
+          backgroundColor: "rgba(256,256,256, 0.65)",
           // backgroundColor: "rgba(0,0,0, 0.3)",
           borderRadius: borderRadius.lg,
           cursor: "pointer",
           transition: "all 0.3s ease",
 
           "&:hover": {
-            backgroundColor: "rgba(256,256,256, 0.5)",
+            backgroundColor: "rgba(256,256,256, 0.75)",
           },
         }}
         onClick={() =>
@@ -87,19 +86,10 @@ const FeedCard = ({
               sx={{ borderRadius: borderRadius.sm }}
             />
           ) : (
-            <Typography
-              // color='white'
-              variant='h6'
-            >
-              {item?.userName}
-            </Typography>
+            <Typography variant='h6'>{item?.userName}</Typography>
           )}
           {!isLoading && (
-            <Typography
-              // color='lightgray'
-              // color='text.secondary'
-              variant='body2'
-            >
+            <Typography variant='body2'>
               {moment(item?.publishDate).fromNow()}
             </Typography>
           )}
@@ -175,7 +165,7 @@ const Feed = () => {
 
   return (
     <PageLayout hideBackButton hideSidebar={!user._id}>
-      <AnimatedHeading heading={`Our Feed`} />
+      {/* <AnimatedHeading heading={`Our Feed`} /> */}
 
       <Box
         sx={{
@@ -188,7 +178,7 @@ const Feed = () => {
           padding: "12px",
           gap: "20px",
           maxWidth: "600px",
-          mt: 20,
+          // mt: 20,
         }}
       >
         {loading ? (
@@ -202,7 +192,7 @@ const Feed = () => {
                 marginBlock: "52px",
               }}
             />
-            <FeedCard isLoading />
+            <FeedCard isLoading animationDelay={0.1}/>
           </>
         ) : (
           data?.map((item: FeedCardItem, index: number) => (

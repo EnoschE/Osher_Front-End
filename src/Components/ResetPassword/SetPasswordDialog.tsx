@@ -117,14 +117,14 @@ const SetPasswordDialog = ({
         {passwordSet ? <CheckCircleOutline /> : <LockOutlined />}
       </IconSquareBox>
 
-      <Typography variant="h2" my={16} textAlign="center">
+      <Typography variant='h2' my={16} textAlign='center'>
         {passwordSet ? "Check your email" : "Set new password"}
       </Typography>
       <Typography
         fontSize={16}
-        textAlign="center"
+        textAlign='center'
         mb={32}
-        color="text.secondary"
+        color='text.secondary'
       >
         {passwordSet
           ? "Your password has bee successfully reset click below to log in magically."
@@ -135,46 +135,44 @@ const SetPasswordDialog = ({
         <>
           <CustomTextField
             autoFocus
-            name="password"
-            label="Password"
-            type="password"
+            name='password'
+            label='Password'
+            type='password'
             bottom={16}
             value={data.password}
             onChange={handleOnChange}
             error={errors.password}
           />
           <CustomTextField
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
+            name='confirmPassword'
+            label='Confirm Password'
+            type='password'
             bottom={16}
             value={data.confirmPassword}
             onChange={handleOnChange}
             error={errors.confirmPassword}
           />
 
-          <Box display="flex" alignItems="center" gap={6} mb={16}>
+          <Box display='flex' alignItems='center' gap={6} mb={16}>
             <CheckCircle
               sx={{
                 color:
-                  data.password?.length >= 8
-                    ? colors.successLight
-                    : colors.border,
+                  data.password?.length >= 8 ? colors.success : colors.border,
               }}
             />
-            <Typography color="text.secondary">
+            <Typography color='text.secondary'>
               Must be at least 8 characters
             </Typography>
           </Box>
-          <Box display="flex" alignItems="center" gap={6} mb={32}>
+          <Box display='flex' alignItems='center' gap={6} mb={32}>
             <CheckCircle
               sx={{
                 color: containsSpecialCharacter(data.password)
-                  ? colors.successLight
+                  ? colors.success
                   : colors.border,
               }}
             />
-            <Typography color="text.secondary">
+            <Typography color='text.secondary'>
               Must Contain one special character
             </Typography>
           </Box>
@@ -192,7 +190,7 @@ const SetPasswordDialog = ({
       {passwordSet && (
         <CustomButton
           fullWidth
-          variant="text"
+          variant='text'
           startIcon={<ArrowBack />}
           onClick={handleBackToLogin}
           sx={{ color: colors.text, mt: 24, py: 5 }}

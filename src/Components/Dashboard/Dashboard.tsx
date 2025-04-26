@@ -1,4 +1,10 @@
-import { useEffect } from "react";
+declare global {
+  interface Window {
+    EpomAdVideoPlayer: any;
+  }
+}
+
+import { useEffect, useRef } from "react";
 import { Box, Skeleton, Typography } from "@mui/material";
 import PageLayout from "../PageLayout/PageLayout";
 import { useDispatch, useSelector } from "../../Redux/reduxHooks";
@@ -35,14 +41,14 @@ const DashboardCard = ({
 
   return isLoading ? (
     <Skeleton
-      variant="rectangular"
-      width="100%"
+      variant='rectangular'
+      width='100%'
       height={251}
       sx={{ borderRadius: borderRadius.md }}
     />
   ) : (
     <Box
-      className="animated-block"
+      className='animated-block'
       sx={{
         padding: "14px 24px",
         borderRadius: borderRadius.md,
@@ -68,7 +74,7 @@ const DashboardCard = ({
         fontSize={140}
         animationDelay={animationDelay}
       />
-      <Typography variant="h5" display="flex" alignItems="center" gap={8}>
+      <Typography variant='h5' display='flex' alignItems='center' gap={8}>
         {text} <ArrowButton onClick={onClick} />
       </Typography>
     </Box>
@@ -83,9 +89,48 @@ const Dashboard = () => {
   const isBrand = isBrandLoggedIn();
   const isInfluencer = isInfluencerLoggedIn();
   const isSuperAdmin = isSuperAdminLoggedIn();
+  const adContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dispatch(fetchDashboardData());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const loadScript = (src: string) => {
+      return new Promise<void>((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.async = true;
+        script.onload = () => resolve();
+        script.onerror = () => reject();
+        document.body.appendChild(script);
+      });
+    };
+
+    const loadCSS = (href: string) => {
+      const link = document.createElement("link");
+      link.href = href;
+      link.rel = "stylesheet";
+      document.head.appendChild(link);
+    };
+
+    const initPlayer = () => {
+      if (window.EpomAdVideoPlayer) {
+        new window.EpomAdVideoPlayer({
+          adTagUrl:
+            "https://serve.epomadserver.com/zQ44YJC2qrWqXq21uvTJIhNhDVazX15TtuL1aANzsrJu4lawq1b1_1S7zGidfl_B0U35xuBBCDKZiO39GfjIjeRGk2skRwUw",
+          mainVideo: "https://cdn.epomadserver.com/video/sample.mp4",
+          mainVideoPoster: "https://cdn.epomadserver.com/video/poster.webp",
+          width: 480,
+          height: 320,
+        });
+      }
+    };
+
+    loadCSS("https://cdn.epomadserver.com/evap/0.1/evap.css");
+    loadScript("https://cdn.epomadserver.com/evap/0.1/evap.js")
+      .then(() => initPlayer())
+      .catch((err) => console.error("Failed to load Epom player", err));
   }, []);
 
   const cards = [
@@ -130,9 +175,9 @@ const Dashboard = () => {
       />
 
       <Typography
-        variant="body2"
+        variant='body2'
         mb={32}
-        className="animated-block"
+        className='animated-block'
         style={{ animationDelay: `${4 / 21}s` }}
       >
         Let's check your stats!
@@ -151,7 +196,7 @@ const Dashboard = () => {
                 key={index}
                 isLoading
                 digit={0}
-                text={""}
+                text=''
                 animationDelay={index * 0.2 + 0.2}
                 onClick={() => undefined}
               />
@@ -166,7 +211,9 @@ const Dashboard = () => {
               />
             ))}
       </Box>
-      {/* )} */}
+
+      {/* Epom Ad Container */}
+      <Box ref={adContainerRef} sx={{ mt: 4 }} />
     </PageLayout>
   );
 };

@@ -42,7 +42,7 @@ const CustomTablePagination = ({
             "&.Mui-selected": {
               fontWeight: 600,
               color: colors.primary,
-              bgcolor: colors.primaryMidLight,
+              bgcolor: colors.primaryLight,
             },
           },
         }}

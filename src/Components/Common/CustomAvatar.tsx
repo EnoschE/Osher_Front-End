@@ -19,7 +19,7 @@ const CustomAvatar = ({
   size = "sm",
   ...props
 }: CustomAvatarProps) => {
-  const sizeMap = { xs: 24, sm: 40, lg: 130, xl: 180 };
+  const sizeMap = { xs: 24, sm: 40, lg: 130, xl: 220 };
   const borderWidth = size === "lg" || size === "xl" ? 2 : 1;
   const radius = isSquarish
     ? size === "lg" || size === "xl"
@@ -27,8 +27,8 @@ const CustomAvatar = ({
       : borderRadius.sm
     : "50%";
 
-  // const [loading, setLoading] = useState(!!src);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!!src);
+  // const [loading, setLoading] = useState(true);
 
   return (
     <Box

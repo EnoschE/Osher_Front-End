@@ -82,39 +82,36 @@ const ProfileHeader = ({
       </Box>
 
       <Box display='flex' alignItems='center' gap={8} flexDirection='column'>
-        {/* <Box
-          // className='animated-block'
-          // sx={{ animationDelay: `${2 / 21}s` }}
+        <Box
           display='flex'
           flexDirection='column'
-          width='100%'
           alignItems='center'
-        > */}
-        {isSquarish ? (
-          <PostPicture
-            src={data?.picture}
-            sx={{ mt: "-90px", mb: 10, maxWidth: 450 }}
-          />
-        ) : (
-          <>
-            {/* <CustomAvatar
-                isSquarish={isSquarish}
-                size='lg'
-                sx={{ mt: "-30px", mb: 10, filter: "blur(15px)", opacity: 0.7 }}
-                src={data?.picture}
-                showLoader={isLoading}
-              /> */}
-
+          width='100%'
+          mb={10}
+          mt={{ xs: 70, sm: 130 }}
+        >
+          {isSquarish ? (
+            <PostPicture
+              src={data?.picture}
+              sx={{
+                // mt: "-90px", mb: 10,
+                maxWidth: 450,
+              }}
+            />
+          ) : (
             <CustomAvatar
               isSquarish={isSquarish}
               size='xl'
-              sx={{ mt: "-90px", mb: 10 }}
+              sx={
+                {
+                  // mt: "-90px", mb: 10
+                }
+              }
               src={data?.picture}
               showLoader={isLoading}
             />
-          </>
-        )}
-        {/* </Box> */}
+          )}
+        </Box>
 
         <Box className='animated-block' sx={{ animationDelay: `${3 / 21}s` }}>
           {isLoading ? (
