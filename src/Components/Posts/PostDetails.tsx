@@ -40,9 +40,13 @@ const PostDetails = () => {
       const data = await getPostById((id || "")?.toString());
       setData(data);
     } catch (error: any) {
-      if (error === "This post is not available") {
+      if (
+        [
+          "This post is not available",
+          "Post with the given id was not found",
+        ].includes(error)
+      )
         navigate(isLoggedIn ? allRoutes.POSTS : allRoutes.FEED);
-      }
       toast.error(error);
     }
     setLoading(false);

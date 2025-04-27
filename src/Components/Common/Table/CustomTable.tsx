@@ -122,7 +122,7 @@ const CustomTable = ({
       }
     });
   }, [rows, sortConfig]);
-  
+
   const handleRowClick = (id: string, row: any) => {
     if (detailsPagePath)
       navigate(
@@ -154,7 +154,7 @@ const CustomTable = ({
                 >
                   <Box
                     display={"flex"}
-                    alignItems="center"
+                    alignItems='center'
                     justifyContent={
                       header.align === "right"
                         ? "end"
@@ -234,19 +234,21 @@ const CustomTable = ({
                           <Box style={{ maxWidth: header?.maxWidth ?? 150 }}>
                             <Tooltip
                               title={row?.[header.key] ?? "-"}
-                              placement="top"
+                              placement='top'
                               arrow
                             >
                               <Typography
-                                fontSize="inherit"
-                                fontWeight="inherit"
+                                fontSize='inherit'
+                                fontWeight='inherit'
                                 sx={{
                                   overflow: "hidden",
                                   whiteSpace: "nowrap",
                                   textOverflow: "ellipsis",
                                 }}
                               >
-                                {(row?.[header.key]
+                                {(![undefined, null, ""]?.includes(
+                                  row?.[header.key]
+                                )
                                   ? typeof row?.[header.key] === "number"
                                     ? formatNumber(row?.[header.key])
                                     : row?.[header.key]
@@ -261,7 +263,7 @@ const CustomTable = ({
                             </Tooltip>
                           </Box>
                         ) : (
-                          (row?.[header.key]
+                          (![undefined, null, ""]?.includes(row?.[header.key])
                             ? typeof row?.[header.key] === "number"
                               ? formatNumber(row?.[header.key])
                               : row?.[header.key]
@@ -273,9 +275,9 @@ const CustomTable = ({
                         )}
                         {row._id === user._id && header.key === "name" ? (
                           <Typography
-                            component="span"
-                            fontSize="12px"
-                            color="text.secondary"
+                            component='span'
+                            fontSize='12px'
+                            color='text.secondary'
                           >
                             {" "}
                             (Me)

@@ -42,6 +42,11 @@ const Influencers = () => {
       sortable: true,
     },
     {
+      text: "Posts",
+      key: "posts",
+      sortable: true,
+    },
+    {
       text: "",
       key: "name",
       align: "right",

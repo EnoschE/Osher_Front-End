@@ -44,7 +44,12 @@ const InfluencerDetails = () => {
       const adsOfInfluencer: any = await getPostsOfInfluencer(id || "");
       setAds(adsOfInfluencer || []);
     } catch (error: any) {
-      if (error === "Invalid influencer id")
+      if (
+        [
+          "Invalid influencer id",
+          "Influencer with the given id was not found",
+        ].includes(error)
+      )
         navigate(isLoggedIn ? allRoutes.INFLUENCERS : allRoutes.FEED);
       toast.error(error);
     }
