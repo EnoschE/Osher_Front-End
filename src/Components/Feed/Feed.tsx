@@ -192,7 +192,7 @@ const Feed = () => {
                 marginBlock: "52px",
               }}
             />
-            <FeedCard isLoading animationDelay={0.1}/>
+            <FeedCard isLoading animationDelay={0.1} />
           </>
         ) : (
           data?.map((item: FeedCardItem, index: number) => (
@@ -207,6 +207,36 @@ const Feed = () => {
                     marginBlock: "52px",
                   }}
                 />
+              )}
+              {index === 1 ? (
+                <>
+                  <Box
+                    sx={{
+                      borderRadius: borderRadius.xl,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      height: 450,
+                      boxShadow: `rgba(23, 58, 90, 0.25) 0px 50px 50px -10px`,
+                      bgcolor: "gray",
+                      color: "white",
+                    }}
+                  >
+                    <span>AD will be displayed here</span>
+                  </Box>
+                  <Box
+                    sx={{
+                      backgroundColor: colors.border,
+                      height: "1px",
+                      width: "100%",
+                      marginBlock: "52px",
+                    }}
+                  />
+                </>
+              ) : (
+                <></>
               )}
             </React.Fragment>
           ))

@@ -49,19 +49,19 @@ const Navbar = ({
   const menuOptions = [
     {
       text: (
-        <Box display="flex" alignItems="center" gap={8}>
+        <Box display='flex' alignItems='center' gap={8}>
           <CustomAvatar src={user.picture} />
           <Box>
-            <Typography variant="h6" mb={4}>
+            <Typography variant='h6' mb={4}>
               {user.name || "User Name"}
             </Typography>
-            <Typography fontSize={12} color="text.secondary">
+            <Typography fontSize={12} color='text.secondary'>
               {user.email || "user@example.com"}
             </Typography>
           </Box>
         </Box>
       ),
-      onClick: () => navigate(allRoutes.ACCOUNT_SETTINGS),
+      onClick: () => navigate(allRoutes.MY_PROFILE),
     },
     { isDivider: true },
     {
@@ -75,7 +75,7 @@ const Navbar = ({
 
   return (
     <StyledAppBar
-      position="fixed"
+      position='fixed'
       sx={{
         zIndex: 30,
         borderTop: `1px solid ${colors.border}`,
@@ -89,11 +89,11 @@ const Navbar = ({
             }),
       }}
     >
-      <Box display="flex" alignItems="center" gap={7}>
+      <Box display='flex' alignItems='center' gap={7}>
         <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
+          color='inherit'
+          aria-label='open drawer'
+          edge='start'
           onClick={handleDrawerToggle}
           sx={{
             display: navbarForNonProtectedRoutes ? "none" : { sm: "none" },
@@ -102,9 +102,9 @@ const Navbar = ({
           <Menu />
         </IconButton>
         <Box
-          component="img"
+          component='img'
           src={OsherLogo}
-          alt=""
+          alt=''
           sx={{
             cursor: "pointer",
             display: navbarForNonProtectedRoutes
@@ -116,14 +116,14 @@ const Navbar = ({
         />
         {!hideBackButton && (
           <CustomButton
-            className="animated-block"
+            className='animated-block'
             sx={{ py: 2, px: 6 }}
-            variant="outlined"
-            color="secondary"
+            variant='outlined'
+            color='secondary'
             onClick={() =>
               backButtonPath ? navigate(backButtonPath) : navigate(-1)
             }
-            startIcon={<KeyboardArrowLeftOutlined fontSize="small" />}
+            startIcon={<KeyboardArrowLeftOutlined fontSize='small' />}
           >
             Back
           </CustomButton>
@@ -145,11 +145,9 @@ const Navbar = ({
         {isUserLoggedIn() ? (
           <CustomMenu
             anchorComponent={(props: any) => (
-              <CustomAvatar
-                sx={{ cursor: "pointer" }}
-                src={user.picture}
-                {...props}
-              />
+              <Box sx={{ cursor: "pointer" }} {...props}>
+                <CustomAvatar src={user.picture} />
+              </Box>
             )}
             options={menuOptions}
           />

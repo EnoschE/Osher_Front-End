@@ -38,18 +38,14 @@ const PostDetails = () => {
     setLoading(true);
     try {
       const data = await getPostById((id || "")?.toString());
-      setTimeout(() => {
-        setData(data);
-      }, 2000);
+      setData(data);
     } catch (error: any) {
       if (error === "This post is not available") {
         navigate(isLoggedIn ? allRoutes.POSTS : allRoutes.FEED);
       }
       toast.error(error);
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    setLoading(false);
   };
 
   const openDeleteDialog = () => setDeleteDialog(true);
