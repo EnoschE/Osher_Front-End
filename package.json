@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "Muhammad Aqib Asif",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -31,7 +32,6 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@types/js-cookie": "^3.0.6",
-    "@types/jwt-decode": "^3.1.0",
     "@types/node": "^22.15.2",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
