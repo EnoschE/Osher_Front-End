@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { UserState, saveUserState } from "../Redux/Slices/userSlice";
 import { AppDispatch } from "../Redux/store";
 import {

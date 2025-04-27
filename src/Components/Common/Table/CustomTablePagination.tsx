@@ -13,7 +13,7 @@ const CustomTablePagination = ({
   totalPages = 1,
   onChange,
 }: CustomTablePaginationProps) => {
-  const handleOnChange = (e: any, pageNumber: number) => {
+  const handleOnChange = (_: any, pageNumber: number) => {
     onChange?.(pageNumber);
   };
 
@@ -27,9 +27,9 @@ const CustomTablePagination = ({
       }}
     >
       <Pagination
-        size="small"
-        color="primary"
-        shape="rounded"
+        size='small'
+        color='primary'
+        shape='rounded'
         page={page}
         onChange={handleOnChange}
         count={totalPages}

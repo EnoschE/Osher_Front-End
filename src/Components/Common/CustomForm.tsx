@@ -1,5 +1,4 @@
 import { Box, Divider, FormHelperText, Typography } from "@mui/material";
-import MuiPhoneNumber from "material-ui-phone-number";
 import ImageUploader from "./ImageUploader"; // Adjust path accordingly
 import CustomTextField, { Asterisk } from "./CustomTextField";
 import CustomButton from "./CustomButton";
@@ -43,12 +42,12 @@ const CustomForm = ({
 }: FormProps) => {
   return (
     <>
-      {!!heading && <AnimatedHeading heading={heading} variant="h3" />}
+      {!!heading && <AnimatedHeading heading={heading} variant='h3' />}
       {!!subHeading && (
         // <AnimatedBlock animationDelay={0.3} sx={{ mt: heading ? 10 : 0 }}>
         <Typography
-          variant="body2"
-          className="animated-block"
+          variant='body2'
+          className='animated-block'
           sx={{ animationDelay: `${1 / 21}s`, mt: heading ? 10 : 0 }}
         >
           {subHeading}
@@ -57,14 +56,14 @@ const CustomForm = ({
       )}
       {(heading || subHeading) && (
         <Divider
-          className="animated-block"
+          className='animated-block'
           sx={{ animationDelay: `${2 / 21}s`, mt: 14, mb: 24 }}
         />
       )}
 
       <form onSubmit={onSave}>
         <Box
-          display="grid"
+          display='grid'
           gridTemplateColumns={{ xs: "1fr", md: "300px 1fr" }}
           gap={{ xs: 10, md: 32 }}
         >
@@ -74,14 +73,14 @@ const CustomForm = ({
               <React.Fragment key={field.name}>
                 {field.type === "image" ? (
                   <Box
-                    className="animated-block"
-                    alignSelf="flex-start"
+                    className='animated-block'
+                    alignSelf='flex-start'
                     sx={{ animationDelay: delay }}
                   >
-                    <Typography variant="h5">
+                    <Typography variant='h5'>
                       {field.label} {!!field.required && <Asterisk />}
                     </Typography>
-                    <Typography variant="body2" mt={10}>
+                    <Typography variant='body2' mt={10}>
                       {field.placeholder}
                     </Typography>
                     {!!field.error && (
@@ -92,8 +91,8 @@ const CustomForm = ({
                   </Box>
                 ) : (
                   <Typography
-                    className="animated-block"
-                    variant="h5"
+                    className='animated-block'
+                    variant='h5'
                     mt={{ xs: 12, md: 0 }}
                     sx={{ animationDelay: delay }}
                   >
@@ -103,7 +102,7 @@ const CustomForm = ({
                 )}
                 {field.type === "image" ? (
                   <ImageUploader
-                    className="animated-block"
+                    className='animated-block'
                     sx={{ animationDelay: delay }}
                     onUpdate={(image: any) =>
                       field.onChange({ value: image, name: field.name })
@@ -112,43 +111,23 @@ const CustomForm = ({
                   />
                 ) : field.type === "dropdown" ? (
                   <CustomDropdown
-                    className="animated-block"
+                    className='animated-block'
                     name={field.name}
                     options={field.options || []}
                     value={field.value}
                     onChange={(value: string) =>
                       field.onChange({ value, name: field.name })
                     }
-                    minWidth="100%"
+                    minWidth='100%'
                     error={field.error}
                     label={field.placeholder}
                     disabled={field.options?.length === 0 || field.disabled}
                     sx={{ animationDelay: delay }}
                   />
-                ) : field.type === "phone" ? (
-                  <MuiPhoneNumber
-                    className="animated-block"
-                    defaultCountry={"us"}
-                    autoComplete="off"
-                    onChange={(phoneNumber: any) =>
-                      field.onChange({
-                        value: phoneNumber?.toString() || "",
-                        name: field.name,
-                      })
-                    }
-                    fullWidth
-                    variant="outlined"
-                    size="small"
-                    value={field.value}
-                    InputLabelProps={{ shrink: true }}
-                    error={!!field.error}
-                    helperText={field.error}
-                    sx={{ animationDelay: delay }}
-                  />
                 ) : (
                   <CustomTextField
                     style={{ animationDelay: delay }}
-                    className="animated-block"
+                    className='animated-block'
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       field.onChange({
                         value: e.target.value,
@@ -158,9 +137,10 @@ const CustomForm = ({
                     value={field.value}
                     error={field.error}
                     name={field.name}
-                    type={field.type}
+                    type={field.type === "phone" ? "tel" : field.type}
                     placeholder={field.placeholder}
                     multiline={field.multiline}
+                    displayPasswordIcon={field.type === "password"}
                   />
                 )}
               </React.Fragment>
@@ -169,23 +149,23 @@ const CustomForm = ({
 
           <Box />
           <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="flex-end"
+            display='flex'
+            alignItems='center'
+            justifyContent='flex-end'
             gap={20}
           >
             <CustomButton
-              variant="outlined"
-              color="secondary"
+              variant='outlined'
+              color='secondary'
               onClick={onCancel}
-              className="animated-block"
+              className='animated-block'
               sx={{ animationDelay: `${(fields?.length + 3) / 21}s` }}
             >
               {cancelButtonText}
             </CustomButton>
             <CustomButton
-              type="submit"
-              className="animated-block"
+              type='submit'
+              className='animated-block'
               sx={{ animationDelay: `${(fields?.length + 4) / 21}s` }}
             >
               {saveButtonText}

@@ -3,7 +3,7 @@ import { logoutUser } from "./userService";
 import { toast } from "react-toastify";
 
 const http = axios.create({
-  baseURL: `${process.env.REACT_APP_BE_URL}`,
+  baseURL: `${import.meta.env.VITE_APP_BE_URL}`,
   headers: { "Content-Type": "application/json" },
 });
 

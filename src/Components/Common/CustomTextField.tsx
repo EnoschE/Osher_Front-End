@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material";
 
-type InputTypes = "text" | "number" | "search" | "password" | "email";
+type InputTypes = "text" | "number" | "search" | "password" | "email" | "tel";
 interface CustomTextFieldProps {
   className?: string;
   inputClassName?: string;
@@ -49,7 +49,7 @@ interface CustomTextFieldProps {
 
 export const Asterisk = () => {
   return (
-    <Box component="span" sx={{ color: "error.main" }}>
+    <Box component='span' sx={{ color: "error.main" }}>
       {" "}
       *
     </Box>
@@ -103,7 +103,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
       }}
     >
       {label && (
-        <Typography mb={10} variant="h6">
+        <Typography mb={10} variant='h6'>
           {label}
         </Typography>
       )}
@@ -124,16 +124,17 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
         onFocus={onFocus}
         InputProps={{
           startAdornment: startIcon ? (
-            <InputAdornment position="start">{startIcon}</InputAdornment>
+            <InputAdornment position='start'>{startIcon}</InputAdornment>
           ) : null,
           endAdornment:
             endIcon || isPasswordField ? (
-              <InputAdornment position="end">
+              <InputAdornment position='end'>
                 {isPasswordField && displayPasswordIcon ? (
                   <IconButton
-                    aria-label="toggle password visibility"
+                    aria-label='toggle password visibility'
                     onClick={() => setShowPassword(!showPassword)}
                     onMouseDown={(e: any) => e.preventDefault()}
+                    sx={{ "& svg": { width: 18, height: 18 } }}
                   >
                     {showPassword ? (
                       <VisibilityOutlined />

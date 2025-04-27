@@ -5,10 +5,7 @@ import CustomTextField from "../CustomTextField";
 import { Add, SearchOutlined } from "@mui/icons-material";
 import CustomButton from "../CustomButton";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getAllInstallerCompanies } from "../../../Services/dashboardService";
-import { toast } from "react-toastify";
-import CustomDropdown from "../CustomDropdown";
+import { useState } from "react";
 import AnimatedHeading from "../AnimatedHeading";
 
 export const TableBlock = ({
@@ -25,7 +22,6 @@ export const TableBlock = ({
   tableHeaders,
   disabledAddButton,
   addButtonTooltip,
-  filterByCompany = false,
   onRowClick,
   isLoading,
 }: {
@@ -42,45 +38,15 @@ export const TableBlock = ({
   rowsPerPage?: number;
   tableData?: Array<any>;
   tableHeaders: Array<any>;
-  filterByCompany?: boolean;
   onRowClick?: (row: any) => void;
   isLoading?: boolean;
 }) => {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState<string>("");
-  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
-  const [allCompanies, setAllCompanies] = useState<Array<any>>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (filterByCompany) {
-      getAllInstallerCompaniesData();
-    }
-  }, [filterByCompany]);
-
-  const getAllInstallerCompaniesData = async () => {
-    setLoading(true);
-    try {
-      let { data }: any = await getAllInstallerCompanies();
-      data = data.map((item: any) => ({
-        ...item,
-        value: item._id,
-        text: item.name,
-      }));
-      setAllCompanies(data);
-      setSelectedId("");
-    } catch (error: any) {
-      toast.error(error);
-    }
-    setLoading(false);
-  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-  };
-  const handleDropdown = (value: string) => {
-    setSelectedId(value);
   };
 
   let searchedTableData = search
@@ -92,15 +58,9 @@ export const TableBlock = ({
           item.phone?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.userName?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.brandName?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          item.email?.toLowerCase()?.includes(search?.toLowerCase()), // TODO: in future, change this logic to dynamic and add all tableHeaders here
+          item.email?.toLowerCase()?.includes(search?.toLowerCase()) // TODO: in future, change this logic to dynamic and add all tableHeaders here
       )
     : tableData;
-
-  if (selectedId && searchedTableData && filterByCompany) {
-    searchedTableData = searchedTableData.filter(
-      (item) => item.companyId === selectedId,
-    );
-  }
 
   return (
     <>
@@ -111,12 +71,12 @@ export const TableBlock = ({
         heading={`${heading} ${
           tableData?.length ? `(${searchedTableData?.length})` : ""
         }`}
-        variant="h3"
+        variant='h3'
       />
       <Box
-        display="flex"
+        display='flex'
         alignItems={{ xs: "stretch", md: "center" }}
-        justifyContent="space-between"
+        justifyContent='space-between'
         flexDirection={{ xs: "column", md: "row" }}
         gap={12}
         mb={32}
@@ -128,54 +88,38 @@ export const TableBlock = ({
           animationSpeed='fast'
           animationDelay={0.1}
         /> */}
-        {/* <AnimatedBlock animationDelay={0.3}> */}
+
         <Typography
-          variant="body2"
-          className="animated-block"
+          variant='body2'
+          className='animated-block'
           sx={{ animationDelay: `${1 / 21}s` }}
         >
           {subHeading}
         </Typography>
-        {/* </AnimatedBlock> */}
 
         <Box
-          display="flex"
+          display='flex'
           alignItems={{ xs: "stretch", md: "center" }}
-          justifyContent="flex-end"
+          justifyContent='flex-end'
           gap={12}
           flexDirection={{ xs: "column", md: "row" }}
         >
           {!!tableData?.length && (
-            <>
-              {filterByCompany && (
-                <CustomDropdown
-                  options={allCompanies}
-                  value={selectedId}
-                  onChange={handleDropdown}
-                  minWidth="220px"
-                  label="Filter by Company"
-                  defaultSelectable={true}
-                  disabled={loading}
-                />
-              )}
-              {/* <AnimatedBlock animationDelay={0.35}> */}
-              <CustomTextField
-                value={search}
-                onChange={handleOnChange}
-                placeholder="Search here"
-                startIcon={<SearchOutlined sx={{ opacity: 0.7 }} />}
-                className="animated-block"
-                style={{ animationDelay: `${2 / 21}s` }}
-              />
-              {/* </AnimatedBlock> */}
-            </>
+            <CustomTextField
+              value={search}
+              onChange={handleOnChange}
+              placeholder='Search here'
+              startIcon={<SearchOutlined sx={{ opacity: 0.7 }} />}
+              className='animated-block'
+              style={{ animationDelay: `${2 / 21}s` }}
+            />
           )}
           {addButtonText && (
             // <AnimatedBlock animationDelay={0.45}>
             <Tooltip title={addButtonTooltip} arrow>
               {/* <span> */}
               <CustomButton
-                className="animated-block"
+                className='animated-block'
                 sx={{
                   animationDelay: `${3 / 21}s`,
                   height: 40.13,
@@ -197,7 +141,7 @@ export const TableBlock = ({
         </Box>
       </Box>
 
-      <Box className="animated-block" sx={{ animationDelay: `${4 / 21}s` }}>
+      <Box className='animated-block' sx={{ animationDelay: `${4 / 21}s` }}>
         {tableData?.length && !isLoading ? (
           <CustomTable
             headers={tableHeaders}

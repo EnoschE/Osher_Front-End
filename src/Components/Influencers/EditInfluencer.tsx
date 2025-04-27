@@ -190,6 +190,7 @@ const EditInfluencer = () => {
       name: "phone",
       type: "phone",
       value: data.phone,
+      error: errors.phone,
       onChange: handleOnChange,
     },
     {

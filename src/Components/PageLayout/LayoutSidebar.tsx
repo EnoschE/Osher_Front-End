@@ -18,7 +18,7 @@ import {
   AccountCircleOutlined,
 } from "@mui/icons-material";
 import { Collapse, Typography } from "@mui/material";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import {
   isBrandLoggedIn,
   isInfluencerLoggedIn,

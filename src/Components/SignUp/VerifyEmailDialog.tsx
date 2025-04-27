@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import CustomDialog from "../Common/CustomDialog";
 import { EmailOutlined } from "@mui/icons-material";
-import colors from "../../Utils/colors";
 import CustomButton from "../Common/CustomButton";
 import useLoginStyles from "../Login/loginStyles";
 

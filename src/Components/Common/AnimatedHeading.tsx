@@ -1,5 +1,4 @@
-import { Box, SxProps, Typography } from "@mui/material";
-import { Variant } from "@mui/material/styles/createTypography";
+import { Box, SxProps, Typography, TypographyVariant } from "@mui/material";
 import React from "react";
 
 interface AnimatedHeadingProps {
@@ -14,7 +13,7 @@ interface AnimatedHeadingProps {
   gapBetweenChars?: string | number;
   justifyContent?: React.CSSProperties["justifyContent"];
   lineHeight?: string | number;
-  variant?: Variant;
+  variant?: TypographyVariant;
   sx?: SxProps;
 }
 
