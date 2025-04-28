@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 import { Box, Typography } from "@mui/material";
+import { isUserLoggedIn } from "../../Services/userService";
 
 const LiveDateTime = () => {
+  const isLoggedIn = isUserLoggedIn();
+
   const [currentTime, setCurrentTime] = useState<string>("");
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const LiveDateTime = () => {
         display: "flex",
         alignItems: "center",
         gap: 6,
-        marginLeft: { xs: 0, sm: 60 },
+        marginLeft: { xs: 0, sm: isLoggedIn ? 0 : 60, md: isLoggedIn ? 0 : 120 },
       }}
     >
       <Typography variant='h2' fontWeight={500} fontSize={45}>
