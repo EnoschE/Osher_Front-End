@@ -1,18 +1,11 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Avatar, Backdrop, IconButton, Tooltip } from "@mui/material";
+import { Avatar, IconButton, Theme, useMediaQuery } from "@mui/material";
 import {
   LogoutOutlined,
   SettingsOutlined,
   Menu,
   KeyboardArrowLeftOutlined,
-  LanguageOutlined,
-  VolumeDownOutlined,
-  VolumeUpOutlined,
-  VolumeMuteOutlined,
-  VolumeOffOutlined,
-  BedtimeOffOutlined,
-  BedtimeOutlined,
   DarkModeOutlined,
 } from "@mui/icons-material";
 import { StyledAppBar, StyledMenuBlock } from "./navbarStyles";
@@ -47,6 +40,9 @@ const Navbar = ({
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isMobileView = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down("sm")
+  );
 
   const [nap, setNap] = useState(false);
 
@@ -123,7 +119,7 @@ const Navbar = ({
               }),
         }}
       >
-        <Box display='flex' alignItems='center' gap={7}>
+        <Box display='flex' alignItems='center' gap={6}>
           <IconButton
             color='inherit'
             aria-label='open drawer'
@@ -144,22 +140,22 @@ const Navbar = ({
               display: navbarForNonProtectedRoutes
                 ? "inline-block"
                 : { sm: "none" },
-              height: "55px",
+              height: { xs: "40px", sm: "55px" },
             }}
             onClick={handleLogoClick}
           />
           {!hideBackButton && (
             <CustomButton
               className='animated-block'
-              sx={{ py: 2, px: 6 }}
+              sx={{ p: { xs: "2px", sm: "2px 6px", minWidth: 0 } }}
               variant='outlined'
               color='secondary'
               onClick={() =>
                 backButtonPath ? navigate(backButtonPath) : navigate(-1)
               }
-              startIcon={<KeyboardArrowLeftOutlined fontSize='small' />}
             >
-              Back
+              <KeyboardArrowLeftOutlined fontSize='small' />
+              {isMobileView ? "" : "Back"}
             </CustomButton>
           )}
         </Box>
@@ -169,9 +165,10 @@ const Navbar = ({
             sx={{
               display: "flex",
               alignItems: "center",
-              gap: { xs: 4, sm: 8 },
+              gap: { xs: 3, sm: 18 },
               "& button": {
                 p: 2,
+                minWidth: 40,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -181,12 +178,12 @@ const Navbar = ({
                 color: "text.primary",
               },
               "& svg": {
-                width: 28,
-                height: 28,
+                width: { xs: 24, sm: 28 },
+                height: { xs: 24, sm: 28 },
               },
             }}
           >
-            {/* <VolumeButtons /> */}
+            <VolumeButtons />
 
             <CustomButton variant='text' onClick={enableNap}>
               <DarkModeOutlined />

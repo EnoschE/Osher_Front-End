@@ -39,6 +39,7 @@ import PostDetails from "../Components/Posts/PostDetails";
 import Feed from "../Components/Feed/Feed";
 import MyProfile from "../Components/MyProfile/MyProfile";
 import Home from "../Components/Home/Home";
+import AudioFile from "../Assets/Audio/audio.mp3";
 
 interface RouteWithComponent {
   path: string;
@@ -257,7 +258,7 @@ const RouteNavigation = () => {
             : isBrand
             ? item.accessTo.brand
             : isInfluencer && item.accessTo.influencer
-          : item,
+          : item
     );
     setRenderingRoutes(allRoutes);
   }, [user._id, isSuperAdmin, isBrand, isInfluencer]);
@@ -277,6 +278,11 @@ const RouteNavigation = () => {
   return (
     <>
       <Loader open={loading} />
+
+      <audio autoPlay muted loop>
+        <source src={AudioFile} />
+      </audio>
+
       <Routes>
         {renderingRoutes.map((item: RouteWithComponent) => {
           const ComponentWrapper = item.isBoth

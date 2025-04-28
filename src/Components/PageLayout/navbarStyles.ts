@@ -6,9 +6,9 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
-  WebkitBackdropFilter: "saturate(200%) blur(15px)",
-  backdropFilter: "saturate(200%) blur(15px)",
   backgroundColor: "rgba(255, 255, 255, 0.5)",
+  backdropFilter: "saturate(200%) blur(15px)",
+  WebkitBackdropFilter: "saturate(200%) blur(15px)",
 
   // TODO: work on ADS of epom only
 
@@ -31,6 +31,6 @@ export const StyledMenuBlock = styled(Box)(({ theme }) => ({
   gap: 24,
   color: "inherit",
   [theme.breakpoints.down("sm")]: {
-    gap: 12,
+    gap: 8,
   },
 }));

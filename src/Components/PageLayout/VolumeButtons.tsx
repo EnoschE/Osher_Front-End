@@ -7,41 +7,70 @@ import {
   VolumeUpOutlined,
 } from "@mui/icons-material";
 import { borderRadius } from "../../Utils/spacings";
+// import AudioFile from "../../Assets/Audio/audio.mp3";
 
-const VolumePopUp = ({ volume }: { volume: number }) => {
+const VolumePopUp = ({
+  open,
+  volume,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+  volume: number;
+}) => {
   return (
     <Dialog
-      open
+      open={open}
+      onClose={onClose}
       hideBackdrop
       disableEnforceFocus
       disableAutoFocus
       disableRestoreFocus
-      PaperProps={{ sx: { borderRadius: borderRadius.xl } }}
-      // BackdropProps={{ sx: { backdropFilter: "none", bgcolor: "transparent" } }}
+      disableEscapeKeyDown
+      PaperProps={{
+        sx: {
+          borderRadius: borderRadius.xl,
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
+          backdropFilter: "saturate(200%) blur(15px)",
+          WebkitBackdropFilter: "saturate(200%) blur(15px)",
+          pointerEvents: "auto",
+        },
+      }}
+      sx={{ pointerEvents: "none" }}
     >
       <DialogContent
         sx={{
-          width: 200,
-          height: 200,
+          width: 240,
+          height: 240,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           flexDirection: "column",
-          gap: 4,
+          gap: 42,
+          color: "white",
+          "& svg": {
+            width: 100,
+            height: 100,
+          },
         }}
       >
         {volume === 0 ? (
-          <VolumeOffOutlined fontSize='large' />
+          <VolumeOffOutlined />
         ) : volume < 50 ? (
-          <VolumeDownOutlined fontSize='large' />
+          <VolumeDownOutlined />
         ) : (
-          <VolumeUpOutlined fontSize='large' />
+          <VolumeUpOutlined />
         )}
         <Box sx={{ width: "100%" }}>
           <LinearProgress
             variant='determinate'
             value={volume}
-            sx={{ height: 10 }}
+            color='inherit'
+            sx={{
+              height: 14,
+              borderRadius: 20,
+              "& .MuiLinearProgress-bar": { borderRadius: 20 },
+            }}
           />
         </Box>
       </DialogContent>
@@ -50,36 +79,81 @@ const VolumePopUp = ({ volume }: { volume: number }) => {
 };
 
 const VolumeButtons = () => {
-  const [volume, setVolume] = useState(50); // Initial 50%
+  const [volume, setVolume] = useState(50);
+  const [previousVolume, setPreviousVolume] = useState(50);
   const [volumePopupOpen, setVolumePopupOpen] = useState(false);
   const popupTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const openVolumePopup = () => {
     setVolumePopupOpen(true);
-
     if (popupTimeoutRef.current) {
       clearTimeout(popupTimeoutRef.current);
     }
-
     popupTimeoutRef.current = setTimeout(() => {
       setVolumePopupOpen(false);
-    }, 2000);
+    }, 1200);
+  };
+
+  const muteMe = (element: HTMLMediaElement) => {
+    if (element.muted) {
+      element.muted = false;
+      element.volume = previousVolume / 100; // Restore previous volume
+    } else {
+      setPreviousVolume(volume); // Save current volume before muting
+      element.muted = true;
+    }
+  };
+
+  const volChange = (element: HTMLMediaElement, role: "up" | "down") => {
+    if (element.muted) element.muted = false;
+    if (role === "up" && element.volume < 1) {
+      element.volume = Math.min(element.volume + 0.1, 1);
+    } else if (role === "down" && element.volume > 0) {
+      element.volume = Math.max(element.volume - 0.1, 0);
+    }
   };
 
   const handleVolumeUp = () => {
-    setVolume((prev) => Math.min(prev + 10, 100)); // Increase by 10%, max 100
     openVolumePopup();
+    document
+      .querySelectorAll<HTMLMediaElement>("video, audio")
+      .forEach((element) => {
+        volChange(element, "up");
+      });
+    setVolume((prev) => Math.min(prev + 10, 100));
   };
 
   const handleVolumeDown = () => {
-    setVolume((prev) => Math.max(prev - 10, 0)); // Decrease by 10%, min 0
     openVolumePopup();
+    document
+      .querySelectorAll<HTMLMediaElement>("video, audio")
+      .forEach((element) => {
+        volChange(element, "down");
+      });
+    setVolume((prev) => Math.max(prev - 10, 0));
   };
 
   const handleMute = () => {
-    setVolume(0);
     openVolumePopup();
+    document
+      .querySelectorAll<HTMLMediaElement>("video, audio")
+      .forEach((element) => {
+        muteMe(element);
+      });
+    // Update volume UI based on mute state
+    setVolume((prev) => (prev === 0 ? previousVolume : 0));
   };
+
+  // Set initial volume from any audio or video element
+  useEffect(() => {
+    const mediaElement =
+      document.querySelector<HTMLMediaElement>("video, audio");
+    if (mediaElement) {
+      const vol = Math.round(mediaElement.volume * 100);
+      setVolume(vol);
+      setPreviousVolume(vol);
+    }
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -106,7 +180,16 @@ const VolumeButtons = () => {
         Up
       </CustomButton>
 
-      {volumePopupOpen && <VolumePopUp volume={volume} />}
+      <VolumePopUp
+        volume={volume}
+        open={volumePopupOpen}
+        onClose={() => setVolumePopupOpen(false)}
+      />
+
+      {/* <audio autoPlay controls>
+        <source src={AudioFile} />
+      </audio> */}
+      
     </>
   );
 };

@@ -60,12 +60,12 @@ const NapScreen = ({
         height: "100vh",
         top: 0,
         zIndex: 1300,
-        backdropFilter: "none",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
         gap: 12,
+        backdropFilter: "none",
         backgroundColor: "#000",
       }}
       open={open}
