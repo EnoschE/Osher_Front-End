@@ -1,4 +1,4 @@
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../PageLayout/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { allRoutes } from "../../Routes/AllRoutes";
@@ -97,10 +97,10 @@ const VerifyEmail = () => {
       >
         <img
           src={EmailVerifiedImage}
-          alt=""
+          alt=''
           style={{ maxWidth: 250, marginBottom: 32 }}
         />
-        <Typography variant="h2" textAlign="center">
+        <Typography variant='h2' textAlign='center'>
           {loading
             ? "Verifying your email address!"
             : error
@@ -109,7 +109,7 @@ const VerifyEmail = () => {
         </Typography>
 
         {!error && (
-          <Typography textAlign="center">You're all set to go!</Typography>
+          <Typography textAlign='center'>You're all set to go!</Typography>
         )}
         <CustomButton
           fullWidth

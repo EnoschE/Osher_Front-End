@@ -1,10 +1,4 @@
-declare global {
-  interface Window {
-    EpomAdVideoPlayer: any;
-  }
-}
-
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Box, Skeleton, Typography } from "@mui/material";
 import PageLayout from "../PageLayout/PageLayout";
 import { useDispatch, useSelector } from "../../Redux/reduxHooks";
@@ -89,49 +83,10 @@ const Dashboard = () => {
   const isBrand = isBrandLoggedIn();
   const isInfluencer = isInfluencerLoggedIn();
   const isSuperAdmin = isSuperAdminLoggedIn();
-  const adContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dispatch(fetchDashboardData());
   }, [dispatch]);
-
-  useEffect(() => {
-    const loadScript = (src: string) => {
-      return new Promise<void>((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src = src;
-        script.async = true;
-        script.onload = () => resolve();
-        script.onerror = () => reject();
-        document.body.appendChild(script);
-      });
-    };
-
-    const loadCSS = (href: string) => {
-      const link = document.createElement("link");
-      link.href = href;
-      link.rel = "stylesheet";
-      document.head.appendChild(link);
-    };
-
-    const initPlayer = () => {
-      if (window.EpomAdVideoPlayer) {
-        new window.EpomAdVideoPlayer({
-          adTagUrl:
-            "https://serve.epomadserver.com/zQ44YJC2qrWqXq21uvTJIhNhDVazX15TtuL1aANzsrJu4lawq1b1_1S7zGidfl_B0U35xuBBCDKZiO39GfjIjeRGk2skRwUw",
-          mainVideo: "https://cdn.epomadserver.com/video/sample.mp4",
-          mainVideoPoster: "https://cdn.epomadserver.com/video/poster.webp",
-          width: 480,
-          height: 320,
-        });
-      }
-    };
-
-    loadCSS("https://cdn.epomadserver.com/evap/0.1/evap.css");
-    loadScript("https://cdn.epomadserver.com/evap/0.1/evap.js")
-      .then(() => initPlayer())
-      .catch((err) => console.error("Failed to load Epom player", err));
-  }, []);
 
   const cards = [
     ...(!isBrand && !isInfluencer
@@ -211,9 +166,6 @@ const Dashboard = () => {
               />
             ))}
       </Box>
-
-      {/* Epom Ad Container */}
-      <Box ref={adContainerRef} sx={{ mt: 4 }} />
     </PageLayout>
   );
 };

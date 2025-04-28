@@ -87,7 +87,7 @@ const Login = () => {
     toast.error("Something went wrong!");
   };
 
-  const openForgotPasswordDialog = () => setForgotPasswordDialog(true);
+  // const openForgotPasswordDialog = () => setForgotPasswordDialog(true);
   const closeForgotPasswordDialog = () => setForgotPasswordDialog(false);
 
   return (
@@ -137,9 +137,9 @@ const Login = () => {
               sx={{ animationDelay: `${4 / 21}s` }}
             >
               <Box />
-              <Typography className="link" onClick={openForgotPasswordDialog}>
+              {/* <Typography className="link" onClick={openForgotPasswordDialog}>
                 Forgot your password?
-              </Typography>
+              </Typography> */}
             </Box>
             <CustomButton
               type="submit"

@@ -130,7 +130,8 @@ const createAppTheme = () => {
             },
 
             "&.MuiInputBase-root": {
-              backgroundColor: "transparent",
+              // backgroundColor: "transparent",
+              backgroundColor: "#fff",
               "&:has(> input), &:has(input)": {
                 height: 40,
               },
@@ -231,8 +232,8 @@ const createAppTheme = () => {
               },
 
               "&.MuiButton-outlinedError": {
-                borderColor: colors.error ,
-                color: colors.error ,
+                borderColor: colors.error,
+                color: colors.error,
 
                 "&:disabled": {
                   color: colors.error + 90,

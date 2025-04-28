@@ -7,7 +7,7 @@ export const borderRadius = {
   xl: 24,
 };
 
-export const navbarHeight = 57;
+export const navbarHeight = 66;
 
 export const tabsHeight = 70;
 

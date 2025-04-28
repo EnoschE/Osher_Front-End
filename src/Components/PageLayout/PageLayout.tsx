@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "./Navbar";
 import Loader from "../Common/Loader";
 import { Box, CssBaseline, SxProps, Toolbar } from "@mui/material";
 import { navbarHeight, sidebarWidth } from "../../Utils/spacings";
@@ -49,7 +49,7 @@ const PageLayout = ({
       )}
 
       <Box
-        component="main"
+        component='main'
         sx={{
           flexGrow: 1,
           width: hideSidebar

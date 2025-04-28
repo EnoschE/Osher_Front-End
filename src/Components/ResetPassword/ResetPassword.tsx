@@ -1,4 +1,4 @@
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../PageLayout/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import SetPasswordDialog from "./SetPasswordDialog";
 import { useEffect, useState } from "react";
