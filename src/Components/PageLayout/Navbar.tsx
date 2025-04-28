@@ -24,6 +24,7 @@ import CustomButton from "../Common/CustomButton";
 import NapScreen, { napTime } from "./NapScreen";
 import { useEffect, useRef, useState } from "react";
 import VolumeButtons from "./VolumeButtons";
+import LiveDateTime from "./LiveDateTime";
 
 const Navbar = ({
   navbarForNonProtectedRoutes,
@@ -158,6 +159,7 @@ const Navbar = ({
               {isMobileView ? "" : "Back"}
             </CustomButton>
           )}
+          <LiveDateTime />
         </Box>
 
         <StyledMenuBlock>

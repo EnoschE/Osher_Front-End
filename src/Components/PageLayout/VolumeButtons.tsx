@@ -31,8 +31,8 @@ const VolumePopUp = ({
         sx: {
           borderRadius: borderRadius.xl,
           backgroundColor: "rgba(0, 0, 0, 0.4)",
-          backdropFilter: "saturate(200%) blur(15px)",
-          WebkitBackdropFilter: "saturate(200%) blur(15px)",
+          backdropFilter: "saturate(200%) blur(12px)",
+          WebkitBackdropFilter: "saturate(200%) blur(12px)",
           pointerEvents: "auto",
         },
       }}
@@ -189,7 +189,6 @@ const VolumeButtons = () => {
       {/* <audio autoPlay controls>
         <source src={AudioFile} />
       </audio> */}
-      
     </>
   );
 };
