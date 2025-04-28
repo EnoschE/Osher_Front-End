@@ -25,6 +25,8 @@ import NapScreen, { napTime } from "./NapScreen";
 import { useEffect, useRef, useState } from "react";
 import VolumeButtons from "./VolumeButtons";
 import LiveDateTime from "./LiveDateTime";
+import LanguageSelector from "./LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const Navbar = ({
   navbarForNonProtectedRoutes,
@@ -37,6 +39,7 @@ const Navbar = ({
   backButtonPath?: string;
   hideBackButton?: boolean;
 }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -170,12 +173,12 @@ const Navbar = ({
               gap: { xs: 3, sm: 18 },
               "& button": {
                 p: 2,
-                minWidth: 40,
+                minWidth: { xs: 42, sm: 46 },
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 4,
-                fontSize: 12,
+                fontSize: { sm: 12, xs: 10 },
                 fontWeight: 500,
                 color: "text.primary",
               },
@@ -185,11 +188,13 @@ const Navbar = ({
               },
             }}
           >
+            <LanguageSelector />
+
             <VolumeButtons />
 
             <CustomButton variant='text' onClick={enableNap}>
               <DarkModeOutlined />
-              Nap
+              {t("Nap")}
             </CustomButton>
           </Box>
 

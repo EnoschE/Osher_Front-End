@@ -5,8 +5,10 @@ import CustomButton from "../Common/CustomButton";
 import PageLayout from "../PageLayout/PageLayout";
 import { HomeImage } from "../../Utils/Images";
 import { allRoutes } from "../../Routes/AllRoutes";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const goToFeed = () => navigate(allRoutes.FEED);
@@ -16,19 +18,19 @@ const Home = () => {
       <LoginContainer>
         <LoginInnerBlock gap={50}>
           <Box
-            className="pop-out-animation"
-            component="img"
+            className='pop-out-animation'
+            component='img'
             src={HomeImage}
-            alt="Home"
+            alt='Home'
           />
           <CustomButton
-            type="submit"
+            type='submit'
             fullWidth
-            className="slide-down-bounce"
+            className='slide-down-bounce'
             sx={{ animationDelay: `0.2s` }}
             onClick={goToFeed}
           >
-            Continue
+            {t("Continue")}
           </CustomButton>
         </LoginInnerBlock>
       </LoginContainer>

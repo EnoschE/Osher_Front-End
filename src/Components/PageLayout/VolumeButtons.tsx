@@ -7,6 +7,7 @@ import {
   VolumeUpOutlined,
 } from "@mui/icons-material";
 import { borderRadius } from "../../Utils/spacings";
+import { useTranslation } from "react-i18next";
 // import AudioFile from "../../Assets/Audio/audio.mp3";
 
 const VolumePopUp = ({
@@ -79,6 +80,8 @@ const VolumePopUp = ({
 };
 
 const VolumeButtons = () => {
+  const { t } = useTranslation();
+
   const [volume, setVolume] = useState(50);
   const [previousVolume, setPreviousVolume] = useState(50);
   const [volumePopupOpen, setVolumePopupOpen] = useState(false);
@@ -167,17 +170,17 @@ const VolumeButtons = () => {
     <>
       <CustomButton variant='text' onClick={handleMute}>
         <VolumeOffOutlined />
-        Mute
+        {t("Mute")}
       </CustomButton>
 
       <CustomButton variant='text' onClick={handleVolumeDown}>
         <VolumeDownOutlined />
-        Down
+        {t("Down")}
       </CustomButton>
 
       <CustomButton variant='text' onClick={handleVolumeUp}>
         <VolumeUpOutlined />
-        Up
+        {t("Up")}
       </CustomButton>
 
       <VolumePopUp
