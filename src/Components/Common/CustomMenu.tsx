@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Box, Divider, Tooltip } from "@mui/material";
 import { borderRadius } from "../../Utils/spacings";
 import colors from "../../Utils/colors";
+import { useTranslation } from "react-i18next";
 
 interface CustomMenuProps {
   anchorComponent?: any;
@@ -23,6 +24,7 @@ const CustomMenu = ({
   anchorComponent: AnchorComponent = Button,
   options = [],
 }: CustomMenuProps) => {
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -55,7 +57,7 @@ const CustomMenu = ({
         }}
       >
         {!!option.icon && <option.icon style={{ width: 16, height: 16 }} />}
-        {option.text}
+        {typeof option.text === "string" ? t(option.text) : option.text}
       </MenuItem>
     );
 
@@ -71,16 +73,16 @@ const CustomMenu = ({
   return (
     <div>
       <AnchorComponent
-        id="custom-menu-anchor"
+        id='custom-menu-anchor'
         aria-controls={open ? "custom-menu" : undefined}
-        aria-haspopup="true"
+        aria-haspopup='true'
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       />
 
       <Menu
-        id="custom-menu"
-        aria-labelledby="custom-menu-anchor"
+        id='custom-menu'
+        aria-labelledby='custom-menu-anchor'
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

@@ -16,8 +16,10 @@ import {
   isSuperAdminLoggedIn,
 } from "../../Services/userService";
 import DashboardCard from "./DashboardCard";
+import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -35,12 +37,12 @@ const Dashboard = () => {
       ? [
           {
             digit: dashboardData.brands,
-            text: "Brands",
+            text: t("Brands"),
             path: allRoutes.BRANDS,
           },
           {
             digit: dashboardData.influencers,
-            text: "Influencers",
+            text: t("Influencers"),
             path: allRoutes.INFLUENCERS,
           },
         ]
@@ -49,7 +51,7 @@ const Dashboard = () => {
       ? [
           {
             digit: dashboardData.ads,
-            text: `${isBrand ? "My " : ""}Ads`,
+            text: `${isBrand ? t("My Ads") : t("Ads")}`,
             path: allRoutes.ADS,
           },
         ]
@@ -58,7 +60,7 @@ const Dashboard = () => {
       ? [
           {
             digit: dashboardData.posts,
-            text: `${isInfluencer ? "My " : ""}Posts`,
+            text: `${isInfluencer ? t("My Posts") : t("Posts")}`,
             path: allRoutes.POSTS,
           },
         ]
@@ -68,7 +70,7 @@ const Dashboard = () => {
   return (
     <PageLayout hideBackButton>
       <AnimatedHeading
-        heading={`Welcome back, ${user.name ? `${user.name}! 👋` : ""}`}
+        heading={`${t("Welcome back")}, ${user.name ? `${user.name}! 👋` : ""}`}
       />
 
       <Typography
@@ -77,7 +79,7 @@ const Dashboard = () => {
         className='animated-block'
         style={{ animationDelay: `${4 / 21}s` }}
       >
-        Let's check your stats!
+        {t("Let's check your stats!")}
       </Typography>
 
       <Box

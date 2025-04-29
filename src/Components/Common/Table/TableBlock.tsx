@@ -7,6 +7,7 @@ import CustomButton from "../CustomButton";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AnimatedHeading from "../AnimatedHeading";
+import { useTranslation } from "react-i18next";
 
 export const TableBlock = ({
   heading,
@@ -41,6 +42,7 @@ export const TableBlock = ({
   onRowClick?: (row: any) => void;
   isLoading?: boolean;
 }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState<string>("");
@@ -64,11 +66,8 @@ export const TableBlock = ({
 
   return (
     <>
-      {/* <Typography variant='h3' mb={8}>
-        {heading} {tableData?.length ? `(${searchedTableData?.length})` : ""}
-      </Typography> */}
       <AnimatedHeading
-        heading={`${heading} ${
+        heading={`${t(heading)} ${
           tableData?.length ? `(${searchedTableData?.length})` : ""
         }`}
         variant='h3'
@@ -82,19 +81,12 @@ export const TableBlock = ({
         mb={32}
         mt={8}
       >
-        {/* <AnimatedHeading
-          heading={subHeading}
-          variant='body2'
-          animationSpeed='fast'
-          animationDelay={0.1}
-        /> */}
-
         <Typography
           variant='body2'
           className='animated-block'
           sx={{ animationDelay: `${1 / 21}s` }}
         >
-          {subHeading}
+          {t(subHeading)}
         </Typography>
 
         <Box
@@ -115,9 +107,7 @@ export const TableBlock = ({
             />
           )}
           {addButtonText && (
-            // <AnimatedBlock animationDelay={0.45}>
             <Tooltip title={addButtonTooltip} arrow>
-              {/* <span> */}
               <CustomButton
                 className='animated-block'
                 sx={{
@@ -132,11 +122,9 @@ export const TableBlock = ({
                 }
                 disabled={disabledAddButton}
               >
-                {addButtonText}
+                {t(addButtonText)}
               </CustomButton>
-              {/* </span> */}
             </Tooltip>
-            // </AnimatedBlock>
           )}
         </Box>
       </Box>

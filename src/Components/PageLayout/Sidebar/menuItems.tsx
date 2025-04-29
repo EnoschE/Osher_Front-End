@@ -14,52 +14,64 @@ import {
   isInfluencerLoggedIn,
   isSuperAdminLoggedIn,
 } from "../../../Services/userService";
+import { useTranslation } from "react-i18next";
 
 export const getMenuItems = () => {
+  const { t } = useTranslation();
   const isSuperAdmin = isSuperAdminLoggedIn();
   const isBrand = isBrandLoggedIn();
   const isInfluencer = isInfluencerLoggedIn();
 
   const items = [
-    { icon: <WidgetsOutlined />, text: "Dashboard", path: allRoutes.DASHBOARD },
-    { icon: <WidgetsOutlined />, text: "Feed", path: allRoutes.FEED },
+    {
+      icon: <WidgetsOutlined />,
+      text: t("Dashboard"),
+      path: allRoutes.DASHBOARD,
+    },
+    { icon: <WidgetsOutlined />, text: t("Feed"), path: allRoutes.FEED },
 
     ...(isSuperAdmin
       ? [
           {
             icon: <StorefrontOutlined />,
-            text: "Brands",
+            text: t("Brands"),
             path: allRoutes.BRANDS,
           },
           {
             icon: <InterpreterModeOutlined />,
-            text: "Influencers",
+            text: t("Influencers"),
             path: allRoutes.INFLUENCERS,
           },
           {
             icon: <StyleOutlined />,
-            text: "Categories",
+            text: t("Categories"),
             path: allRoutes.CATEGORIES,
           },
         ]
       : []),
 
     ...(isSuperAdmin || isBrand
-      ? [{ icon: <SellOutlined />, text: "Ads", path: allRoutes.ADS }]
+      ? [{ icon: <SellOutlined />, text: t("Ads"), path: allRoutes.ADS }]
       : []),
 
     ...(isSuperAdmin || isInfluencer
-      ? [{ icon: <AllInboxOutlined />, text: "Posts", path: allRoutes.POSTS }]
+      ? [
+          {
+            icon: <AllInboxOutlined />,
+            text: t("Posts"),
+            path: allRoutes.POSTS,
+          },
+        ]
       : []),
 
     {
       icon: <AccountCircleOutlined />,
-      text: "My Profile",
+      text: t("My Profile"),
       path: allRoutes.MY_PROFILE,
     },
     {
       icon: <SettingsOutlined />,
-      text: "Account Settings",
+      text: t("Account Settings"),
       path: allRoutes.ACCOUNT_SETTINGS,
     },
   ];

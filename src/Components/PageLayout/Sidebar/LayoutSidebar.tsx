@@ -7,8 +7,8 @@ import {
   StyledDrawerList,
 } from "../pageLayoutStyles";
 import { sidebarWidth } from "../../../Utils/spacings";
-import { OsherLogo } from "../../../Utils/Images";
 import { getMenuItems } from "./menuItems";
+import Logo from "../Navbar/Logo";
 
 interface LayoutSidebarProps {
   open?: boolean;
@@ -27,13 +27,7 @@ const LayoutSidebar = ({ open, handleDrawerToggle }: LayoutSidebarProps) => {
   const DrawerContent = (
     <StyledDrawerBox>
       <Toolbar sx={{ justifyContent: "center" }}>
-        <img
-          alt='Logo'
-          src={OsherLogo}
-          className='main-logo'
-          style={{ cursor: "pointer" }}
-          onClick={() => handleClickItem("/")}
-        />
+        <Logo forSidebar onClick={handleClickItem} />
       </Toolbar>
 
       <StyledDrawerList>

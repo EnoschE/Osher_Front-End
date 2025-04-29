@@ -40,11 +40,11 @@ const UserMenu = ({ user }: { user: any }) => {
     { isDivider: true },
     {
       icon: SettingsOutlined,
-      text: t("Settings"),
+      text: "Settings",
       onClick: () => navigate(allRoutes.ACCOUNT_SETTINGS),
     },
     { isDivider: true },
-    { icon: LogoutOutlined, text: t("Log Out"), onClick: handleLogout },
+    { icon: LogoutOutlined, text: "Log Out", onClick: handleLogout },
   ];
 
   return isUserLoggedIn() ? (

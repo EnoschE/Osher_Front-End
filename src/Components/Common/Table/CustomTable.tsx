@@ -19,6 +19,7 @@ import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import { formatNumber } from "../../../Utils/utils";
 import { useSelector } from "../../../Redux/reduxHooks";
+import { useTranslation } from "react-i18next";
 
 interface HeaderProps {
   text: string;
@@ -68,14 +69,15 @@ const CustomTable = ({
   rows,
   hidePagination,
   extraPaddingInParent,
-  detailsPagePath = "", // disableRowClick,
-  rowsPerPage = 10, // total rows to be displayed on table on one page
+  detailsPagePath = "",
+  rowsPerPage = 10,
   onRowClick,
 }: CustomTableProps) => {
+  const { t } = useTranslation();
   const user = useSelector(selectUser);
   const navigate = useNavigate();
 
-  const totalPages = Math.ceil((rows?.length ?? 1) / rowsPerPage); // finding total pages for pagination
+  const totalPages = Math.ceil((rows?.length ?? 1) / rowsPerPage);
 
   const [page, setPage] = useState(1);
 
@@ -103,7 +105,6 @@ const CustomTable = ({
     const rowsCopy = [...rows];
 
     return rowsCopy.sort((a, b) => {
-      
       const key = sortConfig.key!;
       let x = a[key];
       let y = b[key];
@@ -128,7 +129,7 @@ const CustomTable = ({
       navigate(
         id === user._id
           ? allRoutes.ACCOUNT_SETTINGS
-          : detailsPagePath?.replace(":id", id),
+          : detailsPagePath?.replace(":id", id)
       );
     if (onRowClick) onRowClick(row);
   };
@@ -164,7 +165,7 @@ const CustomTable = ({
                     }
                     style={{ cursor: header.sortable ? "pointer" : "default" }}
                   >
-                    {header.text}
+                    {t(header.text)}
 
                     {header.sortable &&
                       (sortConfig.key === header.key ? (
