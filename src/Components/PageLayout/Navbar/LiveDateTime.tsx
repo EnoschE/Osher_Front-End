@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 import { Box, Typography } from "@mui/material";
-import { isUserLoggedIn } from "../../Services/userService";
+import { isUserLoggedIn } from "../../../Services/userService";
 
 const LiveDateTime = () => {
   const isLoggedIn = isUserLoggedIn();
@@ -26,7 +26,11 @@ const LiveDateTime = () => {
         display: "flex",
         alignItems: "center",
         gap: 6,
-        marginLeft: { xs: 0, sm: isLoggedIn ? 0 : 60, md: isLoggedIn ? 0 : 120 },
+        marginLeft: {
+          xs: 0,
+          sm: isLoggedIn ? 0 : 60,
+          md: isLoggedIn ? 0 : 120,
+        },
       }}
     >
       <Typography variant='h2' fontWeight={500} fontSize={45}>

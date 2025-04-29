@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Backdrop, IconButton, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 const napMinutes = 3; // 3 Minutes
 export const napTime = napMinutes * 60 * 1000; // Converting minutes to milliseconds
@@ -12,6 +13,8 @@ const NapScreen = ({
   open: boolean;
   onClick: () => void;
 }) => {
+  const { t } = useTranslation();
+
   const [timeLeft, setTimeLeft] = useState(napTime);
   const [renderKey, setRenderKey] = useState(0);
 
@@ -91,7 +94,7 @@ const NapScreen = ({
         className='animated-block'
         sx={{ animationDelay: "0.1s" }}
       >
-        This screen will disappear after:
+        {t("This screen will disappear after:")}
       </Typography>
 
       <Typography

@@ -1,12 +1,7 @@
 import { useTranslation } from "react-i18next";
-import CustomButton from "../Common/CustomButton";
+import CustomButton from "../../Common/CustomButton";
 import { TranslateOutlined } from "@mui/icons-material";
-import { languageKey } from "../../i18n";
-
-const languages = {
-  ENGLISH: "en",
-  FRENCH: "fr",
-};
+import { languageKey, languages } from "../../../i18n";
 
 const LanguageSelector = () => {
   const { i18n } = useTranslation();

@@ -13,6 +13,7 @@ import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import { getProfile } from "../../Services/profileService";
 import AnimatedHeading from "../Common/AnimatedHeading";
 import PageLayout from "../PageLayout/PageLayout";
+import { useTranslation } from "react-i18next";
 
 interface DataProps {
   email: string;
@@ -20,11 +21,12 @@ interface DataProps {
 }
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const isMobileView = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down("sm"),
+    theme.breakpoints.down("sm")
   );
 
   const [data, setData] = useState<DataProps>({ email: "", password: "" });
@@ -64,7 +66,7 @@ const Login = () => {
 
       if (user.token === "An Email sent to your account please verify") {
         toast.warn(
-          "An email has been sent to your account. Please check your inbox and verify your email address.",
+          "An email has been sent to your account. Please check your inbox and verify your email address."
         );
       } else if (user) {
         await onLoginSuccess();
@@ -79,12 +81,12 @@ const Login = () => {
 
   const onLoginSuccess = async () => {
     await dispatch(getProfile());
-    toast.success("Successfully signed in!");
+    toast.success(t("Successfully signed in!"));
     navigate(allRoutes.DASHBOARD);
   };
 
   const onLoginFailure = () => {
-    toast.error("Something went wrong!");
+    toast.error(t("Something went wrong!"));
   };
 
   // const openForgotPasswordDialog = () => setForgotPasswordDialog(true);
@@ -95,59 +97,61 @@ const Login = () => {
       <LoginContainer>
         <LoginInnerBlock>
           <AnimatedHeading
-            heading="Sign in"
+            heading={t("Sign in")}
             variant={isMobileView ? "h3" : "h2"}
-            animationSpeed="fast"
+            animationSpeed='fast'
           />
           <Typography
-            className="animated-block"
+            className='animated-block'
             sx={{ animationDelay: `${1 / 21}s`, mt: 10, mb: 40 }}
           >
-            Sign in to your Osher account
+            {t("Sign in to your Osher account")}
           </Typography>
 
           <form onSubmit={handleLoginSubmit}>
             <CustomTextField
-              name="email"
-              label="Email Address"
+              name='email'
+              label={"Email Address"}
+              placeholder={"Enter your email"}
               bottom={24}
               value={data.email}
               error={errors.email}
               onChange={handleOnChange}
-              className="animated-block"
+              className='animated-block'
               style={{ animationDelay: `${2 / 21}s` }}
             />
             <CustomTextField
-              className="animated-block"
+              className='animated-block'
               style={{ animationDelay: `${3 / 21}s` }}
-              type="password"
-              name="password"
-              label="Password"
+              type='password'
+              name='password'
+              label={"Password"}
+              placeholder={"Enter your password"}
               bottom={19}
               value={data.password}
               error={errors.password}
               onChange={handleOnChange}
             />
             <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
+              display='flex'
+              alignItems='center'
+              justifyContent='space-between'
               mb={30}
-              className="animated-block"
+              className='animated-block'
               sx={{ animationDelay: `${4 / 21}s` }}
             >
               <Box />
               {/* <Typography className="link" onClick={openForgotPasswordDialog}>
-                Forgot your password?
+                {t("Forgot your password?")}
               </Typography> */}
             </Box>
             <CustomButton
-              type="submit"
+              type='submit'
               fullWidth
-              className="animated-block"
+              className='animated-block'
               sx={{ animationDelay: `${5 / 21}s`, mb: 20 }}
             >
-              Sign In
+              {t("Sign in")}
             </CustomButton>
           </form>
 

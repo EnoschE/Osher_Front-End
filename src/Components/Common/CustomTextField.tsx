@@ -9,6 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 type InputTypes = "text" | "number" | "search" | "password" | "email" | "tel";
 interface CustomTextFieldProps {
@@ -85,6 +86,8 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   displayPasswordIcon,
   ...rest
 }) => {
+  const { t } = useTranslation();
+
   const isPasswordField = type === "password";
   const [showPassword, setShowPassword] = useState(false);
 
@@ -104,7 +107,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
     >
       {label && (
         <Typography mb={10} variant='h6'>
-          {label}
+          {t(label)}
         </Typography>
       )}
       <TextField
@@ -112,8 +115,8 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
         variant={variant}
         type={isPasswordField && showPassword ? "text" : type}
         value={value ?? ""}
-        placeholder={placeholder}
-        helperText={noHelperText ? undefined : error}
+        placeholder={t(placeholder || "")}
+        helperText={noHelperText ? undefined : t(error || "")}
         error={error ? true : false}
         onChange={onChange}
         style={{ marginTop: 0, width: "100%", ...inputStyle }}

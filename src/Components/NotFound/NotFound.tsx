@@ -4,7 +4,7 @@ import CustomButton from "../Common/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { allRoutes } from "../../Routes/AllRoutes";
 import colors from "../../Utils/colors";
-import Navbar from "../PageLayout/Navbar";
+import Navbar from "../PageLayout/Navbar/Navbar";
 import { navbarHeight } from "../../Utils/spacings";
 import { isUserLoggedIn } from "../../Services/userService";
 

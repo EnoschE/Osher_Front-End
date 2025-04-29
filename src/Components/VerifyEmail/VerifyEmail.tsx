@@ -1,4 +1,4 @@
-import Navbar from "../PageLayout/Navbar";
+import Navbar from "../PageLayout/Navbar/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { allRoutes } from "../../Routes/AllRoutes";

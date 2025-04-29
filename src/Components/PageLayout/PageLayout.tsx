@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import Navbar from "./Navbar/Navbar";
 import Loader from "../Common/Loader";
 import { Box, CssBaseline, SxProps, Toolbar } from "@mui/material";
 import { navbarHeight, sidebarWidth } from "../../Utils/spacings";
-import LayoutSidebar from "./LayoutSidebar";
+import LayoutSidebar from "./Sidebar/LayoutSidebar";
 
 const PageLayout = ({
   children,

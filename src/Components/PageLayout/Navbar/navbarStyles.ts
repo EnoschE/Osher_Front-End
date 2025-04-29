@@ -1,5 +1,5 @@
 import { AppBar, Box, styled } from "@mui/material";
-import { navbarHeight } from "../../Utils/spacings";
+import { navbarHeight } from "../../../Utils/spacings";
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   display: "flex",

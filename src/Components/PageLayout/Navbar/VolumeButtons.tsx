@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, Dialog, DialogContent, LinearProgress } from "@mui/material";
-import CustomButton from "../Common/CustomButton";
+import CustomButton from "../../Common/CustomButton";
 import {
   VolumeDownOutlined,
   VolumeOffOutlined,
   VolumeUpOutlined,
 } from "@mui/icons-material";
-import { borderRadius } from "../../Utils/spacings";
+import { borderRadius } from "../../../Utils/spacings";
 import { useTranslation } from "react-i18next";
 // import AudioFile from "../../Assets/Audio/audio.mp3";
 
