@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { toast } from "react-toastify";
 import { CancelOutlined } from "@mui/icons-material";
 import colors from "../../Utils/colors";
+import { useTranslation } from "react-i18next";
 
 interface ImageUploaderProps {
   onUpdate: any;
@@ -21,6 +22,7 @@ const ImageUploader = ({
   className,
   sx,
 }: ImageUploaderProps) => {
+  const { t } = useTranslation();
   const inputRef = useRef<any>(null);
 
   const handleImageUploader = (event: any) => {
@@ -31,7 +33,7 @@ const ImageUploader = ({
       // Max image size set to 2.5MB, 1,048,576 * 1.5 = 1,572,864 Bytes
       // 1MB = 1,048,576 Bytes
       toast.error(
-        "The selected image exceeds the maximum allowed size. Please choose a smaller image file.",
+        t("The selected image exceeds the maximum allowed size. Please choose a smaller image file.")
       );
     } else {
       onUpdate(selectedImage);
@@ -42,6 +44,8 @@ const ImageUploader = ({
   const handleRemoveImage = () => {
     onUpdate("");
   };
+
+  // TODO: Very important, change it's UI for add/edit ad/post
 
   return (
     <Box
@@ -55,9 +59,9 @@ const ImageUploader = ({
     >
       <input
         ref={inputRef}
-        type="file"
-        name="myImage"
-        accept="image/png, image/jpeg, image/jpg"
+        type='file'
+        name='myImage'
+        accept='image/png, image/jpeg, image/jpg'
         onChange={handleImageUploader}
         style={{ display: "none" }}
       />

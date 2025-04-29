@@ -17,8 +17,10 @@ import {
 import TableBlock from "../Common/Table/TableBlock";
 import { getPostsOfInfluencer } from "../../Services/postsService";
 import { commonPostsTableHeaders } from "../Posts/Posts";
+import { useTranslation } from "react-i18next";
 
 const InfluencerDetails = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const isLoggedIn = isUserLoggedIn();
@@ -51,7 +53,7 @@ const InfluencerDetails = () => {
         ].includes(error)
       )
         navigate(isLoggedIn ? allRoutes.INFLUENCERS : allRoutes.FEED);
-      toast.error(error);
+      toast.error(t(error));
     }
     setLoading(false);
   };
@@ -67,11 +69,11 @@ const InfluencerDetails = () => {
       const data: any = await deleteInfluencer(id || "");
 
       if (data === "Influencer deleted successfully!") {
-        toast.success(data);
+        toast.success(t(data));
         navigate(allRoutes.INFLUENCERS);
       }
     } catch (error: any) {
-      toast.error(error);
+      toast.error(t(error));
       if (error === "Influencer with the given id was not found")
         navigate(allRoutes.INFLUENCERS);
     }
@@ -105,11 +107,13 @@ const InfluencerDetails = () => {
       />
 
       <TableBlock
-        heading={`Posts of ${data?.name || "Influencer"}`}
-        subHeading={`These are all the posts of ${data?.name || "Influencer"}`}
+        heading={`${t("Posts of")} ${data?.name || t("Influencer")}`}
+        subHeading={`${t("These are all the posts of")} ${
+          data?.name || t("Influencer")
+        }`}
         tableData={ads}
         tableHeaders={headers}
-        emptyStateMessage={`There are no posts by ${
+        emptyStateMessage={`${t("There are no posts by")} ${
           data?.name || "Influencer"
         }`}
         detailsPagePath={allRoutes.VIEW_POST}

@@ -6,24 +6,8 @@ import CustomAvatar from "../Common/CustomAvatar";
 import { borderRadius } from "../../Utils/spacings";
 import PostPicture from "./PostPicture";
 import { DeleteOutline, EditOutlined } from "@mui/icons-material";
-
-// const fadeUp = keyframes`
-//   0% {
-//     // transform: scale(0.85) translateY(20px);
-// 		opacity: 0;
-// 		filter: blur(5px);
-//   }
-//   70% {
-//     // transform: scale(1.005) translateY(-5px);
-// 		opacity: 0.5;
-// 		filter: blur(0px);
-//   }
-//   100% {
-//     // transform: scale(1) translateY(0px);
-// 		opacity: 1;
-// 		filter: blur(0px);
-//   }
-// `;
+import { UserRoleType } from "../../Utils/types";
+import { useTranslation } from "react-i18next";
 
 interface ProfileHeaderProps {
   data: {
@@ -32,27 +16,7 @@ interface ProfileHeaderProps {
     lastName?: string;
     role: string;
   };
-  userType:
-    | "Admin"
-    | "Brand"
-    | "Ad"
-    | "Post"
-    | "Influencer"
-    | "Super Admin"
-    | "Customer"
-    | "Technician"
-    | "Installer"
-    | "Office Manager"
-    | "Manager"
-    | "Representative"
-    | "Installer Admin"
-    | "Admin Manager"
-    | "PSL"
-    | "Director"
-    | "Installer Company"
-    | "Installation Crew"
-    | "Utility Company";
-
+  userType: UserRoleType;
   handleEdit?: () => void;
   handleDelete?: () => void;
   disableDeleteButton?: boolean;
@@ -75,10 +39,12 @@ const ProfileHeader = ({
   isLoading,
   tooltipText = "You cannot delete brands those have generated ads",
 }: ProfileHeaderProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Box className='animated-block'>
-        <CustomMarquee text={data?.name || userType} />
+        <CustomMarquee text={data?.name || t(userType)} />
       </Box>
 
       <Box display='flex' alignItems='center' gap={8} flexDirection='column'>
@@ -91,22 +57,11 @@ const ProfileHeader = ({
           mt={{ xs: 70, sm: 130 }}
         >
           {isSquarish ? (
-            <PostPicture
-              src={data?.picture}
-              sx={{
-                // mt: "-90px", mb: 10,
-                maxWidth: 450,
-              }}
-            />
+            <PostPicture src={data?.picture} sx={{ maxWidth: 450 }} />
           ) : (
             <CustomAvatar
               isSquarish={isSquarish}
               size='xl'
-              sx={
-                {
-                  // mt: "-90px", mb: 10
-                }
-              }
               src={data?.picture}
               showLoader={isLoading}
             />
@@ -146,7 +101,7 @@ const ProfileHeader = ({
           sx={{ animationDelay: `${4 / 21}s` }}
           color='text.secondary'
         >
-          {userType}
+          {t(userType)}
         </Typography>
 
         {hideButtons ? (
@@ -167,10 +122,10 @@ const ProfileHeader = ({
               onClick={handleEdit}
               startIcon={<EditOutlined />}
             >
-              Edit
+              {t("Edit")}
             </CustomButton>
             {!hideDeleteButton && (
-              <Tooltip arrow title={disableDeleteButton ? tooltipText : ""}>
+              <Tooltip arrow title={disableDeleteButton ? t(tooltipText) : ""}>
                 <span>
                   <CustomButton
                     size='small'
@@ -180,7 +135,7 @@ const ProfileHeader = ({
                     onClick={handleDelete}
                     startIcon={<DeleteOutline />}
                   >
-                    Delete
+                    {t("Delete")}
                   </CustomButton>
                 </span>
               </Tooltip>

@@ -5,6 +5,7 @@ import { ExpandMoreRounded } from "@mui/icons-material";
 import { FormHelperText, SxProps, Typography } from "@mui/material";
 import { DropDownOptionProps } from "../../Utils/types";
 import CustomAvatar from "./CustomAvatar";
+import { useTranslation } from "react-i18next";
 
 interface CustomDropdownProps {
   name?: string;
@@ -35,6 +36,8 @@ const CustomDropdown = ({
   sx,
   className,
 }: CustomDropdownProps) => {
+  const { t } = useTranslation();
+  
   const handleChange = (event: SelectChangeEvent) => {
     onChange?.(event.target.value);
   };
@@ -61,20 +64,20 @@ const CustomDropdown = ({
         renderValue={(selected) => {
           if (selected === "")
             return (
-              <Typography color="text.disabled" minHeight={20}>
+              <Typography color='text.disabled' minHeight={20}>
                 {label}
               </Typography>
             );
 
           const selectedOption = options?.find(
-            (option) => option.value === selected,
+            (option) => option.value === selected
           );
 
           return (
-            <Typography display="flex" alignItems="center" minHeight={20}>
+            <Typography display='flex' alignItems='center' minHeight={20}>
               {!!selectedOption?.picture && (
                 <CustomAvatar
-                  size="xs"
+                  size='xs'
                   src={selectedOption.picture}
                   sx={{ mr: 10 }}
                 />
@@ -98,8 +101,8 @@ const CustomDropdown = ({
         }
       >
         {!!label && (
-          <MenuItem value="" disabled={!defaultSelectable}>
-            {label}
+          <MenuItem value='' disabled={!defaultSelectable}>
+            {t(label)}
           </MenuItem>
         )}
         {options?.map((option) => (
@@ -109,13 +112,13 @@ const CustomDropdown = ({
             disabled={option.disabled}
           >
             {!!option.picture && (
-              <CustomAvatar size="xs" src={option.picture} sx={{ mr: 10 }} />
+              <CustomAvatar size='xs' src={option.picture} sx={{ mr: 10 }} />
             )}
             {option.text}
           </MenuItem>
         ))}
       </Select>
-      {!!error && <FormHelperText>{error}</FormHelperText>}
+      {!!error && <FormHelperText>{t(error)}</FormHelperText>}
     </FormControl>
   );
 };

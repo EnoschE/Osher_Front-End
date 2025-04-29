@@ -165,7 +165,7 @@ const EditPost = () => {
     <PageLayout loading={loading}>
       <CustomForm
         heading="Edit Post"
-        subHeading={`Edit the details of ${data?.name}`}
+        subHeading={`Edit the details of Post`}
         fields={fields}
         onSave={handleUpdate}
         onCancel={handleCancel}

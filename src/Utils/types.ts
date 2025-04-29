@@ -24,6 +24,8 @@ export interface DropDownOptionProps {
 export interface PageDetailsField {
   key: string;
   text: string;
-  customComponent?: any;
+  customComponent?: (props: any) => any;
   type?: "date";
 }
+
+export type UserRoleType = "Admin" | "Brand" | "Ad" | "Post" | "Influencer";

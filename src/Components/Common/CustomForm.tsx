@@ -6,6 +6,7 @@ import React, { FormEvent } from "react";
 import AnimatedHeading from "./AnimatedHeading";
 import CustomDropdown from "./CustomDropdown";
 import { DropDownOptionProps } from "../../Utils/types";
+import { useTranslation } from "react-i18next";
 
 export interface FormField {
   label: string;
@@ -40,19 +41,19 @@ const CustomForm = ({
   saveButtonText = "Save Changes",
   cancelButtonText = "Cancel",
 }: FormProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
-      {!!heading && <AnimatedHeading heading={heading} variant='h3' />}
+      {!!heading && <AnimatedHeading heading={t(heading)} variant='h3' />}
       {!!subHeading && (
-        // <AnimatedBlock animationDelay={0.3} sx={{ mt: heading ? 10 : 0 }}>
         <Typography
           variant='body2'
           className='animated-block'
           sx={{ animationDelay: `${1 / 21}s`, mt: heading ? 10 : 0 }}
         >
-          {subHeading}
+          {t(subHeading)}
         </Typography>
-        // </AnimatedBlock>
       )}
       {(heading || subHeading) && (
         <Divider
@@ -78,14 +79,14 @@ const CustomForm = ({
                     sx={{ animationDelay: delay }}
                   >
                     <Typography variant='h5'>
-                      {field.label} {!!field.required && <Asterisk />}
+                      {t(field.label)} {!!field.required && <Asterisk />}
                     </Typography>
                     <Typography variant='body2' mt={10}>
-                      {field.placeholder}
+                      {!!field.placeholder && t(field.placeholder)}
                     </Typography>
                     {!!field.error && (
                       <FormHelperText sx={{ color: "error.main", mt: 10 }}>
-                        {field.error}
+                        {t(field.error)}
                       </FormHelperText>
                     )}
                   </Box>
@@ -96,7 +97,7 @@ const CustomForm = ({
                     mt={{ xs: 12, md: 0 }}
                     sx={{ animationDelay: delay }}
                   >
-                    {field.label}
+                    {t(field.label)}
                     {!!field.required && <Asterisk />}
                   </Typography>
                 )}
@@ -161,14 +162,14 @@ const CustomForm = ({
               className='animated-block'
               sx={{ animationDelay: `${(fields?.length + 3) / 21}s` }}
             >
-              {cancelButtonText}
+              {t(cancelButtonText)}
             </CustomButton>
             <CustomButton
               type='submit'
               className='animated-block'
               sx={{ animationDelay: `${(fields?.length + 4) / 21}s` }}
             >
-              {saveButtonText}
+              {t(saveButtonText)}
             </CustomButton>
           </Box>
         </Box>

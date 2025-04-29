@@ -10,6 +10,7 @@ import PageLayout from "../PageLayout/PageLayout";
 import { validateEmail, validatePassword } from "../../Utils/utils";
 import CustomForm, { FormField } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
+import { useTranslation } from "react-i18next";
 
 interface AccountSettingsData extends UserState {
   newPassword?: string;
@@ -25,6 +26,10 @@ const defaultData = {
 };
 
 const AccountSettings = () => {
+  const { t } = useTranslation();
+
+  // TODO: important use EntityDetails page for all remaining and also create ADD,EDIT etc for them as well and maybe for BRANDS, etc as well
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
@@ -108,16 +113,16 @@ const AccountSettings = () => {
       //   setData((state) => ({ ...state, email: user.email }));
       //   openOtpDialog();
       // } else {
-      toast.success("Profile updated successfully!");
+      toast.success(t("Profile updated successfully!"));
       navigate(allRoutes.MY_PROFILE);
       // }
     } catch (error: any) {
       if (error.includes("Incorrect current password")) {
-        setErrors({ ...errors, password: error });
+        setErrors({ ...errors, password: t(error) });
       } else if (error.includes("A user with this email already exists")) {
-        setErrors({ ...errors, email: error });
+        setErrors({ ...errors, email: t(error) });
       } else {
-        toast.error(error);
+        toast.error(t(error));
       }
     }
     setLoading(false);
@@ -195,8 +200,8 @@ const AccountSettings = () => {
   return (
     <PageLayout loading={loading} hideBackButton>
       <CustomForm
-        heading="Account Settings"
-        subHeading="Update your photo and personal details"
+        heading='Account Settings'
+        subHeading='Update your photo and personal details'
         fields={fields}
         onSave={handleUpdateProfile}
         onCancel={handleCancel}

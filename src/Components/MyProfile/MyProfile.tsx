@@ -16,8 +16,10 @@ import { useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
 import { getAdsOfBrand } from "../../Services/adsService";
 import { commonAdsTableHeaders } from "../Ads/Ads";
+import { useTranslation } from "react-i18next";
 
 const MyProfile = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const isBrand = isBrandLoggedIn();
@@ -45,7 +47,7 @@ const MyProfile = () => {
         setItems(userItems || []);
       }
     } catch (error: any) {
-      toast.error(error);
+      toast.error(t(error));
     }
     setLoading(false);
   };
@@ -80,11 +82,15 @@ const MyProfile = () => {
 
       {(isBrand || isInfluencer) && (
         <TableBlock
-          heading={`My ${isBrand ? "Ads" : "Posts"}`}
-          subHeading={`These are all my ${isBrand ? "ads" : "posts"}`}
+          heading={`${t("My")} ${isBrand ? t("Ads") : t("Posts")}`}
+          subHeading={`${t("These are all my")} ${
+            isBrand ? t("ads") : t("posts")
+          }`}
           tableData={items}
           tableHeaders={headers}
-          emptyStateMessage={`There are no ${isBrand ? "ads" : "posts"} by me`}
+          emptyStateMessage={`${t("There are no")} ${
+            isBrand ? t("ads") : t("posts")
+          } ${t("by me")}`}
           detailsPagePath={isBrand ? allRoutes.VIEW_AD : allRoutes.VIEW_POST}
           isLoading={loading}
         />

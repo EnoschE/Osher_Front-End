@@ -3,6 +3,7 @@ import * as React from "react";
 import { PageDetailsField } from "../../Utils/types";
 import moment from "moment";
 import { borderRadius } from "../../Utils/spacings";
+import { useTranslation } from "react-i18next";
 
 interface PageDetailsProps {
   data: any;
@@ -19,6 +20,8 @@ const PageDetailsBlock = ({
   isLoading,
   animationDelay = 6 / 21,
 }: PageDetailsProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Box
@@ -49,7 +52,7 @@ const PageDetailsBlock = ({
               </>
             ) : (
               <>
-                <Typography variant='h6'>{field.text}</Typography>
+                <Typography variant='h6'>{t(field.text)}</Typography>
                 <Typography
                   component={field.customComponent ? "span" : "p"}
                   whiteSpace={
@@ -57,7 +60,7 @@ const PageDetailsBlock = ({
                   }
                 >
                   {field?.customComponent
-                    ? field?.customComponent
+                    ? field?.customComponent(data)
                     : field.type === "date"
                     ? moment(data?.[field.key]).format("LL")
                     : data?.[field.key] || "Not given"}

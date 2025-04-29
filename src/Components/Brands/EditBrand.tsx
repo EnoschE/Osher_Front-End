@@ -210,7 +210,7 @@ const EditBrand = () => {
     <PageLayout loading={loading}>
       <CustomForm
         heading='Edit Brand'
-        subHeading={`Edit the details of ${data?.name}`}
+        subHeading={`Edit the details of Brand`}
         fields={fields}
         onSave={handleUpdateProfile}
         onCancel={handleCancel}
