@@ -91,7 +91,7 @@ const BrandDetails = () => {
         userType='Brand'
         handleEdit={handleEdit}
         handleDelete={openDeleteDialog}
-        disableDeleteButton={!!ads?.length}
+        // disableDeleteButton={!!ads?.length}
         hideButtons={!isSuperAdminLoggedIn()}
         isLoading={loading}
       />
