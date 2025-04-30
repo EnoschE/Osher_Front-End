@@ -10,8 +10,6 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backdropFilter: "saturate(200%) blur(15px)",
   WebkitBackdropFilter: "saturate(200%) blur(15px)",
 
-  // TODO: work on ADS of epom only
-
   boxShadow: "none",
   padding: "8px 61px",
   bottom: 0,

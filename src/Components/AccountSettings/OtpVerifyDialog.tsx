@@ -11,6 +11,7 @@ import { verifyEmailOtp } from "../../Services/profileService";
 import { useDispatch, useSelector } from "../../Redux/reduxHooks";
 import { saveEmail, selectUser } from "../../Redux/Slices/userSlice";
 import colors from "../../Utils/colors";
+import { useTranslation } from "react-i18next";
 
 interface OtpVerifyDialogProps {
   open: boolean;
@@ -23,6 +24,7 @@ const OtpVerifyDialog = ({
   onClose,
   email = "",
 }: OtpVerifyDialogProps) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const { IconSquareBox } = useLoginStyles();
@@ -68,7 +70,7 @@ const OtpVerifyDialog = ({
       const { data: res }: any = await verifyEmailOtp(data);
 
       if (res.message === "Email has been verified") {
-        toast.success("Your email has been verified!");
+        toast.success(t("Your email has been verified!"));
         dispatch(saveEmail(email));
         onClose?.();
       } else {
@@ -78,7 +80,7 @@ const OtpVerifyDialog = ({
       if (error === "Invalid code passed. Check your inbox") {
         setError("Please enter the correct OTP code");
       } else {
-        toast.error(error);
+        toast.error(t(error));
       }
     }
     setLoading(false);
@@ -105,16 +107,18 @@ const OtpVerifyDialog = ({
         <VerifiedUserOutlined />
       </IconSquareBox>
 
-      <Typography variant="h2" my={16} textAlign="center">
-        Verify Your Email
+      <Typography variant='h2' my={16} textAlign='center'>
+        {t("Verify Your Email")}
       </Typography>
       <Typography
         fontSize={16}
-        textAlign="center"
+        textAlign='center'
         mb={32}
-        color="text.secondary"
+        color='text.secondary'
       >
-        Please check your inbox for a verification code to update your email
+        {t(
+          "Please check your inbox for a verification code to update your email"
+        )}
       </Typography>
 
       <form onSubmit={handleVerifyOtp}>
@@ -122,7 +126,7 @@ const OtpVerifyDialog = ({
           shouldAutoFocus
           value={otp}
           numInputs={4}
-          inputType="tel"
+          inputType='tel'
           onChange={handleOnChange}
           renderInput={(props) => <StyledInput {...props} />}
           containerStyle={{
@@ -137,18 +141,18 @@ const OtpVerifyDialog = ({
           }}
         />
         {error && (
-          <Typography mt={10} color="error" textAlign="center">
-            {error}
+          <Typography mt={10} color='error' textAlign='center'>
+            {t(error)}
           </Typography>
         )}
 
         <CustomButton
-          type="submit"
+          type='submit'
           fullWidth
           disabled={loading}
           sx={{ mt: 24, mb: 10 }}
         >
-          Verify
+          {t("Verify")}
         </CustomButton>
       </form>
     </CustomDialog>

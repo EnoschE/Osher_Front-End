@@ -7,6 +7,7 @@ import colors from "../../Utils/colors";
 import Navbar from "../PageLayout/Navbar/Navbar";
 import { navbarHeight } from "../../Utils/spacings";
 import { isUserLoggedIn } from "../../Services/userService";
+import { useTranslation } from "react-i18next";
 
 const fadeUpAnimation = keyframes`
   0% {
@@ -27,6 +28,7 @@ const fadeUpAnimation = keyframes`
 `;
 
 const NotFound = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const isLoggedIn = isUserLoggedIn();
 
@@ -61,9 +63,9 @@ const NotFound = () => {
         }}
       >
         <Typography variant='h1'>404</Typography>
-        <Typography variant='h4'>Page not found!</Typography>
+        <Typography variant='h4'>{t("Page not found!")}</Typography>
         <CustomButton onClick={navigateToHome}>
-          Back to {isLoggedIn ? `Dashboard` : "Home"}
+          {t(isLoggedIn ? `Back to Dashboard` : "Back to Home")}
         </CustomButton>
       </Box>
     </>

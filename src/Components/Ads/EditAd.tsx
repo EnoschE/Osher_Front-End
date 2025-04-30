@@ -11,6 +11,7 @@ import { editAd, getAdById } from "../../Services/adsService";
 import { selectCategories } from "../../Redux/Slices/categoriesSlice";
 import { isBrandLoggedIn } from "../../Services/userService";
 import { selectUser } from "../../Redux/Slices/userSlice";
+import { useTranslation } from "react-i18next";
 
 interface AdState {
   _id: string;
@@ -33,6 +34,7 @@ const defaultData = {
 };
 
 const EditAd = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const categories = useSelector(selectCategories);
@@ -56,7 +58,7 @@ const EditAd = () => {
       const adData: any = await getAdById((id || "")?.toString());
       setData(adData);
       if (isBrand && adData.brandId !== user._id) {
-        toast.error("You are not allowed to edit this ad");
+        toast.error(t("You are not allowed to edit this ad"));
         navigate(allRoutes.ADS);
         return;
       }
@@ -67,29 +69,17 @@ const EditAd = () => {
           value: item._id,
           text: item.name,
           picture: item.picture,
-        })) || [],
+        })) || []
       );
     } catch (error: any) {
-      toast.error(error);
+      toast.error(t(error));
     }
     setLoading(false);
   };
 
   const handleOnChange = ({ name, value }: FormOnChange) => {
     setData((state) => ({ ...state, [name]: value }));
-    setErrors((state) => ({
-      ...state,
-      [name]: "",
-      // name === "email" && value
-      //   ? validateEmail(value)
-      //   : name === "password" && value
-      //   ? validatePassword(value)
-      //   : name === "confirmPassword" && value
-      //   ? data.password === value
-      //     ? ""
-      //     : "Passwords do not match"
-      //   : "",
-    }));
+    setErrors((state) => ({ ...state, [name]: "" }));
   };
 
   const validateData = () => {
@@ -104,13 +94,6 @@ const EditAd = () => {
     updatedErrors.categoryId = data.categoryId
       ? ""
       : "Category cannot be empty";
-
-    // updatedErrors.address = data.address ? "" : "Address cannot be empty";
-    // updatedErrors.phone = data.phone ? "" : "Phone Number cannot be empty";
-    // updatedErrors.email = validateEmail(data.email);
-    // updatedErrors.password = validatePassword(data.password);
-    // updatedErrors.confirmPassword =
-    //   data.password === data.confirmPassword ? "" : "Passwords do not match";
 
     setErrors(updatedErrors);
     return !Object.values(updatedErrors).find(Boolean);
@@ -132,25 +115,15 @@ const EditAd = () => {
 
       await editAd(data._id, formData);
 
-      toast.success("Ad updated successfully!");
+      toast.success(t("Ad updated successfully!"));
       navigate(allRoutes.VIEW_AD.replace(":id", (id || "")?.toString()));
-      // }
     } catch (error: any) {
-      // if (error.includes("Incorrect current password")) {
-      //   setErrors({ ...errors, password: error });
-      // } else if (error.includes("A brand with this email already exists")) {
-      //   setErrors({ ...errors, email: error });
-      // } else {
-      toast.error(error);
-      // }
+      toast.error(t(error));
     }
     setLoading(false);
   };
 
   const handleCancel = () => navigate(allRoutes.ADS);
-
-  // const openOtpDialog = () => setOtpDialog(true);
-  // const closeOtpDialog = () => setOtpDialog(false);
 
   const fields: FormField[] = [
     {
@@ -162,6 +135,7 @@ const EditAd = () => {
       onChange: handleOnChange,
       required: true,
       error: errors.picture,
+      isSquarish: true,
     },
     {
       required: true,
@@ -215,7 +189,7 @@ const EditAd = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading="Edit Ad"
+        heading='Edit Ad'
         subHeading={`Edit the details of Ad`}
         fields={fields}
         onSave={handleUpdate}

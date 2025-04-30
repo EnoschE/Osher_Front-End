@@ -20,6 +20,7 @@ export interface FormField {
   placeholder?: string;
   options?: Array<DropDownOptionProps>;
   disabled?: boolean;
+  isSquarish?: boolean;
 }
 
 interface FormProps {
@@ -109,6 +110,7 @@ const CustomForm = ({
                       field.onChange({ value: image, name: field.name })
                     }
                     imageFile={field.value}
+                    isSquarish={field.isSquarish}
                   />
                 ) : field.type === "dropdown" ? (
                   <CustomDropdown

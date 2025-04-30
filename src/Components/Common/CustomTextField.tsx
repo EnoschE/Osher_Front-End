@@ -117,7 +117,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
         value={value ?? ""}
         placeholder={t(placeholder || "")}
         helperText={noHelperText ? undefined : t(error || "")}
-        error={error ? true : false}
+        error={!!error}
         onChange={onChange}
         style={{ marginTop: 0, width: "100%", ...inputStyle }}
         disabled={disabled}
@@ -134,7 +134,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
               <InputAdornment position='end'>
                 {isPasswordField && displayPasswordIcon ? (
                   <IconButton
-                    aria-label='toggle password visibility'
+                    aria-label={t("Toggle password visibility")}
                     onClick={() => setShowPassword(!showPassword)}
                     onMouseDown={(e: any) => e.preventDefault()}
                     sx={{ "& svg": { width: 18, height: 18 } }}

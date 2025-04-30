@@ -8,6 +8,7 @@ import { editBrand, getBrandById } from "../../Services/brandsService";
 import { validateEmail, validatePassword } from "../../Utils/utils";
 import CustomForm, { FormField } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
+import { useTranslation } from "react-i18next";
 
 interface AccountSettingsData extends UserState {
   newPassword?: string;
@@ -25,6 +26,7 @@ const defaultData = {
 };
 
 const EditBrand = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -53,7 +55,7 @@ const EditBrand = () => {
       };
       setData(currentData);
     } catch (error: any) {
-      toast.error(error);
+      toast.error(t(error));
     }
     setLoading(false);
   };
@@ -120,7 +122,7 @@ const EditBrand = () => {
       //   setData((state) => ({ ...state, email: user.email }));
       //   openOtpDialog();
       // } else {
-      toast.success("Brand updated successfully!");
+      toast.success(t("Brand updated successfully!"));
       navigate(allRoutes.VIEW_BRAND.replace(":id", (id || "")?.toString()));
       // }
     } catch (error: any) {
@@ -129,7 +131,7 @@ const EditBrand = () => {
       } else if (error.includes("A brand with this email already exists")) {
         setErrors({ ...errors, email: error });
       } else {
-        toast.error(error);
+        toast.error(t(error));
       }
     }
     setLoading(false);

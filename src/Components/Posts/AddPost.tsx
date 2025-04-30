@@ -10,6 +10,7 @@ import { addPost } from "../../Services/postsService";
 import { useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
 import { isInfluencerLoggedIn } from "../../Services/userService";
+import { useTranslation } from "react-i18next";
 
 interface PostState {
   name: string;
@@ -28,6 +29,7 @@ const defaultData = {
 };
 
 const AddPost = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const isInfluencer = isInfluencerLoggedIn();
@@ -53,10 +55,10 @@ const AddPost = () => {
             value: item._id,
             text: item.name,
             picture: item.picture,
-          })) || [],
+          })) || []
         );
       } catch (error) {
-        toast.error("Failed to fetch influencers");
+        toast.error(t("Failed to fetch influencers"));
       }
       setLoading(false);
     };
@@ -98,10 +100,10 @@ const AddPost = () => {
 
       await addPost(formData);
 
-      toast.success("Post added successfully!");
+      toast.success(t("Post added successfully!"));
       navigate(allRoutes.POSTS);
     } catch (error: any) {
-      toast.error(error);
+      toast.error(t(error));
     }
     setLoading(false);
   };
@@ -118,6 +120,7 @@ const AddPost = () => {
       onChange: handleOnChange,
       required: true,
       error: errors.picture,
+      isSquarish: true,
     },
     {
       required: true,
@@ -157,8 +160,8 @@ const AddPost = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading="Add new Post"
-        subHeading="Please provide the details to add a new Post"
+        heading='Add new Post'
+        subHeading='Please provide the details to add a new Post'
         fields={fields}
         onSave={handleUpdate}
         onCancel={handleCancel}

@@ -27,15 +27,7 @@ interface HeaderProps {
   alternateKey?: string;
   showEllipses?: boolean;
   maxWidth?: number;
-  // align?: "center" | "left" | "right" | "inherit" | "justify" | undefined;
   align?: any;
-  // customComponent?: (props: {
-  //   text: string;
-  //   id: string;
-  //   fullObject: any;
-  //   mongoId?: string;
-  //   sequentialId?: string;
-  // }) => any;
   customComponent?: (props: any) => any;
   notClickable?: boolean;
   sortable?: boolean;

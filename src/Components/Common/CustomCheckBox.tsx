@@ -15,7 +15,6 @@ interface CustomCheckBoxProps {
   className?: string;
 }
 
-// const CustomCheckBox: React.FC<CustomCheckBoxProps> = ({
 const CustomCheckBox = ({
   top = 0,
   bottom = 0,
@@ -35,8 +34,8 @@ const CustomCheckBox = ({
       style={{ marginTop: top, marginBottom: bottom }}
       control={
         <Checkbox
-          size="small"
-          color="primary"
+          size='small'
+          color='primary'
           disabled={disabled}
           checked={checked ?? false}
           onChange={onChange}
@@ -47,7 +46,7 @@ const CustomCheckBox = ({
       label={
         <span style={{ display: "flex", alignItems: "center" }}>
           {startElement ? startElement : ""}
-          <Typography variant="body2">{text}</Typography>
+          <Typography variant='body2'>{text}</Typography>
           {endElement ? endElement : ""}
         </span>
       }

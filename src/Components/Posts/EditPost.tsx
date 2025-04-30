@@ -10,6 +10,7 @@ import { editPost, getPostById } from "../../Services/postsService";
 import { isInfluencerLoggedIn } from "../../Services/userService";
 import { useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
+import { useTranslation } from "react-i18next";
 
 interface PostState {
   _id: string;
@@ -28,6 +29,7 @@ const defaultData = {
 };
 
 const EditPost = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const isInfluencer = isInfluencerLoggedIn();
@@ -51,7 +53,7 @@ const EditPost = () => {
       setData(postData);
 
       if (isInfluencer && postData.userId !== user._id) {
-        toast.error("You are not allowed to edit this post");
+        toast.error(t("You are not allowed to edit this post"));
         navigate(allRoutes.POSTS);
         return;
       }
@@ -62,10 +64,10 @@ const EditPost = () => {
           value: item._id,
           text: item.name,
           picture: item.picture,
-        })) || [],
+        })) || []
       );
     } catch (error: any) {
-      toast.error(error);
+      toast.error(t(error));
     }
     setLoading(false);
   };
@@ -104,11 +106,11 @@ const EditPost = () => {
 
       await editPost(data._id, formData);
 
-      toast.success("Post updated successfully!");
+      toast.success(t("Post updated successfully!"));
       navigate(allRoutes.VIEW_POST.replace(":id", (id || "")?.toString()));
       // }
     } catch (error: any) {
-      toast.error(error);
+      toast.error(t(error));
     }
     setLoading(false);
   };
@@ -125,6 +127,7 @@ const EditPost = () => {
       onChange: handleOnChange,
       required: true,
       error: errors.picture,
+      isSquarish: true,
     },
     {
       required: true,
@@ -164,7 +167,7 @@ const EditPost = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading="Edit Post"
+        heading='Edit Post'
         subHeading={`Edit the details of Post`}
         fields={fields}
         onSave={handleUpdate}

@@ -8,6 +8,7 @@ import { validateEmail, validatePassword } from "../../Utils/utils";
 import CustomForm, { FormField } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
 import { addInfluencer } from "../../Services/influencersService";
+import { useTranslation } from "react-i18next";
 
 interface MainState extends UserState {
   confirmPassword?: string;
@@ -24,6 +25,7 @@ const defaultData = {
 };
 
 const AddInfluencer = () => {
+  const {t} = useTranslation()
   const navigate = useNavigate();
 
   const [data, setData] = useState<MainState>(defaultData);
@@ -78,13 +80,13 @@ const AddInfluencer = () => {
 
       await addInfluencer(formData);
 
-      toast.success("Influencer added successfully!");
+      toast.success(t("Influencer added successfully!"));
       navigate(allRoutes.INFLUENCERS);
     } catch (error: any) {
       if (error.includes("An influencer with this email already exists")) {
         setErrors({ ...errors, email: error });
       } else {
-        toast.error(error);
+        toast.error(t(error));
       }
     }
     setLoading(false);

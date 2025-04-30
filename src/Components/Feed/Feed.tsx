@@ -7,8 +7,11 @@ import { borderRadius } from "../../Utils/spacings";
 import { getFeedData } from "../../Services/feedService";
 import colors from "../../Utils/colors";
 import FeedCard, { FeedCardItem } from "./FeedCard";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Feed = () => {
+  const { t } = useTranslation();
   const user = useSelector(selectUser);
 
   const [data, setData] = useState([]);
@@ -23,7 +26,8 @@ const Feed = () => {
     try {
       const response: any = await getFeedData();
       setData(response);
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(t(error));
       console.error("Error fetching feed data:", error);
     }
     setLoading(false);
@@ -90,7 +94,7 @@ const Feed = () => {
                       color: "white",
                     }}
                   >
-                    <span>AD will be displayed here</span>
+                    <span>{t("AD will be displayed here")}</span>
                   </Box>
                   <Box
                     sx={{

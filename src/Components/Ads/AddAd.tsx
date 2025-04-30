@@ -11,6 +11,7 @@ import { useSelector } from "../../Redux/reduxHooks";
 import { selectCategories } from "../../Redux/Slices/categoriesSlice";
 import { FormOnChange } from "../../Utils/types";
 import { isBrandLoggedIn } from "../../Services/userService";
+import { useTranslation } from "react-i18next";
 
 interface AdState {
   name: string;
@@ -31,6 +32,7 @@ const defaultData = {
 };
 
 const AddAd = () => {
+  const { t } = useTranslation();
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const categories = useSelector(selectCategories);
@@ -57,10 +59,10 @@ const AddAd = () => {
             value: item._id,
             text: item.name,
             picture: item.picture,
-          })) || [],
+          })) || []
         );
       } catch (error) {
-        toast.error("Failed to fetch brands");
+        toast.error(t("Failed to fetch brands"));
       }
       setLoading(false);
     };
@@ -70,19 +72,7 @@ const AddAd = () => {
 
   const handleOnChange = ({ name, value }: FormOnChange) => {
     setData((state) => ({ ...state, [name]: value }));
-    setErrors((state) => ({
-      ...state,
-      [name]: "",
-      // name === "email" && value
-      //   ? validateEmail(value)
-      //   : name === "password" && value
-      //   ? validatePassword(value)
-      //   : name === "confirmPassword" && value
-      //   ? data.password === value
-      //     ? ""
-      //     : "Passwords do not match"
-      //   : "",
-    }));
+    setErrors((state) => ({ ...state, [name]: "" }));
   };
 
   const validateData = () => {
@@ -97,13 +87,6 @@ const AddAd = () => {
     updatedErrors.categoryId = data.categoryId
       ? ""
       : "Category cannot be empty";
-
-    // updatedErrors.address = data.address ? "" : "Address cannot be empty";
-    // updatedErrors.phone = data.phone ? "" : "Phone Number cannot be empty";
-    // updatedErrors.email = validateEmail(data.email);
-    // updatedErrors.password = validatePassword(data.password);
-    // updatedErrors.confirmPassword =
-    //   data.password === data.confirmPassword ? "" : "Passwords do not match";
 
     setErrors(updatedErrors);
     return !Object.values(updatedErrors).find(Boolean);
@@ -125,29 +108,19 @@ const AddAd = () => {
 
       await addAd(formData);
 
-      toast.success("Ad added successfully!");
+      toast.success(t("Ad added successfully!"));
       navigate(allRoutes.ADS);
     } catch (error: any) {
       if (error.includes("An Ad with this name already exists")) {
         setErrors({ ...errors, name: error });
       } else {
-        toast.error(error);
+        toast.error(t(error));
       }
     }
     setLoading(false);
   };
 
   const handleCancel = () => navigate(allRoutes.BRANDS);
-
-  // if (!body.name) error = "Name is missing";
-  // if (!body.description) error = "Description is missing";
-  // if (!body.categoryId) error = "Category is not selected";
-  // if (!body.brandId) error = "Brand is not selected";
-  // if (!body.quantity) error = "Quantity is missing";
-  // if (!body.video) error = "Video is missing";
-  // if (!body.pictures) error = "Pictures are missing";
-  // if (!body.publishDate) error = "ublishDate is missing";
-  // if (!body.expiryDate) error = "expiryDate is missing";
 
   const fields: FormField[] = [
     {
@@ -159,6 +132,7 @@ const AddAd = () => {
       onChange: handleOnChange,
       required: true,
       error: errors.picture,
+      isSquarish: true,
     },
     {
       required: true,
@@ -214,8 +188,8 @@ const AddAd = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading="Add new Ad"
-        subHeading="Please provide the details to add a new Ad"
+        heading='Add new Ad'
+        subHeading='Please provide the details to add a new Ad'
         fields={fields}
         onSave={handleUpdate}
         onCancel={handleCancel}

@@ -11,6 +11,7 @@ import {
   editInfluencer,
   getInfluencerById,
 } from "../../Services/influencersService";
+import { useTranslation } from "react-i18next";
 
 interface AccountSettingsData extends UserState {
   newPassword?: string;
@@ -29,6 +30,7 @@ const defaultData = {
 };
 
 const EditInfluencer = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -57,7 +59,7 @@ const EditInfluencer = () => {
       };
       setData(currentData);
     } catch (error: any) {
-      toast.error(error);
+      toast.error(t(error));
     }
     setLoading(false);
   };
@@ -125,7 +127,7 @@ const EditInfluencer = () => {
       //   setData((state) => ({ ...state, email: user.email }));
       //   openOtpDialog();
       // } else {
-      toast.success("Influencer updated successfully!");
+      toast.success(t("Influencer updated successfully!"));
       navigate(
         allRoutes.VIEW_INFLUENCER.replace(":id", (id || "")?.toString())
       );
@@ -138,7 +140,7 @@ const EditInfluencer = () => {
       ) {
         setErrors({ ...errors, email: error });
       } else {
-        toast.error(error);
+        toast.error(t(error));
       }
     }
     setLoading(false);

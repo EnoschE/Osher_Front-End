@@ -8,6 +8,7 @@ import { validateEmail, validatePassword } from "../../Utils/utils";
 import CustomForm, { FormField } from "../Common/CustomForm";
 import { addBrand } from "../../Services/brandsService";
 import { FormOnChange } from "../../Utils/types";
+import { useTranslation } from "react-i18next";
 
 interface BrandState extends UserState {
   confirmPassword?: string;
@@ -24,6 +25,7 @@ const defaultData = {
 };
 
 const AddBrand = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [data, setData] = useState<BrandState>(defaultData);
@@ -78,13 +80,13 @@ const AddBrand = () => {
 
       await addBrand(formData);
 
-      toast.success("Brand added successfully!");
+      toast.success(t("Brand added successfully!"));
       navigate(allRoutes.BRANDS);
     } catch (error: any) {
       if (error.includes("A brand with this email already exists")) {
         setErrors({ ...errors, email: error });
       } else {
-        toast.error(error);
+        toast.error(t(error));
       }
     }
     setLoading(false);
@@ -166,8 +168,8 @@ const AddBrand = () => {
   return (
     <PageLayout loading={loading}>
       <CustomForm
-        heading="Add new Brand"
-        subHeading="Please provide the details to add a new brand"
+        heading='Add new Brand'
+        subHeading='Please provide the details to add a new brand'
         fields={fields}
         onSave={handleUpdate}
         onCancel={handleCancel}

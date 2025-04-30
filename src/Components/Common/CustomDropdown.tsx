@@ -37,7 +37,7 @@ const CustomDropdown = ({
   className,
 }: CustomDropdownProps) => {
   const { t } = useTranslation();
-  
+
   const handleChange = (event: SelectChangeEvent) => {
     onChange?.(event.target.value);
   };
@@ -65,7 +65,7 @@ const CustomDropdown = ({
           if (selected === "")
             return (
               <Typography color='text.disabled' minHeight={20}>
-                {label}
+                {t(label || "")}
               </Typography>
             );
 

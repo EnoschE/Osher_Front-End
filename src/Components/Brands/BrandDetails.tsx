@@ -6,7 +6,10 @@ import DeleteDialog from "../Common/DeleteDialog";
 import ProfileHeader from "../Common/ProfileHeader";
 import { toast } from "react-toastify";
 import TableBlock from "../Common/Table/TableBlock";
-import { isSuperAdminLoggedIn } from "../../Services/userService";
+import {
+  isSuperAdminLoggedIn,
+  isUserLoggedIn,
+} from "../../Services/userService";
 import { deleteBrand, getBrandById } from "../../Services/brandsService";
 import PageDetailsBlock from "../Common/PageDetailsBlock";
 import { getAdsOfBrand } from "../../Services/adsService";
@@ -17,6 +20,7 @@ const BrandDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const isLoggedIn = isUserLoggedIn();
 
   const [data, setData] = useState<any>({});
   const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
@@ -38,6 +42,13 @@ const BrandDetails = () => {
       const adsOfBrand: any = await getAdsOfBrand(id || "");
       setAds(adsOfBrand || []);
     } catch (error: any) {
+      if (
+        [
+          "Invalid influencer id",
+          "Influencer with the given id was not found",
+        ].includes(error)
+      )
+        navigate(isLoggedIn ? allRoutes.BRANDS : allRoutes.FEED);
       toast.error(error);
     }
     setLoading(false);

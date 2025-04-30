@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import * as EmailValidator from "email-validator";
 import { sendResetPasswordLink } from "../../Services/passwordService";
+import { useTranslation } from "react-i18next";
 
 interface ForgotPasswordDialogProps {
   open: boolean;
@@ -17,6 +18,7 @@ interface ForgotPasswordDialogProps {
 }
 
 const ForgotPasswordDialog = ({ open, onClose }: ForgotPasswordDialogProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { IconSquareBox } = useLoginStyles();
 
@@ -61,18 +63,17 @@ const ForgotPasswordDialog = ({ open, onClose }: ForgotPasswordDialogProps) => {
 
     setLoading(true);
     try {
-      const { data } = await sendResetPasswordLink(email);
-      // TODO: inform Shahmeer to fix the api response
+      const response = await sendResetPasswordLink(email);
 
-      if (data.resetlink === "user with given email doesn't exist") {
-        toast.error("User with given email doesn't exist");
+      if (response === "User with given email doesn't exist") {
+        toast.error(t(response));
         setError("Email address not found in our records");
       } else {
         setEmailSent(true);
-        toast.success("Password reset link has been sent!");
+        toast.success(t("Password reset link has been sent!"));
       }
     } catch (error: any) {
-      toast.error(error);
+      toast.error(t(error));
     }
     setLoading(false);
   };
@@ -99,21 +100,23 @@ const ForgotPasswordDialog = ({ open, onClose }: ForgotPasswordDialogProps) => {
         {emailSent ? <EmailOutlined /> : <KeyOutlined />}
       </IconSquareBox>
 
-      <Typography variant="h2" my={16} textAlign="center">
-        {emailSent ? "Check your email" : "Forgot password?"}
+      <Typography variant='h2' my={16} textAlign='center'>
+        {t(emailSent ? "Check your email" : "Forgot password?")}
       </Typography>
       <Typography
         fontSize={16}
-        textAlign="center"
+        textAlign='center'
         mb={emailSent ? 6 : 32}
-        color="text.secondary"
+        color='text.secondary'
       >
-        {emailSent
-          ? "We've sent you a password reset link"
-          : "No worries we’ll send you reset instructions"}
+        {t(
+          emailSent
+            ? "We've sent you a password reset link"
+            : "No worries we’ll send you reset instructions"
+        )}
       </Typography>
       {emailSent && (
-        <Typography variant="body2" textAlign="center" mb={32}>
+        <Typography variant='body2' textAlign='center' mb={32}>
           {email || "test@sungroup.com"}
         </Typography>
       )}
@@ -121,8 +124,8 @@ const ForgotPasswordDialog = ({ open, onClose }: ForgotPasswordDialogProps) => {
       {!emailSent && (
         <CustomTextField
           autoFocus
-          label="Email"
-          type="email"
+          label='Email'
+          type='email'
           bottom={24}
           value={email}
           onChange={handleChangeEmail}
@@ -137,28 +140,28 @@ const ForgotPasswordDialog = ({ open, onClose }: ForgotPasswordDialogProps) => {
             disabled={loading}
             onClick={handleOpenEmailApp}
           >
-            Open email app
+            {t("Open email app")}
           </CustomButton>
         )
       ) : (
         <CustomButton fullWidth disabled={loading} onClick={handleSendLink}>
-          Send Now
+          {t("Send Now")}
         </CustomButton>
       )}
       <Typography
         fontSize={12}
-        color="text.secondary"
-        textAlign="center"
+        color='text.secondary'
+        textAlign='center'
         mt={32}
         mb={10}
       >
-        {emailSent ? "Didn’t receive the email? " : "Remember your password? "}
+        {t(emailSent ? "Didn’t receive the email? " : "Remember your password? ")}
         <span
-          className="link"
+          className='link'
           onClick={handleSignInClick}
           style={{ fontWeight: 600 }}
         >
-          {emailSent ? "Click to resend" : "Sign In"}
+          {t(emailSent ? "Click to resend" : "Sign in")}
         </span>
       </Typography>
     </CustomDialog>

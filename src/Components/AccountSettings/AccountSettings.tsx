@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { allRoutes } from "../../Routes/AllRoutes";
 import { updateProfile } from "../../Services/profileService";
-// import OtpVerifyDialog from "./OtpVerifyDialog";
 import PageLayout from "../PageLayout/PageLayout";
 import { validateEmail, validatePassword } from "../../Utils/utils";
 import CustomForm, { FormField } from "../Common/CustomForm";

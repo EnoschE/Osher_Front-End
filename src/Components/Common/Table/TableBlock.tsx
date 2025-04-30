@@ -107,7 +107,7 @@ export const TableBlock = ({
             />
           )}
           {addButtonText && (
-            <Tooltip title={addButtonTooltip} arrow>
+            <Tooltip title={t(addButtonTooltip || "")} arrow>
               <CustomButton
                 className='animated-block'
                 sx={{

@@ -62,7 +62,7 @@ const CustomMenu = ({
     );
 
     return option.disabled && option.tooltip ? (
-      <Tooltip title={option.tooltip}>
+      <Tooltip title={t(option.tooltip)}>
         <Box>{menuItemContent}</Box>
       </Tooltip>
     ) : (

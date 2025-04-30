@@ -86,16 +86,8 @@ const ProfileHeader = ({
           )}
         </Box>
 
-        {/* <Typography
-          variant='h1'
-          style={{
-            background: `radial-gradient(circle 200px at 100% 50%, ${colors.primary} 0.2%,     ${colors.text} 100.2%)`,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          {data?.name}
-        </Typography> */}
+        {/* background: `radial-gradient(circle 200px at 100% 50%, ${colors.primary} 0.2%,     ${colors.text} 100.2%)`, */}
+
         <Typography
           className='animated-block'
           sx={{ animationDelay: `${4 / 21}s` }}
