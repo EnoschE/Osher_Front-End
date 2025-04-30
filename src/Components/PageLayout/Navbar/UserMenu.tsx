@@ -5,14 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { allRoutes } from "../../../Routes/AllRoutes";
 import { useDispatch } from "react-redux";
 import { resetUserState } from "../../../Redux/Slices/userSlice";
-import { useTranslation } from "react-i18next";
 import { LogoutOutlined, SettingsOutlined } from "@mui/icons-material";
 import { isUserLoggedIn, logoutUser } from "../../../Services/userService";
 
 const UserMenu = ({ user }: { user: any }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const handleLogout = () => {
     logoutUser();
