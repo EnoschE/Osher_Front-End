@@ -52,7 +52,7 @@ const translationEN = {
   // 404 Not Found Page
   "Page not found!": "Page not found!",
   "Back to": "Back to",
-  "Home": "Home",
+  Home: "Home",
   "Back to Home": "Back to Home",
   "Back to Dashboard": "Back to Dashboard",
 
@@ -231,6 +231,48 @@ const translationEN = {
   "You are not allowed to edit this post":
     "You are not allowed to edit this post",
   "Failed to fetch influencers": "Failed to fetch influencers",
+  "User with this email doesn't exists": "User with this email doesn't exists",
+  "Invalid email or password": "Invalid email or password",
+  "Email is missing": "Email is missing",
+  "Name is missing": "Name is missing",
+  "Password is missing": "Password is missing",
+  "New Password is missing": "New Password is missing",
+  "The user with the given email was not found.":
+    "The user with the given email was not found.",
+  "Invalid brand id": "Invalid brand id",
+  "Brand with the given id was not found":
+    "Brand with the given id was not found",
+  "Phone is missing": "Phone is missing",
+  "Address is missing": "Address is missing",
+  "Brand Id is missing": "Brand Id is missing",
+  "New password is missing": "New password is missing",
+  "Brand with the given email was not found.":
+    "Brand with the given email was not found.",
+  "Invalid influencer id": "Invalid influencer id",
+  "Influencer with the given id was not found":
+    "Influencer with the given id was not found",
+  "Influencer Id is missing": "Influencer Id is missing",
+  "Influencer with the given email was not found.":
+    "Influencer with the given email was not found.",
+  "This ad is not available": "This ad is not available",
+  "Ad with the given id was not found": "Ad with the given id was not found",
+  "Description is missing": "Description is missing",
+  "Category is not selected": "Category is not selected",
+  "Brand is not selected": "Brand is not selected",
+  "Invalid brandId": "Invalid brandId",
+  "Invalid categoryId": "Invalid categoryId",
+  "Brand not found": "Brand not found",
+  "Category not found": "Category not found",
+  "Ad with the given id was not found.": "Ad with the given id was not found.",
+  "This post is not available": "This post is not available",
+  "Post with the given id was not found":
+    "Post with the given id was not found",
+  "User is not selected": "User is not selected",
+  "Picture is missing": "Picture is missing",
+  "Invalid userId": "Invalid userId",
+  "User not found": "User not found",
+  "Post with the given id was not found.":
+    "Post with the given id was not found.",
 
   // Toast Messages
   "Profile updated successfully!": "Profile updated successfully!",
