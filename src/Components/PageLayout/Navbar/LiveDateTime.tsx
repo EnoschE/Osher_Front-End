@@ -1,24 +1,41 @@
 import { useState, useEffect } from "react";
-import moment from "moment";
 import { Box, Typography } from "@mui/material";
 import { isUserLoggedIn } from "../../../Services/userService";
 
 const LiveDateTime = () => {
   const isLoggedIn = isUserLoggedIn();
-
   const [currentTime, setCurrentTime] = useState<string>("");
 
+  // Update current time immediately on load
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(moment().format("h:mm")); // Only time in 12-hour format
-    }, 1000);
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime(
+        new Intl.DateTimeFormat("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true, // Ensures 12-hour format
+        })
+          .format(now)
+          .replace(/(AM|PM)/, "")
+          .trim()
+      ); // Remove AM/PM
+    };
+
+    // Set the initial time immediately
+    updateTime();
+
+    const interval = setInterval(updateTime, 1000);
 
     // Cleanup the interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
-  const currentDay = moment().format("ddd"); // Day abbreviation (Mon, Tue, etc.)
-  const currentDate = moment().format("DD MMM"); // Date in Day Month format (28 Apr)
+  const currentDay = new Date().toLocaleString("en-US", { weekday: "short" }); // Day abbreviation (Mon, Tue, etc.)
+  const currentDate = new Date().toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "short",
+  }); // Date in Day Month format (28 Apr)
 
   return (
     <Box
@@ -27,9 +44,9 @@ const LiveDateTime = () => {
         alignItems: "center",
         gap: 6,
         marginLeft: {
-          xs: 0,
-          sm: isLoggedIn ? 0 : 60,
-          md: isLoggedIn ? 0 : 120,
+          xs: 4,
+          sm: isLoggedIn ? 20 : 60,
+          md: isLoggedIn ? 20 : 120,
         },
       }}
     >
