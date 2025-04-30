@@ -13,6 +13,13 @@ interface PageDetailsProps {
   animationDelay?: number;
 }
 
+export const commonDetailsPageFields = [
+  { text: "Name", key: "name" },
+  { text: "Email", key: "email" },
+  { text: "Address", key: "address" },
+  { text: "Phone Number", key: "phone" },
+];
+
 const PageDetailsBlock = ({
   data,
   fields,
