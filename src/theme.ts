@@ -211,6 +211,20 @@ const createAppTheme = () => {
               },
             },
 
+            "&.MuiButton-containedError": {
+              "&:disabled": {
+                color: colors.error + 75,
+                backgroundColor: colors.error + 25,
+              },
+            },
+           
+            "&.MuiButton-containedSuccess": {
+              "&:disabled": {
+                color: colors.success + 75,
+                backgroundColor: colors.success + 25,
+              },
+            },
+
             "&.MuiButton-outlined": {
               borderColor: colors.border,
               color: colors.text,

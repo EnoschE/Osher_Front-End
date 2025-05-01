@@ -51,11 +51,50 @@ const translationFR = {
 
   // Home Page
   "PLAY GAMES AND WIN PRIZES": "JOUEZ À DES JEUX ET GAGNEZ DES PRIX",
-  "SEE THE BEST SPOTS AROUND YOU": "VOYEZ LES MEILLEURS ENDROITS AUTOUR DE VOUS",
+  "SEE THE BEST SPOTS AROUND YOU":
+    "VOYEZ LES MEILLEURS ENDROITS AUTOUR DE VOUS",
   FEED: "FIL",
   "Games coming soon...": "Jeux à venir...",
   "Explore Spots coming soon...": "Explorer les endroits à venir...",
 
+  // Games
+  Question: "Question",
+  of: "de",
+  Next: "Suivant",
+  Finish: "Terminer",
+  "🎉 Game Over!": "🎉 Fin du jeu !",
+  "You scored": "Vous avez marqué",
+  "out of": "sur",
+  "Play Again": "Rejouer",
+  "What is the capital of France?": "Quelle est la capitale de la France ?",
+  "Which planet is known as the Red Planet?":
+    "Quelle planète est connue comme la planète rouge ?",
+  "What is the largest ocean on Earth?":
+    "Quel est le plus grand océan sur Terre ?",
+  "Which animal is the largest land mammal?":
+    "Quel animal est le plus grand mammifère terrestre ?",
+  "Which sport is known as the 'king of sports'?":
+    "Quel sport est connu comme le 'roi des sports' ?",
+  Paris: "Paris",
+  Rome: "Rome",
+  Madrid: "Madrid",
+  Berlin: "Berlin",
+  Earth: "Terre",
+  Mars: "Mars",
+  Jupiter: "Jupiter",
+  Saturn: "Saturne",
+  Atlantic: "Atlantique",
+  Indian: "Indien",
+  Pacific: "Pacifique",
+  Arctic: "Arctique",
+  Elephant: "Éléphant",
+  Rhino: "Rhinocéros",
+  Hippo: "Hippopotame",
+  Giraffe: "Girafe",
+  Cricket: "Cricket",
+  Basketball: "Basket-ball",
+  Football: "Football",
+  Tennis: "Tennis",
 
   // 404 Not Found Page
   "Page not found!": "Page non trouvée !",
