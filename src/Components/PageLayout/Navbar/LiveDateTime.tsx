@@ -45,8 +45,8 @@ const LiveDateTime = () => {
         gap: 6,
         marginLeft: {
           xs: 4,
-          sm: isLoggedIn ? 20 : 60,
-          md: isLoggedIn ? 20 : 120,
+          sm: isLoggedIn ? 20 : 20,
+          md: isLoggedIn ? 20 : 100,
         },
       }}
     >

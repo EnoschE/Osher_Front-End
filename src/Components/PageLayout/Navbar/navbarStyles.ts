@@ -17,7 +17,7 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: 10,
   height: navbarHeight,
 
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     padding: "8px 32px",
   },
 }));

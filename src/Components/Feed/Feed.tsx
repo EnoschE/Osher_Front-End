@@ -47,7 +47,7 @@ const Feed = () => {
           width: "100%",
           padding: "12px",
           gap: "20px",
-          maxWidth: "600px",
+          maxWidth: "500px",
           // mt: 20,
         }}
       >

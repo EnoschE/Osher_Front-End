@@ -1,23 +1,27 @@
 import { Box, styled } from "@mui/material";
-import CustomButton from "../Common/CustomButton";
-import { HomeImage } from "../../Utils/Images";
+import { navbarHeight } from "../../Utils/spacings";
 
-export const HomeContainer = styled(Box)({
+export const HomeContainer = styled(Box)(() => ({
   display: "flex",
+  flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  height: "100vh",
-  backgroundImage: `url(${HomeImage})`,
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "center",
-});
+  padding: 32,
+  maxWidth: "100vw",
+  height: `calc(100vh - ${navbarHeight}px)`,
+}));
 
-export const HomeButton = styled(CustomButton)(({ theme }) => ({
-  backgroundColor: "white",
-  color: "darkblue",
-  border: `2px solid darkblue`,
+export const HomeInnerBlock = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr 1fr",
+  maxWidth: 1050,
+  width: "100%",
+  gap: 40,
 
-  "&:hover": {
-    backgroundColor: theme.palette.grey[300],
+  [theme.breakpoints.down("md")]: {
+    gap: 20,
+  },
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "1fr",
   },
 }));

@@ -1,5 +1,7 @@
 export const allRoutes = {
   HOME: "/",
+  GAMES: "/games",
+  EXPLORE_SPOTS: "/explore-spots",
   NOT_FOUND: "/*",
   LOGIN: "/login",
   SIGN_UP: "/register",

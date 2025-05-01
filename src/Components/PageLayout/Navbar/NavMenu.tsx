@@ -1,12 +1,25 @@
 import { Box } from "@mui/material";
 import VolumeButtons from "./VolumeButtons";
 import LanguageSelector from "./LanguageSelector";
-import { DarkModeOutlined } from "@mui/icons-material";
+import {
+  DarkModeOutlined,
+  ArrowBackOutlined,
+} from "@mui/icons-material";
 import CustomButton from "../../Common/CustomButton";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
-const NavMenu = ({ onNap }: { onNap: () => void }) => {
+const NavMenu = ({
+  backButtonPath,
+  hideBackButton,
+  onNap,
+}: {
+  backButtonPath?: string;
+  hideBackButton?: boolean;
+  onNap: () => void;
+}) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -31,6 +44,17 @@ const NavMenu = ({ onNap }: { onNap: () => void }) => {
         },
       }}
     >
+      {!hideBackButton && (
+        <CustomButton
+          variant='text'
+          onClick={() =>
+            backButtonPath ? navigate(backButtonPath) : navigate(-1)
+          }
+        >
+          <ArrowBackOutlined />
+          {t("Back")}
+        </CustomButton>
+      )}
       <LanguageSelector />
       <VolumeButtons />
       <CustomButton variant='text' onClick={onNap}>

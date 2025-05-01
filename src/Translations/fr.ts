@@ -49,6 +49,14 @@ const translationFR = {
   "Remember your password? ": "Vous vous souvenez de votre mot de passe ? ",
   "Click to resend": "Cliquez pour renvoyer",
 
+  // Home Page
+  "PLAY GAMES AND WIN PRIZES": "JOUEZ À DES JEUX ET GAGNEZ DES PRIX",
+  "SEE THE BEST SPOTS AROUND YOU": "VOYEZ LES MEILLEURS ENDROITS AUTOUR DE VOUS",
+  FEED: "FIL",
+  "Games coming soon...": "Jeux à venir...",
+  "Explore Spots coming soon...": "Explorer les endroits à venir...",
+
+
   // 404 Not Found Page
   "Page not found!": "Page non trouvée !",
   "Back to": "Retour à",

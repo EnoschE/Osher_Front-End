@@ -40,6 +40,8 @@ import Feed from "../Components/Feed/Feed";
 import MyProfile from "../Components/MyProfile/MyProfile";
 import Home from "../Components/Home/Home";
 import AudioFile from "../Assets/Audio/audio.mp3";
+import Games from "../Components/Games/Games";
+import ExploreSpots from "../Components/ExploreSpots/ExploreSpots";
 
 interface RouteWithComponent {
   path: string;
@@ -58,7 +60,9 @@ interface RouteWithComponent {
 }
 
 const routesWithComponents = {
-  HOME: { path: allRoutes.HOME, Component: Home },
+  HOME: { path: allRoutes.HOME, Component: Home , isBoth: true },
+  GAMES: { path: allRoutes.GAMES, Component: Games , isBoth: true },
+  EXPLORE_SPOTS: { path: allRoutes.EXPLORE_SPOTS, Component: ExploreSpots , isBoth: true },
   LOGIN: { path: allRoutes.LOGIN, Component: Login },
   RESET_PASSWORD: { path: allRoutes.RESET_PASSWORD, Component: ResetPassword },
   DASHBOARD: {

@@ -11,15 +11,15 @@ export const LoginContainer = styled(Box)(({ theme }) => ({
   maxWidth: "100vw",
   height: `calc(100vh - ${navbarHeight}px)`,
 
-  backgroundImage: `radial-gradient(
-    circle 35vw at 105% 45%,
-   ${colors.primary}40 0.2%,
-   #ffffff00 100.2%
-   ), radial-gradient(
-    circle 40vw at 10.6% 25%,
-    ${colors.primary}40 0.2%,
-    #fff 100.2%
-    )`,
+  // backgroundImage: `radial-gradient(
+  //   circle 35vw at 105% 45%,
+  //  ${colors.primary}40 0.2%,
+  //  #ffffff00 100.2%
+  //  ), radial-gradient(
+  //   circle 40vw at 10.6% 25%,
+  //   ${colors.primary}40 0.2%,
+  //   #fff 100.2%
+  //   )`,
 
   // backgroundImage: `radial-gradient(
   //   circle 35vw at 105% 55%,

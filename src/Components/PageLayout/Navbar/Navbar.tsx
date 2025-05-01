@@ -1,9 +1,6 @@
-import { Box, IconButton, Theme, useMediaQuery } from "@mui/material";
-import { Menu, KeyboardArrowLeftOutlined } from "@mui/icons-material";
-import { useTranslation } from "react-i18next";
-import CustomButton from "../../Common/CustomButton";
+import { Box, IconButton } from "@mui/material";
+import { Menu } from "@mui/icons-material";
 import { StyledAppBar, StyledMenuBlock } from "./navbarStyles";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "../../../Redux/reduxHooks";
 import { selectUser } from "../../../Redux/Slices/userSlice";
 import colors from "../../../Utils/colors";
@@ -26,13 +23,8 @@ const Navbar = ({
   backButtonPath?: string;
   hideBackButton?: boolean;
 }) => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
   const user = useSelector(selectUser);
   const { nap, enableNap, disableNap } = useNap();
-  const isMobileView = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down("sm")
-  );
 
   return (
     <>
@@ -63,26 +55,15 @@ const Navbar = ({
           </IconButton>
 
           <Logo isVisible={!!navbarForNonProtectedRoutes} />
-
-          {!hideBackButton && (
-            <CustomButton
-              sx={{ p: { xs: "2px", sm: "2px 6px", minWidth: 0 } }}
-              variant='outlined'
-              color='secondary'
-              onClick={() =>
-                backButtonPath ? navigate(backButtonPath) : navigate(-1)
-              }
-            >
-              <KeyboardArrowLeftOutlined fontSize='small' />
-              {isMobileView ? "" : t("Back")}
-            </CustomButton>
-          )}
-
           <LiveDateTime />
         </Box>
 
         <StyledMenuBlock>
-          <NavMenu onNap={enableNap} />
+          <NavMenu
+            onNap={enableNap}
+            hideBackButton={hideBackButton}
+            backButtonPath={backButtonPath}
+          />
           <UserMenu user={user} />
         </StyledMenuBlock>
       </StyledAppBar>

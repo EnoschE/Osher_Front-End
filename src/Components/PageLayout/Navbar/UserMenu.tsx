@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { allRoutes } from "../../../Routes/AllRoutes";
 import { useDispatch } from "react-redux";
 import { resetUserState } from "../../../Redux/Slices/userSlice";
-import { LogoutOutlined, SettingsOutlined } from "@mui/icons-material";
+import {
+  LogoutOutlined,
+  SettingsOutlined,
+  WidgetsOutlined,
+} from "@mui/icons-material";
 import { isUserLoggedIn, logoutUser } from "../../../Services/userService";
 
 const UserMenu = ({ user }: { user: any }) => {
@@ -36,6 +40,11 @@ const UserMenu = ({ user }: { user: any }) => {
       onClick: () => navigate(allRoutes.MY_PROFILE),
     },
     { isDivider: true },
+    {
+      icon: WidgetsOutlined,
+      text: "Dashboard",
+      onClick: () => navigate(allRoutes.DASHBOARD),
+    },
     {
       icon: SettingsOutlined,
       text: "Settings",
