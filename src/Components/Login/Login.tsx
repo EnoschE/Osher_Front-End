@@ -93,7 +93,7 @@ const Login = () => {
   const closeForgotPasswordDialog = () => setForgotPasswordDialog(false);
 
   return (
-    <PageLayout loading={loading} hideSidebar hideBackButton sx={{ p: 0 }}>
+    <PageLayout loading={loading} hideSidebar sx={{ p: 0 }}>
       <LoginContainer>
         <LoginInnerBlock>
           <AnimatedHeading

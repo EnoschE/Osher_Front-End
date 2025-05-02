@@ -34,7 +34,7 @@ const Feed = () => {
   };
 
   return (
-    <PageLayout hideBackButton hideSidebar={!user._id}>
+    <PageLayout hideSidebar={!user._id}>
       {/* <AnimatedHeading heading={`Our Feed`} /> */}
 
       <Box
