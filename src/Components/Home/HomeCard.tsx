@@ -37,7 +37,6 @@ const HomeCard = ({
       }}
     >
       <Typography
-        className='pop-out-animation'
         variant='h2'
         fontWeight={900}
         textAlign='center'
@@ -45,7 +44,6 @@ const HomeCard = ({
         lineHeight={1}
         color='white'
         sx={{
-          animationDelay: `${animationDelay}s`,
           textShadow: `1px 1px 1px #000, -1px 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000`,
         }}
       >
