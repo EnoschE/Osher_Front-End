@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PageLayout from "../PageLayout/PageLayout";
-import { Box, Button, Typography, Card } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { borderRadius, navbarHeight } from "../../Utils/spacings";
 import { useTranslation } from "react-i18next";
 import {
@@ -10,6 +10,7 @@ import {
   Q4Image,
   Q5Image,
 } from "../../Utils/Images";
+import PostPicture from "../Common/PostPicture";
 
 const questions = [
   {
@@ -91,23 +92,16 @@ const Games = () => {
         }}
       >
         {!isFinished ? (
-          <Card
-            sx={{
-              width: "100%",
-              maxWidth: 1000,
-              p: 20,
-              borderRadius: borderRadius.xl,
-            }}
-          >
-            <Typography className='pop-out-animation' variant='h6' mb={16}>
+          <Box maxWidth={950}>
+            <Typography className='pop-out-animation' variant='h6' mb={5}>
               {t("Question")} {currentQuestionIndex + 1} {t("of")}{" "}
               {questions.length}
             </Typography>
             <Typography
-              key={currentQuestionIndex}
+              key={currentQuestionIndex + "-question"}
               className='pop-out-animation'
               variant='h3'
-              mb={20}
+              mb={10}
             >
               {t(currentQuestion.question)}
             </Typography>
@@ -123,19 +117,15 @@ const Games = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  position: "relative",
                 }}
               >
-                <img
-                  key={currentQuestionIndex}
+                <PostPicture
                   className='pop-out-animation'
+                  key={currentQuestionIndex}
+                  aspectRatio={1.79}
+                  objectFit='cover'
                   src={currentQuestion.image}
-                  alt='question'
-                  style={{
-                    width: "100%",
-                    aspectRatio: "1.6",
-                    borderRadius: borderRadius.lg,
-                    objectFit: "cover",
-                  }}
                 />
               </Box>
 
@@ -182,10 +172,10 @@ const Games = () => {
               </Box>
             </Box>
 
-            {selectedAnswer && (
+            {selectedAnswer ? (
               <Button
                 variant='contained'
-                sx={{ mt: 24 }}
+                sx={{ mt: 16 }}
                 onClick={handleNext}
                 fullWidth
                 className='slide-up-bounce'
@@ -196,8 +186,10 @@ const Games = () => {
                     : "Next"
                 )}
               </Button>
+            ) : (
+              <Box height={16 + 50} />
             )}
-          </Card>
+          </Box>
         ) : (
           <Box textAlign='center'>
             <Typography className='pop-out-animation' variant='h2' mb={16}>

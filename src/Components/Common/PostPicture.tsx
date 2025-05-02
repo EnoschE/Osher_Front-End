@@ -4,12 +4,23 @@ import { useState, useEffect, useRef } from "react";
 import { borderRadius } from "../../Utils/spacings";
 
 interface PostPictureProps {
+  className?: string;
+  objectFit?: "contain" | "cover" | "fill" | "none" | "scale-down";
+  aspectRatio?: number | string;
   src?: string;
   onClick?: () => void;
   sx?: SxProps;
 }
 
-const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
+const PostPicture = ({
+  className,
+  objectFit,
+  aspectRatio,
+  src,
+  onClick,
+  sx,
+  ...props
+}: PostPictureProps) => {
   const [loaded, setLoaded] = useState(false);
   const [inView, setInView] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -41,9 +52,11 @@ const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
 
   return (
     <Box
+      className={className}
       ref={containerRef}
       position='relative'
       sx={{
+        aspectRatio,
         minHeight: isVisible ? "auto" : 350,
         borderRadius: borderRadius.xl,
         width: "100%",
@@ -61,11 +74,12 @@ const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
           sx={{
             maxWidth: "100%",
             width: "100%",
-            objectFit: "contain",
+            objectFit: objectFit || "contain",
             borderRadius: borderRadius.xl,
             minHeight: isVisible ? "auto" : 350,
             border: `0.5px solid ${colors.border}`,
             display: loaded ? "block" : "none",
+            aspectRatio,
           }}
           alt='Post Picture'
           onLoad={() => setLoaded(true)}
@@ -86,6 +100,7 @@ const PostPicture = ({ src, onClick, sx, ...props }: PostPictureProps) => {
           borderRadius: borderRadius.xl,
           border: `0.5px solid ${colors.border}`,
           bgcolor: "#EBEBEE",
+          aspectRatio,
         }}
         animation='wave'
       />
