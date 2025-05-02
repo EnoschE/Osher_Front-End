@@ -4,6 +4,7 @@ const translationEN = {
   Up: "Up",
   Down: "Down",
   Mute: "Mute",
+  Brightness: "Brightness",
   Settings: "Settings",
   "Log Out": "Log Out",
   Back: "Back",

@@ -20,6 +20,9 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     padding: "8px 32px",
   },
+  [theme.breakpoints.down("sm")]: {
+    padding: "8px 12px",
+  },
 }));
 
 export const StyledMenuBlock = styled(Box)(({ theme }) => ({

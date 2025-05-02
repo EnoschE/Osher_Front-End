@@ -1,74 +1,61 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, Popover, Slider } from "@mui/material";
 import {
-  VolumeDownOutlined,
-  VolumeUpOutlined,
-  VolumeOffOutlined,
-  VolumeMuteOutlined,
+  Brightness4Outlined,
+  BrightnessLowOutlined,
+  Brightness7Outlined,
 } from "@mui/icons-material";
-import { borderRadius } from "../../../Utils/spacings";
 import { useTranslation } from "react-i18next";
+import { borderRadius } from "../../../Utils/spacings";
 import CustomButton from "../../Common/CustomButton";
 
-// Helper: Get icon based on volume level
-const getVolumeIcon = (volume: number) => {
-  if (volume === 0) return <VolumeMuteOutlined />;
-  if (volume < 50) return <VolumeDownOutlined />;
-  return <VolumeUpOutlined />;
+// Helper: Get icon based on brightness
+const getBrightnessIcon = (brightness: number) => {
+  if (brightness < 0.4) return <Brightness4Outlined />;
+  if (brightness < 0.7) return <BrightnessLowOutlined />;
+  return <Brightness7Outlined />;
 };
 
-const VolumeButtons = () => {
+const BrightnessControl = () => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [volume, setVolume] = useState<number>(50);
-  const [previousVolume, setPreviousVolume] = useState<number>(50);
-  const popoverRef = useRef<HTMLDivElement | null>(null);
+  const [brightness, setBrightness] = useState<number>(1);
   const autoCloseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
 
   const open = Boolean(anchorEl);
 
-  const applyVolume = (val: number) => {
-    document
-      .querySelectorAll<HTMLMediaElement>("video, audio")
-      .forEach((element) => {
-        element.muted = false;
-        element.volume = val / 100;
-      });
-  };
-
-  const handleMuteClick = () => {
-    const isMuted = volume === 0;
-    const newVolume = isMuted ? previousVolume : 0;
-
-    if (!isMuted) {
-      setPreviousVolume(volume);
+  const applyBrightness = (value: number) => {
+    const root = document.getElementById("root");
+    if (root) {
+      root.style.filter = `brightness(${value})`;
     }
-
-    setVolume(newVolume);
-    document
-      .querySelectorAll<HTMLMediaElement>("video, audio")
-      .forEach((element) => {
-        element.muted = newVolume === 0;
-        if (newVolume !== 0) element.volume = newVolume / 100;
-      });
-
-    localStorage.setItem("volume", volume.toString());
   };
 
-  const handleVolumeSlider = (_: Event, val: number | number[]) => {
-    const newVal = Array.isArray(val) ? val[0] : val;
-    setVolume(newVal);
-    applyVolume(newVal);
-    localStorage.setItem("volume", newVal.toString());
+  useEffect(() => {
+    // Apply saved or default brightness
+    const saved = localStorage.getItem("brightness");
+    const val = saved ? parseFloat(saved) : 1;
+    setBrightness(val);
+    applyBrightness(val);
+  }, []);
+
+  const handleSliderChange = (_: Event, value: number | number[]) => {
+    const newVal = Array.isArray(value) ? value[0] : value;
+    setBrightness(newVal);
+    applyBrightness(newVal);
+    localStorage.setItem("brightness", newVal.toString());
+
+    // Reset auto-close timer
     resetAutoCloseTimer();
   };
 
-  const handleVolumeClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
     resetAutoCloseTimer();
   };
 
-  const handlePopoverClose = () => {
+  const handleClose = () => {
     setAnchorEl(null);
     clearTimeout(autoCloseTimeoutRef.current!);
   };
@@ -76,11 +63,11 @@ const VolumeButtons = () => {
   const resetAutoCloseTimer = () => {
     clearTimeout(autoCloseTimeoutRef.current!);
     autoCloseTimeoutRef.current = setTimeout(() => {
-      handlePopoverClose();
+      handleClose();
     }, 2000);
   };
 
-  // Close on outside click
+  // Close popover on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
@@ -90,7 +77,7 @@ const VolumeButtons = () => {
         anchorEl &&
         !anchorEl.contains(target)
       ) {
-        handlePopoverClose();
+        handleClose();
       }
     };
 
@@ -105,36 +92,30 @@ const VolumeButtons = () => {
     };
   }, [open, anchorEl]);
 
-  // Set initial volume
-  useEffect(() => {
-    const saved = localStorage.getItem("volume");
-    const initialVol = saved ? parseInt(saved) : 100;
-    setVolume(initialVol);
-    setPreviousVolume(initialVol);
-  }, []);
-
   return (
     <>
-      <CustomButton variant='text' onClick={handleMuteClick}>
-        <VolumeOffOutlined />
-        {t("Mute")}
-      </CustomButton>
-      <CustomButton onClick={handleVolumeClick} variant='text'>
-        {getVolumeIcon(volume)}
-        {t("Volume")}
+      <CustomButton onClick={handleClick} variant='text'>
+        {getBrightnessIcon(brightness)}
+        {t("Brightness")}
       </CustomButton>
 
       <Popover
         open={open}
         anchorEl={anchorEl}
-        onClose={handlePopoverClose}
+        onClose={handleClose}
         hideBackdrop
         disableEnforceFocus
         disableAutoFocus
         disableRestoreFocus
         disableEscapeKeyDown
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        transformOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
         PaperProps={{
           ref: popoverRef,
           sx: {
@@ -163,14 +144,14 @@ const VolumeButtons = () => {
             gap: 20,
           }}
         >
-          {getVolumeIcon(volume)}
+          {getBrightnessIcon(brightness)}
           <Slider
             orientation='vertical'
-            value={volume}
-            min={0}
-            max={100}
-            step={5}
-            onChange={handleVolumeSlider}
+            value={brightness}
+            min={0.1}
+            max={1}
+            step={0.05}
+            onChange={handleSliderChange}
             sx={{
               color: "white",
               "& .MuiSlider-thumb": {
@@ -190,4 +171,4 @@ const VolumeButtons = () => {
   );
 };
 
-export default VolumeButtons;
+export default BrightnessControl;

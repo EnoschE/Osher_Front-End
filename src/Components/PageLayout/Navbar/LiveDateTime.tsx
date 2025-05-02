@@ -42,7 +42,7 @@ const LiveDateTime = () => {
       sx={{
         display: "flex",
         alignItems: "center",
-        gap: 6,
+        gap: { xs: 0, sm: 6 },
         marginLeft: {
           xs: 4,
           sm: isLoggedIn ? 20 : 20,
@@ -50,11 +50,11 @@ const LiveDateTime = () => {
         },
       }}
     >
-      <Typography variant='h2' fontWeight={500} fontSize={45}>
+      <Typography variant='h2' fontWeight={500} fontSize={{ sm: 45, xs: 28 }}>
         {currentTime}
       </Typography>
 
-      <Box>
+      <Box display={{ xs: "none", sm: "flex" }} flexDirection='column'>
         <Typography fontWeight={500}>{currentDay}</Typography>
 
         <Typography fontWeight={500}>{currentDate}</Typography>

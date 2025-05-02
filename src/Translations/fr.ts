@@ -4,6 +4,7 @@ const translationFR = {
   Up: "Haut",
   Down: "Bas",
   Mute: "Muet",
+  Brightness: "Luminosité",
   Settings: "Paramètres",
   "Log Out": "Se déconnecter",
   Back: "Retour",
