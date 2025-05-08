@@ -16,6 +16,7 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   top: "auto",
   zIndex: 10,
   height: navbarHeight,
+  position: "fixed",
 
   [theme.breakpoints.down("md")]: {
     padding: "8px 32px",

@@ -29,9 +29,8 @@ const Navbar = ({
   return (
     <>
       <StyledAppBar
-        position='fixed'
         sx={{
-          zIndex: 30,
+          // zIndex: 30,
           borderTop: `1px solid ${colors.border}`,
           color: colors.text,
           ...(navbarForNonProtectedRoutes

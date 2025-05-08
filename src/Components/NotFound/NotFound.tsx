@@ -4,10 +4,10 @@ import CustomButton from "../Common/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { allRoutes } from "../../Routes/AllRoutes";
 import colors from "../../Utils/colors";
-import Navbar from "../PageLayout/Navbar/Navbar";
 import { navbarHeight } from "../../Utils/spacings";
 import { isUserLoggedIn } from "../../Services/userService";
 import { useTranslation } from "react-i18next";
+import PageLayout from "../PageLayout/PageLayout";
 
 const fadeUpAnimation = keyframes`
   0% {
@@ -36,8 +36,7 @@ const NotFound = () => {
     navigate(isLoggedIn ? allRoutes.DASHBOARD : allRoutes.HOME);
 
   return (
-    <>
-      <Navbar navbarForNonProtectedRoutes hideBackButton />
+    <PageLayout hideSidebar sx={{ p: 0 }}>
       <Box
         sx={{
           display: "flex",
@@ -68,7 +67,7 @@ const NotFound = () => {
           {t(isLoggedIn ? `Back to Dashboard` : "Back to Home")}
         </CustomButton>
       </Box>
-    </>
+    </PageLayout>
   );
 };
 
