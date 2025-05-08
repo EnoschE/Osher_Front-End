@@ -7,7 +7,7 @@ import { allRoutes } from "../../Routes/AllRoutes";
 import { updateProfile } from "../../Services/profileService";
 import PageLayout from "../PageLayout/PageLayout";
 import { validateEmail, validatePassword } from "../../Utils/utils";
-import CustomForm, { FormField } from "../Common/CustomForm";
+import CustomForm, { FormFieldWithValue } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
 import { useTranslation } from "react-i18next";
 
@@ -132,7 +132,7 @@ const AccountSettings = () => {
   // const openOtpDialog = () => setOtpDialog(true);
   // const closeOtpDialog = () => setOtpDialog(false);
 
-  const fields: FormField[] = [
+  const fields: FormFieldWithValue[] = [
     {
       label: "Your Photo",
       placeholder: "This will be displayed on your profile",

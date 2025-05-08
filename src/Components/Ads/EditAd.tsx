@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
 import { getAllBrands } from "../../Services/brandsService";
-import CustomForm, { FormField } from "../Common/CustomForm";
+import CustomForm, { FormFieldWithValue } from "../Common/CustomForm";
 import { useSelector } from "../../Redux/reduxHooks";
 import { FormOnChange } from "../../Utils/types";
 import { editAd, getAdById } from "../../Services/adsService";
@@ -125,7 +125,7 @@ const EditAd = () => {
 
   const handleCancel = () => navigate(allRoutes.ADS);
 
-  const fields: FormField[] = [
+  const fields: FormFieldWithValue[] = [
     {
       label: "Ad Photo",
       placeholder: "This will be displayed on the profile of Ad",

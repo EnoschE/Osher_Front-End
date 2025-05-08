@@ -246,6 +246,7 @@ const translationEN = {
   "Name cannot be empty": "Name cannot be empty",
   "New password should be different": "New password should be different",
   "New password cannot be empty": "New password cannot be empty",
+  "Confirm Password cannot be empty": "Confirm Password cannot be empty",
   "Password length must be at least 5 characters":
     "Password length must be at least 5 characters",
   "Password cannot be empty": "Password cannot be empty",

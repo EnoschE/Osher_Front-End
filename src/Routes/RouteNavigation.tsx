@@ -1,9 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "../Components/Login/Login";
 import { PrivateRoute } from "./PrivateRoutes";
 import { PublicRoute } from "./PublicRoutes";
-import AccountSettings from "../Components/AccountSettings/AccountSettings";
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import {
   isBrandLoggedIn,
   isInfluencerLoggedIn,
@@ -15,33 +13,48 @@ import { toast } from "react-toastify";
 import { getProfile } from "../Services/profileService";
 import { useDispatch, useSelector } from "../Redux/reduxHooks";
 import { allRoutes } from "./AllRoutes";
-import Dashboard from "../Components/Dashboard/Dashboard";
-import ResetPassword from "../Components/ResetPassword/ResetPassword";
-import NotFound from "../Components/NotFound/NotFound";
 import { selectUser } from "../Redux/Slices/userSlice";
-import Brands from "../Components/Brands/Brands";
-import AddBrand from "../Components/Brands/AddBrand";
-import EditBrand from "../Components/Brands/EditBrand";
-import BrandDetails from "../Components/Brands/BrandDetails";
-import Categories from "../Components/Categories/Categories";
-import Ads from "../Components/Ads/Ads";
-import AddAd from "../Components/Ads/AddAd";
-import EditAd from "../Components/Ads/EditAd";
-import AdDetails from "../Components/Ads/AdDetails";
-import Influencers from "../Components/Influencers/Influencers";
-import InfluencerDetails from "../Components/Influencers/InfluencerDetails";
-import EditInfluencer from "../Components/Influencers/EditInfluencer";
-import AddInfluencer from "../Components/Influencers/AddInfluencer";
-import Posts from "../Components/Posts/Posts";
-import AddPost from "../Components/Posts/AddPost";
-import EditPost from "../Components/Posts/EditPost";
-import PostDetails from "../Components/Posts/PostDetails";
-import Feed from "../Components/Feed/Feed";
-import MyProfile from "../Components/MyProfile/MyProfile";
-import Home from "../Components/Home/Home";
 import AudioFile from "../Assets/Audio/audio.mp3";
-import Games from "../Components/Games/Games";
-import ExploreSpots from "../Components/ExploreSpots/ExploreSpots";
+
+const Login = lazy(() => import("../Components/Login/Login"));
+const Home = lazy(() => import("../Components/Home/Home"));
+const AccountSettings = lazy(
+  () => import("../Components/AccountSettings/AccountSettings")
+);
+const Dashboard = lazy(() => import("../Components/Dashboard/Dashboard"));
+const ResetPassword = lazy(
+  () => import("../Components/ResetPassword/ResetPassword")
+);
+const NotFound = lazy(() => import("../Components/NotFound/NotFound"));
+const Brands = lazy(() => import("../Components/Brands/Brands"));
+const AddBrand = lazy(() => import("../Components/Brands/AddBrand"));
+const EditBrand = lazy(() => import("../Components/Brands/EditBrand"));
+const BrandDetails = lazy(() => import("../Components/Brands/BrandDetails"));
+const Categories = lazy(() => import("../Components/Categories/Categories"));
+const Ads = lazy(() => import("../Components/Ads/Ads"));
+const AddAd = lazy(() => import("../Components/Ads/AddAd"));
+const EditAd = lazy(() => import("../Components/Ads/EditAd"));
+const AdDetails = lazy(() => import("../Components/Ads/AdDetails"));
+const Influencers = lazy(() => import("../Components/Influencers/Influencers"));
+const InfluencerDetails = lazy(
+  () => import("../Components/Influencers/InfluencerDetails")
+);
+const EditInfluencer = lazy(
+  () => import("../Components/Influencers/EditInfluencer")
+);
+const AddInfluencer = lazy(
+  () => import("../Components/Influencers/AddInfluencer")
+);
+const Posts = lazy(() => import("../Components/Posts/Posts"));
+const AddPost = lazy(() => import("../Components/Posts/AddPost"));
+const EditPost = lazy(() => import("../Components/Posts/EditPost"));
+const PostDetails = lazy(() => import("../Components/Posts/PostDetails"));
+const Feed = lazy(() => import("../Components/Feed/Feed"));
+const MyProfile = lazy(() => import("../Components/MyProfile/MyProfile"));
+const Games = lazy(() => import("../Components/Games/Games"));
+const ExploreSpots = lazy(
+  () => import("../Components/ExploreSpots/ExploreSpots")
+);
 
 interface RouteWithComponent {
   path: string;
@@ -60,9 +73,13 @@ interface RouteWithComponent {
 }
 
 const routesWithComponents = {
-  HOME: { path: allRoutes.HOME, Component: Home , isBoth: true },
-  GAMES: { path: allRoutes.GAMES, Component: Games , isBoth: true },
-  EXPLORE_SPOTS: { path: allRoutes.EXPLORE_SPOTS, Component: ExploreSpots , isBoth: true },
+  HOME: { path: allRoutes.HOME, Component: Home, isBoth: true },
+  GAMES: { path: allRoutes.GAMES, Component: Games, isBoth: true },
+  EXPLORE_SPOTS: {
+    path: allRoutes.EXPLORE_SPOTS,
+    Component: ExploreSpots,
+    isBoth: true,
+  },
   LOGIN: { path: allRoutes.LOGIN, Component: Login },
   RESET_PASSWORD: { path: allRoutes.RESET_PASSWORD, Component: ResetPassword },
   DASHBOARD: {

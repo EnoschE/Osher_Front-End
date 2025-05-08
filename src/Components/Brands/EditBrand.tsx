@@ -6,7 +6,7 @@ import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
 import { editBrand, getBrandById } from "../../Services/brandsService";
 import { validateEmail, validatePassword } from "../../Utils/utils";
-import CustomForm, { FormField } from "../Common/CustomForm";
+import CustomForm, { FormFieldWithValue } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
 import { useTranslation } from "react-i18next";
 
@@ -142,7 +142,7 @@ const EditBrand = () => {
   // const openOtpDialog = () => setOtpDialog(true);
   // const closeOtpDialog = () => setOtpDialog(false);
 
-  const fields: FormField[] = [
+  const fields: FormFieldWithValue[] = [
     {
       label: "Brand Photo",
       placeholder: "This will be displayed on the profile of Brand",

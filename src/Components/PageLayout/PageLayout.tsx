@@ -32,6 +32,7 @@ const PageLayout = ({
 
   return !hideLayout ? (
     <Box
+      position='relative'
       sx={{
         display: "flex",
         backgroundColor: "#fff",

@@ -129,7 +129,10 @@ const EntityDetailsPage = ({
     : isSuperAdmin || !!checkEditAccess?.(data);
 
   return (
-    <PageLayout hideSidebar={!isLoggedIn} hideBackButton={!isLoggedIn}>
+    <PageLayout
+      hideSidebar={!isLoggedIn}
+      //  hideBackButton={!isLoggedIn}
+    >
       <ProfileHeader
         isSquarish={["Post", "Ad"].includes(entityType)}
         data={data}

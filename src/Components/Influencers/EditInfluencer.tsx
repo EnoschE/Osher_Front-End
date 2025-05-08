@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
 import { validateEmail, validatePassword } from "../../Utils/utils";
-import CustomForm, { FormField } from "../Common/CustomForm";
+import CustomForm, { FormFieldWithValue } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
 import {
   editInfluencer,
@@ -148,7 +148,7 @@ const EditInfluencer = () => {
 
   const handleCancel = () => navigate(allRoutes.INFLUENCERS);
 
-  const fields: FormField[] = [
+  const fields: FormFieldWithValue[] = [
     {
       label: "Influencer Photo",
       placeholder: "This will be displayed on the profile of Influencer",

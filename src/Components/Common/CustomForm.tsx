@@ -14,8 +14,8 @@ export interface FormField {
   required?: boolean;
   type?: "text" | "email" | "password" | "phone" | "image" | "dropdown";
   multiline?: boolean;
-  value: string | number | undefined;
-  onChange: ({ name, value }: { name: string; value: any }) => void;
+  // value: string | number | undefined;
+  // onChange: ({ name, value }: { name: string; value: any }) => void;
   error?: string;
   placeholder?: string;
   options?: Array<DropDownOptionProps>;
@@ -23,10 +23,15 @@ export interface FormField {
   isSquarish?: boolean;
 }
 
+export interface FormFieldWithValue extends FormField {
+  value: string | number | undefined;
+  onChange: ({ name, value }: { name: string; value: any }) => void;
+}
+
 interface FormProps {
   heading?: string;
   subHeading?: string;
-  fields: FormField[];
+  fields: FormFieldWithValue[];
   onSave: (e: FormEvent<HTMLFormElement>) => void;
   onCancel: () => void;
   saveButtonText?: string;
@@ -123,7 +128,7 @@ const CustomForm = ({
                     }
                     minWidth='100%'
                     error={field.error}
-                    label={field.placeholder}
+                    label={field.placeholder || field.label}
                     disabled={field.options?.length === 0 || field.disabled}
                     sx={{ animationDelay: delay }}
                   />
@@ -141,7 +146,7 @@ const CustomForm = ({
                     error={field.error}
                     name={field.name}
                     type={field.type === "phone" ? "tel" : field.type}
-                    placeholder={field.placeholder}
+                    placeholder={field.placeholder || field.label}
                     multiline={field.multiline}
                     displayPasswordIcon={field.type === "password"}
                   />

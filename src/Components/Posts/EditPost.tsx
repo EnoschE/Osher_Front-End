@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
-import CustomForm, { FormField } from "../Common/CustomForm";
+import CustomForm, { FormFieldWithValue } from "../Common/CustomForm";
 import { FormOnChange } from "../../Utils/types";
 import { getAllInfluencers } from "../../Services/influencersService";
 import { editPost, getPostById } from "../../Services/postsService";
@@ -117,7 +117,7 @@ const EditPost = () => {
 
   const handleCancel = () => navigate(allRoutes.POSTS);
 
-  const fields: FormField[] = [
+  const fields: FormFieldWithValue[] = [
     {
       label: "Post Photo",
       placeholder: "This will be the photo of post",

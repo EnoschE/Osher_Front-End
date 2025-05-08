@@ -251,6 +251,8 @@ const translationFR = {
     "Le nouveau mot de passe doit être différent",
   "New password cannot be empty":
     "Le nouveau mot de passe ne peut pas être vide",
+  "Confirm Password cannot be empty":
+    "Le mot de passe de confirmation ne peut pas être vide",
   "Password length must be at least 5 characters":
     "Le mot de passe doit contenir au moins 5 caractères",
   "Password cannot be empty": "Le mot de passe ne peut pas être vide",

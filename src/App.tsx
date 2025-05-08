@@ -5,10 +5,11 @@ import createAppTheme from "./theme";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import "./ToastStyles.css";
-import React from "react";
+import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
 import { BrowserRouter } from "react-router-dom";
+import Loader from "./Components/Common/Loader";
 
 const App: React.FC = () => {
   const theme = createAppTheme();
@@ -16,10 +17,12 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Provider store={store}>
-          <RouteNavigation />
-          <ToastContainer hideProgressBar autoClose={2500} />
-        </Provider>
+        <Suspense fallback={<Loader open />}>
+          <Provider store={store}>
+            <RouteNavigation />
+            <ToastContainer hideProgressBar autoClose={2500} />
+          </Provider>
+        </Suspense>
       </BrowserRouter>
     </ThemeProvider>
   );

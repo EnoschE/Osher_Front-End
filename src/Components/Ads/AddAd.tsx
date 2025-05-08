@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
-import CustomForm, { FormField } from "../Common/CustomForm";
+import CustomForm, { FormFieldWithValue } from "../Common/CustomForm";
 import { getAllBrands } from "../../Services/brandsService";
 import { addAd } from "../../Services/adsService";
 import { useSelector } from "../../Redux/reduxHooks";
@@ -122,7 +122,7 @@ const AddAd = () => {
 
   const handleCancel = () => navigate(allRoutes.BRANDS);
 
-  const fields: FormField[] = [
+  const fields: FormFieldWithValue[] = [
     {
       label: "Ad Photo",
       placeholder: "This will be displayed on the profile of Ad",
