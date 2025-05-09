@@ -25,6 +25,10 @@ const NavMenu = ({
         display: "flex",
         alignItems: "center",
         gap: { xs: 3, sm: 18 },
+        width: { xs: "120px !important", sm: "auto !important" },
+        flexWrap: { xs: "wrap", sm: "auto" },
+        justifyContent: "flex-end",
+
         "& button": {
           p: 2,
           minWidth: { xs: 35, sm: 46 },
@@ -37,8 +41,8 @@ const NavMenu = ({
           color: "text.primary",
         },
         "& svg": {
-          width: { xs: 24, sm: 28 },
-          height: { xs: 24, sm: 28 },
+          width: { xs: 20, sm: 28 },
+          height: { xs: 20, sm: 28 },
         },
       }}
     >
