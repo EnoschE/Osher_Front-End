@@ -28,6 +28,12 @@ const FeedCard = ({
 }) => {
   const navigate = useNavigate();
 
+  const handleClick = () => {
+    if (item?._id) {
+      navigate(allRoutes.VIEW_POST.replace(":id", item?._id));
+    }
+  };
+
   return (
     <Box
       className='animated-block'
@@ -90,12 +96,7 @@ const FeedCard = ({
         </Box>
       </Box>
 
-      <PostPicture
-        src={item?.picture}
-        onClick={() =>
-          navigate(allRoutes.VIEW_POST.replace(":id", item?._id || ""))
-        }
-      />
+      <PostPicture src={item?.picture} onClick={handleClick} />
 
       {isLoading ? (
         <Box>
@@ -125,7 +126,13 @@ const FeedCard = ({
           />
         </Box>
       ) : (
-        <Box display='flex' flexDirection='column' gap={8}>
+        <Box
+          display='flex'
+          flexDirection='column'
+          gap={8}
+          onClick={handleClick}
+          sx={{ cursor: "pointer" }}
+        >
           <Typography fontWeight={500}>{item?.name}</Typography>
           <Typography
             color='text.secondary'

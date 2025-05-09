@@ -10,6 +10,19 @@ import FeedCard, { FeedCardItem } from "./FeedCard";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
+const FeedDivider = () => {
+  return (
+    <Box
+      sx={{
+        backgroundColor: colors.border,
+        height: "1px",
+        width: "100%",
+        marginBlock: "52px",
+      }}
+    />
+  );
+};
+
 const Feed = () => {
   const { t } = useTranslation();
   const user = useSelector(selectUser);
@@ -54,30 +67,14 @@ const Feed = () => {
         {loading ? (
           <>
             <FeedCard isLoading />
-            <Box
-              sx={{
-                backgroundColor: colors.border,
-                height: "1px",
-                width: "100%",
-                marginBlock: "52px",
-              }}
-            />
+            <FeedDivider />
             <FeedCard isLoading animationDelay={0.1} />
           </>
         ) : (
           data?.map((item: FeedCardItem, index: number) => (
             <React.Fragment key={index}>
               <FeedCard key={index} item={item} animationDelay={index * 0.1} />
-              {index !== data?.length - 1 && (
-                <Box
-                  sx={{
-                    backgroundColor: colors.border,
-                    height: "1px",
-                    width: "100%",
-                    marginBlock: "52px",
-                  }}
-                />
-              )}
+              {index !== data?.length - 1 && <FeedDivider />}
               {index === 1 ? (
                 <>
                   <Box
@@ -90,20 +87,13 @@ const Feed = () => {
                       width: "100%",
                       height: 450,
                       boxShadow: `rgba(23, 58, 90, 0.25) 0px 50px 50px -10px`,
-                      bgcolor: "gray",
+                      bgcolor: "darkgrey",
                       color: "white",
                     }}
                   >
                     <span>{t("AD will be displayed here")}</span>
                   </Box>
-                  <Box
-                    sx={{
-                      backgroundColor: colors.border,
-                      height: "1px",
-                      width: "100%",
-                      marginBlock: "52px",
-                    }}
-                  />
+                  <FeedDivider />
                 </>
               ) : (
                 <></>
