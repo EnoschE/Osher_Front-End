@@ -1,10 +1,10 @@
-import Navbar from "../PageLayout/Navbar/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import SetPasswordDialog from "./SetPasswordDialog";
 import { useEffect, useState } from "react";
 import { allRoutes } from "../../Routes/AllRoutes";
 import { Box } from "@mui/material";
 import { navbarHeight } from "../../Utils/spacings";
+import PageLayout from "../PageLayout/PageLayout";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -24,8 +24,7 @@ const ResetPassword = () => {
   const closeSetPasswordDialog = () => navigate(allRoutes.HOME);
 
   return (
-    <>
-      <Navbar />
+    <PageLayout hideSidebar>
       <Box sx={{ width: "100vw", height: `100vh - ${navbarHeight}` }} />
       <SetPasswordDialog
         token={token}
@@ -33,7 +32,7 @@ const ResetPassword = () => {
         open={setPasswordDialog}
         onClose={closeSetPasswordDialog}
       />
-    </>
+    </PageLayout>
   );
 };
 

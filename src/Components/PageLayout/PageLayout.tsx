@@ -34,7 +34,7 @@ const PageLayout = ({
     <Box
       position='relative'
       sx={{
-        // TODO: make it 100vh with autoscroll
+        
         height: "100svh",
         maxHeight: "100svh",
 
@@ -51,7 +51,7 @@ const PageLayout = ({
         handleDrawerToggle={handleDrawerToggle}
         backButtonPath={backButtonPath}
         hideBackButton={hideBackButton}
-        navbarForNonProtectedRoutes={hideSidebar}
+        hideSidebar={hideSidebar}
       />
 
       {!hideSidebar && (
@@ -68,7 +68,7 @@ const PageLayout = ({
           width: hideSidebar
             ? "100%"
             : { sm: `calc(100% - ${sidebarWidth}px)` },
-          p: { xs: 32, sm: "42px 60px" },
+          p: { xs: 24, sm: "42px 60px" },
           minHeight: "100svh",
           overflow: "auto",
           ...sx,

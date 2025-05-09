@@ -22,7 +22,7 @@ const Logo = ({
       sx={{
         cursor: "pointer",
         display: isVisible ? "inline-block" : { sm: "none" },
-        height: forSidebar ? "60px" : { xs: "30px", sm: "55px" },
+        height: forSidebar ? "60px" : { xs: "30px", sm: "45px" },
         width: forSidebar ? "100%" : "auto",
         objectFit: "contain",
       }}

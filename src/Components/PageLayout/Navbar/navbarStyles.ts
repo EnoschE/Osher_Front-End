@@ -1,5 +1,6 @@
 import { AppBar, Box, styled } from "@mui/material";
 import { navbarHeight } from "../../../Utils/spacings";
+import colors from "../../../Utils/colors";
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   display: "flex",
@@ -17,12 +18,14 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: 10,
   height: navbarHeight,
   position: "fixed",
+  borderTop: `1px solid ${colors.border}`,
+  color: colors.text,
 
   [theme.breakpoints.down("md")]: {
-    padding: "8px 32px",
+    padding: "8px 18px",
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "8px 12px",
+    padding: "8px 10px",
   },
 }));
 

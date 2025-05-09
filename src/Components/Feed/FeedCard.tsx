@@ -127,7 +127,17 @@ const FeedCard = ({
       ) : (
         <Box display='flex' flexDirection='column' gap={8}>
           <Typography fontWeight={500}>{item?.name}</Typography>
-          <Typography color='text.secondary' whiteSpace='pre-wrap'>
+          <Typography
+            color='text.secondary'
+            whiteSpace='pre-wrap'
+            sx={{
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 2,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
             {item?.description}
           </Typography>
         </Box>

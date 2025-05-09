@@ -36,7 +36,7 @@ const NavMenu = ({
           flexDirection: "column",
           alignItems: "center",
           gap: { xs: 0, sm: 4 },
-          fontSize: { sm: 12, xs: 0 },
+          fontSize: { sm: 10, xs: 0 },
           fontWeight: 500,
           color: "text.primary",
         },

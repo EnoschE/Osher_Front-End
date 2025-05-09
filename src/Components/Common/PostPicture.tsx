@@ -14,8 +14,8 @@ interface PostPictureProps {
 
 const PostPicture = ({
   className,
-  objectFit,
-  aspectRatio,
+  objectFit = "cover",
+  aspectRatio = "1.55",
   src,
   onClick,
   sx,
@@ -77,6 +77,7 @@ const PostPicture = ({
             objectFit: objectFit || "contain",
             borderRadius: borderRadius.xl,
             minHeight: isVisible ? "auto" : 350,
+            height: "100%",
             border: `0.5px solid ${colors.border}`,
             display: loaded ? "block" : "none",
             aspectRatio,

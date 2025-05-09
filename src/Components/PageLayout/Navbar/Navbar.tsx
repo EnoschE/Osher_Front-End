@@ -3,7 +3,6 @@ import { Menu } from "@mui/icons-material";
 import { StyledAppBar, StyledMenuBlock } from "./navbarStyles";
 import { useSelector } from "../../../Redux/reduxHooks";
 import { selectUser } from "../../../Redux/Slices/userSlice";
-import colors from "../../../Utils/colors";
 import { sidebarWidth } from "../../../Utils/spacings";
 import Logo from "./Logo";
 import LiveDateTime from "./LiveDateTime";
@@ -13,12 +12,12 @@ import NapScreen from "./NapScreen";
 import { useNap } from "../../../Hooks/useNap";
 
 const Navbar = ({
-  navbarForNonProtectedRoutes,
+  hideSidebar,
   handleDrawerToggle,
   backButtonPath,
   hideBackButton,
 }: {
-  navbarForNonProtectedRoutes?: boolean;
+  hideSidebar?: boolean;
   handleDrawerToggle?: () => void;
   backButtonPath?: string;
   hideBackButton?: boolean;
@@ -29,31 +28,26 @@ const Navbar = ({
   return (
     <>
       <StyledAppBar
-        sx={{
-          // zIndex: 30,
-          borderTop: `1px solid ${colors.border}`,
-          color: colors.text,
-          ...(navbarForNonProtectedRoutes
+        sx={
+          hideSidebar
             ? {}
             : {
                 width: { sm: `calc(100% - ${sidebarWidth}px)` },
                 ml: { sm: `${sidebarWidth}px` },
-              }),
-        }}
+              }
+        }
       >
         <Box display='flex' alignItems='center' gap={6}>
           <IconButton
             color='inherit'
             edge='start'
             onClick={handleDrawerToggle}
-            sx={{
-              display: navbarForNonProtectedRoutes ? "none" : { sm: "none" },
-            }}
+            sx={{ display: hideSidebar ? "none" : { sm: "none" } }}
           >
             <Menu />
           </IconButton>
 
-          <Logo isVisible={!!navbarForNonProtectedRoutes} />
+          <Logo isVisible={!!hideSidebar} />
           <LiveDateTime />
         </Box>
 

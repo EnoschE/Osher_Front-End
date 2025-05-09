@@ -1,4 +1,3 @@
-import Navbar from "../PageLayout/Navbar/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { allRoutes } from "../../Routes/AllRoutes";
@@ -9,6 +8,7 @@ import { EmailVerifiedImage } from "../../Utils/Images";
 import { toast } from "react-toastify";
 import { resendVerifyEmail, verifyEmail } from "../../Services/userService";
 import Loader from "../Common/Loader";
+import PageLayout from "../PageLayout/PageLayout";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
@@ -79,8 +79,7 @@ const VerifyEmail = () => {
   };
 
   return (
-    <>
-      <Navbar />
+    <PageLayout hideSidebar>
       <Loader open={loading} />
       <Box
         sx={{
@@ -118,7 +117,7 @@ const VerifyEmail = () => {
           {error ? "Resend" : "Login"}
         </CustomButton>
       </Box>
-    </>
+    </PageLayout>
   );
 };
 

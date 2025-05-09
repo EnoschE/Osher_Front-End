@@ -50,7 +50,7 @@ const LiveDateTime = () => {
         },
       }}
     >
-      <Typography variant='h2' fontWeight={500} fontSize={{ sm: 45, xs: 28 }}>
+      <Typography variant='h2' fontWeight={500} fontSize={{ sm: 40, xs: 28 }}>
         {currentTime}
       </Typography>
 

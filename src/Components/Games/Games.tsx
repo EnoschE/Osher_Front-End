@@ -123,8 +123,7 @@ const Games = () => {
                 <PostPicture
                   className='pop-out-animation'
                   key={currentQuestionIndex}
-                  aspectRatio={1.79}
-                  objectFit='cover'
+                  aspectRatio={2}
                   src={currentQuestion.image}
                 />
               </Box>
