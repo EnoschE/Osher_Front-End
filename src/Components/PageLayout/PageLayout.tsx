@@ -35,8 +35,8 @@ const PageLayout = ({
       position='relative'
       sx={{
         // TODO: make it 100vh with autoscroll
-        height: "100vh",
-        maxHeight: "100vh",
+        height: "100svh",
+        maxHeight: "100svh",
 
         display: "flex",
         backgroundColor: "#fff",
@@ -69,7 +69,7 @@ const PageLayout = ({
             ? "100%"
             : { sm: `calc(100% - ${sidebarWidth}px)` },
           p: { xs: 32, sm: "42px 60px" },
-          minHeight: "100vh",
+          minHeight: "100svh",
           overflow: "auto",
           ...sx,
         }}
