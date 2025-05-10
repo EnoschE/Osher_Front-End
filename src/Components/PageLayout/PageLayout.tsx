@@ -34,9 +34,10 @@ const PageLayout = ({
     <Box
       position='relative'
       sx={{
-        // height: "100svh",
-        // maxHeight: "100svh",
-        minHeight: "100svh",
+        height: "100svh",
+        maxHeight: "100svh",
+        // minHeight: "100svh",
+        // overflow: "auto",
 
         display: "flex",
         backgroundColor: "#fff",
@@ -69,8 +70,13 @@ const PageLayout = ({
             ? "100%"
             : { sm: `calc(100% - ${sidebarWidth}px)` },
           p: { xs: 24, sm: "42px 60px" },
+
           // minHeight: "100svh",
           // height: "max-content",
+          
+          height: "100svh",
+          maxHeight: "100svh",
+
           overflowY: "auto",
           ...sx,
         }}

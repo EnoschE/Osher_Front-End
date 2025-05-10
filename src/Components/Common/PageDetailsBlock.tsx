@@ -35,7 +35,7 @@ const PageDetailsBlock = ({
         className='animated-block'
         display='grid'
         gridTemplateColumns={{ xs: "1fr", md: "300px 1fr" }}
-        gap={{ xs: 16, md: 20 }}
+        gap={{ xs: 8, md: 20 }}
         alignItems='center'
         mt={45}
         sx={{ animationDelay: `${animationDelay}s` }}
@@ -59,12 +59,15 @@ const PageDetailsBlock = ({
               </>
             ) : (
               <>
-                <Typography variant='h6'>{t(field.text)}</Typography>
+                <Typography variant='h6' mt={{ xs: 12, md: 0 }}>
+                  {t(field.text)}
+                </Typography>
                 <Typography
                   component={field.customComponent ? "span" : "p"}
                   whiteSpace={
                     field.text === "Description" ? "pre-wrap" : "normal"
                   }
+                  fontSize={14}
                 >
                   {field?.customComponent
                     ? field?.customComponent(data)

@@ -11,7 +11,7 @@ const colors = {
 
 export default colors;
 
-export const frostedGlassEffect = {
+export const frostedGlassEffect = { // TODO: use it everywhere
   WebkitBackdropFilter: "blur(12px) saturate(200%)",
   backdropFilter: "blur(12px) saturate(200%)",
 };

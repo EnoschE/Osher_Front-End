@@ -183,8 +183,6 @@ const AddAd = () => {
     },
   ];
 
-  // TODO: move errors logic to customForm and we can extra errors here as well for additional cases
-
   return (
     <PageLayout loading={loading}>
       <CustomForm
