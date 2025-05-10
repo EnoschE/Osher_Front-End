@@ -43,18 +43,22 @@ const ProfileHeader = ({
 
   return (
     <>
-      <Box className='animated-block'>
-        <CustomMarquee text={data?.name || t(userType)} />
-      </Box>
+      {!isLoading && (
+        <Box className='animated-block'>
+          <CustomMarquee text={data?.name || t(userType)} />
+        </Box>
+      )}
 
       <Box display='flex' alignItems='center' gap={8} flexDirection='column'>
         <Box
+          className='animated-block'
           display='flex'
           flexDirection='column'
           alignItems='center'
           width='100%'
           mb={10}
           mt={{ xs: 70, sm: 130 }}
+          sx={{ animationDelay: `${2 / 21}s` }}
         >
           {isSquarish ? (
             <PostPicture src={data?.picture} sx={{ maxWidth: 450 }} />

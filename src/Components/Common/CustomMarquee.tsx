@@ -28,19 +28,19 @@ const CustomMarquee = ({
         justifyContent: "flex-start",
         overflow: "hidden",
         maxWidth: {
-          xs: `calc(100% + ${32}px + ${32}px)`,
+          xs: `calc(100% + ${24}px + ${24}px)`,
           sm: `calc(100% + ${60}px + ${60}px)`,
         },
         width: {
-          xs: `calc(100% + ${32}px + ${32}px)`,
+          xs: `calc(100% + ${24}px + ${24}px)`,
           sm: `calc(100% + ${60}px + ${60}px)`,
         },
         marginLeft: {
-          xs: `-${32}px`,
+          xs: `-${24}px`,
           sm: `-${60}px`,
         },
         top: {
-          xs: `-${32}px`,
+          xs: `-${24}px`,
           sm: `-${42}px`,
         },
 

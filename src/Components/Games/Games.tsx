@@ -124,6 +124,7 @@ const Games = () => {
                   className='pop-out-animation'
                   key={currentQuestionIndex}
                   aspectRatio={2}
+                  objectFit='cover'
                   src={currentQuestion.image}
                 />
               </Box>

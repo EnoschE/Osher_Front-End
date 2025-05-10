@@ -10,3 +10,8 @@ const colors = {
 };
 
 export default colors;
+
+export const frostedGlassEffect = {
+  WebkitBackdropFilter: "blur(12px) saturate(200%)",
+  backdropFilter: "blur(12px) saturate(200%)",
+};

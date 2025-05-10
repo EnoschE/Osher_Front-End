@@ -1,10 +1,11 @@
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Chip, Skeleton, Typography } from "@mui/material";
 import { borderRadius } from "../../Utils/spacings";
 import { useNavigate } from "react-router-dom";
 import { allRoutes } from "../../Routes/AllRoutes";
 import moment from "moment";
 import PostPicture from "../Common/PostPicture";
 import CustomAvatar from "../Common/CustomAvatar";
+import { frostedGlassEffect } from "../../Utils/colors";
 
 export type FeedCardItem = {
   _id: string;
@@ -13,6 +14,9 @@ export type FeedCardItem = {
   userName: string;
   userId: string;
   userPicture: string;
+  brandName: string;
+  brandId: string;
+  brandPicture: string;
   description: string;
   publishDate: string;
 };
@@ -20,18 +24,29 @@ export type FeedCardItem = {
 const FeedCard = ({
   item,
   isLoading,
+  isAdCard,
   animationDelay,
 }: {
   item?: FeedCardItem;
   isLoading?: boolean;
+  isAdCard?: boolean;
   animationDelay?: number;
 }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handlePostClick = () => {
     if (item?._id) {
-      navigate(allRoutes.VIEW_POST.replace(":id", item?._id));
+      const url = isAdCard ? allRoutes.VIEW_AD : allRoutes.VIEW_POST;
+      navigate(url.replace(":id", item?._id));
     }
+  };
+
+  const handleAvatarClick = () => {
+    if (isAdCard && item?.brandId) {
+      navigate(allRoutes.VIEW_BRAND.replace(":id", item?.brandId));
+    }
+    if (item?.userId)
+      navigate(allRoutes.VIEW_INFLUENCER.replace(":id", item?.userId));
   };
 
   return (
@@ -54,10 +69,8 @@ const FeedCard = ({
           gap: "8px",
           padding: "8px 12px",
           zIndex: 1,
-          WebkitBackdropFilter: "blur(12px) saturate(200%)",
-          backdropFilter: "blur(12px) saturate(200%)",
+          ...frostedGlassEffect,
           backgroundColor: "rgba(256,256,256, 0.65)",
-          // backgroundColor: "rgba(0,0,0, 0.3)",
           borderRadius: borderRadius.lg,
           cursor: "pointer",
           transition: "all 0.3s ease",
@@ -66,14 +79,10 @@ const FeedCard = ({
             backgroundColor: "rgba(256,256,256, 0.75)",
           },
         }}
-        onClick={() =>
-          item?.userId
-            ? navigate(allRoutes.VIEW_INFLUENCER.replace(":id", item?.userId))
-            : undefined
-        }
+        onClick={handleAvatarClick}
       >
         <CustomAvatar
-          src={item?.userPicture}
+          src={isAdCard ? item?.brandPicture : item?.userPicture}
           size='sm'
           showLoader={isLoading}
         />
@@ -86,7 +95,9 @@ const FeedCard = ({
               sx={{ borderRadius: borderRadius.sm }}
             />
           ) : (
-            <Typography variant='h6'>{item?.userName}</Typography>
+            <Typography variant='h6'>
+              {isAdCard ? item?.brandName : item?.userName}
+            </Typography>
           )}
           {!isLoading && (
             <Typography variant='body2'>
@@ -96,7 +107,19 @@ const FeedCard = ({
         </Box>
       </Box>
 
-      <PostPicture src={item?.picture} onClick={handleClick} />
+      {isAdCard && (
+        <Chip
+          label='AD'
+          sx={{ position: "absolute", top: "8px", right: "8px", zIndex: 1 }}
+        />
+      )}
+
+      <PostPicture
+        src={item?.picture}
+        onClick={handlePostClick}
+        aspectRatio={isAdCard ? "unset" : "1.55"}
+        objectFit={isAdCard ? "contain" : "cover"}
+      />
 
       {isLoading ? (
         <Box>
@@ -130,7 +153,7 @@ const FeedCard = ({
           display='flex'
           flexDirection='column'
           gap={8}
-          onClick={handleClick}
+          onClick={handlePostClick}
           sx={{ cursor: "pointer" }}
         >
           <Typography fontWeight={500}>{item?.name}</Typography>

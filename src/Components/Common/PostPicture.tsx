@@ -14,8 +14,8 @@ interface PostPictureProps {
 
 const PostPicture = ({
   className,
-  objectFit = "cover",
-  aspectRatio = "1.55",
+  objectFit = "contain",
+  aspectRatio,
   src,
   onClick,
   sx,
