@@ -110,7 +110,14 @@ const FeedCard = ({
       {isAdCard && (
         <Chip
           label='AD'
-          sx={{ position: "absolute", top: "8px", right: "8px", zIndex: 1 }}
+          sx={{
+            position: "absolute",
+            top: "8px",
+            right: "8px",
+            zIndex: 1,
+            ...frostedGlassEffect,
+            backgroundColor: "rgba(256,256,256, 0.65)",
+          }}
         />
       )}
 

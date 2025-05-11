@@ -129,11 +129,7 @@ const routesWithComponents = {
   VIEW_BRAND: {
     path: allRoutes.VIEW_BRAND,
     Component: BrandDetails,
-    isPrivate: true,
-    accessTo: {
-      superAdmin: true,
-      brand: true,
-    },
+    isBoth: true,
   },
 
   INFLUENCERS: {
@@ -196,11 +192,7 @@ const routesWithComponents = {
   VIEW_AD: {
     path: allRoutes.VIEW_AD,
     Component: AdDetails,
-    isPrivate: true,
-    accessTo: {
-      superAdmin: true,
-      brand: true,
-    },
+    isBoth: true,
   },
 
   POSTS: {
