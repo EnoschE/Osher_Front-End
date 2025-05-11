@@ -16,6 +16,7 @@ import { allRoutes } from "./AllRoutes";
 import { selectUser } from "../Redux/Slices/userSlice";
 import AudioFile from "../Assets/Audio/audio.mp3";
 
+// TODO: important: check why pages are taking some time to load now is it because of LAZY
 const Login = lazy(() => import("../Components/Login/Login"));
 const Home = lazy(() => import("../Components/Home/Home"));
 const AccountSettings = lazy(

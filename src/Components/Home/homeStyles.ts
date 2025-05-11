@@ -8,7 +8,7 @@ export const HomeContainer = styled(Box)(() => ({
   justifyContent: "center",
   padding: 32,
   maxWidth: "100vw",
-  height: `calc(100vh - ${navbarHeight}px)`,
+  minHeight: `calc(100vh - ${navbarHeight}px)`,
 }));
 
 export const HomeInnerBlock = styled(Box)(({ theme }) => ({
