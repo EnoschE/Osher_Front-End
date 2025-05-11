@@ -37,7 +37,9 @@ const PageLayout = ({
         height: "100svh",
         maxHeight: "100svh",
         // minHeight: "100svh",
-        overflow: "auto",
+        // overflow: "auto", // TODO: maybe go with other scheme for safari
+
+// FOR OPERA/CHROME , set auto overflow in this box
 
         display: "flex",
         backgroundColor: "#fff",
@@ -71,13 +73,14 @@ const PageLayout = ({
             : { sm: `calc(100% - ${sidebarWidth}px)` },
           p: { xs: 24, sm: "42px 60px" },
 
-          minHeight: "100svh",
-          height: "max-content",
+          // minHeight: "100svh",
+          // height: "max-content",
 
-          // height: "100svh",
-          // maxHeight: "100svh",
+          // FOR OPERA/CHROME , comment below and uncomment above
 
-          // overflowY: "auto",
+          height: "100svh",
+          maxHeight: "100svh",
+          overflowY: "auto",
           ...sx,
         }}
       >
