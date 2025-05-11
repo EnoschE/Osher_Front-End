@@ -57,7 +57,7 @@ const ProfileHeader = ({
           alignItems='center'
           width='100%'
           mb={10}
-          mt={{ xs: 70, sm: 130 }}
+          mt={{ xs: 65, sm: 70, md: 110 }}
           sx={{ animationDelay: `${2 / 21}s` }}
         >
           {isSquarish ? (

@@ -40,8 +40,9 @@ const CustomMarquee = ({
           sm: `-${60}px`,
         },
         top: {
-          xs: `-${24}px`,
-          sm: `-${42}px`,
+          xs: `-${40}px`,
+          sm: `-${62}px`,
+          md: `-${90}px`,
         },
 
         "& h2": {
@@ -59,7 +60,7 @@ const CustomMarquee = ({
           } -20%, white 75%)`,
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
-          fontSize: { xs: "180px", sm: "220px", md: "350px" },
+          fontSize: { xs: "180px", sm: "220px", md: "340px" },
           lineHeight: { xs: "220px", sm: "265px", md: "414px" },
           fontWeight: 600,
         },
