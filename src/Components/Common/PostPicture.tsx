@@ -57,7 +57,7 @@ const PostPicture = ({
       position='relative'
       sx={{
         aspectRatio,
-        minHeight: isVisible ? "auto" : 350,
+        minHeight: isVisible ? "auto" : 250,
         borderRadius: borderRadius.xl,
         width: "100%",
         // boxShadow: "rgba(168, 81, 0, 0.15) 0px 65px 50px -30px",
@@ -96,7 +96,7 @@ const PostPicture = ({
           width: "100%",
           minWidth: "100%",
           height: "100%",
-          minHeight: 307,
+          // minHeight: 307,
           display: isVisible ? "none" : "block",
           borderRadius: borderRadius.xl,
           border: `0.5px solid ${colors.border}`,

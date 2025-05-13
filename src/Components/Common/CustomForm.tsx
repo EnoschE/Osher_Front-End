@@ -7,15 +7,21 @@ import AnimatedHeading from "./AnimatedHeading";
 import CustomDropdown from "./CustomDropdown";
 import { DropDownOptionProps } from "../../Utils/types";
 import { useTranslation } from "react-i18next";
+import CustomMultiSelect from "./CustomMultiSelect";
 
 export interface FormField {
   label: string;
   name: string;
   required?: boolean;
-  type?: "text" | "email" | "password" | "phone" | "image" | "dropdown";
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "phone"
+    | "image"
+    | "dropdown"
+    | "multiselect";
   multiline?: boolean;
-  // value: string | number | undefined;
-  // onChange: ({ name, value }: { name: string; value: any }) => void;
   error?: string;
   placeholder?: string;
   options?: Array<DropDownOptionProps>;
@@ -23,10 +29,25 @@ export interface FormField {
   isSquarish?: boolean;
 }
 
-export interface FormFieldWithValue extends FormField {
+// Type for non-multiselect fields
+interface FormFieldWithSingleValue extends FormField {
+  type?: Exclude<FormField["type"], "multiselect">;
   value: string | number | undefined;
-  onChange: ({ name, value }: { name: string; value: any }) => void;
+  onChange: ({ name, value }: { name: string; value: string | number }) => void;
 }
+
+// Type for multiselect field
+interface FormFieldWithMultiSelect extends FormField {
+  type: "multiselect";
+  value: string[];
+  isLargeButtons?: boolean;
+  onChange: ({ name, value }: { name: string; value: string[] }) => void;
+}
+
+// Discriminated union
+export type FormFieldWithValue =
+  | FormFieldWithSingleValue
+  | FormFieldWithMultiSelect;
 
 interface FormProps {
   heading?: string;
@@ -78,7 +99,7 @@ const CustomForm = ({
             const delay = `${(idx + 3) / 21}s`;
             return (
               <React.Fragment key={field.name}>
-                {field.type === "image" ? (
+                {field.type === "image" || field.type === "multiselect" ? (
                   <Box
                     className='animated-block'
                     alignSelf='flex-start'
@@ -131,6 +152,17 @@ const CustomForm = ({
                     label={field.placeholder || field.label}
                     disabled={field.options?.length === 0 || field.disabled}
                     sx={{ animationDelay: delay }}
+                  />
+                ) : field.type === "multiselect" ? (
+                  <CustomMultiSelect
+                    className='animated-block'
+                    sx={{ animationDelay: delay }}
+                    options={field.options || []}
+                    value={field.value}
+                    isLargeButtons={field.isLargeButtons}
+                    onChange={(value: string[]) =>
+                      field.onChange({ value, name: field.name })
+                    }
                   />
                 ) : (
                   <CustomTextField

@@ -30,16 +30,23 @@ const PageLayout = ({
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
+  // Detect if the browser is Opera or Google Chrome
+  const isOpera =
+    typeof window !== "undefined" &&
+    (!!(window as any)?.opr || navigator.userAgent.indexOf("OPR/") > -1);
+  const isChrome =
+    typeof window !== "undefined" &&
+    /Chrome/.test(navigator.userAgent) &&
+    /Google Inc/.test(navigator.vendor) &&
+    !isOpera;
+
   return !hideLayout ? (
     <Box
       sx={{
         position: "relative",
-        height: "100svh",
-        maxHeight: "100svh",
-        // minHeight: "100svh",
-        // overflow: "auto", // TODO: maybe go with other scheme for safari
-
-// FOR OPERA/CHROME , set auto overflow in this box
+        ...(isChrome || isOpera
+          ? { height: "100svh", maxHeight: "100svh" }
+          : {}),
 
         display: "flex",
         backgroundColor: "#fff",
@@ -73,14 +80,18 @@ const PageLayout = ({
             : { sm: `calc(100% - ${sidebarWidth}px)` },
           p: { xs: 24, sm: "42px 60px" },
 
-          // minHeight: "100svh",
-          // height: "max-content",
+          // TODO: also load the fonts in app.tsx or index.tsx
+          // TODO: LIST
+          // 🔥 work on lazy loading, screens taking time to load
+          // 1- update backend API
+          // 2- update api of fetchAdsForFeed to get filtered ads
+          // 3- get location on feed screen and send location, time, day
+          // 4- test with VPN with different locations, diff timezones
 
-          // FOR OPERA/CHROME , comment below and uncomment above
 
-          height: "100svh",
-          maxHeight: "100svh",
-          overflowY: "auto",
+          ...(isChrome || isOpera
+            ? { height: "100svh", maxHeight: "100svh", overflowY: "auto" }
+            : { minHeight: "100svh" }),
           ...sx,
         }}
       >

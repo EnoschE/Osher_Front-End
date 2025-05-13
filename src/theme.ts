@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 import { borderRadius } from "./Utils/spacings";
-import colors from "./Utils/colors";
+import colors, { frostedGlassEffect } from "./Utils/colors";
 
 const breakpoints = {
   xs: 0,
@@ -202,6 +202,7 @@ const createAppTheme = () => {
             "&.MuiButton-containedPrimary": {
               transition: "all ease 0.3s",
               boxShadow: `0px 8px 20px ${colors.primary}99`,
+              border: `1px solid ${colors.primary}`,
               // boxShadow:
               //   `0px 8px 20px ${colors.primary}99, 0 17px 50px 0 rgba(0,0,0,.19)`,
 
@@ -237,6 +238,7 @@ const createAppTheme = () => {
               "&.MuiButton-outlinedPrimary": {
                 borderColor: colors.primary,
                 color: colors.primary,
+                ...frostedGlassEffect,
 
                 "&:disabled": {
                   color: colors.primary + 40,

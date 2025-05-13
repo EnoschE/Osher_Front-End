@@ -1,12 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { UserState, saveUserState } from "../Redux/Slices/userSlice";
 import { AppDispatch } from "../Redux/store";
-import {
-  accessTokenKey,
-  googleLoginKey,
-  googleLoginValue,
-  roles,
-} from "../Utils/tokenKeyValue";
+import { accessTokenKey, roles } from "../Utils/enums";
 import http from "./httpService";
 import Cookies from "js-cookie";
 
@@ -33,22 +28,10 @@ const UserService = {
 export const loginUser =
   (data: { email: string; password: string }) =>
   async (): Promise<any | void> => {
-    // const { data: user }: any = await UserService.login(data);
-    // console.log("User: ", user);
-
-    // if (user?.access_token !== "An Email sent to your account please verify") setJwtToken(user?.access_token);
-
-    // return user;
-
     const { user, token }: any = await UserService.login(data);
 
     if (user?._id) {
       if (token) setJwtToken(token);
-
-      // const userForRedux = getUserObjectForRedux(user);
-      // dispatch(saveUserState(userForRedux));
-      // dispatch(resetStoryState());
-      // dispatch(fetchVoices());
     }
 
     return user;
@@ -139,21 +122,8 @@ export const isUserLoggedIn = (): boolean => {
   return !!Cookies.get(accessTokenKey);
 };
 
-export const isGoogleLoggedIn = (): boolean => {
-  try {
-    return localStorage.getItem(googleLoginKey) === googleLoginValue;
-  } catch (ex) {
-    return false;
-  }
-};
-
-export const setGoogleLoggedIn = () => {
-  localStorage.setItem(googleLoginKey, googleLoginValue);
-};
-
 export const logoutUser = () => {
   Cookies.remove(accessTokenKey);
-  localStorage.removeItem(googleLoginKey);
 };
 
 const getLoggedInUser = (): null | { role: string } => {
@@ -167,7 +137,6 @@ const getLoggedInUser = (): null | { role: string } => {
   }
 };
 
-// TODO: change the name to isAdminLoggedIn
 export const isSuperAdminLoggedIn = (): boolean => {
   const loggedInUser: any = getLoggedInUser();
   return loggedInUser?.role === roles.ADMIN || false;
@@ -186,5 +155,3 @@ export const isInfluencerLoggedIn = (): boolean => {
 export const verifyTokenService = (data: any) => {
   return UserService.verifyTokenService(data);
 };
-
-// const output = 60 + 13 + 60 + 42 + 60 + 38 + 43 + 120 + 4 + 31 + 60 + 17 + 60 + 28 + 49 + 48 + 60 + 7 + 57 + 36;
