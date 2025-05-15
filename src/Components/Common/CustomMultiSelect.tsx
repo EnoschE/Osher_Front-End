@@ -41,8 +41,8 @@ const CustomMultiSelect = ({
         gridTemplateColumns: `repeat(auto-fill, minmax(${
           isLargeButtons ? 250 : 100
         }px, 1fr))`,
+        alignItems: "center",
         gap: 10,
-
         ...sx,
 
         "& button": {

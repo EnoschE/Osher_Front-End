@@ -227,7 +227,7 @@ const CustomTable = ({
                           <Box style={{ maxWidth: header?.maxWidth ?? 150 }}>
                             <Tooltip
                               title={row?.[header.key] ?? "-"}
-                              placement='top'
+                              placement='top-start'
                               arrow
                             >
                               <Typography

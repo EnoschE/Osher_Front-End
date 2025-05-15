@@ -4,8 +4,9 @@ import LanguageSelector from "./LanguageSelector";
 import { DarkModeOutlined, ArrowBackOutlined } from "@mui/icons-material";
 import CustomButton from "../../Common/CustomButton";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigationType } from "react-router-dom";
 import BrightnessButtons from "./BrightnessButtons";
+import { allRoutes } from "../../../Routes/AllRoutes";
 
 const NavMenu = ({
   backButtonPath,
@@ -18,6 +19,19 @@ const NavMenu = ({
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const navigationType = useNavigationType();
+
+  const handleBack = () => {
+    if (backButtonPath) {
+      navigate(backButtonPath);
+    } else if (navigationType === "POP") {
+      // No meaningful history (i.e., direct visit or refresh)
+      navigate("/");
+    } else {
+      // Go back in app navigation history
+      navigate(-1);
+    }
+  };
 
   return (
     <Box
@@ -47,12 +61,7 @@ const NavMenu = ({
       }}
     >
       {!hideBackButton && (
-        <CustomButton
-          variant='text'
-          onClick={() =>
-            backButtonPath ? navigate(backButtonPath) : navigate(-1)
-          }
-        >
+        <CustomButton variant='text' onClick={handleBack}>
           <ArrowBackOutlined />
           {t("Back")}
         </CustomButton>

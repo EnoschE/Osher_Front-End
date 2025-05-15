@@ -41,6 +41,11 @@ const Brands = () => {
       key: "phone",
       sortable: true,
     },
+    // {
+    //   text: "Ads",
+    //   key: "ads",
+    //   sortable: true,
+    // },
     {
       text: "",
       key: "name",
