@@ -2,14 +2,14 @@ import RouteNavigation from "./Routes/RouteNavigation";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@mui/material";
 import createAppTheme from "./theme";
-import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
-import "./ToastStyles.css";
 import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
 import { BrowserRouter } from "react-router-dom";
 import Loader from "./Components/Common/Loader";
+import "react-toastify/dist/ReactToastify.css";
+import "./ToastStyles.css";
+import "./App.css";
 
 const App: React.FC = () => {
   const theme = createAppTheme();

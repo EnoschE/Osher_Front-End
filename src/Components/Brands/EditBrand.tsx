@@ -21,6 +21,7 @@ const defaultData = {
   name: "",
   email: "",
   phone: "",
+  picture: "",
   password: "",
   newPassword: "",
 };
@@ -146,7 +147,7 @@ const EditBrand = () => {
     {
       label: "Brand Photo",
       placeholder: "This will be displayed on the profile of Brand",
-      name: "profilePicture",
+      name: "picture",
       type: "image",
       value: data.picture,
       onChange: handleOnChange,
