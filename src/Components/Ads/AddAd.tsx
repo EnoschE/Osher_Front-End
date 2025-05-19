@@ -12,7 +12,7 @@ import { selectCategories } from "../../Redux/Slices/categoriesSlice";
 import { FormOnChange } from "../../Utils/types";
 import { isBrandLoggedIn } from "../../Services/userService";
 import { useTranslation } from "react-i18next";
-import { Days } from "../../Utils/enums";
+import { Days, States, TimeSlots } from "../../Utils/enums";
 
 interface AdState {
   name: string;
@@ -217,10 +217,7 @@ const AddAd = () => {
       value: data.timeSlots,
       onChange: handleOnChange,
       error: errors.timeSlots,
-      options: Array.from({ length: 24 }, (_, i) => {
-        const hour = i.toString().padStart(2, "0") + ":00";
-        return { text: hour, value: hour };
-      }),
+      options: TimeSlots.map((day) => ({ text: day, value: day })),
     },
     {
       required: true,
@@ -243,18 +240,7 @@ const AddAd = () => {
       onChange: handleOnChange,
       error: errors.states,
       isLargeButtons: true,
-      options: [
-        "Alberta",
-        "British Columbia",
-        "Manitoba",
-        "New Brunswick",
-        "Newfoundland and Labrador",
-        "Nova Scotia",
-        "Ontario",
-        "Prince Edward Island",
-        "Quebec",
-        "Saskatchewan",
-      ].map((day) => ({ text: day, value: day })),
+      options: States.map((day) => ({ text: day, value: day })),
     },
   ];
 

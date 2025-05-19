@@ -238,7 +238,8 @@ const createAppTheme = () => {
               "&.MuiButton-outlinedPrimary": {
                 borderColor: colors.primary,
                 color: colors.primary,
-                ...frostedGlassEffect,
+                // ...frostedGlassEffect,
+                backgroundColor: 'rgba(256, 256, 256, 0.9)',
 
                 "&:disabled": {
                   color: colors.primary + 40,
