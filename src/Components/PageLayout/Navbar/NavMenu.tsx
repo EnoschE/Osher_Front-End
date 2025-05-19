@@ -26,7 +26,7 @@ const NavMenu = ({
       navigate(backButtonPath);
     } else if (navigationType === "POP") {
       // No meaningful history (i.e., direct visit or refresh)
-      navigate("/");
+      navigate(allRoutes.HOME);
     } else {
       // Go back in app navigation history
       navigate(-1);
