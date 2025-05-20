@@ -1,3 +1,4 @@
+import { FeedAdsParams } from "../Components/Feed/Feed";
 import http from "./httpService";
 
 const apiEndpoint = "/feed";
@@ -6,7 +7,8 @@ const apiEndpoint = "/feed";
 
 const FeedService = {
   getFeedData: () => http.get(`${apiEndpoint}/`),
-  getAdsForFeed: () => http.get(`${apiEndpoint}/ads-for-feed`),
+  getAdsForFeed: (params: FeedAdsParams) =>
+    http.post(`${apiEndpoint}/ads-for-feed`, params),
 };
 
 // =====|  APIs  |=====
@@ -15,6 +17,6 @@ export const getFeedData = () => {
   return FeedService.getFeedData();
 };
 
-export const getAdsForFeed = () => {
-  return FeedService.getAdsForFeed();
+export const getAdsForFeed = (params: FeedAdsParams) => {
+  return FeedService.getAdsForFeed(params);
 };

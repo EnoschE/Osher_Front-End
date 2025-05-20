@@ -12,6 +12,7 @@ import { selectCategories } from "../../Redux/Slices/categoriesSlice";
 import { isBrandLoggedIn } from "../../Services/userService";
 import { selectUser } from "../../Redux/Slices/userSlice";
 import { useTranslation } from "react-i18next";
+import { Days, States, TimeSlots } from "../../Utils/enums";
 
 interface AdState {
   _id: string;
@@ -21,6 +22,9 @@ interface AdState {
   categoryId: string;
   description: string;
   picture: any;
+  timeSlots: string[];
+  days: string[];
+  states: string[];
 }
 
 const defaultData = {
@@ -31,6 +35,21 @@ const defaultData = {
   categoryId: "",
   description: "",
   picture: "",
+  timeSlots: [],
+  days: [],
+  states: [],
+};
+
+const defaultErrorsData = {
+  name: "",
+  video: "",
+  brandId: "",
+  categoryId: "",
+  description: "",
+  picture: "",
+  timeSlots: "",
+  days: "",
+  states: "",
 };
 
 const EditAd = () => {
@@ -42,7 +61,7 @@ const EditAd = () => {
   const user = useSelector(selectUser);
 
   const [data, setData] = useState<AdState>(defaultData);
-  const [errors, setErrors] = useState<AdState>(defaultData);
+  const [errors, setErrors] = useState(defaultErrorsData);
   const [loading, setLoading] = useState<boolean>(false);
   const [brands, setBrands] = useState<Array<any>>([]);
 
@@ -94,6 +113,13 @@ const EditAd = () => {
     updatedErrors.categoryId = data.categoryId
       ? ""
       : "Category cannot be empty";
+    updatedErrors.timeSlots = !!data.timeSlots?.length
+      ? ""
+      : "Time slots cannot be empty";
+    updatedErrors.days = !!data.days?.length ? "" : "Days cannot be empty";
+    updatedErrors.states = !!data.states?.length
+      ? ""
+      : "States cannot be empty";
 
     setErrors(updatedErrors);
     return !Object.values(updatedErrors).find(Boolean);
@@ -112,6 +138,9 @@ const EditAd = () => {
       formData.append("categoryId", data.categoryId ?? "");
       formData.append("brandId", data.brandId ?? "");
       formData.append("description", data.description ?? "");
+      formData.append("timeSlots", JSON.stringify(data.timeSlots) ?? "");
+      formData.append("days", JSON.stringify(data.days) ?? "");
+      formData.append("states", JSON.stringify(data.states) ?? "");
 
       await editAd(data._id, formData);
 
@@ -183,6 +212,40 @@ const EditAd = () => {
         value: category._id,
         text: category.name,
       })),
+    },
+    {
+      required: true,
+      label: "Time Slots",
+      placeholder: "Select time slots",
+      name: "timeSlots",
+      type: "multiselect",
+      value: data.timeSlots,
+      onChange: handleOnChange,
+      error: errors.timeSlots,
+      options: TimeSlots.map((day) => ({ text: day, value: day })),
+    },
+    {
+      required: true,
+      label: "Days",
+      placeholder: "Select days",
+      name: "days",
+      type: "multiselect",
+      value: data.days,
+      onChange: handleOnChange,
+      error: errors.days,
+      options: Days.map((day) => ({ text: day, value: day })),
+    },
+    {
+      required: true,
+      label: "States",
+      placeholder: "Select States",
+      name: "states",
+      type: "multiselect",
+      value: data.states,
+      onChange: handleOnChange,
+      error: errors.states,
+      isLargeButtons: true,
+      options: States.map((state) => ({ text: state.name, value: state.name })),
     },
   ];
 

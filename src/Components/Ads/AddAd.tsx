@@ -132,6 +132,8 @@ const AddAd = () => {
       formData.append("brandId", data.brandId ?? "");
       formData.append("description", data.description ?? "");
       formData.append("timeSlots", JSON.stringify(data.timeSlots) ?? "");
+      formData.append("days", JSON.stringify(data.days) ?? "");
+      formData.append("states", JSON.stringify(data.states) ?? "");
 
       await addAd(formData);
 
@@ -193,6 +195,7 @@ const AddAd = () => {
       error: errors.brandId,
       options: brands,
       disabled: isBrand,
+      // TODO: important HIDE IT IF isBrand and also do same for post for influencer for both add/edit
     },
     {
       required: true,
@@ -240,7 +243,10 @@ const AddAd = () => {
       onChange: handleOnChange,
       error: errors.states,
       isLargeButtons: true,
-      options: States.map((day) => ({ text: day, value: day })),
+      options: States.map((state) => ({
+        text: state.name,
+        value: state.name,
+      })),
     },
   ];
 

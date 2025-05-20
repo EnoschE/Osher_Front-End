@@ -180,6 +180,15 @@ const translationEN = {
   "Select Category": "Select Category",
   "Edit the details of Ad": "Edit the details of Ad",
   "Add new Ad": "Add new Ad",
+  "Time Slots": "Time Slots",
+  Days: "Days",
+  States: "States",
+  "Select time slots": "Select time slots",
+  "Select days": "Select days",
+  "Select states": "Select states",
+  "Time slots cannot be empty": "Time slots cannot be empty",
+  "States cannot be empty": "States cannot be empty",
+  "Days cannot be empty": "Days cannot be empty",
 
   // Posts
   "These are all the posts": "These are all the posts",
@@ -237,6 +246,7 @@ const translationEN = {
   "Confirm Password": "Confirm Password",
   Verify: "Verify",
   "Toggle password visibility": "Toggle password visibility",
+  "Not given": "Not given",
 
   // Image Uploader
   "The selected image exceeds the maximum allowed size. Please choose a smaller image file.":

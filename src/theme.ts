@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 import { borderRadius } from "./Utils/spacings";
-import colors, { frostedGlassEffect } from "./Utils/colors";
+import colors from "./Utils/colors";
 
 const breakpoints = {
   xs: 0,
@@ -218,7 +218,7 @@ const createAppTheme = () => {
                 backgroundColor: colors.error + 25,
               },
             },
-           
+
             "&.MuiButton-containedSuccess": {
               "&:disabled": {
                 color: colors.success + 75,
@@ -239,7 +239,7 @@ const createAppTheme = () => {
                 borderColor: colors.primary,
                 color: colors.primary,
                 // ...frostedGlassEffect,
-                backgroundColor: 'rgba(256, 256, 256, 0.9)',
+                backgroundColor: "rgba(256, 256, 256, 0.9)",
 
                 "&:disabled": {
                   color: colors.primary + 40,
@@ -356,12 +356,10 @@ const createAppTheme = () => {
       MuiChip: {
         styleOverrides: {
           root: {
-            height: 28,
-
             "& .MuiChip-label": {
-              paddingRight: 12,
               fontSize: 12,
               fontWeight: 500,
+              lineHeight: 1,
             },
             "& .MuiChip-icon": {
               width: 16,

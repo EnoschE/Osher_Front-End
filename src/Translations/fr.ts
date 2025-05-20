@@ -183,6 +183,15 @@ const translationFR = {
   "Select Category": "Sélectionner une catégorie",
   "Edit the details of Ad": "Modifier les détails de l'annonce",
   "Add new Ad": "Ajouter une nouvelle annonce",
+  "Time Slots": "Créneaux horaires",
+  Days: "Jours",
+  States: "États",
+  "Select time slots": "Sélectionner des créneaux horaires",
+  "Select days": "Sélectionner des jours",
+  "Select states": "Sélectionner des états",
+  "Time slots cannot be empty": "Les créneaux horaires ne peuvent pas être vides",
+  "States cannot be empty": "Les états ne peuvent pas être vides",
+  "Days cannot be empty": "Les jours ne peuvent pas être vides",
 
   // Posts
   "These are all the posts": "Voici toutes les publications",
@@ -229,7 +238,7 @@ const translationFR = {
     "Veuillez vérifier votre boîte de réception pour un code de vérification afin de mettre à jour votre e-mail",
 
   // Common
-  Admin: "Admin",
+  Admin: "Administrateur",
   Edit: "Modifier",
   Delete: "Supprimer",
   Cancel: "Annuler",
@@ -240,6 +249,7 @@ const translationFR = {
   "Confirm Password": "Confirmer le mot de passe",
   Verify: "Vérifier",
   "Toggle password visibility": "Afficher/masquer le mot de passe",
+  "Not given": "Non renseigné",
 
   // Image Uploader
   "The selected image exceeds the maximum allowed size. Please choose a smaller image file.":

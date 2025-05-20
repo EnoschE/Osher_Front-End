@@ -1,4 +1,4 @@
-import { Box, Divider, Skeleton, Typography } from "@mui/material";
+import { Box, Chip, Divider, Skeleton, Typography } from "@mui/material";
 import * as React from "react";
 import { PageDetailsField } from "../../Utils/types";
 import moment from "moment";
@@ -40,45 +40,65 @@ const PageDetailsBlock = ({
         mt={45}
         sx={{ animationDelay: `${animationDelay}s` }}
       >
-        {fields?.map((field: PageDetailsField) => (
-          <React.Fragment key={field.key}>
-            {isLoading ? (
-              <>
-                <Skeleton
-                  variant='text'
-                  width='100%'
-                  height={20}
-                  sx={{ borderRadius: borderRadius.sm }}
-                />
-                <Skeleton
-                  variant='text'
-                  width='100%'
-                  height={20}
-                  sx={{ borderRadius: borderRadius.sm, maxWidth: 450 }}
-                />
-              </>
-            ) : (
-              <>
-                <Typography variant='h6' mt={{ xs: 12, md: 0 }}>
-                  {t(field.text)}
-                </Typography>
-                <Typography
-                  component={field.customComponent ? "span" : "p"}
-                  whiteSpace={
-                    field.text === "Description" ? "pre-wrap" : "normal"
-                  }
-                  fontSize={14}
-                >
-                  {field?.customComponent
-                    ? field?.customComponent(data)
-                    : field.type === "date"
-                    ? moment(data?.[field.key]).format("LL")
-                    : data?.[field.key] || "Not given"}
-                </Typography>
-              </>
-            )}
-          </React.Fragment>
-        ))}
+        {fields?.map((field: PageDetailsField) => {
+          const isArray = Array.isArray(data?.[field.key]);
+
+          const renderValue = field?.customComponent
+            ? field?.customComponent(data)
+            : field.type === "date"
+            ? moment(data?.[field.key]).format("LL")
+            : isArray
+            ? data?.[field.key]?.length
+              ? data?.[field.key]?.map((item: string) => (
+                  <Chip
+                    key={item}
+                    size='small'
+                    component='span'
+                    label={item}
+                    sx={{ mr: 4 }}
+                  />
+                ))
+              : "Not given"
+            : data?.[field.key] || "Not given";
+
+          return (
+            <React.Fragment key={field.key}>
+              {isLoading ? (
+                <>
+                  <Skeleton
+                    variant='text'
+                    width='100%'
+                    height={20}
+                    sx={{ borderRadius: borderRadius.sm }}
+                  />
+                  <Skeleton
+                    variant='text'
+                    width='100%'
+                    height={20}
+                    sx={{ borderRadius: borderRadius.sm, maxWidth: 450 }}
+                  />
+                </>
+              ) : (
+                <>
+                  <Typography variant='h6' mt={{ xs: 12, md: 0 }}>
+                    {t(field.text)}
+                  </Typography>
+                  <Typography
+                    component={
+                      isArray ? "div" : field.customComponent ? "span" : "p"
+                    }
+                    whiteSpace={
+                      field.text === "Description" ? "pre-wrap" : "normal"
+                    }
+                    fontSize={14}
+                  >
+                    {renderValue}
+                  </Typography>
+                </>
+              )}
+            </React.Fragment>
+          );
+        })}
       </Box>
 
       {showBottomDivider && <Divider sx={{ my: { xs: 16, md: 42 } }} />}

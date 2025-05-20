@@ -124,8 +124,11 @@ const FeedCard = ({
       <PostPicture
         src={item?.picture}
         onClick={handlePostClick}
-        aspectRatio={isAdCard ? "unset" : "1.55"}
-        objectFit={isAdCard ? "contain" : "cover"}
+        aspectRatio={isAdCard ? "1" : "1.55"}
+        objectFit="cover"
+        
+        // aspectRatio={isAdCard ? "unset" : "1.55"}
+        // objectFit={isAdCard ? "contain" : "cover"}
       />
 
       {isLoading ? (

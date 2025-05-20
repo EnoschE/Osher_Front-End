@@ -3,63 +3,31 @@ import { Box } from "@mui/material";
 import PageLayout from "../PageLayout/PageLayout";
 import { useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
-import { borderRadius } from "../../Utils/spacings";
-import { getAdsForFeed, getFeedData } from "../../Services/feedService";
-import colors from "../../Utils/colors";
+import { getFeedData } from "../../Services/feedService";
 import FeedCard, { FeedCardItem } from "./FeedCard";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import AdPlaceholder from "./AdPlaceholder";
+import FeedDivider from "./FeedDivider";
+import { useGeoAdWatcher } from "../../Hooks/useGeoAdWatcher";
 
-const AdPlaceholder = () => {
-  const { t } = useTranslation();
-
-  return (
-    <Box
-      sx={{
-        borderRadius: borderRadius.xl,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: 450,
-        boxShadow: `rgba(23, 58, 90, 0.25) 0px 50px 50px -10px`,
-        bgcolor: "darkgrey",
-        color: "white",
-      }}
-    >
-      <span>{t("AD will be displayed here")}</span>
-    </Box>
-  );
-};
-
-const FeedDivider = () => {
-  return (
-    <Box
-      sx={{
-        backgroundColor: colors.border,
-        height: "1px",
-        width: "100%",
-        marginBlock: "32px",
-      }}
-    />
-  );
-};
+export interface FeedAdsParams {
+  state?: string;
+  time?: number;
+  day?: string;
+}
 
 const Feed = () => {
   const { t } = useTranslation();
   const user = useSelector(selectUser);
 
-  const [posts, setPosts] = useState([]);
-  const [ads, setAds] = useState([]);
+  const ads = useGeoAdWatcher();
+
+  const [posts, setPosts] = useState<Array<FeedCardItem>>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchPosts();
-  }, []);
-
-  useEffect(() => {
-    fetchAds();
   }, []);
 
   const fetchPosts = async () => {
@@ -70,17 +38,8 @@ const Feed = () => {
     } catch (error: any) {
       toast.error(t(error));
       console.error("Error fetching feed posts:", error);
-    }
-    setLoading(false);
-  };
-
-  const fetchAds = async () => {
-    try {
-      const response: any = await getAdsForFeed();
-      setAds(response);
-    } catch (error: any) {
-      toast.error(t(error));
-      console.error("Error fetching feed Ads:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -106,25 +65,26 @@ const Feed = () => {
             <FeedCard isLoading animationDelay={0.1} />
           </>
         ) : (
-          posts?.map((item: FeedCardItem, index: number) => {
+          posts.map((item, index) => {
             const adAfterEveryPosts = 2;
             const showAd = (index + 1) % adAfterEveryPosts === 0;
-            const adIndex = Math.floor(index / adAfterEveryPosts);
+            const adIndex = ads.length
+              ? Math.floor((index + 1) / adAfterEveryPosts) % ads.length
+              : 0;
+
             return (
               <React.Fragment key={index}>
                 <FeedCard item={item} animationDelay={index * 0.1} />
-
                 {showAd && (
                   <>
                     <FeedDivider />
-                    {ads[adIndex] ? (
+                    {ads.length ? (
                       <FeedCard item={ads[adIndex]} isAdCard />
                     ) : (
                       <AdPlaceholder />
                     )}
                   </>
                 )}
-
                 {index !== posts.length - 1 && <FeedDivider />}
               </React.Fragment>
             );

@@ -1,4 +1,5 @@
 import * as EmailValidator from "email-validator";
+import { States } from "./enums";
 
 export const formatNumber = (value: string | number) => {
   const isDecimalValue =
@@ -6,7 +7,7 @@ export const formatNumber = (value: string | number) => {
   const numOfDecimals = isDecimalValue ? 2 : 0;
 
   return parseFloat(
-    parseFloat((value || 0).toString()).toFixed(numOfDecimals),
+    parseFloat((value || 0).toString()).toFixed(numOfDecimals)
   ).toLocaleString();
 };
 
@@ -42,14 +43,16 @@ export const validateEmail = (email: string | undefined) => {
     : "Email cannot be empty";
 };
 
-export function formatDate(dateString: any) {
-  // Parse the date string into a Date object
-  const dateObject = new Date(dateString);
-
-  // Format the date as "26 March 2024"
-  return dateObject.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
+export const findStateFromCoords = (lat: number, lng: number) => {
+  for (const state of States) {
+    if (
+      lat >= state.latMin &&
+      lat <= state.latMax &&
+      lng >= state.lngMin &&
+      lng <= state.lngMax
+    ) {
+      return state.value;
+    }
+  }
+  return '';
+};

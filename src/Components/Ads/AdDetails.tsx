@@ -35,8 +35,12 @@ const AdDetails = () => {
       ),
     },
     { text: "Publish Date", key: "publishDate", type: "date" },
-    { text: "Expiry Date", key: "expiryDate", type: "date" },
+    { text: "Time Slots", key: "timeSlots" },
+    { text: "Days", key: "days" },
+    { text: "States", key: "states" },
   ];
+
+  // TODO: hide last fields for driver and non users
 
   return (
     <EntityDetailsPage

@@ -138,6 +138,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                     onClick={() => setShowPassword(!showPassword)}
                     onMouseDown={(e: any) => e.preventDefault()}
                     sx={{ "& svg": { width: 18, height: 18 } }}
+                    tabIndex={-1} 
                   >
                     {showPassword ? (
                       <VisibilityOutlined />
