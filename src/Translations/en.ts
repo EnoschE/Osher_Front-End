@@ -189,6 +189,10 @@ const translationEN = {
   "Time slots cannot be empty": "Time slots cannot be empty",
   "States cannot be empty": "States cannot be empty",
   "Days cannot be empty": "Days cannot be empty",
+  "Ad ID is required": "Ad ID is required",
+  "Ad not found": "Ad not found",
+  "Ad view incremented": "Ad view incremented",
+  "Views": "Views",
 
   // Posts
   "These are all the posts": "These are all the posts",

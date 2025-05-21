@@ -74,7 +74,12 @@ const CustomDropdown = ({
           );
 
           return (
-            <Typography display='flex' alignItems='center' minHeight={20}>
+            <Typography
+              component='span'
+              display='flex'
+              alignItems='center'
+              minHeight={20}
+            >
               {!!selectedOption?.picture && (
                 <CustomAvatar
                   size='xs'

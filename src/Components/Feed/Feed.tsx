@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import PageLayout from "../PageLayout/PageLayout";
 import { useSelector } from "../../Redux/reduxHooks";
 import { selectUser } from "../../Redux/Slices/userSlice";
-import { getFeedData } from "../../Services/feedService";
+import { getFeedData, incrementAdViews } from "../../Services/feedService";
 import FeedCard, { FeedCardItem } from "./FeedCard";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import AdPlaceholder from "./AdPlaceholder";
 import FeedDivider from "./FeedDivider";
 import { useGeoAdWatcher } from "../../Hooks/useGeoAdWatcher";
+import AdCard from "./AdCard";
 
 export interface FeedAdsParams {
   state?: string;
@@ -20,15 +21,17 @@ export interface FeedAdsParams {
 const Feed = () => {
   const { t } = useTranslation();
   const user = useSelector(selectUser);
-
   const ads = useGeoAdWatcher();
 
   const [posts, setPosts] = useState<Array<FeedCardItem>>([]);
   const [loading, setLoading] = useState(false);
+  const viewedAdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  // TODO: important - work on infinite scroll pagination
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -40,6 +43,22 @@ const Feed = () => {
       console.error("Error fetching feed posts:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAdViewIncrement = async (adId: string) => {
+    try {
+      const res = await incrementAdViews(adId);
+      console.log("AD VIEWED: ", adId, res);
+    } catch (error) {
+      console.error("Failed to increment ad view:", error);
+    }
+  };
+
+  const handleAdView = (adId: string) => {
+    if (!viewedAdsRef.current.has(adId)) {
+      viewedAdsRef.current.add(adId);
+      handleAdViewIncrement(adId);
     }
   };
 
@@ -71,6 +90,7 @@ const Feed = () => {
             const adIndex = ads.length
               ? Math.floor((index + 1) / adAfterEveryPosts) % ads.length
               : 0;
+            const ad = ads.length ? ads[adIndex] : null;
 
             return (
               <React.Fragment key={index}>
@@ -78,8 +98,12 @@ const Feed = () => {
                 {showAd && (
                   <>
                     <FeedDivider />
-                    {ads.length ? (
-                      <FeedCard item={ads[adIndex]} isAdCard />
+                    {ad ? (
+                      <AdCard
+                        item={ad}
+                        hasViewed={viewedAdsRef.current?.has(ad._id)}
+                        onView={handleAdView}
+                      />
                     ) : (
                       <AdPlaceholder />
                     )}

@@ -192,6 +192,10 @@ const translationFR = {
   "Time slots cannot be empty": "Les créneaux horaires ne peuvent pas être vides",
   "States cannot be empty": "Les états ne peuvent pas être vides",
   "Days cannot be empty": "Les jours ne peuvent pas être vides",
+  "Ad ID is required": "L'identifiant de l'annonce est requis",
+  "Ad not found": "Annonce non trouvée",
+  "Ad view incremented": "Vue de l'annonce incrémentée",
+  "Views": "Vues",
 
   // Posts
   "These are all the posts": "Voici toutes les publications",

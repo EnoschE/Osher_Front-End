@@ -9,6 +9,7 @@ const FeedService = {
   getFeedData: () => http.get(`${apiEndpoint}/`),
   getAdsForFeed: (params: FeedAdsParams) =>
     http.post(`${apiEndpoint}/ads-for-feed`, params),
+  incrementAdViews: (id: string) => http.put(`${apiEndpoint}/increment-ad-views/${id}`),
 };
 
 // =====|  APIs  |=====
@@ -19,4 +20,8 @@ export const getFeedData = () => {
 
 export const getAdsForFeed = (params: FeedAdsParams) => {
   return FeedService.getAdsForFeed(params);
+};
+
+export const incrementAdViews = (id: string) => {
+  return FeedService.incrementAdViews(id);
 };

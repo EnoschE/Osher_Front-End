@@ -125,38 +125,23 @@ const FeedCard = ({
         src={item?.picture}
         onClick={handlePostClick}
         aspectRatio={isAdCard ? "1" : "1.55"}
-        objectFit="cover"
-        
+        objectFit='cover'
+
         // aspectRatio={isAdCard ? "unset" : "1.55"}
         // objectFit={isAdCard ? "contain" : "cover"}
       />
 
       {isLoading ? (
         <Box>
-          <Skeleton
-            variant='text'
-            width='100%'
-            height={16}
-            sx={{ borderRadius: borderRadius.sm }}
-          />
-          <Skeleton
-            variant='text'
-            width='100%'
-            height={16}
-            sx={{ borderRadius: borderRadius.sm }}
-          />
-          <Skeleton
-            variant='text'
-            width='100%'
-            height={16}
-            sx={{ borderRadius: borderRadius.sm }}
-          />
-          <Skeleton
-            variant='text'
-            width='85%'
-            height={16}
-            sx={{ borderRadius: borderRadius.sm }}
-          />
+          {Array.from({ length: 4 }).map((_, index) => (
+            <Skeleton
+              key={index}
+              variant='text'
+              width={index === 3 ? "85%" : "100%"}
+              height={16}
+              sx={{ borderRadius: borderRadius.sm }}
+            />
+          ))}
         </Box>
       ) : (
         <Box

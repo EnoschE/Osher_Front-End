@@ -37,13 +37,13 @@ export const useGeoAdWatcher = () => {
         const { latitude, longitude } = coords;
 
         const state = findStateFromCoords(latitude, longitude);
-        console.log("Current position:", latitude, longitude, state);
+        // console.log("Current position:", latitude, longitude, state);
 
-        toast.info(
-          `Current position: ${latitude?.toFixed(2)}°, ${longitude?.toFixed(
-            2
-          )}° - State: ${state}`
-        );
+        // toast.info(
+        //   `Current position: ${latitude?.toFixed(2)}°, ${longitude?.toFixed(
+        //     2
+        //   )}° - State: ${state}`
+        // );
 
         const currentSlot = getTimeSlot();
         const currentDay = getDay();

@@ -34,10 +34,11 @@ const AdDetails = () => {
         />
       ),
     },
-    { text: "Publish Date", key: "publishDate", type: "date" },
+    { text: "Views", key: "views" },
     { text: "Time Slots", key: "timeSlots" },
     { text: "Days", key: "days" },
     { text: "States", key: "states" },
+    { text: "Publish Date", key: "publishDate", type: "date" },
   ];
 
   // TODO: hide last fields for driver and non users
