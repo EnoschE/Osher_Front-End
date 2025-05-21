@@ -156,10 +156,11 @@ const EditAd = () => {
 
   const fields: FormFieldWithValue[] = [
     {
-      label: "Ad Photo",
-      placeholder: "This will be displayed on the profile of Ad",
+      label: "Ad Media", 
+      placeholder: "This will be displayed as an Ad",
       name: "picture",
       type: "image",
+      allowVideo: true,
       value: data.picture,
       onChange: handleOnChange,
       required: true,

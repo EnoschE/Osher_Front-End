@@ -126,7 +126,7 @@ const AddAd = () => {
     try {
       const formData = new FormData();
 
-      formData.append("picture", data.picture ?? "");
+      formData.append("picture", data.picture ?? ""); // TODO: change this to media add/edit/details and all other places for ads/posts on FE/BE
       formData.append("name", data.name ?? "");
       formData.append("categoryId", data.categoryId ?? "");
       formData.append("brandId", data.brandId ?? "");
@@ -153,10 +153,11 @@ const AddAd = () => {
 
   const fields: FormFieldWithValue[] = [
     {
-      label: "Ad Photo",
-      placeholder: "This will be displayed on the profile of Ad",
+      label: "Ad Media",
+      placeholder: "This will be displayed as an Ad",
       name: "picture",
       type: "image",
+      allowVideo: true,
       value: data.picture,
       onChange: handleOnChange,
       required: true,

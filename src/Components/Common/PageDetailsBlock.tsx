@@ -43,6 +43,11 @@ const PageDetailsBlock = ({
         {fields?.map((field: PageDetailsField) => {
           const isArray = Array.isArray(data?.[field.key]);
 
+          // TODO: Ad option to display 0 as 0
+          // TODO: Fix navbar issue for android that Enosch sent last night
+          // TODO: next work on Video Ads
+          // TODO: and then next work on Full screen video ads for Games
+
           const renderValue = field?.customComponent
             ? field?.customComponent(data)
             : field.type === "date"

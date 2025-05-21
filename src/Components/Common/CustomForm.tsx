@@ -27,6 +27,7 @@ export interface FormField {
   options?: Array<DropDownOptionProps>;
   disabled?: boolean;
   isSquarish?: boolean;
+  allowVideo?: boolean;
 }
 
 // Type for non-multiselect fields
@@ -137,6 +138,7 @@ const CustomForm = ({
                     }
                     imageFile={field.value}
                     isSquarish={field.isSquarish}
+                    allowVideoUpload={field.allowVideo}
                   />
                 ) : field.type === "dropdown" ? (
                   <CustomDropdown

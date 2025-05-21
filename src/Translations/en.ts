@@ -173,9 +173,8 @@ const translationEN = {
   "Expiry Date": "Expiry Date",
   "Edit Ad": "Edit Ad",
   "You are not allowed to edit this ad": "You are not allowed to edit this ad",
-  "Ad Photo": "Ad Photo",
-  "This will be displayed on the profile of Ad":
-    "This will be displayed on the profile of Ad",
+  "Ad Media": "Ad Media",
+  "This will be displayed as an Ad": "This will be displayed as an Ad",
   "Select Brand": "Select Brand",
   "Select Category": "Select Category",
   "Edit the details of Ad": "Edit the details of Ad",
@@ -192,7 +191,7 @@ const translationEN = {
   "Ad ID is required": "Ad ID is required",
   "Ad not found": "Ad not found",
   "Ad view incremented": "Ad view incremented",
-  "Views": "Views",
+  Views: "Views",
 
   // Posts
   "These are all the posts": "These are all the posts",

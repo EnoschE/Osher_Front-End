@@ -7,11 +7,12 @@ import { useTranslation } from "react-i18next";
 import { borderRadius } from "../../Utils/spacings";
 
 interface ImageUploaderProps {
-  onUpdate: any;
+  onUpdate: (file: any) => void;
   imageFile?: any;
   className?: string;
   sx?: SxProps;
   isSquarish?: boolean;
+  allowVideoUpload?: boolean;
 }
 
 const ImageUploader = ({
@@ -20,32 +21,58 @@ const ImageUploader = ({
   className,
   sx,
   isSquarish,
+  allowVideoUpload = false,
 }: ImageUploaderProps) => {
   const { t } = useTranslation();
-  const inputRef = useRef<any>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const size = isSquarish ? 240 : 134;
 
-  const handleImageUploader = (event: any) => {
-    const selectedImage = event.target.files[0];
+  // TODO: important allow images and videos of IOS/iPhone
+  
+  const handleImageUploader = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (!selectedFile) return;
 
-    if (!selectedImage) return;
-    if (selectedImage?.size > 2572864) {
-      // Max image size set to 2.5MB, 1,048,576 * 1.5 = 1,572,864 Bytes
-      // 1MB = 1,048,576 Bytes
+    const isVideo = selectedFile.type.startsWith("video/");
+    const isImage = selectedFile.type.startsWith("image/");
+
+    if (!isImage && !isVideo) {
+      toast.error(t("Please select a valid image or video file."));
+      return;
+    }
+
+    const maxSizeInBytes = allowVideoUpload
+      ? 10 * 1024 * 1024
+      : 2.5 * 1024 * 1024; // 10MB or 2.5MB
+    if (selectedFile.size > maxSizeInBytes) {
       toast.error(
         t(
-          "The selected image exceeds the maximum allowed size. Please choose a smaller image file."
+          `The selected file exceeds the maximum allowed size of ${
+            allowVideoUpload ? "10MB" : "2.5MB"
+          }. Please choose a smaller file.`
         )
       );
     } else {
-      onUpdate(selectedImage);
+      onUpdate(selectedFile);
     }
-    event.target.value = null; // resetting the value of input
+
+    event.target.value = ""; // reset input
   };
 
   const handleRemoveImage = () => {
     onUpdate("");
   };
+
+  const fileUrl =
+    typeof imageFile === "string"
+      ? imageFile
+      : imageFile instanceof Blob
+      ? URL.createObjectURL(imageFile)
+      : "";
+
+  const isVideo =
+    fileUrl &&
+    (imageFile instanceof Blob ? imageFile.type.startsWith("video/") : false);
 
   return (
     <Box
@@ -61,33 +88,48 @@ const ImageUploader = ({
       <input
         ref={inputRef}
         type='file'
-        name='myImage'
-        accept='image/png, image/jpeg, image/jpg'
+        accept={
+          allowVideoUpload
+            ? "image/png, image/jpeg, image/jpg, video/mp4, video/webm"
+            : "image/png, image/jpeg, image/jpg"
+        }
         onChange={handleImageUploader}
         style={{ display: "none" }}
       />
 
-      <Avatar
-        sx={{
-          cursor: "pointer",
-          width: size,
-          height: isSquarish ? (imageFile ? "max-content" : size) : size,
-          border: `1px solid ${colors.border}`,
-          borderRadius: isSquarish ? borderRadius.xl : "50%",
-          padding: 0,
-        }}
-        src={
-          typeof imageFile === "string"
-            ? imageFile
-            : imageFile instanceof Blob
-            ? URL.createObjectURL(imageFile)
-            : ""
-        }
-        onClick={() => inputRef?.current?.click()}
-        imgProps={{ style: { objectFit: "cover" } }}
-      >
-        {isSquarish && !imageFile && <PanoramaOutlined sx={{ fontSize: 57 }} />}
-      </Avatar>
+      {isVideo ? (
+        <video
+          src={fileUrl}
+          controls
+          style={{
+            width: size,
+            height: isSquarish ? "auto" : size,
+            borderRadius: isSquarish ? borderRadius.xl : "50%",
+            objectFit: "cover",
+            cursor: "pointer",
+          }}
+          onClick={() => inputRef?.current?.click()}
+          autoPlay
+        />
+      ) : (
+        <Avatar
+          sx={{
+            cursor: "pointer",
+            width: size,
+            height: isSquarish ? (imageFile ? "max-content" : size) : size,
+            border: `1px solid ${colors.border}`,
+            borderRadius: isSquarish ? borderRadius.xl : "50%",
+            padding: 0,
+          }}
+          src={fileUrl}
+          onClick={() => inputRef?.current?.click()}
+          imgProps={{ style: { objectFit: "cover" } }}
+        >
+          {isSquarish && !imageFile && (
+            <PanoramaOutlined sx={{ fontSize: 57 }} />
+          )}
+        </Avatar>
+      )}
 
       {!!imageFile && (
         <IconButton

@@ -176,9 +176,8 @@ const translationFR = {
   "Edit Ad": "Modifier l'annonce",
   "You are not allowed to edit this ad":
     "Vous n'êtes pas autorisé à modifier cette annonce",
-  "Ad Photo": "Photo de l'annonce",
-  "This will be displayed on the profile of Ad":
-    "Ceci sera affiché sur le profil de l'annonce",
+  "Ad Media": "Média de l'annonce",
+  "This will be displayed as an Ad": "Ceci sera affiché comme une annonce",
   "Select Brand": "Sélectionner une marque",
   "Select Category": "Sélectionner une catégorie",
   "Edit the details of Ad": "Modifier les détails de l'annonce",
