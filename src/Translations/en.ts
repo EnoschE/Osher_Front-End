@@ -247,6 +247,8 @@ const translationEN = {
   Verify: "Verify",
   "Toggle password visibility": "Toggle password visibility",
   "Not given": "Not given",
+  "Select All": "Select All",
+  "Unselect All": "Unselect All",
 
   // Image Uploader
   "The selected image exceeds the maximum allowed size. Please choose a smaller image file.":

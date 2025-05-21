@@ -31,6 +31,11 @@ export const commonAdsTableHeaders = [
     customComponent: (props: { brandName: string }) => props.brandName,
   },
   {
+    text: "Views",
+    key: "views",
+    sortable: true,
+  },
+  {
     text: "Publish Date",
     key: "publishDate",
     sortable: true,

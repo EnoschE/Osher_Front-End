@@ -250,6 +250,8 @@ const translationFR = {
   Verify: "Vérifier",
   "Toggle password visibility": "Afficher/masquer le mot de passe",
   "Not given": "Non renseigné",
+  "Select All": "Tout sélectionner",
+  "Unselect All": "Tout désélectionner",
 
   // Image Uploader
   "The selected image exceeds the maximum allowed size. Please choose a smaller image file.":

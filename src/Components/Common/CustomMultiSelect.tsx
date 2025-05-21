@@ -1,6 +1,8 @@
 import { Box, SxProps } from "@mui/material";
 import { DropDownOptionProps } from "../../Utils/types";
 import CustomButton from "./CustomButton";
+import { useTranslation } from "react-i18next";
+import { languages } from "../../i18n";
 
 interface CustomMultiSelectProps {
   options?: Array<DropDownOptionProps>;
@@ -19,17 +21,34 @@ const CustomMultiSelect = ({
   sx,
   className,
 }: CustomMultiSelectProps) => {
-  const array = value || [];
+  const { t, i18n } = useTranslation();
+  const isEnglishSelected = i18n.language === languages.ENGLISH;
+
+  const isAllSelected = options?.every((option: DropDownOptionProps) =>
+    value?.includes(option.value.toString())
+  );
 
   const isSelected = (val: string | number) => {
-    return array?.includes(val.toString());
+    return value?.includes(val.toString());
   };
 
   const handleOnChange = (val: string | number) => {
-    if (array?.includes(val.toString())) {
-      onChange?.(array.filter((item: string) => item !== val.toString()));
+    if (value?.includes(val.toString())) {
+      onChange?.(value.filter((item: string) => item !== val.toString()));
     } else {
-      onChange?.([...(array || []), val.toString()]);
+      onChange?.([...(value || []), val.toString()]);
+    }
+  };
+
+  const handleSelectAll = () => {
+    if (isAllSelected) {
+      onChange?.([]);
+    } else {
+      onChange?.(
+        options?.map((option: DropDownOptionProps) =>
+          option.value?.toString()
+        ) || []
+      );
     }
   };
 
@@ -39,7 +58,7 @@ const CustomMultiSelect = ({
       sx={{
         display: "grid",
         gridTemplateColumns: `repeat(auto-fill, minmax(${
-          isLargeButtons ? 250 : 100
+          isLargeButtons ? 250 : isEnglishSelected ? 120 : 170
         }px, 1fr))`,
         alignItems: "center",
         gap: 10,
@@ -59,6 +78,13 @@ const CustomMultiSelect = ({
           {option.text}
         </CustomButton>
       ))}
+      <Box sx={{ gridColumn: "1 / -1" }}></Box>
+      <CustomButton
+        variant={isAllSelected ? "contained" : "outlined"}
+        onClick={handleSelectAll}
+      >
+        {t(isAllSelected ? "Unselect All" : "Select All")}
+      </CustomButton>
     </Box>
   );
 };

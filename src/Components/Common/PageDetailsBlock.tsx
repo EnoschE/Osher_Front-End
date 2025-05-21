@@ -55,7 +55,7 @@ const PageDetailsBlock = ({
                     size='small'
                     component='span'
                     label={item}
-                    sx={{ mr: 4 }}
+                    sx={{ mr: 4, mb: 6 }}
                   />
                 ))
               : "Not given"
