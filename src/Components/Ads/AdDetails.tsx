@@ -2,16 +2,20 @@ import { deleteAd, getAdById } from "../../Services/adsService";
 import { allRoutes } from "../../Routes/AllRoutes";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../Redux/Slices/userSlice";
-import { isBrandLoggedIn } from "../../Services/userService";
+import {
+  isBrandLoggedIn,
+  isSuperAdminLoggedIn,
+} from "../../Services/userService";
 import AvatarWithName from "../Common/AvatarWithName";
 import { PageDetailsField } from "../../Utils/types";
 import { useNavigate } from "react-router-dom";
 import EntityDetailsPage from "../ReusablePages/EntityDetailsPage";
 
 const AdDetails = () => {
+  const navigate = useNavigate();
   const user = useSelector(selectUser);
   const isBrand = isBrandLoggedIn();
-  const navigate = useNavigate();
+  const isAdmin = isSuperAdminLoggedIn();
 
   const fields: PageDetailsField[] = [
     { text: "Name", key: "name" },
@@ -34,14 +38,17 @@ const AdDetails = () => {
         />
       ),
     },
-    { text: "Views", key: "views" },
-    { text: "Time Slots", key: "timeSlots" },
-    { text: "Days", key: "days" },
-    { text: "States", key: "states" },
-    { text: "Publish Date", key: "publishDate", type: "date" },
-  ];
 
-  // TODO: hide last fields for driver and non users
+    { text: "Publish Date", key: "publishDate", type: "date" },
+    ...(isAdmin || isBrand
+      ? [
+          { text: "Views", key: "views" },
+          { text: "Time Slots", key: "timeSlots" },
+          { text: "Days", key: "days" },
+          { text: "States", key: "states" },
+        ]
+      : []),
+  ];
 
   return (
     <EntityDetailsPage

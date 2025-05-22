@@ -5,9 +5,6 @@ export const roles = {
   ADMIN: "admin",
   BRAND: "brand",
   INFLUENCER: "influencer",
-
-  // TODO: will might need to add
-
   DRIVER: "driver",
 };
 

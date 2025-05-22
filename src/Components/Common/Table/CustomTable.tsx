@@ -195,7 +195,7 @@ const CustomTable = ({
                 },
 
                 "&:hover":
-                  detailsPagePath || onRowClick // TODO: add onClick option as well here
+                  detailsPagePath || onRowClick
                     ? {}
                     : {
                         cursor: "auto",

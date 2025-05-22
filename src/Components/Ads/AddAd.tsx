@@ -162,7 +162,7 @@ const AddAd = () => {
       onChange: handleOnChange,
       required: true,
       error: errors.picture,
-      isSquarish: true,
+      isSquarish: true, // TODO: try different state of picture, when we type image disappear for some time
     },
     {
       required: true,

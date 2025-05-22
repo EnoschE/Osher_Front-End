@@ -58,6 +58,7 @@ export const TableBlock = ({
           item.description?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.address?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.phone?.toLowerCase()?.includes(search?.toLowerCase()) ||
+          item.category?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.userName?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.brandName?.toLowerCase()?.includes(search?.toLowerCase()) ||
           item.email?.toLowerCase()?.includes(search?.toLowerCase()) // TODO: in future, change this logic to dynamic and add all tableHeaders here

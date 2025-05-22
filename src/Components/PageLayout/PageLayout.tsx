@@ -80,14 +80,8 @@ const PageLayout = ({
             : { sm: `calc(100% - ${sidebarWidth}px)` },
           p: { xs: 24, sm: "42px 60px" },
 
-          // TODO: also load the fonts in app.tsx or index.tsx
           // TODO: LIST
           // 🔥 work on lazy loading, screens taking time to load
-          // 1- update backend API
-          // 2- update api of fetchAdsForFeed to get filtered ads
-          // 3- get location on feed screen and send location, time, day
-          // 4- test with VPN with different locations, diff timezones
-
 
           ...(isChrome || isOpera
             ? { height: "100svh", maxHeight: "100svh", overflowY: "auto" }

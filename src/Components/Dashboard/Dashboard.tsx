@@ -54,6 +54,7 @@ const Dashboard = () => {
             text: `${isBrand ? t("My Ads") : t("Ads")}`,
             path: allRoutes.ADS,
           },
+          // TODO: display Ads Views here in future
         ]
       : []),
     ...(isSuperAdmin || isInfluencer

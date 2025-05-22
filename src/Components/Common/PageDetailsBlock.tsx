@@ -45,7 +45,6 @@ const PageDetailsBlock = ({
 
           // TODO: Ad option to display 0 as 0
           // TODO: Fix navbar issue for android that Enosch sent last night
-          // TODO: next work on Video Ads
           // TODO: and then next work on Full screen video ads for Games
 
           const renderValue = field?.customComponent
@@ -64,6 +63,8 @@ const PageDetailsBlock = ({
                   />
                 ))
               : "Not given"
+            : data?.[field.key] === 0
+            ? data?.[field.key]
             : data?.[field.key] || "Not given";
 
           return (

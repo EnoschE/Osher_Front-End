@@ -1,6 +1,5 @@
 export const borderRadius = {
-  xs: 6, // TODO: try these radius and increase, and make table header white with boxshadow
-  // TODO: also add similar type fade in slide up animation in CustomForm fields with dynamic delay of 0.1s
+  xs: 6,
   sm: 10,
   md: 16,
   lg: 20,
