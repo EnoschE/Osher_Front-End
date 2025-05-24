@@ -8,6 +8,8 @@ import CustomDropdown from "./CustomDropdown";
 import { DropDownOptionProps } from "../../Utils/types";
 import { useTranslation } from "react-i18next";
 import CustomMultiSelect from "./CustomMultiSelect";
+import CustomDatePicker from "./CustomDatePicker";
+import CustomSingleSelect from "./CustomSingleSelect";
 
 export interface FormField {
   label: string;
@@ -20,7 +22,9 @@ export interface FormField {
     | "phone"
     | "image"
     | "dropdown"
-    | "multiselect";
+    | "multiselect"
+    | "singleSelect"
+    | "datePicker";
   multiline?: boolean;
   error?: string;
   placeholder?: string;
@@ -100,7 +104,9 @@ const CustomForm = ({
             const delay = `${(idx + 3) / 21}s`;
             return (
               <React.Fragment key={field.name}>
-                {field.type === "image" || field.type === "multiselect" ? (
+                {field.type === "image" ||
+                field.type === "multiselect" ||
+                field.type === "singleSelect" ? (
                   <Box
                     className='animated-block'
                     alignSelf='flex-start'
@@ -163,6 +169,28 @@ const CustomForm = ({
                     value={field.value}
                     isLargeButtons={field.isLargeButtons}
                     onChange={(value: string[]) =>
+                      field.onChange({ value, name: field.name })
+                    }
+                  />
+                ) : field.type === "singleSelect" ? (
+                  <CustomSingleSelect
+                    className='animated-block'
+                    sx={{ animationDelay: delay }}
+                    options={field.options || []}
+                    value={field.value}
+                    onChange={(value: string) =>
+                      field.onChange({ value, name: field.name })
+                    }
+                  />
+                ) : field.type === "datePicker" ? (
+                  <CustomDatePicker
+                    className='animated-block'
+                    sx={{ animationDelay: delay }}
+                    value={field.value}
+                    label={field.placeholder || field.label}
+                    disabled={field.disabled}
+                    error={field.error}
+                    onChange={(value: string) =>
                       field.onChange({ value, name: field.name })
                     }
                   />

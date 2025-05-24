@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { getAllAds } from "../../Services/adsService";
 import moment from "moment";
 import AvatarWithName from "../Common/AvatarWithName";
+import { adTypes } from "../../Utils/enums";
 
 export const commonAdsTableHeaders = [
   {
@@ -36,11 +37,25 @@ export const commonAdsTableHeaders = [
     sortable: true,
   },
   {
+    text: "Ad Type",
+    key: "adType",
+    sortable: true,
+    customComponent: (props: { adType: string }) =>
+      Object.values(adTypes).find((type) => type.value === props.adType)?.name,
+  },
+  {
     text: "Publish Date",
     key: "publishDate",
     sortable: true,
     customComponent: (props: { publishDate: string }) =>
       moment(props.publishDate).format("LL"),
+  },
+  {
+    text: "Expiry Date",
+    key: "expiryDate",
+    sortable: true,
+    customComponent: (props: { expiryDate: string }) =>
+      moment(props.expiryDate).format("LL"),
   },
 ];
 

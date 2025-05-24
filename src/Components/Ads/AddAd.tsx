@@ -12,7 +12,7 @@ import { selectCategories } from "../../Redux/Slices/categoriesSlice";
 import { FormOnChange } from "../../Utils/types";
 import { isBrandLoggedIn } from "../../Services/userService";
 import { useTranslation } from "react-i18next";
-import { Days, States, TimeSlots } from "../../Utils/enums";
+import { adTypes, Days, States, TimeSlots } from "../../Utils/enums";
 
 interface AdState {
   name: string;
@@ -20,7 +20,9 @@ interface AdState {
   brandId: string;
   categoryId: string;
   description: string;
+  adType: string;
   picture: any;
+  expiryDate: any;
   timeSlots: string[];
   days: string[];
   states: string[];
@@ -32,7 +34,9 @@ const defaultData = {
   brandId: "",
   categoryId: "",
   description: "",
+  adType: adTypes.BANNER.value,
   picture: "",
+  expiryDate: "",
   timeSlots: [],
   days: [],
   states: [],
@@ -44,7 +48,9 @@ const defaultErrorsData = {
   brandId: "",
   categoryId: "",
   description: "",
+  adType: "",
   picture: "",
+  expiryDate: "",
   timeSlots: "",
   days: "",
   states: "",
@@ -97,6 +103,9 @@ const AddAd = () => {
   const validateData = () => {
     const updatedErrors = { ...errors };
 
+    const today = new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
+
+    updatedErrors.adType = data.adType ? "" : "Ad type cannot be empty";
     updatedErrors.picture = data.picture ? "" : "Picture cannot be empty";
     updatedErrors.name = data.name ? "" : "Name cannot be empty";
     updatedErrors.description = data.description
@@ -113,10 +122,17 @@ const AddAd = () => {
     updatedErrors.categoryId = data.categoryId
       ? ""
       : "Category cannot be empty";
+    updatedErrors.expiryDate = !data.expiryDate
+      ? "Expiry date cannot be empty"
+      : data.expiryDate <= today
+      ? "Expiry date must be a future date"
+      : "";
 
     setErrors(updatedErrors);
     return !Object.values(updatedErrors).find(Boolean);
   };
+
+  console.log("DATA", data.expiryDate);
 
   const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -127,6 +143,7 @@ const AddAd = () => {
       const formData = new FormData();
 
       formData.append("picture", data.picture ?? ""); // TODO: change this to media add/edit/details and all other places for ads/posts on FE/BE
+      formData.append("adType", data.adType ?? ""); // TODO: change this to media add/edit/details and all other places for ads/posts on FE/BE
       formData.append("name", data.name ?? "");
       formData.append("categoryId", data.categoryId ?? "");
       formData.append("brandId", data.brandId ?? "");
@@ -134,6 +151,7 @@ const AddAd = () => {
       formData.append("timeSlots", JSON.stringify(data.timeSlots) ?? "");
       formData.append("days", JSON.stringify(data.days) ?? "");
       formData.append("states", JSON.stringify(data.states) ?? "");
+      formData.append("expiryDate", data.expiryDate ?? "");
 
       await addAd(formData);
 
@@ -152,6 +170,22 @@ const AddAd = () => {
   const handleCancel = () => navigate(allRoutes.BRANDS);
 
   const fields: FormFieldWithValue[] = [
+    {
+      label: "Ad Type",
+      placeholder: "Select type of Ad",
+      name: "adType",
+      type: "singleSelect",
+      required: true,
+      value: data.adType,
+      onChange: handleOnChange,
+      error: errors.adType,
+      options: Object.values(adTypes).map((type) => ({
+        text: type.name,
+        value: type.value,
+      })),
+
+      // TODO: very important, create images for these two and create a component singleSelection for this
+    },
     {
       label: "Ad Media",
       placeholder: "This will be displayed as an Ad",
@@ -221,7 +255,7 @@ const AddAd = () => {
       value: data.timeSlots,
       onChange: handleOnChange,
       error: errors.timeSlots,
-      options: TimeSlots.map((day) => ({ text: day, value: day })),
+      options: TimeSlots.map((slot) => ({ text: slot, value: slot })),
     },
     {
       required: true,
@@ -248,6 +282,16 @@ const AddAd = () => {
         text: state.name,
         value: state.name,
       })),
+    },
+    {
+      label: "Expiry Date",
+      placeholder: "The Ad will be disabled after this expiry date",
+      name: "expiryDate",
+      type: "datePicker",
+      value: data.expiryDate,
+      onChange: handleOnChange,
+      required: true,
+      error: errors.expiryDate,
     },
   ];
 

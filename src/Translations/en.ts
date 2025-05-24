@@ -207,7 +207,12 @@ const translationEN = {
   "Post Photo": "Post Photo",
   "Add new Post": "Add new Post",
   "Please provide the details to add a new Post":
-    "Please provide the details to add a new Post",
+  "Please provide the details to add a new Post",
+  "Ad Type": "Ad Type",
+  "Select type of Ad": "Select type of Ad",
+  "Ad type cannot be empty": "Ad type cannot be empty",
+  "Banner": "Banner",
+  "Video": "Video",
 
   // DeleteDialog
   "Are you sure you want to delete ": "Are you sure you want to delete ",
@@ -335,6 +340,10 @@ const translationEN = {
   "User not found": "User not found",
   "Post with the given id was not found.":
     "Post with the given id was not found.",
+  "Expiry date cannot be empty": "Expiry date cannot be empty",
+  "Expiry date must be after publish date":
+    "Expiry date must be after publish date",
+  "Expiry date must be a future date": "Expiry date must be a future date",
 
   // Toast Messages
   "Profile updated successfully!": "Profile updated successfully!",

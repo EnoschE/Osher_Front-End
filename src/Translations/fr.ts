@@ -188,13 +188,14 @@ const translationFR = {
   "Select time slots": "Sélectionner des créneaux horaires",
   "Select days": "Sélectionner des jours",
   "Select states": "Sélectionner des états",
-  "Time slots cannot be empty": "Les créneaux horaires ne peuvent pas être vides",
+  "Time slots cannot be empty":
+    "Les créneaux horaires ne peuvent pas être vides",
   "States cannot be empty": "Les états ne peuvent pas être vides",
   "Days cannot be empty": "Les jours ne peuvent pas être vides",
   "Ad ID is required": "L'identifiant de l'annonce est requis",
   "Ad not found": "Annonce non trouvée",
   "Ad view incremented": "Vue de l'annonce incrémentée",
-  "Views": "Vues",
+  Views: "Vues",
 
   // Posts
   "These are all the posts": "Voici toutes les publications",
@@ -211,6 +212,11 @@ const translationFR = {
   "Add new Post": "Ajouter une nouvelle publication",
   "Please provide the details to add a new Post":
     "Veuillez fournir les détails pour ajouter une nouvelle publication",
+  "Ad Type": "Type d'annonce",
+  "Select type of Ad": "Sélectionner le type d'annonce",
+  "Ad type cannot be empty": "Le type d'annonce ne peut pas être vide",
+  "Banner": "Bannière",
+  "Video": "Vidéo",
 
   // DeleteDialog
   "Are you sure you want to delete ": "Êtes-vous sûr de vouloir supprimer ",
@@ -344,6 +350,10 @@ const translationFR = {
   "User not found": "Utilisateur non trouvé",
   "Post with the given id was not found.":
     "Aucune publication trouvée avec cet identifiant.",
+  "Expiry date cannot be empty": "La date d'expiration ne peut pas être vide",
+  "Expiry date must be after publish date":
+    "La date d'expiration doit être postérieure à la date de publication",
+  "Expiry date must be a future date": "La date d'expiration doit être une date future",
 
   // Toast Messages
   "Profile updated successfully!": "Profil mis à jour avec succès !",

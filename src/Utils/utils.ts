@@ -54,5 +54,9 @@ export const findStateFromCoords = (lat: number, lng: number) => {
       return state.value;
     }
   }
-  return '';
+  return "";
+};
+
+export const capitalizeText = (text: string) => {
+  return text.split("")[0].toUpperCase() + text.slice(1);
 };

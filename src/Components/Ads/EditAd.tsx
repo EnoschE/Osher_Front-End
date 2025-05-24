@@ -12,7 +12,7 @@ import { selectCategories } from "../../Redux/Slices/categoriesSlice";
 import { isBrandLoggedIn } from "../../Services/userService";
 import { selectUser } from "../../Redux/Slices/userSlice";
 import { useTranslation } from "react-i18next";
-import { Days, States, TimeSlots } from "../../Utils/enums";
+import { adTypes, Days, States, TimeSlots } from "../../Utils/enums";
 
 interface AdState {
   _id: string;
@@ -21,10 +21,13 @@ interface AdState {
   brandId: string;
   categoryId: string;
   description: string;
+  adType: string;
   picture: any;
   timeSlots: string[];
   days: string[];
   states: string[];
+  expiryDate: string;
+  publishDate: string;
 }
 
 const defaultData = {
@@ -34,10 +37,13 @@ const defaultData = {
   brandId: "",
   categoryId: "",
   description: "",
+  adType: "",
   picture: "",
   timeSlots: [],
   days: [],
   states: [],
+  expiryDate: "",
+  publishDate: "",
 };
 
 const defaultErrorsData = {
@@ -46,10 +52,12 @@ const defaultErrorsData = {
   brandId: "",
   categoryId: "",
   description: "",
+  adType: "",
   picture: "",
   timeSlots: "",
   days: "",
   states: "",
+  expiryDate: "",
 };
 
 const EditAd = () => {
@@ -104,6 +112,10 @@ const EditAd = () => {
   const validateData = () => {
     const updatedErrors = { ...errors };
 
+    const publishDate = data.publishDate?.split("T")?.[0]; // "YYYY-MM-DD";
+    const expiryDate = data.expiryDate?.split("T")?.[0]; // "YYYY-MM-DD";
+
+    updatedErrors.adType = data.adType ? "" : "Ad type cannot be empty";
     updatedErrors.picture = data.picture ? "" : "Picture cannot be empty";
     updatedErrors.name = data.name ? "" : "Name cannot be empty";
     updatedErrors.description = data.description
@@ -120,6 +132,11 @@ const EditAd = () => {
     updatedErrors.states = !!data.states?.length
       ? ""
       : "States cannot be empty";
+    updatedErrors.expiryDate = !data.expiryDate
+      ? "Expiry date cannot be empty"
+      : publishDate >= expiryDate
+      ? "Expiry date must be after publish date"
+      : "";
 
     setErrors(updatedErrors);
     return !Object.values(updatedErrors).find(Boolean);
@@ -133,6 +150,7 @@ const EditAd = () => {
     try {
       const formData = new FormData();
 
+      formData.append("adType", data.adType ?? "");
       formData.append("picture", data.picture ?? "");
       formData.append("name", data.name ?? "");
       formData.append("categoryId", data.categoryId ?? "");
@@ -141,6 +159,7 @@ const EditAd = () => {
       formData.append("timeSlots", JSON.stringify(data.timeSlots) ?? "");
       formData.append("days", JSON.stringify(data.days) ?? "");
       formData.append("states", JSON.stringify(data.states) ?? "");
+      formData.append("expiryDate", data.expiryDate ?? "");
 
       await editAd(data._id, formData);
 
@@ -156,7 +175,25 @@ const EditAd = () => {
 
   const fields: FormFieldWithValue[] = [
     {
-      label: "Ad Media", 
+      label: "Ad Type",
+      placeholder: "Select type of Ad",
+      name: "adType",
+      type: "singleSelect",
+      required: true,
+      value: data.adType,
+      onChange: handleOnChange,
+      error: errors.adType,
+      options: Object.values(adTypes).map((type) => ({
+        text: type.name,
+        value: type.value,
+      })),
+
+      // TODO: very important, create images for these two and create a component singleSelection for this
+      // TODO: add info for video ads on left side
+      // TODO: add restrictions for video length, res for Video Ads
+    },
+    {
+      label: "Ad Media",
       placeholder: "This will be displayed as an Ad",
       name: "picture",
       type: "image",
@@ -247,6 +284,16 @@ const EditAd = () => {
       error: errors.states,
       isLargeButtons: true,
       options: States.map((state) => ({ text: state.name, value: state.name })),
+    },
+    {
+      label: "Expiry Date",
+      placeholder: "The Ad will be disabled after this expiry date",
+      name: "expiryDate",
+      type: "datePicker",
+      value: data.expiryDate,
+      onChange: handleOnChange,
+      required: true,
+      error: errors.expiryDate,
     },
   ];
 

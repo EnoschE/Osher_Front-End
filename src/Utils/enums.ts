@@ -8,6 +8,11 @@ export const roles = {
   DRIVER: "driver",
 };
 
+export const adTypes = {
+  BANNER: { name: "Banner", value: "banner" },
+  VIDEO: { name: "Video", value: "video" },
+};
+
 export const TimeSlots = Array.from({ length: 24 }, (_, i) => {
   return i.toString().padStart(2, "0") + ":00";
 });
