@@ -192,6 +192,8 @@ const translationEN = {
   "Ad not found": "Ad not found",
   "Ad view incremented": "Ad view incremented",
   Views: "Views",
+  "AD is loading": "AD is loading",
+  "Ad will skip in ": "Ad will skip in ",
 
   // Posts
   "These are all the posts": "These are all the posts",
@@ -207,12 +209,12 @@ const translationEN = {
   "Post Photo": "Post Photo",
   "Add new Post": "Add new Post",
   "Please provide the details to add a new Post":
-  "Please provide the details to add a new Post",
+    "Please provide the details to add a new Post",
   "Ad Type": "Ad Type",
   "Select type of Ad": "Select type of Ad",
   "Ad type cannot be empty": "Ad type cannot be empty",
-  "Banner": "Banner",
-  "Video": "Video",
+  Banner: "Banner",
+  Video: "Video",
 
   // DeleteDialog
   "Are you sure you want to delete ": "Are you sure you want to delete ",

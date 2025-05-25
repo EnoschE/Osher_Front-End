@@ -10,7 +10,7 @@ const getTimeSlot = () => new Date().getHours();
 
 const getDay = () => new Date().toLocaleString("en-US", { weekday: "long" });
 
-export const useGeoAdWatcher = () => {
+export const useFeedAdsWatcher = () => {
   const watchIdRef = useRef<number | null>(null);
   const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastStateRef = useRef<string | null>(null);

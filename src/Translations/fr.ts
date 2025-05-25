@@ -196,6 +196,8 @@ const translationFR = {
   "Ad not found": "Annonce non trouvée",
   "Ad view incremented": "Vue de l'annonce incrémentée",
   Views: "Vues",
+  "AD is loading": "L'annonce est en cours de chargement",
+  "Ad will skip in ": "L'annonce sera ignorée dans ",
 
   // Posts
   "These are all the posts": "Voici toutes les publications",
@@ -215,8 +217,8 @@ const translationFR = {
   "Ad Type": "Type d'annonce",
   "Select type of Ad": "Sélectionner le type d'annonce",
   "Ad type cannot be empty": "Le type d'annonce ne peut pas être vide",
-  "Banner": "Bannière",
-  "Video": "Vidéo",
+  Banner: "Bannière",
+  Video: "Vidéo",
 
   // DeleteDialog
   "Are you sure you want to delete ": "Êtes-vous sûr de vouloir supprimer ",
@@ -353,7 +355,8 @@ const translationFR = {
   "Expiry date cannot be empty": "La date d'expiration ne peut pas être vide",
   "Expiry date must be after publish date":
     "La date d'expiration doit être postérieure à la date de publication",
-  "Expiry date must be a future date": "La date d'expiration doit être une date future",
+  "Expiry date must be a future date":
+    "La date d'expiration doit être une date future",
 
   // Toast Messages
   "Profile updated successfully!": "Profil mis à jour avec succès !",

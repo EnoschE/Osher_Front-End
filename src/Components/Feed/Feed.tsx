@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import AdPlaceholder from "./AdPlaceholder";
 import FeedDivider from "./FeedDivider";
-import { useGeoAdWatcher } from "../../Hooks/useGeoAdWatcher";
+import { useFeedAdsWatcher } from "../../Hooks/useFeedAdsWatcher";
 import AdCard from "./AdCard";
 
 export interface FeedAdsParams {
@@ -21,7 +21,7 @@ export interface FeedAdsParams {
 const Feed = () => {
   const { t } = useTranslation();
   const user = useSelector(selectUser);
-  const ads = useGeoAdWatcher();
+  const ads = useFeedAdsWatcher();
 
   const [posts, setPosts] = useState<Array<FeedCardItem>>([]);
   const [loading, setLoading] = useState(false);
@@ -48,8 +48,7 @@ const Feed = () => {
 
   const handleAdViewIncrement = async (adId: string) => {
     try {
-      const res = await incrementAdViews(adId);
-      console.log("AD VIEWED: ", adId, res);
+      await incrementAdViews(adId);
     } catch (error) {
       console.error("Failed to increment ad view:", error);
     }

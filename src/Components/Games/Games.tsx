@@ -11,6 +11,7 @@ import {
   Q5Image,
 } from "../../Utils/Images";
 import PostPicture from "../Common/PostPicture";
+import VideoAdDisplay from "../Common/VideoAdDisplay";
 
 const questions = [
   {
@@ -80,6 +81,10 @@ const Games = () => {
 
   return (
     <PageLayout hideSidebar sx={{ p: 0 }}>
+      {([0, 3].includes(currentQuestionIndex) || isFinished) && (
+        <VideoAdDisplay />
+      )}
+
       <Box
         sx={{
           minHeight: `calc(100vh - ${navbarHeight}px)`,
