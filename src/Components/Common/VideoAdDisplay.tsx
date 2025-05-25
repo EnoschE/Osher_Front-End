@@ -52,7 +52,10 @@ const VideoAdDisplay = () => {
     )}`;
   };
 
-  if (!open) return null;
+  if (!open || !ad) return null;
+  // TODO: adding this here just for testing purpose
+  
+  // if (!open) return null;
 
   return (
     <Backdrop
@@ -77,7 +80,7 @@ const VideoAdDisplay = () => {
             sx={{
               position: "absolute",
               top: 20,
-              right:  20,
+              right: 20,
               padding: "8px 12px",
               zIndex: 1,
               backgroundColor: "rgba(256,256,256, 0.65)",
