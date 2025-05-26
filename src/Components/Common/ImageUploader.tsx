@@ -13,6 +13,7 @@ interface ImageUploaderProps {
   sx?: SxProps;
   isSquarish?: boolean;
   allowVideoUpload?: boolean;
+  allowOnlyVideo?: boolean;
 }
 
 const ImageUploader = ({
@@ -22,13 +23,14 @@ const ImageUploader = ({
   sx,
   isSquarish,
   allowVideoUpload = false,
+  allowOnlyVideo = false,
 }: ImageUploaderProps) => {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const size = isSquarish ? 240 : 134;
 
   // TODO: important allow images and videos of IOS/iPhone
-  
+
   const handleImageUploader = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile) return;
@@ -36,14 +38,18 @@ const ImageUploader = ({
     const isVideo = selectedFile.type.startsWith("video/");
     const isImage = selectedFile.type.startsWith("image/");
 
+    if (allowOnlyVideo && !isVideo) {
+      toast.error(t("Please select a valid video file."));
+      return;
+    }
+
     if (!isImage && !isVideo) {
       toast.error(t("Please select a valid image or video file."));
       return;
     }
 
-    const maxSizeInBytes = allowVideoUpload
-      ? 10 * 1024 * 1024
-      : 2.5 * 1024 * 1024; // 10MB or 2.5MB
+    const maxSizeInBytes = isVideo ? 10 * 1024 * 1024 : 2.5 * 1024 * 1024; // 10MB or 2.5MB
+
     if (selectedFile.size > maxSizeInBytes) {
       toast.error(
         t(
@@ -52,11 +58,40 @@ const ImageUploader = ({
           }. Please choose a smaller file.`
         )
       );
-    } else {
-      onUpdate(selectedFile);
+      event.target.value = ""; // reset input
+      return;
     }
 
-    event.target.value = ""; // reset input
+    if (isVideo) {
+      const video = document.createElement("video");
+      video.preload = "metadata";
+
+      video.onloadedmetadata = () => {
+        window.URL.revokeObjectURL(video.src);
+
+        const maxVideoLength = 30;
+
+        if (video.duration > maxVideoLength) {
+          toast.error(t(`The video must be ${maxVideoLength} seconds or shorter.`));
+        } else {
+          onUpdate(selectedFile);
+        }
+
+        event.target.value = ""; // reset input
+      };
+
+      video.onerror = () => {
+        toast.error(
+          t("Failed to load the video. Please try a different file.")
+        );
+        event.target.value = ""; // reset input
+      };
+
+      video.src = URL.createObjectURL(selectedFile);
+    } else {
+      onUpdate(selectedFile);
+      event.target.value = ""; // reset input
+    }
   };
 
   const handleRemoveImage = () => {
@@ -89,7 +124,9 @@ const ImageUploader = ({
         ref={inputRef}
         type='file'
         accept={
-          allowVideoUpload
+          allowOnlyVideo
+            ? "video/mp4, video/webm"
+            : allowVideoUpload
             ? "image/png, image/jpeg, image/jpg, video/mp4, video/webm"
             : "image/png, image/jpeg, image/jpg"
         }

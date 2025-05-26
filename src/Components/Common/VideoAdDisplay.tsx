@@ -7,11 +7,11 @@ import { borderRadius } from "../../Utils/spacings";
 
 const VideoAdDisplay = () => {
   const { t } = useTranslation();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const { ad, loading } = useVideoAdFetcher();
+
   const [open, setOpen] = useState(true);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
-  const ad = useVideoAdFetcher();
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   const handleLoadedMetadata = () => {
     const duration = videoRef.current?.duration;
     if (duration && !isNaN(duration)) {
@@ -52,10 +52,7 @@ const VideoAdDisplay = () => {
     )}`;
   };
 
-  if (!open || !ad) return null;
-  // TODO: adding this here just for testing purpose
-  
-  // if (!open) return null;
+  if (!open && !loading) return null;
 
   return (
     <Backdrop

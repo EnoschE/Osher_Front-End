@@ -14,7 +14,7 @@ interface PostPictureProps {
   sx?: SxProps;
 }
 
-const isVideo = (url?: string) => {
+export const isVideoFromUrl = (url?: string) => {
   if (!url) return false;
   return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
 };
@@ -35,7 +35,7 @@ const PostPicture = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const video = isVideo(src);
+  const video = isVideoFromUrl(src);
 
   useEffect(() => {
     if (!containerRef.current) return;

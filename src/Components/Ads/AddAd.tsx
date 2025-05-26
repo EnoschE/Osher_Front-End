@@ -96,6 +96,22 @@ const AddAd = () => {
   }, []);
 
   const handleOnChange = ({ name, value }: FormOnChange) => {
+    if (name === "adType") {
+      const isSwitchingToVideo = value === adTypes.VIDEO.value;
+      const isCurrentlyVideo = data.picture?.type?.startsWith("video");
+
+      if (isSwitchingToVideo && data.picture && !isCurrentlyVideo) {
+        // If switching to video but current picture is not a video
+        setData((state) => ({
+          ...state,
+          [name]: value,
+          picture: "", // Reset picture
+        }));
+        setErrors((state) => ({ ...state, [name]: "", picture: "" }));
+        return;
+      }
+    }
+
     setData((state) => ({ ...state, [name]: value }));
     setErrors((state) => ({ ...state, [name]: "" }));
   };
@@ -169,6 +185,8 @@ const AddAd = () => {
 
   const handleCancel = () => navigate(allRoutes.BRANDS);
 
+  const isVideoAd = data.adType === adTypes.VIDEO.value;
+
   const fields: FormFieldWithValue[] = [
     {
       label: "Ad Type",
@@ -191,7 +209,7 @@ const AddAd = () => {
       placeholder: "This will be displayed as an Ad",
       name: "picture",
       type: "image",
-      allowVideo: true,
+      ...(isVideoAd ? { allowOnlyVideo: true } : { allowVideo: true }),
       value: data.picture,
       onChange: handleOnChange,
       required: true,

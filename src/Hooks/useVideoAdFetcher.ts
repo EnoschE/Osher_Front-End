@@ -8,6 +8,7 @@ const getDay = () => new Date().toLocaleString("en-US", { weekday: "long" });
 
 export const useVideoAdFetcher = () => {
   const [ad, setAd] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -19,19 +20,22 @@ export const useVideoAdFetcher = () => {
 
         try {
           const adResponse = await getVideoAd({ state, time, day });
-          setAd(adResponse); // assuming it returns a single object
+          setAd(adResponse);
         } catch (error) {
           toast.error("Failed to fetch video ad.");
           console.error("Geo video ad fetch failed:", error);
+        } finally {
+          setLoading(false);
         }
       },
       (error) => {
         toast.error("Failed to get location.");
         console.error("Geolocation error:", error);
+        setLoading(false);
       },
-      { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 20000 }
     );
   }, []);
 
-  return ad;
+  return { ad, loading };
 };

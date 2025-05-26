@@ -102,7 +102,7 @@ const Login = () => {
             animationSpeed='fast'
           />
           <Typography
-            className='animated-block'
+            className='pop-out-animation'
             sx={{ animationDelay: `${1 / 21}s`, mt: 10, mb: 40 }}
           >
             {t("Sign in to your Osher account")}
@@ -117,11 +117,11 @@ const Login = () => {
               value={data.email}
               error={errors.email}
               onChange={handleOnChange}
-              className='animated-block'
+              className='pop-out-animation'
               style={{ animationDelay: `${2 / 21}s` }}
             />
             <CustomTextField
-              className='animated-block'
+              className='pop-out-animation'
               style={{ animationDelay: `${3 / 21}s` }}
               type='password'
               name='password'
@@ -137,7 +137,7 @@ const Login = () => {
               alignItems='center'
               justifyContent='space-between'
               mb={30}
-              className='animated-block'
+              className='pop-out-animation'
               sx={{ animationDelay: `${4 / 21}s` }}
             >
               <Box />
@@ -148,7 +148,7 @@ const Login = () => {
             <CustomButton
               type='submit'
               fullWidth
-              className='animated-block'
+              className='pop-out-animation'
               sx={{ animationDelay: `${5 / 21}s`, mb: 20 }}
             >
               {t("Sign in")}

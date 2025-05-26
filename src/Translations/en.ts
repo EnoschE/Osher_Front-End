@@ -275,6 +275,7 @@ const translationEN = {
   "Enter a valid email": "Enter a valid email",
   "Email cannot be empty": "Email cannot be empty",
   "Picture cannot be empty": "Picture cannot be empty",
+  "Media cannot be empty": "Media cannot be empty",
   "Description cannot be empty": "Description cannot be empty",
   "Influencer cannot be empty": "Influencer cannot be empty",
   "Brand cannot be empty": "Brand cannot be empty",
@@ -289,6 +290,8 @@ const translationEN = {
   "Passwords do not match": "Passwords do not match",
   "Please enter complete otp code": "Please enter complete otp code",
   "Otp cannot be empty": "Otp cannot be empty",
+  "The video must be 30 seconds or shorter.":
+    "The video must be 30 seconds or shorter.",
 
   // API Errors
   "Incorrect current password": "Incorrect current password",

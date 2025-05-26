@@ -282,6 +282,7 @@ const translationFR = {
   "Enter a valid email": "Entrez une adresse e-mail valide",
   "Email cannot be empty": "L'e-mail ne peut pas être vide",
   "Picture cannot be empty": "L'image ne peut pas être vide",
+  "Media cannot be empty": "Le média ne peut pas être vide",
   "Description cannot be empty": "La description ne peut pas être vide",
   "Influencer cannot be empty": "L'influenceur ne peut pas être vide",
   "Brand cannot be empty": "La marque ne peut pas être vide",
@@ -297,6 +298,8 @@ const translationFR = {
   "Passwords do not match": "Les mots de passe ne correspondent pas",
   "Please enter complete otp code": "Veuillez entrer le code OTP complet",
   "Otp cannot be empty": "Le code OTP ne peut pas être vide",
+  "The video must be 30 seconds or shorter.":
+    "The video must be 30 seconds or shorter.", // TODO: convert to fr
 
   // API Errors
   "Incorrect current password": "Mot de passe actuel incorrect",

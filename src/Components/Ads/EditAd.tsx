@@ -13,6 +13,7 @@ import { isBrandLoggedIn } from "../../Services/userService";
 import { selectUser } from "../../Redux/Slices/userSlice";
 import { useTranslation } from "react-i18next";
 import { adTypes, Days, States, TimeSlots } from "../../Utils/enums";
+import { isVideoFromUrl } from "../Common/PostPicture";
 
 interface AdState {
   _id: string;
@@ -105,6 +106,26 @@ const EditAd = () => {
   };
 
   const handleOnChange = ({ name, value }: FormOnChange) => {
+    if (name === "adType") {
+      const isSwitchingToVideo = value === adTypes.VIDEO.value;
+
+      const isCurrentlyVideo =
+        typeof data.picture === "string"
+          ? isVideoFromUrl(data.picture)
+          : data.picture?.type?.startsWith("video");
+
+      if (isSwitchingToVideo && data.picture && !isCurrentlyVideo) {
+        // If switching to video but current picture is not a video
+        setData((state) => ({
+          ...state,
+          [name]: value,
+          picture: "", // Reset picture
+        }));
+        setErrors((state) => ({ ...state, [name]: "", picture: "" }));
+        return;
+      }
+    }
+
     setData((state) => ({ ...state, [name]: value }));
     setErrors((state) => ({ ...state, [name]: "" }));
   };
@@ -173,6 +194,8 @@ const EditAd = () => {
 
   const handleCancel = () => navigate(allRoutes.ADS);
 
+  const isVideoAd = data.adType === adTypes.VIDEO.value;
+
   const fields: FormFieldWithValue[] = [
     {
       label: "Ad Type",
@@ -197,7 +220,7 @@ const EditAd = () => {
       placeholder: "This will be displayed as an Ad",
       name: "picture",
       type: "image",
-      allowVideo: true,
+      ...(isVideoAd ? { allowOnlyVideo: true } : { allowVideo: true }),
       value: data.picture,
       onChange: handleOnChange,
       required: true,
