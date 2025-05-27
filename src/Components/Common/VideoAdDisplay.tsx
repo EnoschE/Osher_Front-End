@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useVideoAdFetcher } from "../../Hooks/useVideoAdFetcher";
 import { frostedGlassEffect } from "../../Utils/colors";
 import { borderRadius } from "../../Utils/spacings";
+import { incrementAdViews } from "../../Services/feedService";
 
 const VideoAdDisplay = () => {
   const { t } = useTranslation();
@@ -12,13 +13,6 @@ const VideoAdDisplay = () => {
 
   const [open, setOpen] = useState(true);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
-  const handleLoadedMetadata = () => {
-    const duration = videoRef.current?.duration;
-    if (duration && !isNaN(duration)) {
-      const durationMs = Math.floor(duration * 1000);
-      setTimeLeft(durationMs);
-    }
-  };
 
   useEffect(() => {
     if (!open || timeLeft === null) return;
@@ -41,15 +35,36 @@ const VideoAdDisplay = () => {
     return () => clearInterval(interval);
   }, [open, timeLeft]);
 
+  useEffect(() => {
+    if (ad?._id && open) {
+      handleAdViewIncrement(ad._id);
+      // todo: make the logic of change the ads order, change to 1,2,3 after every call instead of seconds
+    }
+  }, [ad, open]);
+
+  const handleAdViewIncrement = async (adId: string) => {
+    try {
+      const res = await incrementAdViews(adId);
+      console.log("Ad view incremented:", res);
+    } catch (error) {
+      console.error("Failed to increment ad view:", error);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    const duration = videoRef.current?.duration;
+    if (duration && !isNaN(duration)) {
+      const durationMs = Math.floor(duration * 1000);
+      setTimeLeft(durationMs);
+    }
+  };
+
   const formatTime = (milliseconds: number | null) => {
-    if (milliseconds === null) return "--:--";
+    if (milliseconds === null) return "";
     const totalSeconds = Math.floor(milliseconds / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
+    // const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-      2,
-      "0"
-    )}`;
+    return `${seconds}s`;
   };
 
   if (!open && !loading) return null;
