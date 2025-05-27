@@ -60,3 +60,8 @@ export const findStateFromCoords = (lat: number, lng: number) => {
 export const capitalizeText = (text: string) => {
   return text.split("")[0].toUpperCase() + text.slice(1);
 };
+
+export const isVideoFromUrl = (url?: string) => {
+  if (!url) return false;
+   return /\.(mp4|webm|ogg|mov|qt)(\?.*)?$/i.test(url);
+};

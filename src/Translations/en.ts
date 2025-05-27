@@ -367,6 +367,10 @@ const translationEN = {
   "Your email has been verified!": "Your email has been verified!",
   "Please enter the correct OTP code": "Please enter the correct OTP code",
   "Password reset link has been sent!": "Password reset link has been sent!",
+  "The selected file exceeds the maximum allowed size of 2.5MB. Please choose a smaller file.":
+    "The selected file exceeds the maximum allowed size of 2.5MB. Please choose a smaller file.",
+  "The selected file exceeds the maximum allowed size of 10MB. Please choose a smaller file.":
+    "The selected file exceeds the maximum allowed size of 10MB. Please choose a smaller file.",
 };
 
 export { translationEN };

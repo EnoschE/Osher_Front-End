@@ -299,7 +299,7 @@ const translationFR = {
   "Please enter complete otp code": "Veuillez entrer le code OTP complet",
   "Otp cannot be empty": "Le code OTP ne peut pas être vide",
   "The video must be 30 seconds or shorter.":
-    "The video must be 30 seconds or shorter.", // TODO: convert to fr
+    "La vidéo doit durer 30 secondes ou moins.",
 
   // API Errors
   "Incorrect current password": "Mot de passe actuel incorrect",
@@ -379,6 +379,10 @@ const translationFR = {
   "Please enter the correct OTP code": "Veuillez entrer le bon code OTP",
   "Password reset link has been sent!":
     "Le lien de réinitialisation du mot de passe a été envoyé !",
+  "The selected file exceeds the maximum allowed size of 2.5MB. Please choose a smaller file.":
+    "Le fichier sélectionné dépasse la taille maximale autorisée de 2,5 Mo. Veuillez choisir un fichier plus petit.",
+  "The selected file exceeds the maximum allowed size of 10MB. Please choose a smaller file.":
+    "Le fichier sélectionné dépasse la taille maximale autorisée de 10 Mo. Veuillez choisir un fichier plus petit.",
 };
 
 export { translationFR };

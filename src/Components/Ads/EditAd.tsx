@@ -13,7 +13,7 @@ import { isBrandLoggedIn } from "../../Services/userService";
 import { selectUser } from "../../Redux/Slices/userSlice";
 import { useTranslation } from "react-i18next";
 import { adTypes, Days, States, TimeSlots } from "../../Utils/enums";
-import { isVideoFromUrl } from "../Common/PostPicture";
+import { isVideoFromUrl } from "../../Utils/utils";
 
 interface AdState {
   _id: string;

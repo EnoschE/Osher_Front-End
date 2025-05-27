@@ -4,6 +4,7 @@ import PauseIcon from "@mui/icons-material/Pause";
 import colors from "../../Utils/colors";
 import { useState, useEffect, useRef } from "react";
 import { borderRadius } from "../../Utils/spacings";
+import { isVideoFromUrl } from "../../Utils/utils";
 
 interface PostPictureProps {
   className?: string;
@@ -13,11 +14,6 @@ interface PostPictureProps {
   onClick?: () => void;
   sx?: SxProps;
 }
-
-export const isVideoFromUrl = (url?: string) => {
-  if (!url) return false;
-  return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
-};
 
 const PostPicture = ({
   className,
@@ -35,7 +31,7 @@ const PostPicture = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const video = isVideoFromUrl(src);
+  const isVideo = isVideoFromUrl(src);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -119,7 +115,7 @@ const PostPicture = ({
       onClick={onClick}
     >
       {inView &&
-        (video ? (
+        (isVideo ? (
           <>
             <Box
               component='video'

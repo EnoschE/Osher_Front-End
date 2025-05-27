@@ -2,7 +2,7 @@ import { Avatar, Box, Skeleton, SxProps } from "@mui/material";
 import colors from "../../Utils/colors";
 import { useState } from "react";
 import { borderRadius } from "../../Utils/spacings";
-import { isVideoFromUrl } from "./PostPicture";
+import { isVideoFromUrl } from "../../Utils/utils";
 
 interface CustomAvatarProps {
   src?: string;

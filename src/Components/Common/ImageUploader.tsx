@@ -54,7 +54,7 @@ const ImageUploader = ({
       toast.error(
         t(
           `The selected file exceeds the maximum allowed size of ${
-            allowVideoUpload ? "10MB" : "2.5MB"
+            isVideo ? "10MB" : "2.5MB"
           }. Please choose a smaller file.`
         )
       );
@@ -72,7 +72,9 @@ const ImageUploader = ({
         const maxVideoLength = 30;
 
         if (video.duration > maxVideoLength) {
-          toast.error(t(`The video must be ${maxVideoLength} seconds or shorter.`));
+          toast.error(
+            t(`The video must be ${maxVideoLength} seconds or shorter.`)
+          );
         } else {
           onUpdate(selectedFile);
         }
@@ -125,9 +127,9 @@ const ImageUploader = ({
         type='file'
         accept={
           allowOnlyVideo
-            ? "video/mp4, video/webm"
+            ? "video/mp4, video/webm, video/quicktime, .mov"
             : allowVideoUpload
-            ? "image/png, image/jpeg, image/jpg, video/mp4, video/webm"
+            ? "image/png, image/jpeg, image/jpg, video/mp4, video/webm, video/quicktime, .mov"
             : "image/png, image/jpeg, image/jpg"
         }
         onChange={handleImageUploader}
