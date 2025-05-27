@@ -2,6 +2,7 @@ import { Avatar, Box, Skeleton, SxProps } from "@mui/material";
 import colors from "../../Utils/colors";
 import { useState } from "react";
 import { borderRadius } from "../../Utils/spacings";
+import { isVideoFromUrl } from "./PostPicture";
 
 interface CustomAvatarProps {
   src?: string;
@@ -28,7 +29,7 @@ const CustomAvatar = ({
     : "50%";
 
   const [loading, setLoading] = useState(!!src);
-  // const [loading, setLoading] = useState(true);
+  const isVideo = isVideoFromUrl(src);
 
   return (
     <Box
@@ -42,22 +43,46 @@ const CustomAvatar = ({
       }}
     >
       {!showLoader && (
-        <Avatar
-          sx={{
-            width: sizeMap[size],
-            height: sizeMap[size],
-            minWidth: sizeMap[size],
-            minHeight: sizeMap[size],
-            border: `${borderWidth}px solid ${colors.border}`,
-            borderRadius: radius,
-            boxShadow: ["lg", "xl"].includes(size)
-              ? `rgba(23, 58, 90, 0.25) 0px 50px 50px -10px` // TODO: extract color from img later
-              : "none",
-          }}
-          src={src}
-          onLoad={() => setLoading(false)}
-          {...props}
-        />
+        <>
+          {isVideo ? (
+            <video
+              src={src}
+              style={{
+                width: sizeMap[size],
+                height: sizeMap[size],
+                minWidth: sizeMap[size],
+                minHeight: sizeMap[size],
+                border: `${borderWidth}px solid ${colors.border}`,
+                borderRadius: radius,
+                boxShadow: ["lg", "xl"].includes(size)
+                  ? `rgba(23, 58, 90, 0.25) 0px 50px 50px -10px`
+                  : "none",
+                objectFit: "cover",
+              }}
+              onLoadedData={() => setLoading(false)}
+              muted
+              controls={false}
+              {...props}
+            />
+          ) : (
+            <Avatar
+              sx={{
+                width: sizeMap[size],
+                height: sizeMap[size],
+                minWidth: sizeMap[size],
+                minHeight: sizeMap[size],
+                border: `${borderWidth}px solid ${colors.border}`,
+                borderRadius: radius,
+                boxShadow: ["lg", "xl"].includes(size)
+                  ? `rgba(23, 58, 90, 0.25) 0px 50px 50px -10px`
+                  : "none",
+              }}
+              src={src}
+              onLoad={() => setLoading(false)}
+              {...props}
+            />
+          )}
+        </>
       )}
 
       <Skeleton

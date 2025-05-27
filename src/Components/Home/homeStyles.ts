@@ -1,5 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { navbarHeight } from "../../Utils/spacings";
+import { backgroundImage } from "../../Utils/colors";
 
 export const HomeContainer = styled(Box)(() => ({
   display: "flex",
@@ -9,6 +10,7 @@ export const HomeContainer = styled(Box)(() => ({
   padding: 32,
   maxWidth: "100vw",
   minHeight: `calc(100vh - ${navbarHeight}px)`,
+  ...backgroundImage,
 }));
 
 export const HomeInnerBlock = styled(Box)(({ theme }) => ({
