@@ -36,11 +36,16 @@ const VideoAdDisplay = () => {
   }, [open, timeLeft]);
 
   useEffect(() => {
+    if (!ad && !loading) {
+      // If ad is null, close the ad display
+      setOpen(false);
+      return;
+    }
+
     if (ad?._id && open) {
       handleAdViewIncrement(ad._id);
-      // todo: make the logic of change the ads order, change to 1,2,3 after every call instead of seconds
     }
-  }, [ad, open]);
+  }, [ad, open, loading]);
 
   const handleAdViewIncrement = async (adId: string) => {
     try {
@@ -62,7 +67,6 @@ const VideoAdDisplay = () => {
   const formatTime = (milliseconds: number | null) => {
     if (milliseconds === null) return "";
     const totalSeconds = Math.floor(milliseconds / 1000);
-    // const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     return `${seconds}s`;
   };
