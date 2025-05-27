@@ -29,7 +29,7 @@ const ImageUploader = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const size = isSquarish ? 240 : 134;
 
-  // TODO: important allow images and videos of IOS/iPhone
+  // TODO: allow images of IOS/iPhone (HEIC) for future
 
   const handleImageUploader = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];

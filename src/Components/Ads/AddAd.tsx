@@ -159,7 +159,7 @@ const AddAd = () => {
       const formData = new FormData();
 
       formData.append("picture", data.picture ?? ""); // TODO: change this to media add/edit/details and all other places for ads/posts on FE/BE
-      formData.append("adType", data.adType ?? ""); // TODO: change this to media add/edit/details and all other places for ads/posts on FE/BE
+      formData.append("adType", data.adType ?? "");
       formData.append("name", data.name ?? "");
       formData.append("categoryId", data.categoryId ?? "");
       formData.append("brandId", data.brandId ?? "");
@@ -202,7 +202,7 @@ const AddAd = () => {
         value: type.value,
       })),
 
-      // TODO: very important, create images for these two and create a component singleSelection for this
+      // TODO: very important, create images for these two and use in component singleSelection for this
     },
     {
       label: "Ad Media",

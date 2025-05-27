@@ -27,8 +27,6 @@ const defaultData = {
 const AccountSettings = () => {
   const { t } = useTranslation();
 
-  // TODO: important use EntityDetails page for all remaining and also create ADD,EDIT etc for them as well and maybe for BRANDS, etc as well
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);

@@ -1,4 +1,3 @@
-import axios from "axios";
 import http from "./httpService";
 import { AppDispatch } from "../Redux/store";
 import { resetUserState, saveUserState } from "../Redux/Slices/userSlice";
@@ -65,17 +64,6 @@ export const getDashboardAllData = () => {
 
 export const verifyEmailOtp = (data: any) => {
   return ProfileService.verifyEmailOtp(data);
-};
-
-// TODO in future: move this google api and all other google apis in a separate googleApiService file
-export const getGoogleProfile = async (accessToken: string) => {
-  const { data } = await axios.get(
-    "https://www.googleapis.com/oauth2/v2/userinfo",
-    {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    },
-  );
-  return data;
 };
 
 const getUserObjectForRedux = (user: any) => ({

@@ -23,8 +23,6 @@ const VerifyEmail = () => {
   console.log("Is First Render: ", isFirstRender.current);
 
   useEffect(() => {
-    // TODO: figure out why this api is called 2 times on localhost
-    // TODO: If it's only happening on localhost then, maybe consider creating an env variable NODE_ENV and set to deployed
     if (token || userId) {
       handleVerifyEmail();
     } else {

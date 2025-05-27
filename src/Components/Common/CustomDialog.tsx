@@ -42,7 +42,7 @@ const CustomDialog = ({
           <IconButton
             sx={{
               position: "absolute",
-              top: "5px", // TODO URGENT: need to figure out why the button is not appearing if it goes outside the dialog
+              top: "5px",
               right: "5px",
               bgColor: "white",
               zIndex: 1000,

@@ -211,9 +211,8 @@ const EditAd = () => {
         value: type.value,
       })),
 
-      // TODO: very important, create images for these two and create a component singleSelection for this
       // TODO: add info for video ads on left side
-      // TODO: add restrictions for video length, res for Video Ads
+      // TODO: add restrictions for res of Video Ads
     },
     {
       label: "Ad Media",
