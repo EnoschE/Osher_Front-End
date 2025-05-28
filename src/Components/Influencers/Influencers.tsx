@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
 import TableBlock from "../Common/Table/TableBlock";
@@ -10,9 +8,6 @@ import { getAllInfluencers } from "../../Services/influencersService";
 
 const Influencers = () => {
   const navigate = useNavigate();
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Array<any>>([]);
 
   const tableHeaders = [
     {
@@ -66,33 +61,17 @@ const Influencers = () => {
     },
   ];
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    setLoading(true);
-    try {
-      const data: any = await getAllInfluencers();
-      setData(data);
-    } catch (error: any) {
-      toast.error(error);
-    }
-    setLoading(false);
-  };
-
   return (
     <PageLayout hideBackButton>
       <TableBlock
-        isLoading={loading}
-        heading="Influencers"
-        subHeading="These are all the influencers"
-        tableData={data}
-        addButtonText="Add Influencer"
+        getDataFn={getAllInfluencers}
+        heading='Influencers'
+        subHeading='These are all the influencers'
+        addButtonText='Add Influencer'
         addButtonPath={allRoutes.ADD_INFLUENCER}
         detailsPagePath={allRoutes.VIEW_INFLUENCER}
         tableHeaders={tableHeaders}
-        emptyStateMessage="There are no influencers present. Please add an influencer."
+        emptyStateMessage='There are no influencers present. Please add an influencer.'
         rowsPerPage={10}
       />
     </PageLayout>

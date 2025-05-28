@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
 import TableBlock from "../Common/Table/TableBlock";
@@ -10,9 +8,6 @@ import AvatarWithName from "../Common/AvatarWithName";
 
 const Brands = () => {
   const navigate = useNavigate();
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Array<any>>([]);
 
   const tableHeaders = [
     {
@@ -66,33 +61,17 @@ const Brands = () => {
     },
   ];
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    setLoading(true);
-    try {
-      const data: any = await getAllBrands();
-      setData(data);
-    } catch (error: any) {
-      toast.error(error);
-    }
-    setLoading(false);
-  };
-
   return (
     <PageLayout hideBackButton>
       <TableBlock
-        isLoading={loading}
-        heading="Brands"
-        subHeading="These are all the brands"
-        tableData={data}
-        addButtonText="Add Brand"
+        getDataFn={getAllBrands}
+        heading='Brands'
+        subHeading='These are all the brands'
+        addButtonText='Add Brand'
         addButtonPath={allRoutes.ADD_BRAND}
         detailsPagePath={allRoutes.VIEW_BRAND}
         tableHeaders={tableHeaders}
-        emptyStateMessage="There are no brands present. Please add a brand."
+        emptyStateMessage='There are no brands present. Please add a brand.'
         rowsPerPage={10}
       />
     </PageLayout>

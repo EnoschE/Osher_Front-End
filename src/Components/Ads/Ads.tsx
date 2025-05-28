@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
 import TableBlock from "../Common/Table/TableBlock";
@@ -62,9 +60,6 @@ export const commonAdsTableHeaders = [
 const Ads = () => {
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Array<any>>([]);
-
   const tableHeaders = [
     ...commonAdsTableHeaders,
     {
@@ -87,28 +82,12 @@ const Ads = () => {
     },
   ];
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    setLoading(true);
-    try {
-      const data: any = await getAllAds();
-      setData(data);
-    } catch (error: any) {
-      toast.error(error);
-    }
-    setLoading(false);
-  };
-
   return (
     <PageLayout hideBackButton>
       <TableBlock
-        isLoading={loading}
+        getDataFn={getAllAds}
         heading='Ads'
         subHeading='These are all the ads'
-        tableData={data}
         addButtonText='Add ad'
         addButtonPath={allRoutes.ADD_AD}
         detailsPagePath={allRoutes.VIEW_AD}

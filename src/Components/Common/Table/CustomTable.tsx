@@ -21,7 +21,7 @@ import { formatNumber } from "../../../Utils/utils";
 import { useSelector } from "../../../Redux/reduxHooks";
 import { useTranslation } from "react-i18next";
 
-interface HeaderProps {
+export interface TableHeaderProps {
   text: string;
   key: string;
   alternateKey?: string;
@@ -35,7 +35,7 @@ interface HeaderProps {
 }
 
 interface CustomTableProps {
-  headers?: Array<HeaderProps>;
+  headers?: Array<TableHeaderProps>;
   rows?: Array<any>;
   hidePagination?: boolean;
   disableRowClick?: boolean;
@@ -139,7 +139,7 @@ const CustomTable = ({
         <Table>
           <TableHead>
             <TableRow>
-              {headers?.map((header: HeaderProps, idx: number) => (
+              {headers?.map((header: TableHeaderProps, idx: number) => (
                 <TableCell
                   key={idx}
                   align={header.align || "left"}
@@ -211,7 +211,7 @@ const CustomTable = ({
                     key={idx}
                     // onClick={disableRowClick ? undefined : () => handleRowClick?.(row._id)}
                   >
-                    {headers?.map((header: HeaderProps, idx: number) => (
+                    {headers?.map((header: TableHeaderProps, idx: number) => (
                       <TableCell
                         align={header.align || "left"}
                         key={idx}

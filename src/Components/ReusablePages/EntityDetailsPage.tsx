@@ -57,11 +57,8 @@ const EntityDetailsPage = ({
   const dependency = isMyProfilePage ? user : null;
 
   const [data, setData] = useState<any>({});
-  const [items, setItems] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
-
-  const extraSectionData = getExtraSectionData?.(data);
 
   useEffect(() => {
     getDetails();
@@ -84,12 +81,6 @@ const EntityDetailsPage = ({
       } else {
         const response = await getDetailsFn?.(id || "");
         setData(response);
-      }
-
-      if (!!extraSectionData) {
-        const userId = (isMyProfilePage ? user?._id : id) || "";
-        const itemsResponse: any = await extraSectionData?.getItemsFn(userId);
-        setItems(itemsResponse || []);
       }
     } catch (err: any) {
       toast.error(t(err));
@@ -128,11 +119,10 @@ const EntityDetailsPage = ({
     ? true
     : isSuperAdmin || !!checkEditAccess?.(data);
 
+  const extraSectionData = getExtraSectionData?.(data);
+
   return (
-    <PageLayout
-      hideSidebar={!isLoggedIn}
-      //  hideBackButton={!isLoggedIn}
-    >
+    <PageLayout hideSidebar={!isLoggedIn}>
       <ProfileHeader
         isSquarish={["Post", "Ad"].includes(entityType)}
         data={data}
@@ -155,11 +145,14 @@ const EntityDetailsPage = ({
         <TableBlock
           heading={extraSectionData.heading}
           subHeading={extraSectionData.subHeading}
-          tableData={items}
           tableHeaders={extraSectionData.headers}
           emptyStateMessage={extraSectionData.emptyStateMessage}
           detailsPagePath={extraSectionData.detailsPagePath}
-          isLoading={loading}
+          getDataFn={() =>
+            extraSectionData?.getItemsFn(
+              (isMyProfilePage ? user?._id : id) || ""
+            )
+          }
         />
       )}
 

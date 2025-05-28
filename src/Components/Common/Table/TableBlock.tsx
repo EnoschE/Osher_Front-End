@@ -1,13 +1,14 @@
 import { Box, Tooltip, Typography } from "@mui/material";
-import CustomTable from "./CustomTable";
+import CustomTable, { TableHeaderProps } from "./CustomTable";
 import PlaceholderForEmptyTable from "./PlaceholderForEmptyTable";
 import CustomTextField from "../CustomTextField";
 import { Add, SearchOutlined } from "@mui/icons-material";
 import CustomButton from "../CustomButton";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AnimatedHeading from "../AnimatedHeading";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 export const TableBlock = ({
   heading,
@@ -19,13 +20,15 @@ export const TableBlock = ({
   addButtonState,
   detailsPagePath,
   rowsPerPage = 10,
-  tableData,
   tableHeaders,
   disabledAddButton,
   addButtonTooltip,
   onRowClick,
+  tableData,
   isLoading,
+  getDataFn,
 }: {
+  getDataFn?: () => Promise<any>;
   heading: string;
   subHeading: string;
   addButtonText?: string;
@@ -37,39 +40,64 @@ export const TableBlock = ({
   addButtonTooltip?: string;
   detailsPagePath?: string;
   rowsPerPage?: number;
-  tableData?: Array<any>;
-  tableHeaders: Array<any>;
+  tableHeaders: Array<TableHeaderProps>;
   onRowClick?: (row: any) => void;
+  tableData?: Array<any>;
   isLoading?: boolean;
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<Array<any>>([]);
+
+  useEffect(() => {
+    if (tableData?.length) {
+      setData(tableData);
+    }
+  }, [tableData]);
+
+  useEffect(() => {
+    if (isLoading !== undefined) {
+      setLoading(isLoading);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    if (!getDataFn) return;
+
+    setLoading(true);
+    try {
+      const data: any = await getDataFn();
+      setData(data);
+    } catch (error: any) {
+      toast.error(t(error));
+    }
+    setLoading(false);
+  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-  let searchedTableData = search
-    ? tableData?.filter(
-        (item) =>
-          item.name?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          item.description?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          item.address?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          item.phone?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          item.category?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          item.userName?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          item.brandName?.toLowerCase()?.includes(search?.toLowerCase()) ||
-          item.email?.toLowerCase()?.includes(search?.toLowerCase()) // TODO: in future, change this logic to dynamic and add all tableHeaders here
+  const searchedTableData = search
+    ? data?.filter((item) =>
+        tableHeaders.some(({ key }) =>
+          item[key]?.toString()?.toLowerCase()?.includes(search.toLowerCase())
+        )
       )
-    : tableData;
+    : data;
 
   return (
     <>
       <AnimatedHeading
         heading={`${t(heading)} ${
-          tableData?.length ? `(${searchedTableData?.length})` : ""
+          data?.length ? `(${searchedTableData?.length})` : ""
         }`}
         variant='h3'
       />
@@ -97,7 +125,7 @@ export const TableBlock = ({
           gap={12}
           flexDirection={{ xs: "column", md: "row" }}
         >
-          {!!tableData?.length && (
+          {!!data?.length && (
             <CustomTextField
               value={search}
               onChange={handleOnChange}
@@ -131,7 +159,7 @@ export const TableBlock = ({
       </Box>
 
       <Box className='animated-block' sx={{ animationDelay: `${4 / 21}s` }}>
-        {tableData?.length && !isLoading ? (
+        {data?.length && !loading ? (
           <CustomTable
             headers={tableHeaders}
             rows={searchedTableData}
@@ -142,7 +170,7 @@ export const TableBlock = ({
         ) : (
           <PlaceholderForEmptyTable
             message={emptyStateMessage}
-            isLoading={isLoading}
+            isLoading={loading}
           />
         )}
       </Box>

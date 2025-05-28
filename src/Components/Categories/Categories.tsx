@@ -15,12 +15,12 @@ const Categories = () => {
   return (
     <PageLayout hideBackButton>
       <TableBlock
-        isLoading={catsLoading}
         heading='Categories'
         subHeading='These are all the categories'
         tableData={cats}
         tableHeaders={tableHeaders}
         emptyStateMessage='There are no categories present.'
+        isLoading={catsLoading}
       />
     </PageLayout>
   );

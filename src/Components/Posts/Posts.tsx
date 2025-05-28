@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import PageLayout from "../PageLayout/PageLayout";
 import { allRoutes } from "../../Routes/AllRoutes";
 import TableBlock from "../Common/Table/TableBlock";
@@ -40,9 +38,6 @@ export const commonPostsTableHeaders = [
 const Posts = () => {
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Array<any>>([]);
-
   const tableHeaders = [
     ...commonPostsTableHeaders,
     {
@@ -65,34 +60,17 @@ const Posts = () => {
     },
   ];
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    setLoading(true);
-    try {
-      const data: any = await getAllPosts();
-
-      setData(data);
-    } catch (error: any) {
-      toast.error(error);
-    }
-    setLoading(false);
-  };
-
   return (
     <PageLayout hideBackButton>
       <TableBlock
-        isLoading={loading}
-        heading="Posts"
-        subHeading="These are all the posts"
-        tableData={data}
-        addButtonText="Add post"
+        heading='Posts'
+        subHeading='These are all the posts'
+        getDataFn={getAllPosts}
+        addButtonText='Add post'
         addButtonPath={allRoutes.ADD_POST}
         detailsPagePath={allRoutes.VIEW_POST}
         tableHeaders={tableHeaders}
-        emptyStateMessage="There are no posts present. Please add a post."
+        emptyStateMessage='There are no posts present. Please add a post.'
         rowsPerPage={10}
       />
     </PageLayout>
