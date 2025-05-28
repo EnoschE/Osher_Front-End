@@ -34,6 +34,11 @@ export const allRoutes = {
   EDIT_POST: "/posts/edit/:id",
   ADD_POST: "/posts/add-post",
 
+  SPOTS: "/spots",
+  VIEW_SPOT: "/spots/view/:id",
+  EDIT_SPOT: "/spots/edit/:id",
+  ADD_SPOT: "/spots/add-post",
+
   UPDATE_STATUS: "/customers/update-status/:id",
   INSTALLER_COMPANIES: "/installers/companies",
   VIEW_INSTALLER_COMPANY: "/installers/companies/view/:id",

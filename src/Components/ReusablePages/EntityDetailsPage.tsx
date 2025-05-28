@@ -124,7 +124,7 @@ const EntityDetailsPage = ({
   return (
     <PageLayout hideSidebar={!isLoggedIn}>
       <ProfileHeader
-        isSquarish={["Post", "Ad"].includes(entityType)}
+        isSquarish={["Post", "Ad", "Spot"].includes(entityType)}
         data={data}
         userType={entityType}
         handleEdit={handleEdit}
@@ -153,6 +153,7 @@ const EntityDetailsPage = ({
               (isMyProfilePage ? user?._id : id) || ""
             )
           }
+          rowsPerPage={5}
         />
       )}
 

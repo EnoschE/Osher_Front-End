@@ -17,4 +17,10 @@ export interface PageDetailsField {
   type?: "date";
 }
 
-export type UserRoleType = "Admin" | "Brand" | "Ad" | "Post" | "Influencer";
+export type UserRoleType =
+  | "Admin"
+  | "Brand"
+  | "Ad"
+  | "Post"
+  | "Influencer"
+  | "Spot";

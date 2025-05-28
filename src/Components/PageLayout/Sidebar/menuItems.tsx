@@ -7,6 +7,7 @@ import {
   AllInboxOutlined,
   SettingsOutlined,
   AccountCircleOutlined,
+  MapOutlined,
 } from "@mui/icons-material";
 import { allRoutes } from "../../../Routes/AllRoutes";
 import {
@@ -60,6 +61,16 @@ export const getMenuItems = () => {
             icon: <AllInboxOutlined />,
             text: t("Posts"),
             path: allRoutes.POSTS,
+          },
+        ]
+      : []),
+
+    ...(isSuperAdmin
+      ? [
+          {
+            icon: <MapOutlined />,
+            text: t("Spots"),
+            path: allRoutes.SPOTS,
           },
         ]
       : []),

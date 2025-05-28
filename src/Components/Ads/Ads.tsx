@@ -93,7 +93,6 @@ const Ads = () => {
         detailsPagePath={allRoutes.VIEW_AD}
         tableHeaders={tableHeaders}
         emptyStateMessage='There are no ads present. Please add an ad.'
-        rowsPerPage={10}
       />
     </PageLayout>
   );

@@ -71,7 +71,6 @@ const Posts = () => {
         detailsPagePath={allRoutes.VIEW_POST}
         tableHeaders={tableHeaders}
         emptyStateMessage='There are no posts present. Please add a post.'
-        rowsPerPage={10}
       />
     </PageLayout>
   );

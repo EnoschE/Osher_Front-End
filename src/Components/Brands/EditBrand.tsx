@@ -188,6 +188,7 @@ const EditBrand = () => {
       type: "phone",
       value: data.phone,
       onChange: handleOnChange,
+      error: errors.phone,
     },
     {
       label: "Password",

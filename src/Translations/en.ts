@@ -195,6 +195,11 @@ const translationEN = {
   "AD is loading": "AD is loading",
   "Ad will skip in ": "Ad will skip in ",
 
+  // Spots
+  spot: "spot",
+  Spot: "Spot",
+  Spots: "Spots",
+
   // Posts
   "These are all the posts": "These are all the posts",
   "Add post": "Add post",

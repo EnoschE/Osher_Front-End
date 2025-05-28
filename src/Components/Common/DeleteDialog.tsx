@@ -50,7 +50,7 @@ const DeleteDialog = ({
       </Typography>
       <Typography fontSize={16} textAlign='center' color='text.secondary'>
         {t("Are you sure you want to delete ")}
-        {["Post", "Ad"].includes(userType) ? "" : t("the account of")}
+        {["Post", "Ad", "Spot"].includes(userType) ? "" : t("the account of")}
         {` ${user.name}`}?
       </Typography>
 

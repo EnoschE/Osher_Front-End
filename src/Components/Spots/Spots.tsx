@@ -3,43 +3,48 @@ import { allRoutes } from "../../Routes/AllRoutes";
 import TableBlock from "../Common/Table/TableBlock";
 import CustomTableOptions from "../Common/CustomTableOptions";
 import { useNavigate } from "react-router-dom";
-import { getAllBrands } from "../../Services/brandsService";
+import moment from "moment";
 import AvatarWithName from "../Common/AvatarWithName";
+import { getAllSpots } from "../../Services/spotsService";
 
-const Brands = () => {
+const Spots = () => {
   const navigate = useNavigate();
 
   const tableHeaders = [
     {
-      text: "Brand",
+      text: "Spot",
       key: "name",
       customComponent: (props: { picture: string; name: string }) => (
-        <AvatarWithName picture={props.picture} name={props.name} />
+        <AvatarWithName isSquarish name={props.name} picture={props.picture} />
       ),
     },
     {
-      text: "Email address",
-      key: "email",
+      text: "Information",
+      key: "information",
       showEllipses: true,
       maxWidth: 130,
-      sortable: true,
     },
     {
-      text: "Address",
-      key: "address",
-      showEllipses: true,
-      maxWidth: 130,
+      text: "Location",
+      key: "location",
       sortable: true,
     },
     {
       text: "Phone",
       key: "phone",
       sortable: true,
+      // TODO: next
+      // 1- add translations of spots FE BE
+      // 2- display these spots on Explore Spots screen
+      // 3- change the UI of spotDetails page
+      // 4- allow multiple pics for spots
     },
     {
-      text: "Ads",
-      key: "ads",
+      text: "Publish Date",
+      key: "publishDate",
       sortable: true,
+      customComponent: (props: { publishDate: string }) =>
+        moment(props.publishDate).format("LL"),
     },
     {
       text: "",
@@ -50,9 +55,9 @@ const Brands = () => {
         <CustomTableOptions
           menuOptions={[
             {
-              text: "Edit Brand",
+              text: "Edit Spot",
               onClick: () => {
-                navigate(allRoutes.EDIT_BRAND.replace(":id", props._id));
+                navigate(allRoutes.EDIT_SPOT.replace(":id", props._id));
               },
             },
           ]}
@@ -64,17 +69,17 @@ const Brands = () => {
   return (
     <PageLayout hideBackButton>
       <TableBlock
-        getDataFn={getAllBrands}
-        heading='Brands'
-        subHeading='These are all the brands'
-        addButtonText='Add Brand'
-        addButtonPath={allRoutes.ADD_BRAND}
-        detailsPagePath={allRoutes.VIEW_BRAND}
+        heading='Spots'
+        subHeading='These are all the spots'
+        getDataFn={getAllSpots}
+        addButtonText='Add spot'
+        addButtonPath={allRoutes.ADD_SPOT}
+        detailsPagePath={allRoutes.VIEW_SPOT}
         tableHeaders={tableHeaders}
-        emptyStateMessage='There are no brands present. Please add a brand.'
+        emptyStateMessage='There are no spots present. Please add a spot.'
       />
     </PageLayout>
   );
 };
 
-export default Brands;
+export default Spots;

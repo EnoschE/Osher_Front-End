@@ -72,7 +72,6 @@ const Influencers = () => {
         detailsPagePath={allRoutes.VIEW_INFLUENCER}
         tableHeaders={tableHeaders}
         emptyStateMessage='There are no influencers present. Please add an influencer.'
-        rowsPerPage={10}
       />
     </PageLayout>
   );

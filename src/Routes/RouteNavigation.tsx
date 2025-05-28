@@ -15,6 +15,10 @@ import { useDispatch, useSelector } from "../Redux/reduxHooks";
 import { allRoutes } from "./AllRoutes";
 import { selectUser } from "../Redux/Slices/userSlice";
 import AudioFile from "../Assets/Audio/audio.mp3";
+import Spots from "../Components/Spots/Spots";
+import AddSpot from "../Components/Spots/AddSpot";
+import EditSpot from "../Components/Spots/EditSpot";
+import SpotDetails from "../Components/Spots/SpotDetails";
 
 // TODO: important: check why pages are taking some time to load now is it because of LAZY
 const Login = lazy(() => import("../Components/Login/Login"));
@@ -226,6 +230,36 @@ const routesWithComponents = {
   VIEW_POST: {
     path: allRoutes.VIEW_POST,
     Component: PostDetails,
+    isBoth: true,
+  },
+
+  SPOTS: {
+    path: allRoutes.SPOTS,
+    Component: Spots,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true,
+    },
+  },
+  ADD_SPOT: {
+    path: allRoutes.ADD_SPOT,
+    Component: AddSpot,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true,
+    },
+  },
+  EDIT_SPOT: {
+    path: allRoutes.EDIT_SPOT,
+    Component: EditSpot,
+    isPrivate: true,
+    accessTo: {
+      superAdmin: true,
+    },
+  },
+  VIEW_SPOT: {
+    path: allRoutes.VIEW_SPOT,
+    Component: SpotDetails,
     isBoth: true,
   },
 
